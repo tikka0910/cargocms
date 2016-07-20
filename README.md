@@ -1,7 +1,12 @@
-sailsProject
-============
+Cargo CMS
+==========
 
-a [Sails](http://sailsjs.org) application
+Ports
+-------
+
+* 5001 development sails server
+* 5002 development react admin dev server
+* 5011 production sails server
 
 gem install
 -----------

@@ -4,7 +4,6 @@ var baseConfig = require('./base.config')
 var path = require('path');
 var webpack = require('webpack');
 
-
 var config = _.merge(baseConfig, {
     entry: _.merge({
         bundle: './src/app/main.jsx'
@@ -20,7 +19,7 @@ var config = _.merge(baseConfig, {
     devServer: {
         contentBase: 'web',
         devtool: 'eval',
-        port: 14608,
+        port: 5002,
         hot: true,
         inline: true
     },
