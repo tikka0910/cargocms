@@ -11,7 +11,7 @@
  */
 
 module.exports = {
-  port: 1337, 
+  port: 5001, 
   models: {
     connection: 'sqlite',
     migrate: 'drop'
