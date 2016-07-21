@@ -69,7 +69,7 @@ passport.protocols = require('./protocols');
  */
 
 passport.connect = async function(req, query, profile, next) {
-
+  console.log('=== profile ===', profile);
   var provider, user;
   user = {};
   provider = undefined;
@@ -102,7 +102,7 @@ passport.connect = async function(req, query, profile, next) {
   try {
 
 
-    let passport = await Passport.findOne({
+    let hasFacebookPassport = await Passport.findOne({
       where: {
         provider: provider,
         identifier: query.identifier.toString()
@@ -111,15 +111,20 @@ passport.connect = async function(req, query, profile, next) {
 
     //有一般使用者登入但沒使用FB註冊過
     let loginedUser = req.user;
-    sails.log.info("=== loginedUser ===",loginedUser);
-    if (loginedUser && !passport) {
+    console.log("===loginedUser===", !!loginedUser);
+    console.log("===hasFacebookPassport===", !!hasFacebookPassport);
+    let Logined_WithoutfacebookPassport = !!loginedUser && !hasFacebookPassport;
+
+    console.log('=== Logined_WithoutfacebookPassport ===', Logined_WithoutfacebookPassport);
+    if (Logined_WithoutfacebookPassport) {
       query.UserId = loginedUser.id;
+      console.info('=== fb callback query === ', query);
       passport = await Passport.create(query);
       return next(null, loginedUser);
     }
 
     //已用FB註冊過，直接登入
-    if(passport){
+    if(hasFacebookPassport){
       if(query.hasOwnProperty('tokens') && query.tokens !== passport.tokens){
         passport.tokens = query.tokens;
         passport = await passport.save();
@@ -145,6 +150,9 @@ passport.connect = async function(req, query, profile, next) {
     if(checkMail){
       throw new Error('Error passport email exists');
     } else{
+      // 新增使用者
+      console.log('=== query ===', query);
+      console.log('=== create user ===', user);
       user = await User.create(user);
       query.UserId = user.id;
       passport = await Passport.create(query);
