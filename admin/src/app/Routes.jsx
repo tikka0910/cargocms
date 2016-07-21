@@ -5,10 +5,13 @@ import Layout from './pages/layout/Layout.jsx'
 
 import Home from './pages/home/Home.jsx'
 
-import LockedScreen from './pages/misc/LockedScreen.jsx'
-import Login from './pages/misc/Login.jsx'
-import Forgot from './pages/misc/Forgot.jsx'
-import Register from './pages/misc/Register.jsx'
+// import LockedScreen from './pages/misc/LockedScreen.jsx'
+// import Login from './pages/misc/Login.jsx'
+// import Forgot from './pages/misc/Forgot.jsx'
+// import Register from './pages/misc/Register.jsx'
+
+
+import FormElements from './pages/forms/FormElements.jsx'
 
 const Routes = (
     <Route>
@@ -16,12 +19,19 @@ const Routes = (
             <Redirect from="/" to="/home"/>
             <IndexRoute component={Home}/>
             <Route path="home" component={Home}/>
+
+            <Redirect from="forms" to="/forms/elements"/>
+            <Route path="forms">
+                <Route path="elements" component={FormElements}/>
+            </Route>
+            
         </Route>
-        <Route path="lock" component={LockedScreen} />
-        <Route path="login" component={Login}/>
-        <Route path="forgot" component={Forgot}/>
-        <Route path="register" component={Register}/>
     </Route>);
+
+        // <Route path="lock" component={LockedScreen} />
+        // <Route path="login" component={Login}/>
+        // <Route path="forgot" component={Forgot}/>
+        // <Route path="register" component={Register}/>
 
 
 export default Routes
