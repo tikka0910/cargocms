@@ -26,8 +26,13 @@ html
               a(href='/') #{i18n('home')}
             li(class=(req.options.controller == 'user' ? 'active' : ''))
               a(href='/user/index') #{i18n('user')}
+            if !req.session.authenticated
+              li(class=(req.options.controller == 'auth' ? 'active' : ''))
+                a(href='/auth/facebook') #{i18n('auth')}
+            else 
+              li
+                a #{req.session.passport.user.email}
 
-    
     block body
 
     // SCRIPTS
