@@ -5,7 +5,7 @@
 <div class="container content">
   <div class="row">
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-      <form class="reg-page">
+      <form class="reg-page" method='post' action="/auth/local/register">
         <div class="reg-header">
           <h2>註冊新帳號</h2>
           <p>如果已經註冊帳號，請直接<a href="/login" class="color-green">登入</a>即可。</p>
@@ -14,28 +14,28 @@
         <div class="row">
           <div class="col-sm-6">
             <label>姓氏</label>
-            <input type="text" class="form-control margin-bottom-20">
+            <input type="text" name="firstName" value="<%= data.user.firstName %>" class="form-control margin-bottom-20">
           </div>
           <div class="col-sm-6">
             <label>名字</label>
-            <input type="text" class="form-control margin-bottom-20">
+            <input type="text" name="lastName" value="<%= data.user.lastName %>" class="form-control margin-bottom-20">
           </div>
         </div>
 
         <label>Email <span class="color-red">*</span></label>
-        <input type="text" class="form-control margin-bottom-20">
-        
+        <input type="text" name="email" value="<%= data.user.email %>" class="form-control margin-bottom-20">
+
         <label>帳號 <span class="color-red">*</span></label>
-        <input type="text" class="form-control margin-bottom-20">
+        <input type="text" name="username" value="<%= data.user.username %>" class="form-control margin-bottom-20">
 
         <div class="row">
           <div class="col-sm-6">
             <label>密碼 <span class="color-red">*</span></label>
-            <input type="password" class="form-control margin-bottom-20">
+            <input type="password" name="password" class="form-control margin-bottom-20">
           </div>
           <div class="col-sm-6">
             <label>再次確認密碼 <span class="color-red">*</span></label>
-            <input type="password" class="form-control margin-bottom-20">
+            <input type="password" name="passwordAgain" class="form-control margin-bottom-20">
           </div>
         </div>
 

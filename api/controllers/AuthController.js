@@ -11,7 +11,7 @@ module.exports = {
     // res.ok({
     //   errors: req.flash('error')
     // });
-    
+
     res.view('auth/login', {});
   },
   logout: function(req, res) {
@@ -32,8 +32,10 @@ module.exports = {
       let user = {
         username: '',
         email: '',
+        lastName: '',
+        firstName: '',
       }
-      res.view('auth/register', {user});
+      res.ok({user});
     } catch (e) {
       console.error(e.stack);
     }

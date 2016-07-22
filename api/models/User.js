@@ -8,8 +8,11 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false
     },
-    age: {
-      type: Sequelize.INTEGER
+    firstName: {
+      type: Sequelize.STRING
+    },
+    lastName: {
+      type: Sequelize.STRING
     }
   },
   associations: function() {
