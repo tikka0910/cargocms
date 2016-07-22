@@ -29,6 +29,9 @@ module.exports.policies = {
   'BlogController': {
     'index': true,
   },
+  'MainController': {
+    'index': []
+  }
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions (`true` allows public     *

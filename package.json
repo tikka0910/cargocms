@@ -49,7 +49,7 @@
     "test": "grunt test",
     "test-junit": "mocha test",
     "build": "npm i && node_modules/grunt-cli/bin/grunt build",
-    "start": "node_modules/.bin/babel-node app.js",
+    "start": "node app.js",
     "pm2-start": "pm2 start -f app.js --name 'cargocms'",
     "pm2-stop": "pm2 stop cargocms",
     "start-prod": "NODE_ENV=production node app.js",
@@ -72,7 +72,6 @@
     "url": "git://github.com/trunk-studio/cargocms.git"
   },
   "devDependencies": {
-    "babel-cli": "*",
     "chai": "^3.4.1",
     "grunt-bower-task": "^0.4.0",
     "grunt-cli": "^0.1.13",
