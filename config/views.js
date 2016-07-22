@@ -12,5 +12,7 @@
  */
 
 module.exports.views = {
-  engine: 'jade'
+//   engine: 'jade',
+  engine: 'ejs',
+  layout: 'layout'
 };

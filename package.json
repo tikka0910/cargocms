@@ -4,10 +4,12 @@
   "version": "1.0.0",
   "description": "Cargo CMS",
   "author": "Trunk Studio <office@trunk-studio.com>",
-  "contributors": [{
-    "name": "Kyle Lin",
-    "email": "lyhcode@gmail.com"
-  }],
+  "contributors": [
+    {
+      "name": "Kyle Lin",
+      "email": "lyhcode@gmail.com"
+    }
+  ],
   "license": "MIT",
   "keywords": [],
   "dependencies": {
@@ -37,6 +39,7 @@
     "sails": "^0.12.0",
     "sails-auth": "^1.3.1",
     "sails-disk": "~0.10.0",
+    "sails-hook-autoreload": "^0.13.2",
     "sails-hook-sequelize": "^1.0.1",
     "sqlite3": "^3.1.1",
     "validator": "^4.3.0"
@@ -46,7 +49,7 @@
     "test": "grunt test",
     "test-junit": "mocha test",
     "build": "npm i && node_modules/grunt-cli/bin/grunt build",
-    "start": "babel-node app.js",
+    "start": "node_modules/.bin/babel-node app.js",
     "pm2-start": "pm2 start -f app.js --name 'cargocms'",
     "pm2-stop": "pm2 stop cargocms",
     "start-prod": "NODE_ENV=production node app.js",
@@ -69,6 +72,7 @@
     "url": "git://github.com/trunk-studio/cargocms.git"
   },
   "devDependencies": {
+    "babel-cli": "*",
     "chai": "^3.4.1",
     "grunt-bower-task": "^0.4.0",
     "grunt-cli": "^0.1.13",

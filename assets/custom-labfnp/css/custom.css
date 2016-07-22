@@ -1,0 +1,7 @@
+.header .topbar ul.loginbar > li > a, .header .topbar ul.loginbar > li > a:hover {
+  font-size: 13px;
+}
+
+.header .navbar-nav > li > a {
+  text-transform: none;
+}

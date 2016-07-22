@@ -8,9 +8,11 @@
 
 module.exports = {
   login: function(req, res) {
-    res.ok({
-      errors: req.flash('error')
-    });
+    // res.ok({
+    //   errors: req.flash('error')
+    // });
+    
+    res.view('auth/login', {});
   },
   logout: function(req, res) {
     req.session.authenticated = false;
@@ -27,13 +29,11 @@ module.exports = {
   },
   register: async (req, res) => {
     try {
-      let defaultUser = {
+      let user = {
         username: '',
         email: '',
       }
-
-      res.ok({user});
-
+      res.view('auth/register', {user});
     } catch (e) {
       console.error(e.stack);
     }

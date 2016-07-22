@@ -36,12 +36,13 @@ module.exports.routes = {
     view: 'index'
   },
 
+  //----- AuthController -----
   'get /login': 'AuthController.login',
   'get /logout': 'AuthController.logout',
   'get /register': 'AuthController.register',
 
   'get /auth/status': 'AuthController.status',
-  
+
   'post /auth/local': 'AuthController.callback',
   'post /auth/local/:action': 'AuthController.callback',
 
@@ -49,6 +50,13 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback',
   'get /auth/:provider/:action': 'AuthController.callback',
 
+  //----- BlogController -----
+  'get /blog': 'BlogController.index',
+  
+  'get /wall': {
+    view: 'wall/index'
+  }
+  
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
