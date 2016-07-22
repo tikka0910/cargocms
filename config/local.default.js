@@ -10,7 +10,8 @@ module.exports = {
       options: {
         clientID: '',
         clientSecret: '',
-        profileFields: ['id', 'displayName', 'photos', 'email']
+        profileFields: ['id', 'displayName', 'photos', 'email'],
+        callbackURL: "http://localhost:5001/auth/facebook/callback"
       }
     }
   },

@@ -61,9 +61,17 @@
         <!-- Topbar -->
         <div class="topbar">
           <ul class="loginbar pull-right">
-            <li><a href="/register">註冊</a></li>
-            <li class="topbar-devider"></li>
-            <li><a href="/login">登入</a></li>
+
+
+            <% if (!req.session.authenticated) { %>
+              <li><a href="/register">註冊</a></li>
+              <li class="topbar-devider"></li>
+              <li><a href="/login">登入</a></li>
+            <% } else { %>
+            <li><a href="/logout">logout</a></li>
+              <li class="topbar-devider"></li>
+              <li><a href=""><%= req.session.passport.user.email %></a></li>
+            <% } %>
           </ul>
         </div>
         <!-- End Topbar -->
