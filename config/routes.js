@@ -53,9 +53,7 @@ module.exports.routes = {
   //----- BlogController -----
   'get /blog': 'BlogController.index',
   
-  'get /wall': {
-    view: 'wall/index'
-  }
+  'get /wall': 'WallController.index',
   
   /***************************************************************************
   *                                                                          *
