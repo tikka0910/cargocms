@@ -38,11 +38,15 @@ module.exports.bootstrap = async (cb) => {
     sails.services.passport.loadStrategies();
     await porductionInitDb();
 
-    let user = await User.create({username: 'user', email: 'user@gmail.com'});
+    let user = await User.create({
+      username: 'user',
+      email: 'user@gmail.com',
+      firstName: '王',
+      lastName: '大明'
+    });
     let passport = await Passport.create({provider: 'local', password: 'user', UserId: user.id});
     let post = await Post.create({title: 'testTitle', UserId: user.id});
-    // await user.setPosts([post]);
-    // await user.setPassports([passport]);
+
     cb();
   } catch (e) {
     cb(e);

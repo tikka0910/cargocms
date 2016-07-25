@@ -46,6 +46,7 @@ exports.register = async (req, res, next) => {
 
 
 exports.connect = async (req, res, next) => {
+  console.info("=== protocol local connect ===");
   var password, user;
   user = req.user;
   password = req.param('password');

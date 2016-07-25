@@ -31,17 +31,6 @@ module.exports = function(req, accessToken, refreshToken, profile, next) {
     query.tokens.refreshToken = refreshToken;
   }
 
-  /*
-  FB query has
-  {
-    identifier: 'facebook uuid',
-    protocol: 'oauth2',
-    tokens:
-      accessToken: '---'
-  }
-   */
-  console.log("-----");
-  console.log(query);
   passport.connect(req, query, profile, next);
 };
 

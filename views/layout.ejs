@@ -70,7 +70,7 @@
             <% } else { %>
             <li><a href="/logout">logout</a></li>
               <li class="topbar-devider"></li>
-              <li><a href=""><%= req.session.passport.user.email %></a></li>
+              <li><a href=""><%= req.session.passport.user.firstName + " " + req.session.passport.user.lastName %></a></li>
             <% } %>
           </ul>
         </div>

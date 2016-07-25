@@ -78,21 +78,24 @@ passport.connect = async function(req, query, profile, next) {
   if (!provider) {
     return next(new Error('No authentication provider was identified.'));
   }
+
   if (profile.hasOwnProperty('emails')) {
     user.email = profile.emails[0].value || profile.emails[0];
   } else if (profile.hasOwnProperty('email')) {
     user.email = profile.email;
   }
-  if (profile.hasOwnProperty('username')) {
-    user.username = profile.email || profile.username || profile.displayName;
+
+  if (profile.hasOwnProperty('username') && profile.username != undefined) {
+    user.username = profile.username
   } else if (profile.hasOwnProperty('family_name')) {
     user.username = profile.family_name;
   } else {
     user.username = user.email;
   }
 
-  if(profile.hasOwnProperty('displayName')){
-    user.fullName = profile.displayName;
+  if(profile.hasOwnProperty('name')){
+    user.firstName = profile.name.familyName;
+    user.lastName = profile.name.givenName;
   }
 
   if (!user.username && !user.email) {
@@ -111,14 +114,10 @@ passport.connect = async function(req, query, profile, next) {
 
     //有一般使用者登入但沒使用FB註冊過
     let loginedUser = req.user;
-    console.log("===loginedUser===", !!loginedUser);
-    console.log("===hasFacebookPassport===", !!hasFacebookPassport);
     let Logined_WithoutfacebookPassport = !!loginedUser && !hasFacebookPassport;
 
-    console.log('=== Logined_WithoutfacebookPassport ===', Logined_WithoutfacebookPassport);
     if (Logined_WithoutfacebookPassport) {
       query.UserId = loginedUser.id;
-      console.info('=== fb callback query === ', query);
       passport = await Passport.create(query);
       return next(null, loginedUser);
     }
@@ -135,7 +134,7 @@ passport.connect = async function(req, query, profile, next) {
         }
       });
       if(user)
-        return next(null, user)
+         next(null, user)
       else
         throw new Error('Error user not found');
     }
@@ -149,15 +148,14 @@ passport.connect = async function(req, query, profile, next) {
 
     if(checkMail){
       throw new Error('Error passport email exists');
-    } else{
-      // 新增使用者
-      console.log('=== query ===', query);
-      console.log('=== create user ===', user);
-      user = await User.create(user);
-      query.UserId = user.id;
-      passport = await Passport.create(query);
-      return next(null, user);
     }
+
+    // 新增使用者
+    user = await User.create(user);
+    query.UserId = user.id;
+    passport = await Passport.create(query);
+    return next(null, user);
+
 
   } catch (err) {
     req.flash('error',err.message);

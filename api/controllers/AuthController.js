@@ -88,7 +88,6 @@ module.exports = {
           return tryAgain(err);
         }
         req.session.authenticated = true;
-        sails.log.info('=== login success ===');
         return res.redirect('/');
       });
     });
