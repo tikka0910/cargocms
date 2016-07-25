@@ -30,7 +30,9 @@ module.exports.policies = {
     'index': true,
   },
   'WallController': true,
-  
+  'MainController': {
+    'index': []
+  }
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions (`true` allows public     *
