@@ -1,6 +1,6 @@
 var validator = require('validator');
 
-exports.register = async function(req, res, next) {
+exports.register = async (req, res, next) => {
   var email, password, username;
   email = req.param('email');
   username = req.param('username');
@@ -45,73 +45,73 @@ exports.register = async function(req, res, next) {
 
 
 
-exports.connect = function(req, res, next) {
+exports.connect = async (req, res, next) => {
   var password, user;
   user = req.user;
   password = req.param('password');
-  Passport.find({
-    protocol: 'local',
-    UserId: user.id
-  }, function(err, passport) {
-    if (err) {
-      return next(err);
-    }
+
+  try {
+    let passport = await Passport.find({
+      protocol: 'local',
+      UserId: user.id
+    });
     if (!passport) {
-      Passport.create({
+      await Passport.create({
         protocol: 'local',
         password: password,
         UserId: user.id
-      }, function(err, passport) {
-        next(err, user);
       });
-    } else {
-      next(null, user);
     }
-  });
+    ext(null, user);
+
+  } catch (e) {
+    return next(e);
+  }
 };
 
 
-exports.login = function(req, identifier, password, next) {
-
+exports.login = async (req, identifier, password, next) => {
+  console.info("=== protocol local login ===");
   try {
     var isEmail, query;
     isEmail = validator.isEmail(identifier);
     query = {
       where: {}
     };
+
     if (isEmail) {
       query.where.email = identifier;
     } else {
       query.where.username = identifier;
     }
-    User.findOne(query).then(function(user) {
-      if (!user) {
-        if (isEmail) {
-          throw new Error('Error.Passport.Email.NotFound');
-        } else {
-          throw new Error('Error.Passport.Username.NotFound');
-        }
-      }
+    let user = await User.findOne(query);
 
-      Passport.findOne({
-        where: {
-          UserId: user.id
-        }
-      }).then(function(passport) {
-        if (passport) {
-          passport.validatePassword(password, function(err, res) {
-            if (err) throw err;
-            if (!res) {
-              throw new Error('Error.Passport.Password.Wrong');
-            } else {
-              return next(null, user);
-            }
-          });
+    if (!user) {
+      if (isEmail) {
+        throw new Error('Error.Passport.Email.NotFound');
+      } else {
+        throw new Error('Error.Passport.Username.NotFound');
+      }
+    }
+
+    let passport = await Passport.findOne({
+      where: {
+        UserId: user.id
+      }
+    })
+
+    if (passport) {
+      passport.validatePassword(password, function(err, res) {
+        if (err) throw err;
+        if (!res) {
+          throw new Error('Error.Passport.Password.Wrong');
         } else {
-          throw new Error('Error.Passport.Password.NotSet');
+          return next(null, user);
         }
       });
-    });
+    } else {
+      throw new Error('Error.Passport.Password.NotSet');
+    }
 
   } catch (e) {
     sails.log.info(e.stack);

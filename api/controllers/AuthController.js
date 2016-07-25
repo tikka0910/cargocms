@@ -75,25 +75,20 @@ module.exports = {
           } catch (e) {
             reference = { path : "" };
           }
-
           res.redirect('/');
-
       }
     };
+
     await passport.callback(req, res, function(err, user, challenges, statuses) {
       if (err || !user) {
         return tryAgain(challenges);
       }
-
       req.login(user, function(err) {
         if (err) {
           return tryAgain(err);
         }
-
         req.session.authenticated = true;
-
         sails.log.info('=== login success ===');
-
         return res.redirect('/');
       });
     });
