@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <!--<meta name="keywords" content="Fragrance, LFP, Laboratory, customize, perfume, personalize, 個人化, 客製化, 情人, 禮物, 訂製, 課程, 調香, 香水"/>-->
+  <!--<meta name="description" content="Provide the personal perfume for individual customer. 個人化香水創作平台"/>-->
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <base href="/">
+  <title>LFP:香料香水實驗室，客製專屬香水</title>
+  <meta name="description" content="個人化香水創作平台,由你創造嗅覺新感受">
+  <meta name="fragment" content="!">
+  <!-- Apple META -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Facebook META -->
+  <meta property="fb:app_id" content="117004232001878">
+  <meta property="og:site_name" content="LFP:香料香水實驗室，客製專屬香水">
+  <meta property="og:title" content="LFP:香料香水實驗室，客製專屬香水">
+  <meta property="og:description" content="個人化香水創作平台,由你創造嗅覺新感受">
+  <meta property="og:url" content="http://www.labfnp.com/articles/createmodules/core/img/brand/favicon.ico">
+  <meta property="og:image" content="http://www.labfnp.com/articles/createmodules/core/img/brand/favicon.icomodules/core/img/brand/logo2.png">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter META -->
+  <meta name="twitter:title" content="LFP:香料香水實驗室，客製專屬香水">
+  <meta name="twitter:description" content="個人化香水創作平台,由你創造嗅覺新感受">
+  <meta name="twitter:url" content="http://www.labfnp.com/articles/createmodules/core/img/brand/favicon.ico">
+  <meta name="twitter:image" content="http://www.labfnp.com/articles/createmodules/core/img/brand/favicon.icomodules/core/img/brand/logo.png">
+
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','//connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '952397454795783');
+fbq('track', "PageView");
+fbq('track', 'ViewContent');
+fbq('track', 'Lead');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=952397454795783&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+
+
+  <link href='//fonts.googleapis.com/css?family=IM+Fell French Canon:400' rel='stylesheet' type='text/css'><script type="text/javascript">var _jf = _jf || [];_jf.push(['p','36455']);_jf.push(['_setFont','xingothic-tc-w8','css','.xingothic-tc-w8']);_jf.push(['_setFont','xingothic-tc-w8','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w8','weight',800]);_jf.push(['_setFont','chekiangshukesung','css','.chekiangshukesung']);_jf.push(['_setFont','chekiangshukesung','alias','chekiangshukesung']);_jf.push(['_setFont','chekiangshukesung','english','IM Fell French Canon']);_jf.push(['_setFont','chekiangshukesung','weight',700]);(function(f,q,c,h,e,i,r,d){var k=f._jf;if(k.constructor===Object){return}var l,t=q.getElementsByTagName("html")[0],a=function(u){for(var v in k){if(k[v][0]==u){if(false===k[v][1].call(k)){break}}}},j=/\S+/g,o=/[\t\r\n\f]/g,b=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,g="".trim,s=g&&!g.call("\uFEFF\xA0")?function(u){return u==null?"":g.call(u)}:function(u){return u==null?"":(u+"").replace(b,"")},m=function(y){var w,z,v,u,x=typeof y==="string"&&y;if(x){w=(y||"").match(j)||[];z=t[c]?(" "+t[c]+" ").replace(o," "):" ";if(z){u=0;while((v=w[u++])){if(z.indexOf(" "+v+" ")<0){z+=v+" "}}t[c]=s(z)}}},p=function(y){var w,z,v,u,x=arguments.length===0||typeof y==="string"&&y;if(x){w=(y||"").match(j)||[];z=t[c]?(" "+t[c]+" ").replace(o," "):"";if(z){u=0;while((v=w[u++])){while(z.indexOf(" "+v+" ")>=0){z=z.replace(" "+v+" "," ")}}t[c]=y?s(z):""}}},n;k.push(["_eventActived",function(){p(h);m(e)}]);k.push(["_eventInactived",function(){p(h);m(i)}]);k.addScript=n=function(u,A,w,C,E,B){E=E||function(){};B=B||function(){};var x=q.createElement("script"),z=q.getElementsByTagName("script")[0],v,y=false,D=function(){x.src="";x.onerror=x.onload=x.onreadystatechange=null;x.parentNode.removeChild(x);x=null;a("_eventInactived");B()};if(C){v=setTimeout(function(){D()},C)}x.type=A||"text/javascript";x.async=w;x.onload=x.onreadystatechange=function(G,F){if(!y&&(!x.readyState||/loaded|complete/.test(x.readyState))){y=true;if(C){clearTimeout(v)}x.src="";x.onerror=x.onload=x.onreadystatechange=null;x.parentNode.removeChild(x);x=null;if(!F){setTimeout(function(){E()},200)}}};x.onerror=function(H,G,F){if(C){clearTimeout(v)}D();return true};x.src=u;z.parentNode.insertBefore(x,z)};a("_eventPreload");m(h);n(r,"text/javascript",false,3000)})(this,this.document,"className","jf-loading","jf-active","jf-inactive","//d3gc6cgx8oosp4.cloudfront.net/js/stable/v/4.9.4/id/162424116621");</script>
+
+  <!-- Fav Icon -->
+  <link href="http://www.labfnp.com/articles/createmodules/core/img/brand/favicon.icomodules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+  <!-- Application CSS Files -->
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css"><link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap-theme.min.css"><link rel="stylesheet" href="dist/application.min.css">
+  <!-- Bootstrap Core CSS -->
+  <link href="modules/core/css/landing-page.css" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+
+
+  <link href="modules/core/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!--Bell bold fonts-->
+  <!--angular CDN-->
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>-->
+  <!--<script type="text/javascript" src="http://fast.fonts.net/jsapi/7f58b6ea-6323-40cb-8b49-940b1ba0ebe8.js"></script>-->
+
+  <script type="text/javascript" src="http://fast.fonts.net/jsapi/7f58b6ea-6323-40cb-8b49-940b1ba0ebe8.js"></script>
+  <link href="https://assets.juicer.io/embed.css" media="all" rel="stylesheet" type="text/css" />
+  <!--Just font -->
+
+  <!-- d3js-->
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <!--switch -->
+  <!--jquery CDN-->
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+
+</head>
+
+
+<body class="ng-cloak">
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KWJ4VL"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KWJ4VL');</script>
+<!-- End Google Tag Manager -->
+
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
+  <header data-ng-include="'/modules/core/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
+  <section class="content">
+    <section class="container">
+      
+  <section data-ui-view></section>
+
+    </section>
+  </section>
+
+  <!--Embedding The User Object-->
+  <script type="text/javascript">
+    var user = "";
+  </script>
+
+  <script src="https://assets.juicer.io/embed.js" type="text/javascript"></script>
+  
+  <!--Load The Socket.io File-->
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+  <!--Application JavaScript Files-->
+  <script type="text/javascript" src="lib/angular/angular.min.js"></script><script type="text/javascript" src="lib/angular-resource/angular-resource.min.js"></script><script type="text/javascript" src="lib/angular-animate/angular-animate.min.js"></script><script type="text/javascript" src="lib/angular-ui-router/release/angular-ui-router.min.js"></script><script type="text/javascript" src="lib/angular-ui-utils/ui-utils.min.js"></script><script type="text/javascript" src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script><script type="text/javascript" src="lib/angular-file-upload/angular-file-upload.min.js"></script><script type="text/javascript" src="dist/application.min.js"></script> 
+
+  
+
+
+<!--footer-->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="list-inline">
+            <li>
+              <a href="http://www.labfnp.com/#homehead">Home</a>
+            </li>
+            <li class="footer-menu-divider">&sdot;</li>
+            <li>
+              <a href="http://www.labfnp.com/#about">About</a>
+            </li>
+            <li class="footer-menu-divider">&sdot;</li>
+            <li>
+              <a href="http://www.labfnp.com/#services">Services</a>
+            </li>
+            <li class="footer-menu-divider">&sdot;</li>
+            <li>
+              <a href="http://www.labfnp.com/#contact">Contact</a>
+            </li>
+          </ul>
+          <p class="copyright text-muted small">Copyright &copy; Laboratory of Fragrance & Perfume Co. 2015. All Rights Reserved</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
