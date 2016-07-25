@@ -12,7 +12,7 @@
   <meta name="author" content="">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="http://www.labfnp.com/articles/createmodules/core/img/brand/favicon.ico">
 
   <!-- Web Fonts -->
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin">
@@ -43,7 +43,7 @@
   <script type="text/javascript" src="http://fast.fonts.net/jsapi/7f58b6ea-6323-40cb-8b49-940b1ba0ebe8.js"></script>
 
   <!-- Layout Custom -->
-  <link rel="stylesheet" href="custom-labfnp/css/custom.css">
+  <link rel="stylesheet" href="custom/labfnp/css/custom.css">
 </head>
 
 <body>
@@ -54,7 +54,7 @@
       <div class="container">
         <!-- Logo -->
         <a class="logo" href="/">
-          <img src="custom-labfnp/img/lfp-logo.png" width="103" height="39" alt="Logo">
+          <img src="custom/labfnp/img/lfp-logo.png" width="103" height="39" alt="Logo">
         </a>
         <!-- End Logo -->
 
@@ -68,9 +68,9 @@
               <li class="topbar-devider"></li>
               <li><a href="/login">登入</a></li>
             <% } else { %>
-            <li><a href="/logout">logout</a></li>
+              <li><a href="/logout">登出</a></li>
               <li class="topbar-devider"></li>
-              <li><a href=""><%= req.session.passport.user.firstName + " " + req.session.passport.user.lastName %></a></li>
+              <li><a href="#"><%= req.session.passport.user.firstName + " " + req.session.passport.user.lastName %></a></li>
             <% } %>
           </ul>
         </div>

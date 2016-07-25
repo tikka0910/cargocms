@@ -32,7 +32,9 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': 'BlogController.index',
+  '/': {
+    view: 'index'
+  },
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
@@ -50,9 +52,9 @@ module.exports.routes = {
 
   //----- BlogController -----
   'get /blog': 'BlogController.index',
-  
+
   'get /wall': 'WallController.index',
-  
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
