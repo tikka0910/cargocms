@@ -14,5 +14,8 @@
 module.exports.views = {
 //   engine: 'jade',
   engine: 'ejs',
-  layout: 'layout'
+  layout: 'layout',
+  locals: {
+    //scripts: ['abc']
+  }
 };
