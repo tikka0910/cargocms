@@ -1,6 +1,6 @@
 module.exports = {
 
-  getLoginState: function(req) {
+  isAuthenticated: function(req) {
     if (req.session.authenticated) {
       return true;
     } else {
@@ -8,7 +8,7 @@ module.exports = {
     }
   },
 
-  getLoginUser: function(req) {
+  getSessionUser: function(req) {
     if (req.session.passport != undefined && req.session.passport.user) {
       return req.session.passport.user;
     } else {

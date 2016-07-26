@@ -42,11 +42,10 @@ module.exports = {
 
   },
   status: (req, res) => {
-    let status = {
-      loginState: AuthService.getLoginState(req),
-      loginUser: AuthService.getLoginUser(req)
-    }
-    res.ok({status});
+    let authenticated = AuthService.isAuthenticated(req)
+    let sessionUser = AuthService.getSessionUser(req)
+
+    res.ok({authenticated, sessionUser});
 
   },
   callback: async function(req, res) {

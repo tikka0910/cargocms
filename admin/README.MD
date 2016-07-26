@@ -9,6 +9,11 @@ To run the code in your development environment:
 2. Run `npm install`
 3. Run `bower install`
 
+bower install require
+-----------
+* jquery#2.2.0
+* font-awesome#4.0.3
+
 Now with all dependencies installed
 
 4. Start the development server for seed project with `npm run dev`
