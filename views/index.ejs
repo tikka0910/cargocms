@@ -192,18 +192,10 @@ p.lead {
 	</div>
 </div>
 
-<!-- Common Footer -->
-<% include footer.ejs %>
-<% include scripts.ejs %>
-
-<!-- Custom Script -->
-
-<!-- JS Page Level -->
-<script type="text/javascript" src="unify/js/app.js"></script>
-<script type="text/javascript" src="unify/js/plugins/owl-carousel.js"></script>
-<script type="text/javascript">
+<% addScripts('/unify/js/app.js', '/unify/js/plugins/owl-carousel.js'); %>
+<% addScriptBlock(`
 jQuery(document).ready(function() {
   App.init();
 		OwlCarousel.initOwlCarousel();
 });
-</script>
+`); %>

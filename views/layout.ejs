@@ -18,32 +18,32 @@
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin">
 
   <!-- CSS Global Compulsory -->
-  <link rel="stylesheet" href="unify/plugins/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="unify/css/style.css">
+  <link rel="stylesheet" href="/unify/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/unify/css/style.css">
 
   <!-- CSS Header and Footer -->
-  <link rel="stylesheet" href="unify/css/headers/header-default.css">
-  <link rel="stylesheet" href="unify/css/footers/footer-v1.css">
+  <link rel="stylesheet" href="/unify/css/headers/header-default.css">
+  <link rel="stylesheet" href="/unify/css/footers/footer-v1.css">
 
   <!-- CSS Implementing Plugins -->
-  <link rel="stylesheet" href="unify/plugins/animate.css">
-  <link rel="stylesheet" href="unify/plugins/line-icons/line-icons.css">
-  <link rel="stylesheet" href="unify/plugins/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="unify/plugins/owl-carousel/owl-carousel/owl.carousel.css">
-  <link rel="stylesheet" href="unify/plugins/brand-buttons/brand-buttons-inversed.css">
+  <link rel="stylesheet" href="//plugins/animate.css">
+  <link rel="stylesheet" href="/unify/plugins/line-icons/line-icons.css">
+  <link rel="stylesheet" href="/unify/plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/unify/plugins/owl-carousel/owl-carousel/owl.carousel.css">
+  <link rel="stylesheet" href="/unify/plugins/brand-buttons/brand-buttons-inversed.css">
 
   <!-- CSS Theme -->
-  <link rel="stylesheet" href="unify/css/theme-colors/default.css" id="style_color">
-  <link rel="stylesheet" href="unify/css/theme-skins/dark.css">
+  <link rel="stylesheet" href="/unify/css/theme-colors/default.css" id="style_color">
+  <link rel="stylesheet" href="/unify/css/theme-skins/dark.css">
 
   <!-- CSS Customization -->
-  <link rel="stylesheet" href="unify/css/custom.css">
+  <link rel="stylesheet" href="/unify/css/custom.css">
 
   <!-- LFP Custom -->
   <script type="text/javascript" src="http://fast.fonts.net/jsapi/7f58b6ea-6323-40cb-8b49-940b1ba0ebe8.js"></script>
 
   <!-- Layout Custom -->
-  <link rel="stylesheet" href="custom/labfnp/css/custom.css">
+  <link rel="stylesheet" href="/custom/labfnp/css/custom.css">
 </head>
 
 <body>
@@ -54,15 +54,13 @@
       <div class="container">
         <!-- Logo -->
         <a class="logo" href="/">
-          <img src="custom/labfnp/img/lfp-logo.png" width="103" height="39" alt="Logo">
+          <img src="/custom/labfnp/img/lfp-logo.png" width="103" height="39" alt="Logo">
         </a>
         <!-- End Logo -->
 
         <!-- Topbar -->
         <div class="topbar">
           <ul class="loginbar pull-right">
-
-
             <% if (!req.session.authenticated) { %>
               <li><a href="/register">註冊</a></li>
               <li class="topbar-devider"></li>
@@ -70,7 +68,11 @@
             <% } else { %>
               <li><a href="/logout">登出</a></li>
               <li class="topbar-devider"></li>
-              <li><a href="#"><%= req.session.passport.user.displayName %></a></li>
+              <li>
+                <a href="/user/<%= req.session.passport.user.id %>">
+                  <%= req.session.passport.user.displayName %>
+                </a>
+              </li>
             <% } %>
           </ul>
         </div>
@@ -91,14 +93,17 @@
             <li class="<%= (req.path=='/')?'active':'' %>">
               <a href="/">首頁</a>
             </li>
+            <li class="<%= (req.path=='/explore')?'active':'' %>">
+              <a href="/explore">實驗室</a>
+            </li>
             <li class="<%= (req.path=='/wall')?'active':'' %>">
               <a href="/wall">近期動態</a>
             </li>
             <li class="<%= (req.path=='/blog')?'active':'' %>">
-              <a href="/blog">Blog</a>
+              <a href="/blog">網誌</a>
             </li>
             <li class="<%= (req.path=='/shop')?'active':'' %>">
-              <a href="/shop">miniShop</a>
+              <a href="/shop">活動報名</a>
             </li>
           </ul>
         </div><!--/end container-->
@@ -108,6 +113,12 @@
 
     <%- body -%>
 
+    <!-- Common Footer -->
+    <% include footer.ejs %>
+
   </div><!--/wrapper-->
+
+<% include scripts.ejs %>
+
 </body>
 </html>

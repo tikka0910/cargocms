@@ -35,6 +35,14 @@ module.exports.routes = {
   '/': {
     view: 'index'
   },
+  
+  '/creator': {
+    view: 'labfnp/creator/index'
+  },
+  
+  '/explore': {
+    view: 'labfnp/explore'
+  },
 
   //----- AuthController -----
   'get /login': 'AuthController.login',

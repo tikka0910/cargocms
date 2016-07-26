@@ -84,4 +84,52 @@ module.exports.http = {
   ***************************************************************************/
 
   // cache: 31557600000
+
+  middleware: {
+    order: [
+      'startRequestTimer',
+      'cookieParser',
+      'session',
+      //'myRequestLogger',
+      'myScriptsContainer',
+      'bodyParser',
+      'handleBodyParserError',
+      'compress',
+      'methodOverride',
+      'poweredBy',
+      '$custom',
+      'router',
+      'www',
+      'favicon',
+      '404',
+      '500'
+    ],
+    myScriptsContainer: function (req, res, next) {
+      console.log(">>> myScriptsContainer <<<");
+      res._scripts = [];
+      res._scriptBlock = '';
+      res.locals.addScripts = function() {
+        for (var i = 0; i < arguments.length; i++) {
+          res._scripts.push(arguments[i]);
+        }
+      };
+      res.locals.getScripts = function() {
+        return res._scripts;
+      };
+      res.locals.addScriptBlock = function(block) {
+        res._scriptBlock += block;
+      };
+      res.locals.getScriptBlock = function() {
+        return res._scriptBlock;
+      };
+      return next();
+    },
+  },
+  locals: {
+    filters: {
+      formatDate: function(date) {
+        return "AAA";
+      }
+    }
+  }
 };
