@@ -92,8 +92,10 @@ passport.connect = async function(req, query, profile, next) {
     let token = query.tokens.accessToken;
     let identifier = query.identifier;
     let profileWithLocale = await FacebookService.getProfileWithLocale({token, identifier, locale});
+
     let profileWithLocaleHasName = profileWithLocale.hasOwnProperty('first_name') && profileWithLocale.first_name != undefined
 
+    user.locale = locale;
     if(profileWithLocaleHasName){
       user.firstName = profileWithLocale.first_name;
       user.lastName = profileWithLocale.last_name;
@@ -164,7 +166,7 @@ passport.connect = async function(req, query, profile, next) {
       throw new Error('Error passport email exists');
     }
 
-    console.info("=== facebook signin user ===", user);
+
     user = await User.create(user);
     query.UserId = user.id;
     passport = await Passport.create(query);
