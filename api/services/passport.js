@@ -69,40 +69,41 @@ passport.protocols = require('./protocols');
  */
 
 passport.connect = async function(req, query, profile, next) {
-  console.log('=== profile ===', profile);
-  var provider, user;
-  user = {};
-  provider = undefined;
-  query.provider = req.param('provider');
-  provider = profile.provider || query.provider;
-  if (!provider) {
-    return next(new Error('No authentication provider was identified.'));
-  }
-
-  if (profile.hasOwnProperty('emails')) {
-    user.email = profile.emails[0].value || profile.emails[0];
-  } else if (profile.hasOwnProperty('email')) {
-    user.email = profile.email;
-  }
-
-  if (profile.hasOwnProperty('username') && profile.username != undefined) {
-    user.username = profile.username
-  } else if (profile.hasOwnProperty('family_name')) {
-    user.username = profile.family_name;
-  } else {
-    user.username = user.email;
-  }
-
-  if(profile.hasOwnProperty('name')){
-    user.firstName = profile.name.familyName;
-    user.lastName = profile.name.givenName;
-  }
-
-  if (!user.username && !user.email) {
-    return next(new Error('Neither a username nor email was available'));
-  }
 
   try {
+    console.log('=== profile ===', profile);
+    var provider, user;
+    user = {};
+    provider = undefined;
+    query.provider = req.param('provider');
+    provider = profile.provider || query.provider;
+    if (!provider) {
+      return next(new Error('No authentication provider was identified.'));
+    }
+
+    if (profile.hasOwnProperty('emails')) {
+      user.email = profile.emails[0].value || profile.emails[0];
+    } else if (profile.hasOwnProperty('email')) {
+      user.email = profile.email;
+    }
+
+    if(profile.hasOwnProperty('name')){
+      user.firstName = profile.name.familyName;
+      user.lastName = profile.name.givenName;
+    }
+
+    if (profile.hasOwnProperty('username') && profile.username != undefined) {
+      user.username = profile.username
+    } else if (user.email != undefined) {
+      user.username = user.email;
+    } else {
+      user.username = user.firstName + user.lastName;
+    }
+
+
+    if (!user.username && !user.email) {
+      throw new Error('Neither a username nor email was available');
+    }
 
 
     let hasFacebookPassport = await Passport.findOne({
@@ -117,6 +118,7 @@ passport.connect = async function(req, query, profile, next) {
     let Logined_WithoutfacebookPassport = !!loginedUser && !hasFacebookPassport;
 
     if (Logined_WithoutfacebookPassport) {
+      console.info("=== Logined_WithoutfacebookPassport ===");
       query.UserId = loginedUser.id;
       passport = await Passport.create(query);
       return next(null, loginedUser);
@@ -124,6 +126,7 @@ passport.connect = async function(req, query, profile, next) {
 
     //已用FB註冊過，直接登入
     if(hasFacebookPassport){
+      console.info("=== hasFacebookPassport ===");
       if(query.hasOwnProperty('tokens') && query.tokens !== passport.tokens){
         passport.tokens = query.tokens;
         passport = await passport.save();
@@ -151,6 +154,8 @@ passport.connect = async function(req, query, profile, next) {
     }
 
     // 新增使用者
+
+    console.info("=== facebook signin user ===", user);
     user = await User.create(user);
     query.UserId = user.id;
     passport = await Passport.create(query);
@@ -159,7 +164,7 @@ passport.connect = async function(req, query, profile, next) {
 
   } catch (err) {
     req.flash('error',err.message);
-    console.log(err);
+    console.error(err.stack);
     return next(err);
   }
 

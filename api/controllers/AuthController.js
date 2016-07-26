@@ -5,7 +5,7 @@
  * should look. It currently includes the minimum amount of functionality for
  * the basics of Passport.js to work.
  */
-
+const url = require('url');
 module.exports = {
   login: function(req, res) {
     // res.ok({
@@ -50,7 +50,9 @@ module.exports = {
 
   },
   callback: async function(req, res) {
+
     var tryAgain = function(err) {
+      console.info("=== tryAgain ===", err);
       var action, flashError;
       flashError = req.flash('error')[0];
       if (err && !flashError) {
@@ -73,15 +75,18 @@ module.exports = {
           try {
             reference = url.parse(req.headers.referer);
           } catch (e) {
-            reference = { path : "" };
+
+            reference = { path : "/" };
           }
-          res.redirect('/');
+
+          res.redirect(reference.path);
       }
     };
 
     await passport.callback(req, res, function(err, user, challenges, statuses) {
       if (err || !user) {
-        return tryAgain(challenges);
+        console.info('=== passport.callback ===', err);
+        return tryAgain(err);
       }
       req.login(user, function(err) {
         if (err) {
