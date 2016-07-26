@@ -84,4 +84,13 @@ module.exports.http = {
   ***************************************************************************/
 
   // cache: 31557600000
+
+
+  locals: {
+    filters: {
+      formatDate: function(date) {
+        return "AAA";
+      }
+    }
+  }
 };

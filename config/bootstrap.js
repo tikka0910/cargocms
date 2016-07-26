@@ -11,6 +11,9 @@
 
 module.exports.bootstrap = async (cb) => {
 
+  console.log("=== Setup express-helpers ===");
+  _.extend(sails.hooks.http.app.locals, sails.config.http.locals);
+
   let porductionInitDb = async () => {
     let {connection} = sails.config.models;
     let {environment} = sails.config;

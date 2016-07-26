@@ -11,7 +11,8 @@
  */
 
 module.exports = {
-  port: 5001, 
+  appUrl: 'http://cargo-dev.trunksys.com/',
+  port: 5001,
   models: {
     connection: 'sqlite',
     migrate: 'drop'
