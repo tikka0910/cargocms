@@ -89,11 +89,17 @@ passport.connect = async function(req, query, profile, next) {
     }
 
     let locale = profile._json.locale;
-    let profileWithLocale = await FacebookService.getProfileWithLocale({query, locale});
+    let token = query.tokens.accessToken;
+    let identifier = query.identifier;
+    let profileWithLocale = await FacebookService.getProfileWithLocale({token, identifier, locale});
+    let profileWithLocaleHasName = profileWithLocale.hasOwnProperty('first_name') && profileWithLocale.first_name != undefined
 
-    if(profile.hasOwnProperty('name')){
+    if(profileWithLocaleHasName){
       user.firstName = profileWithLocale.first_name;
       user.lastName = profileWithLocale.last_name;
+    } else {
+      user.firstName = profile.name.givenName;
+      user.lastName = profile.name.familyName;
     }
 
     if (profile.hasOwnProperty('username') && profile.username != undefined) {
