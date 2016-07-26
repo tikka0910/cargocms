@@ -71,7 +71,8 @@ passport.protocols = require('./protocols');
 passport.connect = async function(req, query, profile, next) {
 
   try {
-    console.log('=== profile ===', profile);
+    console.info('=== profile ===', profile);
+    console.info('=== query ===', query);
     var provider, user;
     user = {};
     provider = undefined;
@@ -87,9 +88,12 @@ passport.connect = async function(req, query, profile, next) {
       user.email = profile.email;
     }
 
+    let locale = profile._json.locale;
+    let profileWithLocale = await FacebookService.getProfileWithLocale({query, locale});
+
     if(profile.hasOwnProperty('name')){
-      user.firstName = profile.name.familyName;
-      user.lastName = profile.name.givenName;
+      user.firstName = profileWithLocale.first_name;
+      user.lastName = profileWithLocale.last_name;
     }
 
     if (profile.hasOwnProperty('username') && profile.username != undefined) {
@@ -97,8 +101,9 @@ passport.connect = async function(req, query, profile, next) {
     } else if (user.email != undefined) {
       user.username = user.email;
     } else {
-      user.username = user.firstName + user.lastName;
+      user.username = user.lastName + user.firstName;
     }
+
 
 
     if (!user.username && !user.email) {
@@ -137,12 +142,12 @@ passport.connect = async function(req, query, profile, next) {
         }
       });
       if(user)
-         next(null, user)
+         return next(null, user)
       else
         throw new Error('Error user not found');
     }
 
-
+    // 全新使用者沒有 user 也沒有 password
 
     let checkMail;
     if(user.hasOwnProperty('eamil')){
@@ -152,8 +157,6 @@ passport.connect = async function(req, query, profile, next) {
     if(checkMail){
       throw new Error('Error passport email exists');
     }
-
-    // 新增使用者
 
     console.info("=== facebook signin user ===", user);
     user = await User.create(user);
