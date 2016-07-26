@@ -55,16 +55,7 @@
 </div>
 <!--=== End Content Part ===-->
 
-<!-- Common Footer -->
-<% include ../footer.ejs %>
-<% include ../scripts.ejs %>
-
-<!-- Custom Script -->
-
-<!-- JS Page Level -->
-<!-- <script type="text/javascript" src="unify/js/pages/blog-masonry.js"></script> -->
-
-<script type="text/javascript">
+<% addScriptBlock(`
 $(document).ready(function(){
     var $container = $('.grid-boxes');
 
@@ -93,4 +84,4 @@ $(document).ready(function(){
         });
     });
 });
-</script>
+`); %>

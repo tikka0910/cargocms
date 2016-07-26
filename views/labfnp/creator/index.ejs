@@ -171,16 +171,8 @@
 
 </div>
 
-<!-- Common Footer -->
-<!--% include ../../footer.ejs %-->
-<% include ../../scripts.ejs %>
-
-<!-- Custom Script -->
-
-<!-- JS Page Level -->
-<script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
-<script src="owlcarousel/owl.carousel.min.js"></script>
-<script type="text/javascript">
+<% addScripts('http://hammerjs.github.io/dist/hammer.min.js', '/owlcarousel/owl.carousel.min.js'); %>
+<% addScriptBlock(`
 $(document).ready(function(){
   $('.owl-carousel').owlCarousel({
     stagePadding: 80,
@@ -221,4 +213,4 @@ $(document).ready(function(){
   });
 
 });
-</script>
+`); %>
