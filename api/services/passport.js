@@ -119,58 +119,60 @@ passport.connect = async function(req, query, profile, next) {
     }
 
 
-    let hasFacebookPassport = await Passport.findOne({
+    let facebookPassport = await Passport.findOne({
       where: {
         provider: provider,
         identifier: query.identifier.toString()
       }
     });
 
-    //有一般使用者登入但沒使用FB註冊過
+
     let loginedUser = req.user;
-    let Logined_WithoutfacebookPassport = !!loginedUser && !hasFacebookPassport;
+    let Logined_WithoutfacebookPassport = !!loginedUser && !facebookPassport;
 
     if (Logined_WithoutfacebookPassport) {
+      //有一般使用者登入但沒使用FB註冊過
       console.info("=== Logined_WithoutfacebookPassport ===");
       query.UserId = loginedUser.id;
-      passport = await Passport.create(query);
+      await Passport.create(query);
       return next(null, loginedUser);
-    }
-
-    //已用FB註冊過，直接登入
-    if(hasFacebookPassport){
-      console.info("=== hasFacebookPassport ===");
+    }else if(facebookPassport){
+      //已用FB註冊過，直接登入
+      console.info("=== facebookPassport ===");
       if(query.hasOwnProperty('tokens') && query.tokens !== passport.tokens){
-        passport.tokens = query.tokens;
-        passport = await passport.save();
+        facebookPassport.tokens = query.tokens;
+        facebookPassport = await facebookPassport.save();
       }
+      console.info("=== facebookPassport passport ===", passport);
       user = await User.findOne({
         where:{
-          id: passport.UserId
+          id: facebookPassport.UserId
         }
       });
       if(user)
          return next(null, user)
       else
         throw new Error('Error user not found');
+    }else {
+      // 全新使用者沒有 user 也沒有 password
+
+      let checkMail;
+      if(user.hasOwnProperty('eamil')){
+        checkMail = await User.findOne({where:{email:user.email}});
+      }
+
+      if(checkMail){
+        throw new Error('Error passport email exists');
+      }
+
+
+      let newUser = await User.create(user);
+      query.UserId = newUser.id;
+      let newFacebookPassword = await Passport.create(query);
+      return next(null, newUser);
+
     }
 
-    // 全新使用者沒有 user 也沒有 password
-
-    let checkMail;
-    if(user.hasOwnProperty('eamil')){
-      checkMail = await User.findOne({where:{email:user.email}});
-    }
-
-    if(checkMail){
-      throw new Error('Error passport email exists');
-    }
-
-
-    user = await User.create(user);
-    query.UserId = user.id;
-    passport = await Passport.create(query);
-    return next(null, user);
 
 
   } catch (err) {

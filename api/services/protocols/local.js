@@ -6,6 +6,9 @@ exports.register = async (req, res, next) => {
   username = req.param('username');
   password = req.param('password');
 
+  let lastName = req.param('lastName');
+  let firstName = req.param('firstName');
+
   try {
 
     if (!email) {
@@ -20,7 +23,9 @@ exports.register = async (req, res, next) => {
 
     let newUser = {
       username: newUserParams.username || email,
-      email: email
+      email: email,
+      lastName,
+      firstName
     }
 
     let user = await User.create(newUser);
