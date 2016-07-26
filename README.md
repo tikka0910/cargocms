@@ -14,7 +14,7 @@ Run
 ----
 
 ```
-npm build
+npm run build
 
 npm start
 ```
@@ -34,3 +34,12 @@ References
 * [react-admin](https://github.com/marmelab/react-admin)
 * [AdminLTE - Free Premium Admin control Panel Theme](https://github.com/almasaeed2010/AdminLTE)
 * [StrapUI](http://www.strapui.com/)
+* 
+
+Issues
+------
+
+EJS JS/CSS Injection Issues
+
+http://stackoverflow.com/questions/6609238/is-there-a-way-to-add-css-js-later-using-ejs-with-nodejs-express
+
