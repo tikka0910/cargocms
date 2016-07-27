@@ -91,5 +91,16 @@ module.exports.routes = {
       layout: false
     }
   },
-
+  '/admin/index': {
+    view: 'admin/index',
+    locals: {
+      layout: false
+    }
+  },
+  '/admin/user': {
+    view: 'admin/user/index',
+    locals: {
+      layout: false
+    }
+  }
 };

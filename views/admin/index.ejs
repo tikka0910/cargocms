@@ -10,23 +10,24 @@
 
 		<!-- #CSS Links -->
 		<!-- Basic Styles -->
-		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/admin/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/admin/css/font-awesome.min.css">
 
 		<!-- SmartAdmin Styles : Caution! DO NOT change the order -->
-		<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/admin/css/smartadmin-production-plugins.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/admin/css/smartadmin-production.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/admin/css/smartadmin-skins.min.css">
 
 		<!-- SmartAdmin RTL Support -->
-		<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/admin/css/smartadmin-rtl.min.css">
 
 		<!-- We recommend you use "your_style.css" to override SmartAdmin
 		     specific styles this will also ensure you retrain your customization with each SmartAdmin update.
 		<link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
 
 		<!-- #FAVICONS -->
-		<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="/admin/img/favicon/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="/admin/img/favicon/favicon.ico" type="image/x-icon">
 
 		<!-- #GOOGLE FONT -->
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
@@ -34,19 +35,19 @@
 		<!-- #APP SCREEN / ICONS -->
 		<!-- Specifying a Webpage Icon for Web Clip
 			 Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
-		<link rel="apple-touch-icon" href="img/splash/sptouch-icon-iphone.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="img/splash/touch-icon-ipad.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="img/splash/touch-icon-iphone-retina.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="img/splash/touch-icon-ipad-retina.png">
+		<link rel="apple-touch-icon" href="/admin/img/splash/sptouch-icon-iphone.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/admin/img/splash/touch-icon-ipad.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/admin/img/splash/touch-icon-iphone-retina.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/admin/img/splash/touch-icon-ipad-retina.png">
 
 		<!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<!-- Startup image for web apps -->
-		<link rel="apple-touch-startup-image" href="img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
-		<link rel="apple-touch-startup-image" href="img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
-		<link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+		<link rel="apple-touch-startup-image" href="/admin/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+		<link rel="apple-touch-startup-image" href="/admin/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+		<link rel="apple-touch-startup-image" href="/admin/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
 
 	</head>
 
@@ -71,7 +72,7 @@
 			<div id="logo-group">
 
 				<!-- PLACE YOUR LOGO HERE -->
-				<span id="logo"> <img src="img/logo.png" alt="SmartAdmin"> </span>
+				<span id="logo"> <img src="/admin/img/logo.png" alt="SmartAdmin"> </span>
 				<!-- END LOGO PLACEHOLDER -->
 
       </div>
@@ -95,7 +96,7 @@
 				<ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
 					<li class="">
 						<a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown">
-							<img src="img/avatars/sunny.png" alt="John Doe" class="online" />
+							<img src="/admin/img/avatars/sunny.png" alt="John Doe" class="online" />
 						</a>
 						<ul class="dropdown-menu pull-right">
 							<li>
@@ -127,23 +128,6 @@
 				</div>
 				<!-- end logout button -->
 
-				<!-- search mobile button (this is hidden till mobile view port) -->
-				<div id="search-mobile" class="btn-header transparent pull-right">
-					<span> <a href="javascript:void(0)" title="Search"><i class="fa fa-search"></i></a> </span>
-				</div>
-				<!-- end search mobile button -->
-
-				<!-- #SEARCH -->
-				<!-- input: search field -->
-				<form action="#ajax/search.html" class="header-search pull-right">
-					<input id="search-fld" type="text" name="param" placeholder="Find reports and more">
-					<button type="submit">
-						<i class="fa fa-search"></i>
-					</button>
-					<a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
-				</form>
-				<!-- end input: search field -->
-
 				<!-- fullscreen button -->
 				<div id="fullscreen" class="btn-header transparent pull-right">
 					<span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
@@ -161,21 +145,9 @@
 		<!-- Note: This width of the aside area can be adjusted through LESS/SASS variables -->
 		<aside id="left-panel">
 
-			<!-- User info -->
-			<div class="login-info">
-				<span> <!-- User image size is adjusted inside CSS, it should stay as is -->
-
-					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-						<img src="img/avatars/sunny.png" alt="me" class="online" />
-						<span>
-							john.doe
-						</span>
-						<i class="fa fa-angle-down"></i>
-					</a>
-
-				</span>
+			<div style="padding: 15px">
+				<p>Hello, Kyle!</p>
 			</div>
-			<!-- end user info -->
 
 			<!-- NAVIGATION : This navigation is also responsive
 
@@ -192,7 +164,7 @@
 
 				<ul>
 					<li class="">
-						<a href="ajax/dashboard.html" title="blank_"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Blank</span></a>
+						<a href="/admin/user" title="blank_"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">會員管理</span></a>
 					</li>
 				</ul>
 			</nav>
@@ -213,17 +185,6 @@
 					<!-- This is auto generated -->
 				</ol>
 				<!-- end breadcrumb -->
-
-				<!-- You can also add more buttons to the
-				ribbon for further usability
-
-				Example below:
-
-				<span class="ribbon-button-alignment pull-right" style="margin-right:25px">
-					<a href="#" id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa fa-grid"></i> Change Grid</a>
-					<span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa fa-plus"></i> Add</span>
-					<button id="search" class="btn btn-ribbon" data-title="search"><i class="fa fa-search"></i> <span class="hidden-mobile">Search</span></button>
-				</span> -->
 
 			</div>
 			<!-- END RIBBON -->
@@ -271,14 +232,14 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script>
 			if (!window.jQuery) {
-				document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
+				document.write('<script src="/admin/js/libs/jquery-2.1.1.min.js"><\/script>');
 			}
 		</script>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 		<script>
 			if (!window.jQuery.ui) {
-				document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+				document.write('<script src="/admin/js/libs/jquery-ui-1.10.3.min.js"><\/script>');
 			}
 		</script>
 
