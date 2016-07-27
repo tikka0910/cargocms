@@ -1,8 +1,8 @@
 module.exports = {
   index: async (req, res) => {
     try {
-      let users = await UserService.findAll();
-      res.ok({users});
+      let data = await UserService.findAll();
+      res.ok({data});
     } catch (e) {
       res.serverError(e);
     }

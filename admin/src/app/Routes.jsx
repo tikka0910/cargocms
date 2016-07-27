@@ -65,8 +65,8 @@ let requireAuth = async (nextState, replace) => {
   let response = await fetch('/auth/status', {credentials: 'include'});
   let result = await response.json();
   console.log("=== result ===", result);
-  if (!result.authenticated || true) {
-    window.location.replace("/");
+  if (!result.authenticated) {
+    // window.location.replace("/");
   }
 }
 
