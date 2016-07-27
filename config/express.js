@@ -5,9 +5,9 @@ module.exports.express = {
     custom: true
   },
   customMiddleware: function (app) {
-      console.log("######### HELLO ######");
+    // console.log("######### HELLO ######");
     // app.use(express.logger());
     // app.use(express.compress());
-    app.use('/admin', express.static('admin/web/'));
+    // app.use('/admin', express.static('admin/web/'));
   }
 };
