@@ -31,12 +31,17 @@ module.exports = function serverError (data, options) {
   // Only include errors in response if application environment
   // is not set to 'production'.  In production, we shouldn't
   // send back any identifying information about errors.
-  if (sails.config.environment === 'production') {
-    data = undefined;
-  }
+  // if (sails.config.environment === 'production') {
+  //   data = undefined;
+  // }
 
   // If the user-agent wants JSON, always respond with JSON
   if (req.wantsJSON) {
+    data.controller = req.options.controller;
+    data.action = req.options.action;
+    data.success = false;
+    if(!data.data)data.data = {};
+    if(!data.message)data.message = "";
     return res.jsonx(data);
   }
 
@@ -74,4 +79,3 @@ module.exports = function serverError (data, options) {
   });
 
 };
-

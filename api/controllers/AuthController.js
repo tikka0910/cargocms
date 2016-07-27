@@ -12,7 +12,7 @@ module.exports = {
     //   errors: req.flash('error')
     // });
 
-    res.view('auth/login', {});
+    res.ok();
   },
   logout: function(req, res) {
     req.session.authenticated = false;
@@ -35,11 +35,13 @@ module.exports = {
         lastName: '',
         firstName: '',
       }
-      res.ok({user});
-    } catch (e) {
-      console.error(e.stack);
-    }
+      let form = req.flash('form')[0];
+      if(form) user = form;
 
+      res.ok({user, errors: req.flash('error')});
+    } catch (e) {
+      res.serverError(e);
+    }
   },
   status: (req, res) => {
     let authenticated = AuthService.isAuthenticated(req)
@@ -51,7 +53,7 @@ module.exports = {
   callback: async function(req, res) {
 
     var tryAgain = function(err) {
-      console.info("=== tryAgain ===", err);
+
       var action, flashError;
       flashError = req.flash('error')[0];
       if (err && !flashError) {
@@ -61,7 +63,6 @@ module.exports = {
       }
       req.flash('form', req.body);
       action = req.param('action');
-      // console.log("!!!",req);
       switch (action) {
         case 'register':
           res.redirect('/register');
@@ -85,7 +86,6 @@ module.exports = {
     await passport.callback(req, res, function(err, user, challenges, statuses) {
       console.info('=== callback user ===', user);
       console.info('=== passport.callback ===', err);
-
       if (err || !user) {
         return tryAgain(err);
       }

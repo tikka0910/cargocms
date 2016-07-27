@@ -45,10 +45,8 @@ module.exports = {
     instanceMethods: {},
     hooks: {
       afterCreate: async (user, options) => {
-        console.log('=== afterCreate ===');
         let userRole = await Role.findOne({where: {authority: 'user'}});
         console.log(userRole.toJSON());
-
         await user.addRole(userRole);
       }
     }
