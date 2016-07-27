@@ -66,6 +66,12 @@ module.exports.routes = {
 
   //----- UserController -----
   'get /user': 'UserController.index',
+  'get /user/:userId': 'UserController.findOne',
+  'put /user/:userId': 'UserController.update',
+  'delete /user/:userId': 'UserController.delete',
+  'post /user': 'UserController.create',
+
+
   'get /admin/index': 'AdminController.index',
 
   /***************************************************************************
@@ -103,5 +109,6 @@ module.exports.routes = {
     locals: {
       layout: false
     }
-  }
+  },
+  '/admin/debug': 'AdminController.debug',
 };

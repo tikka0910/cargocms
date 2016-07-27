@@ -6,8 +6,15 @@
  * the basics of Passport.js to work.
  */
 const url = require('url');
+
 module.exports = {
+
   index: function(req, res) {
     res.ok({});
-  }
+  },
+
+  debug: function(req, res) {
+    res.ok({a: 3});
+  },
+
 };
