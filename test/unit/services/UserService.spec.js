@@ -9,7 +9,7 @@ describe('about User Service operation.', function() {
         locale: 'zh_TW',
       };
       const user = await UserService.create(data);
-      console.log('create user service spec=>', user);
+      sails.log.info('create user service spec=>', user);
       user.result.should.be.Object;
       done();
     } catch (e) {
@@ -37,7 +37,7 @@ describe('about User Service operation.', function() {
     it('should success.', async (done) => {
       try {
         const user = await UserService.findOne(findThisUser.id);
-        console.log('find user service spec=>', user);
+        sails.log.info('find user service spec=>', user);
         user.result.should.be.Object;
         user.result.id.should.be.equal(findThisUser.id);
         user.result.username.should.be.equal(findThisUser.username);
@@ -68,9 +68,9 @@ describe('about User Service operation.', function() {
     it('should success.', async (done) => {
       try {
         const user = await UserService.delete(deleteThisUser.id);
-        console.log('delete user service spec=>', user);
+        sails.log.info('delete user service spec=>', user);
         const findDeletedUser = await UserService.findOne(deleteThisUser.id);
-        console.log("findDeletedUser service spec=>", findDeletedUser);
+        sails.log.info("findDeletedUser service spec=>", findDeletedUser);
         user.result.should.not.be.equal(false);
         findDeletedUser.result.should.be.equal(false);
         done();
@@ -110,7 +110,7 @@ describe('about User Service operation.', function() {
           id: updateThisUser.id,
           ...updatedUser,
         });
-        console.log('update user service spec=>', user);
+        sails.log.info('update user service spec=>', user);
         updateThisUser.locale.should.be.equal('zh_TW');
         user.result.id.should.be.equal(updateThisUser.id);
         user.result.locale.should.be.equal('hk');

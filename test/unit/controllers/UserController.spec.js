@@ -11,7 +11,7 @@ describe('about User Controller operation.', function() {
       const res = await request(sails.hooks.http.app)
       .post(`/user`)
       .send(createThisUser);
-      console.log('create user spec =>', res.body);
+      sails.log.info('create user spec =>', res.body);
       res.body.should.be.Object;
       res.body.result.email.should.be.equal(createThisUser.email);
       res.body.result.locale.should.be.equal('zh_TW');
@@ -25,7 +25,7 @@ describe('about User Controller operation.', function() {
     it('should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app).get(`/user`);
-        console.log('find users spec =>', res.body);
+        sails.log.info('find users spec =>', res.body);
         res.body.should.be.Array;
         res.body.length.should.be.Number;
         res.body.length.should.be.above(0);
@@ -47,7 +47,7 @@ describe('about User Controller operation.', function() {
           lastName: 'test',
           locale: 'zh_TW',
         });
-        console.log('findThisUser.result.id=>', findThisUser.result.id);
+        sails.log.info('findThisUser.result.id=>', findThisUser.result.id);
         done();
       } catch (e) {
         done(e);
@@ -58,7 +58,7 @@ describe('about User Controller operation.', function() {
       try {
         const res = await request(sails.hooks.http.app)
         .get(`/user/${findThisUser.result.id}`);
-        console.log('find one user spec =>', res.body);
+        sails.log.info('find one user spec =>', res.body);
         res.body.result.should.be.Object;
         res.body.result.id.should.be.Number;
         res.body.result.id.should.be.equal(findThisUser.result.id);
@@ -80,7 +80,7 @@ describe('about User Controller operation.', function() {
           lastName: 'test',
           locale: 'zh_TW',
         });
-        console.log('deleteThisUser.result.id=>', deleteThisUser.result.id);
+        sails.log.info('deleteThisUser.result.id=>', deleteThisUser.result.id);
         done();
       } catch (e) {
         done(e);
@@ -91,7 +91,7 @@ describe('about User Controller operation.', function() {
       try {
         const res = await request(sails.hooks.http.app)
         .delete(`/user/${deleteThisUser.result.id}`);
-        console.log('delete user spec =>', res.body);
+        sails.log.info('delete user spec =>', res.body);
         res.body.result.id.should.be.equal(deleteThisUser.result.id);
         done();
       } catch (e) {
@@ -118,7 +118,7 @@ describe('about User Controller operation.', function() {
           lastName: 'test',
           locale: 'zh_TW',
         });
-        console.log('updateThisUser.result.id=>', updateThisUser.result.id);
+        sails.log.info('updateThisUser.result.id=>', updateThisUser.result.id);
         done();
       } catch (e) {
         done(e);
