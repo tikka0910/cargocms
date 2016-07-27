@@ -1,7 +1,3 @@
-
-<!-- CSS Page Style -->
-<link rel="stylesheet" href="unify/css/pages/blog_masonry_3col.css">
-
 <!--=== Content Part ===-->
 <div class="blog_masonry_3col">
 	<div class="container content grid-boxes">
@@ -18,7 +14,7 @@
 						<li>|</li>
 						<li><a href="#"><i class="fa fa-comments-o"></i> 06</a></li>
 					</ul>
-					<p><%= post.message %></p>
+					<p class="dont-break-out"><%= post.message %></p>
 				</div>
 			</div>
 
@@ -37,5 +33,7 @@
 	</div><!--/container-->
 </div>
 <!--=== End Content Part ===-->
+
+<% addStylesheets('/unify/css/pages/blog_masonry_3col.css') %>
 
 <% addScripts('unify/js/pages/blog-masonry.js') %>

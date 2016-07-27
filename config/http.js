@@ -91,7 +91,7 @@ module.exports.http = {
       'cookieParser',
       'session',
       //'myRequestLogger',
-      'myScriptsContainer',
+      'myPageInjection',
       'bodyParser',
       'handleBodyParserError',
       'compress',
@@ -104,10 +104,15 @@ module.exports.http = {
       '404',
       '500'
     ],
-    myScriptsContainer: function (req, res, next) {
+    myPageInjection: function (req, res, next) {
+
       console.log(">>> myScriptsContainer <<<");
+
+      res._stylesheets = [];
+      res._stylesheetBlock = '';
       res._scripts = [];
       res._scriptBlock = '';
+
       res.locals.addScripts = function() {
         for (var i = 0; i < arguments.length; i++) {
           res._scripts.push(arguments[i]);
@@ -122,6 +127,22 @@ module.exports.http = {
       res.locals.getScriptBlock = function() {
         return res._scriptBlock;
       };
+
+      res.locals.addStylesheets = function() {
+        for (var i = 0; i < arguments.length; i++) {
+          res._stylesheets.push(arguments[i]);
+        }
+      };
+      res.locals.getStylesheets = function() {
+        return res._stylesheets;
+      };
+      res.locals.addStylesheetBlock = function(block) {
+        res._stylesheetBlock += block;
+      };
+      res.locals.getStylesheetBlock = function() {
+        return res._stylesheetBlock;
+      };
+
       return next();
     },
   },

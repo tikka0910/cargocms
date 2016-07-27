@@ -7,7 +7,7 @@
 	<div class="container content grid-boxes">
 
 		<div class="grid-boxes-in">
-			<img class="img-responsive" src="http://loremflickr.com/640/480/taiwan,girl/all" alt="">
+			<img class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="http://loremflickr.com/640/480/taiwan,girl/all" alt="">
 			<div class="grid-boxes-caption">
 				<h3><a href="#">阿蒂蜜絲 黛安娜</a></h3>
 				<ul class="list-inline grid-boxes-news">
@@ -22,7 +22,7 @@
 		</div>
 
 		<div class="grid-boxes-in">
-			<img class="img-responsive" src="http://loremflickr.com/640/480/paris,girl/all" alt="">
+			<img class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="http://loremflickr.com/640/480/paris,girl/all" alt="">
 			<div class="grid-boxes-caption">
 				<h3><a href="#">阿芙蘿黛蒂 維納斯</a></h3>
 				<ul class="list-inline grid-boxes-news">
@@ -37,7 +37,7 @@
 		</div>
 
 		<div class="grid-boxes-in">
-			<img class="img-responsive" src="http://loremflickr.com/640/480/brazil,girl/all" alt="">
+			<img class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="http://loremflickr.com/640/480/brazil,girl/all" alt="">
 			<div class="grid-boxes-caption">
 				<h3><a href="#">狄蜜特 刻瑞斯</a></h3>
 				<ul class="list-inline grid-boxes-news">
@@ -57,31 +57,34 @@
 
 <% addScriptBlock(`
 $(document).ready(function(){
-    var $container = $('.grid-boxes');
+  var $container = $('.grid-boxes');
 
-    var gutter = 30;
-    var min_width = 240;
-    $container.imagesLoaded( function(){
-        $container.masonry({
-            itemSelector : '.grid-boxes-in',
-            gutterWidth: gutter,
-            isAnimated: true,
-              columnWidth: function( containerWidth ) {
-                var box_width = (((containerWidth - 2*gutter)/3) | 0) ;
-
-                if (box_width < min_width) {
-                    box_width = (((containerWidth - gutter)/2) | 0);
-                }
-
-                if (box_width < min_width) {
-                    box_width = containerWidth;
-                }
-
-                $('.grid-boxes-in').width(box_width);
-
-                return box_width;
-              }
-        });
+  var gutter = 30;
+  var min_width = 240;
+  $container.imagesLoaded( function(){
+		$(function() {
+      $("img.lazy").unveil(screen.height);
     });
+    $container.masonry({
+      itemSelector : '.grid-boxes-in',
+      gutterWidth: gutter,
+      isAnimated: true,
+      columnWidth: function( containerWidth ) {
+        var box_width = (((containerWidth - 2*gutter)/3) | 0) ;
+
+        if (box_width < min_width) {
+            box_width = (((containerWidth - gutter)/2) | 0);
+        }
+
+        if (box_width < min_width) {
+            box_width = containerWidth;
+        }
+
+        $('.grid-boxes-in').width(box_width);
+
+        return box_width;
+      }
+    });
+  });
 });
 `); %>

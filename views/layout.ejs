@@ -12,10 +12,11 @@
   <meta name="author" content="">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="http://www.labfnp.com/articles/createmodules/core/img/brand/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="/custom/labfnp/favicon.ico">
 
   <!-- Web Fonts -->
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin">
+  <link rel="stylesheet" href="/fonts/notosanstc.css">
 
   <!-- CSS Global Compulsory -->
   <link rel="stylesheet" href="/unify/plugins/bootstrap/css/bootstrap.min.css">
@@ -26,11 +27,15 @@
   <link rel="stylesheet" href="/unify/css/footers/footer-v1.css">
 
   <!-- CSS Implementing Plugins -->
-  <link rel="stylesheet" href="//plugins/animate.css">
+  <link rel="stylesheet" href="/unify/plugins/animate.css">
   <link rel="stylesheet" href="/unify/plugins/line-icons/line-icons.css">
   <link rel="stylesheet" href="/unify/plugins/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="/unify/plugins/owl-carousel/owl-carousel/owl.carousel.css">
   <link rel="stylesheet" href="/unify/plugins/brand-buttons/brand-buttons-inversed.css">
+
+  <!-- CSS Page Style -->
+  <% getStylesheets().forEach(function(href) { %><link rel="stylesheet" href="<%= href %>">
+  <% }); %>
 
   <!-- CSS Theme -->
   <link rel="stylesheet" href="/unify/css/theme-colors/default.css" id="style_color">
@@ -44,6 +49,12 @@
 
   <!-- Layout Custom -->
   <link rel="stylesheet" href="/custom/labfnp/css/custom.css">
+
+  <!-- CSS Page Block -->
+  <style type="text/css">
+  <%- getStylesheetBlock() %>
+  </style>
+
 </head>
 
 <body>
