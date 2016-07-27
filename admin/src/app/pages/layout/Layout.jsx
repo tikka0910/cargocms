@@ -22,7 +22,9 @@ let Layout = React.createClass({
                 <Navigation />
 
                 <div id="main" role="main">
+                    <DemoStylesSwitcher />
                     <Ribbon />
+
                     {this.props.children}
                 </div>
 

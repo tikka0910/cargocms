@@ -26,7 +26,8 @@ let ActivitiesDropdown = React.createClass({
     render: function () {
         let activities = this.state.activities;
         let activity = this.state.activity;
-        let count = _.sum(activities, function (a) {
+
+        let count = _.sumBy(activities, function (a) {
             return a.length
         });
         return (

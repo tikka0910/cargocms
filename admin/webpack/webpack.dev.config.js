@@ -4,6 +4,7 @@ var baseConfig = require('./base.config')
 var path = require('path');
 var webpack = require('webpack');
 
+
 var config = _.merge(baseConfig, {
     entry: _.merge({
         bundle: './src/app/main.jsx'

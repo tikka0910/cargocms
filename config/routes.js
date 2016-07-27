@@ -35,11 +35,11 @@ module.exports.routes = {
   '/': {
     view: 'index'
   },
-  
+
   '/creator': {
     view: 'labfnp/creator/index'
   },
-  
+
   '/explore': {
     view: 'labfnp/explore'
   },
@@ -62,6 +62,10 @@ module.exports.routes = {
   'get /blog': 'BlogController.index',
 
   'get /wall': 'WallController.index',
+
+
+  //----- UserController -----
+  'get /user': 'UserController.index',
 
   /***************************************************************************
   *                                                                          *

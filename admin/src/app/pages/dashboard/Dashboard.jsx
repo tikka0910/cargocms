@@ -20,7 +20,7 @@ let Dashboard = React.createClass({
         return (
             <div id="content">
 
-                <div className="row">
+                {/*<div className="row">
                     <BigBreadcrumbs items={['Dashboard', 'My Dashboard']}
                                      className="col-xs-12 col-sm-7 col-md-7 col-lg-4" />
                     <SubHeader />
@@ -53,7 +53,7 @@ let Dashboard = React.createClass({
                             <TodoWidget />
                         </article>
                     </div>
-                </WidgetGrid>
+                </WidgetGrid>*/}
             </div>
         )
     }
