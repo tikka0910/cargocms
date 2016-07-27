@@ -21,6 +21,7 @@ let Navigation = React.createClass({
                 <LoginInfo />
                 <nav>
                     <SmartMenu rawItems={rawItems} />
+                    <AsideChat />
                 </nav>
                 <MinifyMenu />
             </aside>

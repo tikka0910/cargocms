@@ -119,6 +119,8 @@ let Header = React.createClass({
                 </form>
 
 
+                <SpeechButton className="btn-header transparent pull-right hidden-sm hidden-xs" />
+
                 <FullScreen className="btn-header transparent pull-right" />
 
 
