@@ -38,10 +38,19 @@ module.exports = {
   associations: function() {
     User.hasMany(Post);
     User.hasMany(Passport);
+    User.belongsToMany(Role, {through: 'UserRole'});
   },
   options: {
     classMethods: {},
     instanceMethods: {},
-    hooks: {}
+    hooks: {
+      afterCreate: async (user, options) => {
+        console.log('=== afterCreate ===');
+        let userRole = await Role.findOne({where: {authority: 'user'}});
+        console.log(userRole.toJSON());
+
+        await user.addRole(userRole);
+      }
+    }
   }
 };

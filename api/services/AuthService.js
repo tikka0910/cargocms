@@ -14,6 +14,17 @@ module.exports = {
     } else {
       return null;
     }
+  },
+
+  isAdmin: function(req) {
+    let user = AuthService.getSessionUser(req);
+    let isAdmin = false;
+
+    user.Roles.forEach((role) => {
+      if(role.authority == 'admin') isAdmin = true;
+    });
+    
+    return isAdmin;
   }
 
 }

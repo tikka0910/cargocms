@@ -41,6 +41,15 @@ module.exports.bootstrap = async (cb) => {
     sails.services.passport.loadStrategies();
     await porductionInitDb();
 
+    let adminRole = await Role.findOrCreate({
+      where: {authority: 'admin'},
+      defaults: {authority: 'admin'}
+    });
+    let userRole = await Role.findOrCreate({
+      where: {authority: 'user'},
+      defaults: {authority: 'user'}
+    });
+
     let user = await User.create({
       username: 'user',
       email: 'user@gmail.com',
@@ -49,6 +58,29 @@ module.exports.bootstrap = async (cb) => {
     });
     let passport = await Passport.create({provider: 'local', password: 'user', UserId: user.id});
     let post = await Post.create({title: 'testTitle', UserId: user.id});
+
+
+
+
+    let admin = {
+      username: 'admin',
+      email: 'admin@gmail.com',
+      firstName: '管',
+      lastName: '李仁'
+    };
+
+    let adminUser = await User.findOrCreate({
+      where: {username: 'admin'},
+      defaults: admin
+    });
+
+    await Passport.findOrCreate({
+      where: {provider: 'local', UserId: adminUser[0].id},
+      defaults: {provider: 'local', password: 'admin', UserId: adminUser[0].id}
+    });
+
+    adminUser[0].addRole(adminRole[0]);
+
 
     cb();
   } catch (e) {
