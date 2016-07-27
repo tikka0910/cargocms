@@ -1,4 +1,4 @@
-describe.only('about Tag Service operation.', function() {
+describe('about Tag Service operation.', function() {
 
   describe('add Tag to Post', () => {
     let tagsIds;
@@ -6,12 +6,11 @@ describe.only('about Tag Service operation.', function() {
     before(async (done) => {
       try {
         targetPost = await Post.create({
-          title: '1213',
-          content: '1213',
-          category: '1213',
-          cover: '1213',
-          url: '1213',
-          abstract: '1213',
+          title: '香味的一沙一世界4',
+          content: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材（ex:玫瑰、康乃馨..等)所組成的『這束花的味道』，接著抽出其中的一朵康乃馨',
+          cover: 'http://www.labfnp.com/modules/core/img/update1.jpg',
+          url: 'http://localhost:5001/blog/flower',
+          abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
         })
         done();
       } catch (e) {
@@ -43,12 +42,11 @@ describe.only('about Tag Service operation.', function() {
     before(async (done) => {
       try {
         targetPost = await Post.create({
-          title: '1213',
-          content: '1213',
-          category: '1213',
-          cover: '1213',
-          url: '1213',
-          abstract: '1213',
+          title: '香味的一沙一世界5',
+          content: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材（ex:玫瑰、康乃馨..等)所組成的『這束花的味道』，接著抽出其中的一朵康乃馨',
+          cover: 'http://www.labfnp.com/modules/core/img/update1.jpg',
+          url: 'http://localhost:5001/blog/flower',
+          abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
         })
         const datas = [{
           title: 'A',
