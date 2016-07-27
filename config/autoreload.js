@@ -1,5 +1,3 @@
-console.log("I'm here");
-
 module.exports.autoreload = {
   active: true,
   usePolling: false,

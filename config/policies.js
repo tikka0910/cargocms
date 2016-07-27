@@ -35,7 +35,7 @@ module.exports.policies = {
   },
   'AdminController': {
     'index': ['passport', 'sessionAuth', 'isAdmin'],
-  }
+  },
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions (`true` allows public     *
@@ -43,7 +43,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': true,
 
   /***************************************************************************
   *                                                                          *

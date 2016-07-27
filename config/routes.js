@@ -103,5 +103,6 @@ module.exports.routes = {
     locals: {
       layout: false
     }
-  }
+  },
+  '/admin/debug': 'AdminController.debug',
 };
