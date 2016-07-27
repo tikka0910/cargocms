@@ -1,6 +1,13 @@
 module.exports = {
-  create: async (datas = []) => {
+  updateOrCreate: async ({postId, datas}) => {
     try {
+      const post = await Post.findById(postId);
+      let originTags = await post.getTags();
+      originTags = originTags.map(tag => tag.id);
+      if (originTags.length > 0) {
+        await post.removeTags(originTags);
+      }
+
       const tags = [];
       for (let data of datas) {
         const findOrCreate = await Tag.findOrCreate({
@@ -9,33 +16,14 @@ module.exports = {
         });
         tags.push(findOrCreate[0]);
       }
-      return tags.map(tag => tag.id);
-    } catch (e) {
-      sails.log.error(e);
-      throw e;
-    }
-  },
-
-  addToPost: async({postId, tags}) => {
-    try {
-      console.log(tags);
-      const post = await Post.findById(postId);
-      const result = await post.addTags(tags);
-      return result;
-    } catch (e) {
-      sails.log.error(e);
-      throw e;
-    }
-  },
-
-  updatePostTag: async({postId, tags}) => {
-    try {
-      const post = await Post.findById(postId);
-      let originTags = await post.getTags();
-      originTags = originTags.map(tag => tag.id);
-      await post.removeTags(originTags);
-      let newTags = await post.addTags(tags);
-      return newTags[0].map(tag => tag.toJSON());
+      const tagIds = tags.map(tag => tag.id);
+      await post.addTags(tagIds);
+      return tags.map(tag => {
+        return {
+          id: tag.id,
+          title: tag.title,
+        }
+      });
     } catch (e) {
       sails.log.error(e);
       throw e;

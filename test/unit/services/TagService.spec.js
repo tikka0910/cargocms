@@ -1,24 +1,4 @@
-describe('about Tag Service operation.', function() {
-
-  describe('create tag', () => {
-    before(async (done) => {
-      done();
-    });
-    it('create Tag should success.', async (done) => {
-      try {
-        const datas = [{
-          title: 'A',
-        }, {
-          title: 'B',
-        }];
-        let result = await TagService.create(datas);
-        console.log(result);
-        done();
-      } catch (e) {
-        done(e)
-      }
-    });
-  });
+describe.only('about Tag Service operation.', function() {
 
   describe('add Tag to Post', () => {
     let tagsIds;
@@ -33,12 +13,6 @@ describe('about Tag Service operation.', function() {
           url: '1213',
           abstract: '1213',
         })
-        const datas = [{
-          title: 'C',
-        }, {
-          title: 'D',
-        }];
-        tagsIds = await TagService.create(datas);
         done();
       } catch (e) {
         done(e);
@@ -46,10 +20,17 @@ describe('about Tag Service operation.', function() {
     });
     it('add to Post should success.', async (done) => {
       try {
-        const result = await TagService.addToPost({
+        const datas = [{
+          title: 'A',
+        }, {
+          title: 'B',
+        }];
+        const result = await TagService.updateOrCreate({
           postId: targetPost.id,
-          tags: tagsIds,
+          datas,
         });
+        result[0].title.should.be.eq(datas[0].title);
+        result[1].title.should.be.eq(datas[1].title);
         done()
       } catch (e) {
         done(e)
@@ -57,8 +38,7 @@ describe('about Tag Service operation.', function() {
     });
   });
 
-  describe.only('update Tag to Post', () => {
-    let tagsIds;
+  describe('update Tag to Post', () => {
     let targetPost;
     before(async (done) => {
       try {
@@ -70,19 +50,15 @@ describe('about Tag Service operation.', function() {
           url: '1213',
           abstract: '1213',
         })
-        const originTags = await TagService.create([{
-            title: 'C',
-          }, {
-            title: 'D',
-          }]
-        );
-        await targetPost.addTags(originTags);
-        tagsIds = await TagService.create([{
-            title: 'C',
-          }, {
-            title: 'E',
-          }]
-        );
+        const datas = [{
+          title: 'A',
+        }, {
+          title: 'B',
+        }];
+        await TagService.updateOrCreate({
+          postId: targetPost.id,
+          datas,
+        });
         done();
       } catch (e) {
         done(e);
@@ -90,11 +66,17 @@ describe('about Tag Service operation.', function() {
     });
     it('update Post tags should success.', async (done) => {
       try {
-        const result = await TagService.updatePostTag({
+        const datas = [{
+          title: 'A',
+        }, {
+          title: 'C',
+        }];
+        const result = await TagService.updateOrCreate({
           postId: targetPost.id,
-          tags: tagsIds,
+          datas,
         });
-        console.log(result);
+        result[0].title.should.be.eq(datas[0].title);
+        result[1].title.should.be.eq(datas[1].title);
         done()
       } catch (e) {
         done(e)
