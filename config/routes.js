@@ -66,6 +66,7 @@ module.exports.routes = {
 
   //----- UserController -----
   'get /user': 'UserController.index',
+  'get /admin/index': 'AdminController.index',
 
   /***************************************************************************
   *                                                                          *
@@ -82,7 +83,7 @@ module.exports.routes = {
   '/admin/login': {
     view: 'admin/login',
     locals: {
-      layout: false      
+      layout: false
     }
   },
 

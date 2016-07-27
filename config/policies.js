@@ -27,12 +27,14 @@ module.exports.policies = {
     'find': []
   },
   'BlogController': {
-    // 'index': ['passport', 'sessionAuth', 'isAdmin'],
     'index': true
   },
   'WallController': true,
   'MainController': {
     'index': []
+  },
+  'AdminController': {
+    'index': ['passport', 'sessionAuth', 'isAdmin'],
   }
   /***************************************************************************
   *                                                                          *
