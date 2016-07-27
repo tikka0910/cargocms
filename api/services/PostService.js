@@ -3,11 +3,9 @@ module.exports = {
     title,
     content,
     category,
-    tag,
     cover,
     url,
     abstract,
-    location
   }) => {
     try {
       return await Post.create(data);
@@ -19,7 +17,10 @@ module.exports = {
 
   findById: async ({ id }) => {
     try {
-      return await Post.findById(id);
+      return await Post.findOne({
+        where: { id },
+        include: Tag
+      });
     } catch (e) {
       sails.log.error(e);
       throw e;
@@ -30,11 +31,9 @@ module.exports = {
     title,
     content,
     category,
-    tag,
     cover,
     url,
     abstract,
-    location
   }) => {
     try {
       return await Post.update(data, {

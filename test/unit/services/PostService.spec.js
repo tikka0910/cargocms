@@ -1,4 +1,4 @@
-describe.only('about Post Service operation.', function() {
+describe('about Post Service operation.', function() {
 
   describe('create post', () => {
     before(async (done) => {
@@ -10,11 +10,9 @@ describe.only('about Post Service operation.', function() {
           title: '1213',
           content: '1213',
           category: '1213',
-          tag: ['1213', '456', '789'],
           cover: '1213',
           url: '1213',
           abstract: '1213',
-          location: '1213'
         });
         done();
       } catch (e) {
@@ -23,7 +21,7 @@ describe.only('about Post Service operation.', function() {
     });
   });
 
-  describe('find & update & destroy post by id', () => {
+  describe.only('find & update & destroy post by id', () => {
     let targetPost;
     before(async (done) => {
       try {
@@ -31,12 +29,14 @@ describe.only('about Post Service operation.', function() {
           title: '1213',
           content: '1213',
           category: '1213',
-          tag: ['1213', '456', '789'],
           cover: '1213',
           url: '1213',
           abstract: '1213',
-          location: '1213'
         })
+        const tag = await Tag.create({
+          title: 'A'
+        });
+        await targetPost.addTag(tag.id);
         done();
       } catch (e) {
         done(e);
@@ -58,11 +58,9 @@ describe.only('about Post Service operation.', function() {
           title: '456',
           content: '456',
           category: '456',
-          tag: ['ABC', 'DEF', 'GHI'],
           cover: '456',
           url: '456',
           abstract: '456',
-          location: '456'
         }
         const post = await PostService.update(targetPost.id, data);
         done()
