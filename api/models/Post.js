@@ -5,11 +5,21 @@ module.exports = {
       allowNull: false
     },
     content: {
+      type: Sequelize.TEXT,
+    },
+    // 特色圖片
+    cover: {
+      type: Sequelize.STRING,
+    },
+    url: {
+      type: Sequelize.STRING,
+    },
+    abstract: {
       type: Sequelize.STRING,
     }
   },
-  associations: function() {
-
+  associations: () => {
+    Post.belongsToMany(Tag,  {through: 'PostTag'})
   },
   options: {
     classMethods: {},
