@@ -197,8 +197,8 @@ p.lead {
 	</div>
 </div>
 
-<% addScripts('/unify/js/app.js', '/unify/js/plugins/owl-carousel.js'); %>
-<% addScriptBlock(`
+<% LayoutUtils.addScripts('/unify/js/app.js', '/unify/js/plugins/owl-carousel.js'); %>
+<% LayoutUtils.addScriptBlock(`
 jQuery(document).ready(function() {
   App.init();
 		OwlCarousel.initOwlCarousel();

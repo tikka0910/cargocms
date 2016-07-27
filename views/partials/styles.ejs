@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="/unify/plugins/brand-buttons/brand-buttons-inversed.css">
 
 <!-- CSS Page Style -->
-<% getStylesheets().forEach(function(href) { %><link rel="stylesheet" href="<%= href %>">
+<% LayoutUtils.getStylesheets().forEach(function(href) { %><link rel="stylesheet" href="<%= href %>">
 <% }); %>
 
 <!-- CSS Theme -->
@@ -36,5 +36,5 @@
 
 <!-- CSS Page Block -->
 <style type="text/css">
-<%- getStylesheetBlock() %>
+<%- LayoutUtils.getStylesheetBlock() %>
 </style>

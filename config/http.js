@@ -143,6 +143,37 @@ module.exports.http = {
         return res._stylesheetBlock;
       };
 
+      res.locals.LayoutUtils = {
+        addScripts: function() {
+          for (var i = 0; i < arguments.length; i++) {
+            res._scripts.push(arguments[i]);
+          }
+        },
+        getScripts: function() {
+          return res._scripts;
+        },
+        addScriptBlock: function(block) {
+          res._scriptBlock += block;
+        },
+        getScriptBlock: function() {
+          return res._scriptBlock;
+        },
+        addStylesheets: function() {
+          for (var i = 0; i < arguments.length; i++) {
+            res._stylesheets.push(arguments[i]);
+          }
+        },
+        getStylesheets: function() {
+          return res._stylesheets;
+        },
+        addStylesheetBlock: function(block) {
+          res._stylesheetBlock += block;
+        },
+        getStylesheetBlock: function() {
+          return res._stylesheetBlock;
+        },
+      };
+
       return next();
     },
   },

@@ -171,8 +171,8 @@
 
 </div>
 
-<% addScripts('http://hammerjs.github.io/dist/hammer.min.js', '/owlcarousel/owl.carousel.min.js'); %>
-<% addScriptBlock(`
+<% LayoutUtils.addScripts('http://hammerjs.github.io/dist/hammer.min.js', '/owlcarousel/owl.carousel.min.js'); %>
+<% LayoutUtils.addScriptBlock(`
 $(document).ready(function(){
   $('.owl-carousel').owlCarousel({
     stagePadding: 80,
