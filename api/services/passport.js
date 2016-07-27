@@ -119,7 +119,7 @@ passport.connect = async function(req, query, profile, next) {
     }
 
 
-    let facebookPassport = await Passport.findOne({
+    let dbPassport = await Passport.findOne({
       where: {
         provider: provider,
         identifier: query.identifier.toString()
@@ -128,26 +128,27 @@ passport.connect = async function(req, query, profile, next) {
 
 
     let loginedUser = req.user;
-    let Logined_WithoutfacebookPassport = !!loginedUser && !facebookPassport;
+    let Logined_WithoutDbPassport = !!loginedUser && !dbPassport;
 
-    if (Logined_WithoutfacebookPassport) {
+    if (Logined_WithoutDbPassport) {
       //有一般使用者登入但沒使用FB註冊過
-      console.info("=== Logined_WithoutfacebookPassport ===");
+      console.info("=== Logined_WithoutdbPassport ===");
       query.UserId = loginedUser.id;
       await Passport.create(query);
       return next(null, loginedUser);
-    }else if(facebookPassport){
+    }else if(dbPassport){
       //已用FB註冊過，直接登入
-      console.info("=== facebookPassport ===");
+      console.info("=== dbPassport ===");
       if(query.hasOwnProperty('tokens') && query.tokens !== passport.tokens){
-        facebookPassport.tokens = query.tokens;
-        facebookPassport = await facebookPassport.save();
+        dbPassport.tokens = query.tokens;
+        dbPassport = await dbPassport.save();
       }
-      console.info("=== facebookPassport passport ===", passport);
+      console.info("=== dbPassport passport ===", passport);
       user = await User.findOne({
         where:{
-          id: facebookPassport.UserId
-        }
+          id: dbPassport.UserId
+        },
+        include: [Role]
       });
       if(user)
          return next(null, user)
@@ -167,6 +168,14 @@ passport.connect = async function(req, query, profile, next) {
 
       let newUser = await User.create(user);
       query.UserId = newUser.id;
+
+      newUser = await User.findOne({
+        where:{
+          id: newUser.id
+        },
+        include: [Role]
+      });
+
       let newFacebookPassword = await Passport.create(query);
       return next(null, newUser);
 
@@ -353,6 +362,7 @@ passport.serializeUser(function(user, next) {
 });
 
 passport.deserializeUser(function(user, next) {
+
   return next(null, user);
 });
 
