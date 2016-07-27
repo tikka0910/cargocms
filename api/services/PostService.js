@@ -2,7 +2,6 @@ module.exports = {
   create: async (data = {
     title,
     content,
-    category,
     cover,
     url,
     abstract,
@@ -30,7 +29,6 @@ module.exports = {
   update: async (postId, data = {
     title,
     content,
-    category,
     cover,
     url,
     abstract,

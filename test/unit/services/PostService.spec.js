@@ -1,4 +1,4 @@
-describe('about Post Service operation.', function() {
+describe.only('about Post Service operation.', function() {
 
   describe('create post', () => {
     before(async (done) => {
@@ -9,7 +9,6 @@ describe('about Post Service operation.', function() {
         const post = await PostService.create({
           title: '1213',
           content: '1213',
-          category: '1213',
           cover: '1213',
           url: '1213',
           abstract: '1213',
@@ -21,14 +20,13 @@ describe('about Post Service operation.', function() {
     });
   });
 
-  describe.only('find & update & destroy post by id', () => {
+  describe('find & update & destroy post by id', () => {
     let targetPost;
     before(async (done) => {
       try {
         targetPost = await Post.create({
           title: '1213',
           content: '1213',
-          category: '1213',
           cover: '1213',
           url: '1213',
           abstract: '1213',
@@ -57,7 +55,6 @@ describe('about Post Service operation.', function() {
         let data = {
           title: '456',
           content: '456',
-          category: '456',
           cover: '456',
           url: '456',
           abstract: '456',

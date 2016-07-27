@@ -7,9 +7,6 @@ module.exports = {
     content: {
       type: Sequelize.TEXT,
     },
-    category: {
-      type: Sequelize.STRING,
-    },
     // 特色圖片
     cover: {
       type: Sequelize.STRING,
