@@ -36,8 +36,12 @@ exports.register = async (req, res, next) => {
       UserId: user.id
     });
 
-    sails.log.info("=== local register success ===");
-
+    user = await User.findOne({
+      where:{
+        id: user.id
+      },
+      include: [Role]
+    });
     return next(null, user);
 
   } catch (err) {
@@ -82,7 +86,8 @@ exports.login = async (req, identifier, password, next) => {
     var isEmail, query;
     isEmail = validator.isEmail(identifier);
     query = {
-      where: {}
+      where: {},
+      include: [Role]
     };
 
     if (isEmail) {

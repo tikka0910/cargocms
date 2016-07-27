@@ -30,11 +30,14 @@ module.exports.policies = {
     'delete': []
   },
   'BlogController': {
-    'index': true,
+    'index': true
   },
   'WallController': true,
   'MainController': {
     'index': []
+  },
+  'AdminController': {
+    'index': ['passport', 'sessionAuth', 'isAdmin'],
   }
   /***************************************************************************
   *                                                                          *

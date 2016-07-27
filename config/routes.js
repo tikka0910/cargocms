@@ -71,6 +71,9 @@ module.exports.routes = {
   'delete /user/:userId': 'UserController.delete',
   'post /user': 'UserController.create',
 
+
+  'get /admin/index': 'AdminController.index',
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
@@ -89,5 +92,22 @@ module.exports.routes = {
       layout: false
     }
   },
-
+  '/admin': {
+    view: 'admin/index',
+    locals: {
+      layout: false
+    }
+  },
+  '/admin/index': {
+    view: 'admin/index',
+    locals: {
+      layout: false
+    }
+  },
+  '/admin/user': {
+    view: 'admin/user/index',
+    locals: {
+      layout: false
+    }
+  }
 };
