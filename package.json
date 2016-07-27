@@ -76,6 +76,7 @@
     "url": "git://github.com/trunk-studio/cargocms.git"
   },
   "devDependencies": {
+    "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.4.1",
     "grunt-bower-task": "^0.4.0",
     "grunt-cli": "^0.1.13",
