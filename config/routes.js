@@ -66,6 +66,7 @@ module.exports.routes = {
 
   //----- UserController -----
   'get /user': 'UserController.index',
+  'get /admin/index': 'AdminController.index',
 
   /***************************************************************************
   *                                                                          *

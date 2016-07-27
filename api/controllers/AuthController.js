@@ -92,7 +92,7 @@ module.exports = {
           return tryAgain(err);
         }
         req.session.authenticated = true;
-        return res.redirect(sails.config.urls.afterSignIn);
+        return res.redirect(req.query.url || sails.config.urls.afterSignIn);
       });
     });
   },

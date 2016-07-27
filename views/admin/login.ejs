@@ -57,16 +57,16 @@
 					<img src="/custom/labfnp/img/lfp-logo.png" alt="">
 				</a>
 				<h2 class="margin-bottom-50">網站管理系統</h2>
-				<form action="#">
+				<form action="/auth/local?url=/admin/index" method="post">
 					<div class="login-block">
 						<div class="input-group margin-bottom-40">
 							<span class="input-group-addon rounded-left"><i class="icon-user color-blue"></i></span>
-							<input type="text" class="form-control rounded-right" placeholder="Username">
+							<input type="text" name="identifier" class="form-control rounded-right" placeholder="Username">
 						</div>
 
 						<div class="input-group margin-bottom-40">
 							<span class="input-group-addon rounded-left"><i class="icon-lock color-blue"></i></span>
-							<input type="password" class="form-control rounded-right" placeholder="Password">
+							<input type="password" name="password" class="form-control rounded-right" placeholder="Password">
 						</div>
 
 						<div class="checkbox">
