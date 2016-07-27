@@ -83,16 +83,19 @@ module.exports = {
     };
 
     await passport.callback(req, res, function(err, user, challenges, statuses) {
+      console.info('=== callback user ===', user);
+      console.info('=== passport.callback ===', err);
+
       if (err || !user) {
-        console.info('=== passport.callback ===', err);
         return tryAgain(err);
       }
+
       req.login(user, function(err) {
         if (err) {
           return tryAgain(err);
         }
         req.session.authenticated = true;
-        return res.redirect(req.query.url || sails.config.urls.afterSignIn);
+        return res.redirect(req.query.url || sails.config.urls.afterSignIn || "/");
       });
     });
   },
