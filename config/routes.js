@@ -82,7 +82,13 @@ module.exports.routes = {
   '/admin/login': {
     view: 'admin/login',
     locals: {
-      layout: false      
+      layout: false
+    }
+  },
+  '/admin': {
+    view: 'admin/index',
+    locals: {
+      layout: false
     }
   },
 
