@@ -24,7 +24,10 @@ module.exports.policies = {
   },
   'UserController': {
     'index': [],
-    'find': []
+    'findOne': [],
+    'create': [],
+    'update': [],
+    'delete': []
   },
   'BlogController': {
     'index': true
