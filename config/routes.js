@@ -77,4 +77,13 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  //----- Admin -----
+
+  '/admin/login': {
+    view: 'admin/login',
+    locals: {
+      layout: false      
+    }
+  },
+
 };
