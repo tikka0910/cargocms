@@ -65,14 +65,14 @@
 		* 'fixed-page-footer' - Fixes footer
 		* 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
 	-->
-	<body class="smart-style-6">
+	<body class="smart-style-2">
 
 		<!-- #HEADER -->
 		<header id="header">
 			<div id="logo-group">
 
 				<!-- PLACE YOUR LOGO HERE -->
-				<span id="logo"> <img src="/admin/img/logo.png" alt="SmartAdmin"> </span>
+				<span id="logo"> <img src="/admin/img/logo-white.png" alt="SmartAdmin"> </span>
 				<!-- END LOGO PLACEHOLDER -->
 
       </div>
@@ -124,7 +124,11 @@
 
 				<!-- logout button -->
 				<div id="logout" class="btn-header transparent pull-right">
-					<span> <a href="login.html" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
+					<span>
+						<a href="/admin/logout" title="Sign Out" data-action="userLogout" data-logout-msg="請確認是否要登出目前的管理帳號？">
+							<i class="fa fa-sign-out"></i>
+						</a>
+					</span>
 				</div>
 				<!-- end logout button -->
 
@@ -145,26 +149,37 @@
 		<!-- Note: This width of the aside area can be adjusted through LESS/SASS variables -->
 		<aside id="left-panel">
 
-			<div style="padding: 15px">
-				<p>Hello, Kyle!</p>
+			<!-- User info -->
+			<div class="login-info">
+				<span> <!-- User image size is adjusted inside CSS, it should stay as is -->
+
+					<a href="javascript:void(0);" id="show-shortcut">
+						<img src="img/avatars/sunny.png" alt="me" class="online" />
+						<span>
+							john.doe
+						</span>
+						<i class="fa fa-angle-right"></i>
+					</a>
+
+				</span>
 			</div>
+			<!-- end user info -->
 
-			<!-- NAVIGATION : This navigation is also responsive
-
-			To make this navigation dynamic please make sure to link the node
-			(the reference to the nav > ul) after page load. Or the navigation
-			will not initialize.
-			-->
 			<nav>
-				<!--
-				NOTE: Notice the gaps after each icon usage <i></i>..
-				Please note that these links work a bit different than
-				traditional href="" links. See documentation for details.
-				-->
-
 				<ul>
 					<li class="">
-						<a href="/admin/user" title="blank_"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">會員管理</span></a>
+						<a href="#" title="Dashboard">
+							<i class="fa fa-lg fa-fw fa-wrench"></i>
+							<span class="menu-item-parent">資料維護</span>
+						</a>
+						<ul>
+							<li class="">
+								<a href="/admin/user" title="Dashboard"><span class="menu-item-parent">會員管理</span></a>
+							</li>
+							<li class="">
+								<a href="ajax/dashboard-social.html" title="Dashboard"><span class="menu-item-parent">Social Wall</span></a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</nav>
@@ -232,29 +247,70 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script>
 			if (!window.jQuery) {
-				document.write('<script src="/admin/js/libs/jquery-2.1.1.min.js"><\/script>');
+				document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
 			}
 		</script>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 		<script>
 			if (!window.jQuery.ui) {
-				document.write('<script src="/admin/js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+				document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
 			}
 		</script>
 
 		<!-- IMPORTANT: APP CONFIG -->
-		<script src="js/app.config.seed.js"></script>
+		<script src="js/app.config.js"></script>
+
+		<!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
+		<script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
 
 		<!-- BOOTSTRAP JS -->
 		<script src="js/bootstrap/bootstrap.min.js"></script>
+
+		<!-- CUSTOM NOTIFICATION -->
+		<script src="js/notification/SmartNotification.min.js"></script>
+
+		<!-- JARVIS WIDGETS -->
+		<script src="js/smartwidgets/jarvis.widget.min.js"></script>
+
+		<!-- EASY PIE CHARTS -->
+		<script src="js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+
+		<!-- SPARKLINES -->
+		<script src="js/plugin/sparkline/jquery.sparkline.min.js"></script>
+
+		<!-- JQUERY VALIDATE -->
+		<script src="js/plugin/jquery-validate/jquery.validate.min.js"></script>
+
+		<!-- JQUERY MASKED INPUT -->
+		<script src="js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+
+		<!-- JQUERY SELECT2 INPUT -->
+		<script src="js/plugin/select2/select2.min.js"></script>
+
+		<!-- JQUERY UI + Bootstrap Slider -->
+		<script src="js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
+
+		<!-- browser msie issue fix -->
+		<script src="js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+
+		<!-- FastClick: For mobile devices: you can disable this in app.js -->
+		<script src="js/plugin/fastclick/fastclick.min.js"></script>
 
 		<!--[if IE 8]>
 			<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
 		<![endif]-->
 
 		<!-- MAIN APP JS FILE -->
-		<script src="js/app.seed.js"></script>
+		<script src="js/app.min.js"></script>
+
+		<!-- ENHANCEMENT PLUGINS : NOT A REQUIREMENT -->
+		<!-- Voice command : plugin -->
+		<script src="js/speech/voicecommand.min.js"></script>
+
+		<!-- SmartChat UI : plugin -->
+		<script src="js/smart-chat-ui/smart.chat.ui.min.js"></script>
+		<script src="js/smart-chat-ui/smart.chat.manager.min.js"></script>
 
 		<!-- Your GOOGLE ANALYTICS CODE Below -->
 		<script type="text/javascript">
