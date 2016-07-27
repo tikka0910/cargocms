@@ -10,6 +10,7 @@
  */
 
 module.exports.bootstrap = async (cb) => {
+  if(!sails.config.urls) sails.config.urls = {afterSignIn: "/"};
 
   console.log("=== Setup express-helpers ===");
   _.extend(sails.hooks.http.app.locals, sails.config.http.locals);
