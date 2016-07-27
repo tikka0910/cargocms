@@ -11,7 +11,7 @@ module.exports = {
   findOne: async (req, res) => {
     const { userId } = req.params;
     try {
-      console.log('findOne user controller=>', userId);
+      sails.log.info('findOne user controller=>', userId);
       const user = await UserService.findOne(userId);
       res.ok(user);
     } catch (e) {
@@ -22,7 +22,7 @@ module.exports = {
   create: async (req, res) => {
     const data = req.body;
     try {
-      console.log('create user controller=>', data);
+      sails.log.info('create user controller=>', data);
       const user = await UserService.create(data);
       res.ok(user);
     } catch (e) {
@@ -34,8 +34,8 @@ module.exports = {
     const { userId } = req.params;
     const data = req.body;
     try {
-      console.log('update user controller userId=>', userId);
-      console.log('update user controller data=>', data);
+      sails.log.info('update user controller userId=>', userId);
+      sails.log.info('update user controller data=>', data);
       const user = await UserService.update({
         id: userId,
         ...data,
@@ -49,7 +49,7 @@ module.exports = {
   delete: async (req, res) => {
     const { userId } = req.params;
     try {
-      console.log('delete user controller=>', userId);
+      sails.log.info('delete user controller=>', userId);
       const user = await UserService.delete(userId);
       res.ok(user);
     } catch (e) {
