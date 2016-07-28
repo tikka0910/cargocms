@@ -72,7 +72,7 @@ module.exports.routes = {
   'post /user': 'UserController.create',
 
 
-  'get /admin/index': 'AdminController.index',
+
 
   /***************************************************************************
   *                                                                          *
@@ -86,24 +86,22 @@ module.exports.routes = {
 
   //----- Admin -----
 
+
   '/admin/login': {
     view: 'admin/login',
     locals: {
       layout: false
     }
   },
-  '/admin': {
-    view: 'admin/index',
+
+  '/admin/': {
+    controller: 'AdminController',
+    action: 'index',
     locals: {
       layout: false
     }
   },
-  '/admin/index': {
-    view: 'admin/index',
-    locals: {
-      layout: false
-    }
-  },
+
   '/admin/user': {
     view: 'admin/user/index',
     locals: {

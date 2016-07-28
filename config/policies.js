@@ -37,7 +37,9 @@ module.exports.policies = {
     'index': []
   },
   'AdminController': {
-    'index': ['passport', 'sessionAuth', 'isAdmin'],
+    'index': [
+      // 'passport', 'sessionAuth', 'isAdmin'
+    ],
   },
   /***************************************************************************
   *                                                                          *
