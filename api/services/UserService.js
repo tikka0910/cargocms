@@ -8,17 +8,17 @@ module.exports = {
   },
 
   findOne: async (userId) => {
-    let result = false
-    let msg = '';
+    let data = false
+    let message = '';
     try {
       sails.log.info('findOne user service=>', userId);
       const findUser = await User.findById(parseInt(userId, 10));
       if (findUser) {
-        result = findUser.dataValues;
+        data = findUser.dataValues;
       } else {
-        msg = `user id ${userId} does not exist`;
+        message = `user id ${userId} does not exist`;
       }
-      return { result, msg };
+      return { data, message };
     } catch (e) {
       throw e;
     }
@@ -31,11 +31,11 @@ module.exports = {
     lastName,
     locale
   }) => {
-    let result = false;
+    let data = false;
     try {
       sails.log.info('create user service=>', user);
       const createdUser = await User.create(user);
-      return { result: createdUser.dataValues };
+      return { data: createdUser.dataValues };
     } catch (e) {
       throw e;
     }
@@ -49,8 +49,8 @@ module.exports = {
     lastName,
     locale,
   }) => {
-    let result = false
-    let msg = '';
+    let data = false
+    let message = '';
     try {
       sails.log.info('update user service=>', user);
       let updatedUser = await User.findById(parseInt(user.id, 10));
@@ -61,29 +61,29 @@ module.exports = {
         updatedUser.lastName = user.lastName;
         updatedUser.locale = user.locale;
         updatedUser = await updatedUser.save();
-        result = updatedUser.dataValues;
+        data = updatedUser.dataValues;
       } else {
-        msg = `user id ${userId} does not exist`;
+        message = `user id ${userId} does not exist`;
       }
-      return { result, msg };
+      return { data, message };
     } catch (e) {
       throw e;
     }
   },
 
   delete: async (userId) => {
-    let result = false
-    let msg = '';
+    let data = false
+    let message = '';
     try {
       sails.log.info('delete user service=>', userId);
       let deletedUser = await User.findById(parseInt(userId, 10));
       if (deletedUser) {
         deletedUser = await deletedUser.destroy();
-        result = deletedUser.dataValues;
+        data = deletedUser.dataValues;
       } else {
-        msg = `user id ${userId} does not exist`;
+        message = `user id ${userId} does not exist`;
       }
-      return { result, msg };
+      return { data, message };
     } catch (e) {
       throw e;
     }
