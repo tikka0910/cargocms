@@ -26,7 +26,7 @@ module.exports = {
       const user = await UserService.create(data);
       res.ok(user);
     } catch (e) {
-      res.serverError({ message: e, data: {}});
+      res.serverError({ message: e.message, data: {}});
     }
   },
 
@@ -42,7 +42,7 @@ module.exports = {
       });
       res.ok(user);
     } catch (e) {
-      res.serverError({ message: e, data: {}});
+      res.serverError({ message: e.message, data: {}});
     }
   },
 
@@ -53,7 +53,7 @@ module.exports = {
       const user = await UserService.delete(userId);
       res.ok(user);
     } catch (e) {
-      res.serverError({ message: e, data: {}});
+      res.serverError({ message: e.message, data: {}});
     }
   },
 }
