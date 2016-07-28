@@ -328,11 +328,8 @@
 	})
 
 	fetch('/user', {credentials: 'include'})
-	.then((response) => {
-		return response.json();
-	}).then((result) => {
-		userListData.items = result.data.items;
-	});
+	.then(response => response.json())
+	.then(result => userListData.items = result.data.items);
 
 
 </script>
