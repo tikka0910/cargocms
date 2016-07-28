@@ -14,7 +14,7 @@ describe('test Feed model operation', function() {
     done();
   });
 
-  it.only('should success.', async (done) => {
+  it('should success.', async (done) => {
     try {
       // let users;
       let row = await Feed.find({where: {sourceId: '1000184139997844_1407701562579431'}});

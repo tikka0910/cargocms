@@ -4,7 +4,7 @@ module.exports = {
       const data = await UserService.findAll();
       res.ok(data);
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e, data: {}});
     }
   },
 
@@ -15,7 +15,7 @@ module.exports = {
       const user = await UserService.findOne(userId);
       res.ok(user);
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e, data: {}});
     }
   },
 
@@ -26,7 +26,7 @@ module.exports = {
       const user = await UserService.create(data);
       res.ok(user);
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e, data: {}});
     }
   },
 
@@ -42,7 +42,7 @@ module.exports = {
       });
       res.ok(user);
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e, data: {}});
     }
   },
 
@@ -53,7 +53,7 @@ module.exports = {
       const user = await UserService.delete(userId);
       res.ok(user);
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e, data: {}});
     }
   },
 }

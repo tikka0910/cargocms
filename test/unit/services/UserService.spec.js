@@ -1,16 +1,17 @@
 describe('about User Service operation.', function() {
   it('create User should success.', async (done) => {
     try {
-      const data = {
+      const newUser = {
         username: 'xxxx',
         email: 'xxx@xxx.xxx',
         firstName: 'test',
         lastName: 'test',
         locale: 'zh_TW',
       };
-      const user = await UserService.create(data);
-      sails.log.info('create user service spec=>', user);
-      user.result.should.be.Object;
+      const result = await UserService.create(newUser);
+      sails.log.info('create user service spec=>', result);
+      result.data.should.be.Object;
+      result.data.username.should.be.equal(newUser.username);
       done();
     } catch (e) {
       done(e);
@@ -36,11 +37,11 @@ describe('about User Service operation.', function() {
 
     it('should success.', async (done) => {
       try {
-        const user = await UserService.findOne(findThisUser.id);
-        sails.log.info('find user service spec=>', user);
-        user.result.should.be.Object;
-        user.result.id.should.be.equal(findThisUser.id);
-        user.result.username.should.be.equal(findThisUser.username);
+        const result = await UserService.findOne(findThisUser.id);
+        sails.log.info('find user service spec=>', result);
+        result.data.should.be.Object;
+        result.data.id.should.be.equal(findThisUser.id);
+        result.data.username.should.be.equal(findThisUser.username);
         done();
       } catch (e) {
         done(e);
@@ -67,12 +68,12 @@ describe('about User Service operation.', function() {
 
     it('should success.', async (done) => {
       try {
-        const user = await UserService.delete(deleteThisUser.id);
-        sails.log.info('delete user service spec=>', user);
+        const result = await UserService.delete(deleteThisUser.id);
+        sails.log.info('delete user service spec=>', result);
         const findDeletedUser = await UserService.findOne(deleteThisUser.id);
         sails.log.info("findDeletedUser service spec=>", findDeletedUser);
-        user.result.should.not.be.equal(false);
-        findDeletedUser.result.should.be.equal(false);
+        result.data.should.not.be.equal(false);
+        findDeletedUser.data.should.be.equal(false);
         done();
       } catch (e) {
         done(e);
@@ -106,14 +107,14 @@ describe('about User Service operation.', function() {
 
     it('should success.', async (done) => {
       try {
-        const user = await UserService.update({
+        const result = await UserService.update({
           id: updateThisUser.id,
           ...updatedUser,
         });
-        sails.log.info('update user service spec=>', user);
+        sails.log.info('update user service spec=>', result);
         updateThisUser.locale.should.be.equal('zh_TW');
-        user.result.id.should.be.equal(updateThisUser.id);
-        user.result.locale.should.be.equal('hk');
+        result.data.id.should.be.equal(updateThisUser.id);
+        result.data.locale.should.be.equal('hk');
         done();
       } catch (e) {
         done(e);

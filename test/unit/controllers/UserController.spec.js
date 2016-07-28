@@ -11,10 +11,10 @@ describe('about User Controller operation.', function() {
       const res = await request(sails.hooks.http.app)
       .post(`/user`)
       .send(createThisUser);
-      sails.log.info('create user spec =>', res.body);
+      sails.log.info('create user controller spec =>', res.body);
       res.body.should.be.Object;
-      res.body.result.email.should.be.equal(createThisUser.email);
-      res.body.result.locale.should.be.equal('zh_TW');
+      res.body.data.email.should.be.equal(createThisUser.email);
+      res.body.data.locale.should.be.equal('zh_TW');
       done();
     } catch (e) {
       done(e);
@@ -25,7 +25,7 @@ describe('about User Controller operation.', function() {
     it('should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app).get(`/user`);
-        sails.log.info('find users spec =>', res.body);
+        sails.log.info('find users controller spec =>', res.body);
         res.body.should.be.Array;
         res.body.length.should.be.Number;
         res.body.length.should.be.above(0);
@@ -47,7 +47,7 @@ describe('about User Controller operation.', function() {
           lastName: 'test',
           locale: 'zh_TW',
         });
-        sails.log.info('findThisUser.result.id=>', findThisUser.result.id);
+        sails.log.info('findThisUser.data.id=>', findThisUser.data.id);
         done();
       } catch (e) {
         done(e);
@@ -57,11 +57,11 @@ describe('about User Controller operation.', function() {
     it('should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
-        .get(`/user/${findThisUser.result.id}`);
-        sails.log.info('find one user spec =>', res.body);
-        res.body.result.should.be.Object;
-        res.body.result.id.should.be.Number;
-        res.body.result.id.should.be.equal(findThisUser.result.id);
+        .get(`/user/${findThisUser.data.id}`);
+        sails.log.info('find one user controller spec =>', res.body);
+        res.body.data.should.be.Object;
+        res.body.data.id.should.be.Number;
+        res.body.data.id.should.be.equal(findThisUser.data.id);
         done();
       } catch (e) {
         done(e);
@@ -80,7 +80,7 @@ describe('about User Controller operation.', function() {
           lastName: 'test',
           locale: 'zh_TW',
         });
-        sails.log.info('deleteThisUser.result.id=>', deleteThisUser.result.id);
+        sails.log.info('deleteThisUser.data.id=>', deleteThisUser.data.id);
         done();
       } catch (e) {
         done(e);
@@ -90,9 +90,9 @@ describe('about User Controller operation.', function() {
     it('should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
-        .delete(`/user/${deleteThisUser.result.id}`);
-        sails.log.info('delete user spec =>', res.body);
-        res.body.result.id.should.be.equal(deleteThisUser.result.id);
+        .delete(`/user/${deleteThisUser.data.id}`);
+        sails.log.info('delete user controller spec =>', res.body);
+        res.body.data.id.should.be.equal(deleteThisUser.data.id);
         done();
       } catch (e) {
         done(e);
@@ -118,7 +118,7 @@ describe('about User Controller operation.', function() {
           lastName: 'test',
           locale: 'zh_TW',
         });
-        sails.log.info('updateThisUser.result.id=>', updateThisUser.result.id);
+        sails.log.info('updateThisUser.data.id=>', updateThisUser.data.id);
         done();
       } catch (e) {
         done(e);
@@ -128,10 +128,10 @@ describe('about User Controller operation.', function() {
     it('should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
-        .put(`/user/${updateThisUser.result.id}`)
+        .put(`/user/${updateThisUser.data.id}`)
         .send(updatedUser);
-        res.body.result.locale.should.be.equal('hk');
-        res.body.result.username.should.be.equal('updated');
+        res.body.data.locale.should.be.equal('hk');
+        res.body.data.username.should.be.equal('updated');
         done();
       } catch (e) {
         done(e);
