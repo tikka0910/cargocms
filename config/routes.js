@@ -108,5 +108,11 @@ module.exports.routes = {
       layout: false
     }
   },
+  '/admin/user/create': {
+    view: 'admin/user/create',
+    locals: {
+      layout: false
+    }
+  },
   '/admin/debug': 'AdminController.debug',
 };
