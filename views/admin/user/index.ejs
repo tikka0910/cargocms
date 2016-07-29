@@ -1,5 +1,5 @@
 <!-- widget grid -->
-<section id="widget-grid" class="">
+<section id="user-grid" class="">
 
 	<!-- row -->
 	<div class="row">
@@ -53,7 +53,7 @@
 									<th data-hide="phone,tablet"> 全名</th>
 								</tr>
 							</thead>
-							<tbody id="user_tableBody">
+							<tbody>
 								<tr v-for="user in items">
 									<td>{{ user.id }}</td>
 									<td>{{ user.username }}</td>
@@ -86,7 +86,6 @@
 
 </section>
 <!-- end widget grid -->
-<script src="js/app/user.js"></script>
 <script type="text/javascript">
 
 	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -135,6 +134,7 @@
 	// PAGE RELATED SCRIPTS
 
 	// pagefunction
+	var userApp, userAppModel;
 	var pagefunction = function() {
 		//console.log("cleared");
 
@@ -304,6 +304,25 @@
 
 		/* END TABLETOOLS */
 
+	  userAppModel = {
+	    items: []
+	  }
+
+	  userApp = new Vue({
+	    el: '#user-grid',
+	    data: userAppModel,
+			methods: {
+			 load: function (event) {
+				 fetch('/user', {credentials: 'include'})
+				 .then(response => response.json())
+				 .then(result => {
+					 userAppModel.items = result.data.items
+				 });
+			 }
+		 }
+	  })
+
+		userApp.load();
 	};
 
 	// load related plugins
@@ -317,5 +336,14 @@
 			});
 		});
 	});
+
+	var pagedestroy = function() {
+		userApp = null;
+		userAppModel = null;
+		$("#user-grid").remove();
+		if (debugState) {
+			console.log("✔ user-grid unbind");
+		}
+	}
 
 </script>
