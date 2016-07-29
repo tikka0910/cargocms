@@ -47,7 +47,7 @@ describe('about Post Controller operation.', function() {
       }
     });
 
-    it('get all post', async(done) => {
+    it.only('get all post', async(done) => {
       try {
         const res = await request(sails.hooks.http.app)
         .get(`/post`);

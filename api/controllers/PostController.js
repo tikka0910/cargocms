@@ -3,7 +3,9 @@ module.exports = {
     try {
       res.ok({
         message: 'Create post success.',
-        data: await Post.findAll({ include: Tag }),
+        data: {
+          items: await Post.findAll({ include: Tag }),
+        }
       });
     } catch (e) {
       sails.log.error(e);
