@@ -7,7 +7,7 @@
 			<i class="fa-fw fa fa-pencil-square-o"></i>
 				會員資料
 			<span>>
-				修改
+				建立
 			</span>
 		</h1>
 	</div>
@@ -24,7 +24,7 @@
 
 
 		<!-- NEW COL START -->
-		<article class="col-sm-12 col-md-12 col-lg-6">
+		<article class="col-sm-12 col-md-12 col-lg-12">
 
 			<!-- Widget ID (each widget will need unique ID)-->
 			<div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
@@ -60,10 +60,10 @@
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 
-						<form id="user-form" class="smart-form">
+						<form id="smart-form-register" class="smart-form">
 							<input type="text" name="id" id="id" hidden="hidden" value="<%= req.params.id %>">
 							<header>
-								Update form
+								Registration form
 							</header>
 
 							<fieldset>
@@ -93,6 +93,18 @@
 										</label>
 									</section>
 								</div>
+
+								<section>
+									<label class="input"> <i class="icon-append fa fa-lock"></i>
+										<input type="password" name="password" placeholder="Password" id="password" v-model="password">
+										<b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+								</section>
+
+								<section>
+									<label class="input"> <i class="icon-append fa fa-lock"></i>
+										<input type="password" name="passwordConfirm" placeholder="Confirm password">
+										<b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+								</section>
 <!--
 								<div class="row">
 									<section class="col col-6">
@@ -186,11 +198,63 @@
 	// PAGE RELATED SCRIPTS
 
 	// pagefunction
+
 	var userApp, userAppModel;
 	var pagefunction = function() {
 
 
-		var $registerForm = $("#user-form").validate({
+		let userId = document.getElementById("id").value;
+
+
+		userAppModel = {
+			id: userId,
+			username: '',
+			email: '',
+			firstName: '',
+			lastName: '',
+			password: '',
+		}
+		userApp = new Vue({
+			el: '#smart-form-register',
+			data: userAppModel,
+			methods: {
+				submit: function (event) {
+					var data = {
+						username: userAppModel.username,
+						email: userAppModel.email,
+						firstName: userAppModel.firstName,
+						lastName: userAppModel.lastName,
+						password: userAppModel.password,
+					};
+
+					fetch(`/user/${userId}`, {
+						credentials: 'include',
+						method: 'post',
+						body: JSON.stringify(data)
+					})
+					.then(response => response.json())
+					.then(result => {
+						if (result.success) {
+							loadURL("/admin/user", $('#main'));
+						}
+					});
+				},
+				load: function (event) {
+					fetch(`/user/${userId}`, {credentials: 'include'})
+					.then(response => response.json())
+					.then(result => {
+						userAppModel.username = result.data.username
+						userAppModel.email = result.data.email
+						userAppModel.firstName = result.data.firstName
+						userAppModel.lastName = result.data.lastName
+					});
+				}
+			}
+
+		});
+		userApp.load();
+
+		var $registerForm = $("#smart-form-register").validate({
 
 			// Rules for form validation
 			rules : {
@@ -200,6 +264,12 @@
 				email : {
 					required : true,
 					email : true
+				},
+				firstname : {
+					required : true
+				},
+				lastname : {
+					required : true
 				},
 				password : {
 					required : true,
@@ -212,18 +282,6 @@
 					maxlength : 20,
 					equalTo : '#password'
 				},
-				firstname : {
-					required : true
-				},
-				lastname : {
-					required : true
-				},
-				gender : {
-					required : true
-				},
-				terms : {
-					required : true
-				}
 			},
 
 			// Messages for form validation
@@ -235,6 +293,12 @@
 					required : 'Please enter your email address',
 					email : 'Please enter a VALID email address'
 				},
+				firstname : {
+					required : 'Please select your first name'
+				},
+				lastname : {
+					required : 'Please select your last name'
+				},
 				password : {
 					required : 'Please enter your password'
 				},
@@ -242,18 +306,6 @@
 					required : 'Please enter your password one more time',
 					equalTo : 'Please enter the same password as above'
 				},
-				firstname : {
-					required : 'Please select your first name'
-				},
-				lastname : {
-					required : 'Please select your last name'
-				},
-				gender : {
-					required : 'Please select your gender'
-				},
-				terms : {
-					required : 'You must agree with Terms and Conditions'
-				}
 			},
 
 			// Do not change code below
@@ -262,11 +314,11 @@
 			},
 
 			submitHandler: function(form) {
+				console.log("!!!!!!!!!!!!!!!!!!", form);
 				userApp.submit();
-				// return false
+				return false
 			}
 		});
-
 
 		// START AND FINISH DATE
 		$('#startdate').datepicker({
@@ -286,53 +338,6 @@
 				$('#startdate').datepicker('option', 'maxDate', selectedDate);
 			}
 		});
-
-		let userId = document.getElementById("id").value;
-		userAppModel = {
-			id: userId,
-      username: '',
-      email: '',
-      lastName: '',
-      firstName: ''
-    }
-
-	  userApp = new Vue({
-	    el: '#user-form',
-	    data: userAppModel,
-			methods: {
-			 load: function (event) {
-				 fetch(`/user/${userId}`, {credentials: 'include'})
-				 .then(response => response.json())
-				 .then(result => {
-					 userAppModel.username = result.data.username
-					 userAppModel.email = result.data.email
-					 userAppModel.firstName = result.data.firstName
-					 userAppModel.lastName = result.data.lastName
-				 });
-			 },
-			 submit: function (event) {
-				 var data = {
-					 username: userAppModel.username,
-					 email: userAppModel.email,
-					 firstName: userAppModel.firstName,
-					 lastName: userAppModel.lastName,
-				 };
-				 console.log(data);
-				 fetch(`/user/${userId}`, {
-					 credentials: 'include',
-					 method: 'post',
-					 body: JSON.stringify(data)
-				 })
-				 .then(response => response.json())
-				 .then(result => {
-					//  if (result.success) {
-					// 	 loadURL("/admin/user", $('#main'));
-					//  }
-				 });
-			 },
-		 }
-	 });
-	 userApp.load();
 
 	};
 

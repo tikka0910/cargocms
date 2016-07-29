@@ -92,6 +92,18 @@
 										</label>
 									</section>
 								</div>
+
+								<section>
+									<label class="input"> <i class="icon-append fa fa-lock"></i>
+										<input type="password" name="password" placeholder="Password" id="password" v-model="password">
+										<b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+								</section>
+
+								<section>
+									<label class="input"> <i class="icon-append fa fa-lock"></i>
+										<input type="password" name="passwordConfirm" placeholder="Confirm password">
+										<b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
+								</section>
 <!--
 								<div class="row">
 									<section class="col col-6">
@@ -194,6 +206,7 @@
 			email: '',
 			firstName: '',
 			lastName: '',
+			password: '',
 		}
 
 		userApp = new Vue({
@@ -206,6 +219,7 @@
 						email: userAppModel.email,
 						firstName: userAppModel.firstName,
 						lastName: userAppModel.lastName,
+						password: userAppModel.password,
 					};
 					fetch('/user', {
 						credentials: 'include',
@@ -243,6 +257,17 @@
 				lastname : {
 					required : true
 				},
+				password : {
+					required : true,
+					minlength : 3,
+					maxlength : 20
+				},
+				passwordConfirm : {
+					required : true,
+					minlength : 3,
+					maxlength : 20,
+					equalTo : '#password'
+				},
 			},
 
 			// Messages for form validation
@@ -259,6 +284,13 @@
 				},
 				lastname : {
 					required : 'Please select your last name'
+				},
+				password : {
+					required : 'Please enter your password'
+				},
+				passwordConfirm : {
+					required : 'Please enter your password one more time',
+					equalTo : 'Please enter the same password as above'
 				},
 			},
 
