@@ -40,7 +40,13 @@
 
 					<!-- widget content -->
 					<div class="widget-body no-padding">
-
+            <div class="alert alert-block alert-success" v-show="showChart">
+            	<a class="close" data-dismiss="alert" href="#">×</a>
+            	<h4 class="alert-heading"><i class="fa fa-check-square-o"></i> Check validation!</h4>
+            	<p>
+            		You may also check the form validation by clicking on the form action button. Please try and see the results below!
+            	</p>
+            </div>
 						<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
 							<thead>
 								<tr>
@@ -195,8 +201,7 @@
 					  "sExtends": "text",
 						"sButtonText": "delete",
 					  "fnClick": function ( nButton, oConfig, oFlash ) {
-							let index = userAppModel.selectIndex;
-					  	alert( userAppModel.items[index].id );
+              userApp.delete();
 					  }
 					}
 				]
@@ -231,7 +236,8 @@
 
 	  userAppModel = {
 			selectIndex: -1,
-	    items: []
+	    items: [],
+      showChart: false
 	  }
 
 	  userApp = new Vue({
@@ -248,7 +254,41 @@
 			 selection:  function (index) {
 				 userAppModel.selectIndex = index;
 				 console.log('userAppModel.selectIndex', userAppModel.selectIndex);
-			 }
+			 },
+       delete: function() {
+         let index = userAppModel.selectIndex;
+         if (index < 0) {
+           alert(`沒有選擇任何會員！`);
+           return false;
+         }
+         alert( userAppModel.items[index].id );
+
+				 fetch(`/user/${userAppModel.items[index].id}`, {
+            credentials: 'include',
+            method: 'DELETE',
+         })
+				 .then(response => response.json())
+				 .then(result => {
+           console.log("result=>", result);
+           console.log("result.success=>", result.success);
+           console.log("before userAppModel=>", userAppModel);
+           this.showChart = result.success;
+           if (result.success) {
+             userAppModel.items.splice(userAppModel.selectIndex, 1);
+             console.log("after userAppModel=>", userAppModel);
+             userAppModel.selectIndex = -1;
+             return true;
+           } else {
+             alert(`刪除會員失敗！errorMessage:${result.message}`);
+             return false;
+           }
+				 });
+       },
+       computed: {
+          showChart: function() {
+            return this.showChart;
+          } // end showChart
+       }
 		 }
 	  })
 
