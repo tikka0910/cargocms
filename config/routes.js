@@ -107,6 +107,7 @@ module.exports.routes = {
     }
   },
 
+//----- Admin User -----
   '/admin/user': {
     view: 'admin/user/index',
     locals: {
@@ -114,11 +115,20 @@ module.exports.routes = {
     }
   },
 
-  '/admin/post': {
-    view: 'admin/post/index',
+  '/admin/user/create': {
+    view: 'admin/user/create',
     locals: {
       layout: false
     }
   },
+
+//----- Admin Post -----
+    '/admin/post': {
+      view: 'admin/post/index',
+      locals: {
+        layout: false
+      }
+    },
+
   '/admin/debug': 'AdminController.debug',
 };
