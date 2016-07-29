@@ -121,14 +121,19 @@ module.exports.routes = {
       layout: false
     }
   },
+  '/admin/user/edit/:id': {
+    view: 'admin/user/edit',
+    locals: {
+      layout: false
+    }
+  },
 
-//----- Admin Post -----
-    '/admin/post': {
-      view: 'admin/post/index',
-      locals: {
-        layout: false
-      }
-    },
+  '/admin/post': {
+    view: 'admin/post/index',
+    locals: {
+      layout: false
+    }
+  },
 
   '/admin/debug': 'AdminController.debug',
 };
