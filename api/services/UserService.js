@@ -24,19 +24,20 @@ module.exports = {
     }
   },
 
-  create: async (user = {
+  create: async ({
     username,
     email,
     firstName,
     lastName,
-    locale
+    locale,
+    password,
   }) => {
-    let data = false;
     try {
-      sails.log.info('create user service=>', user);
-      const createdUser = await User.create(user);
-      return createdUser;
+      const user = await User.create({ username, email, firstName, lastName, locale });
+      await Passport.create({ provider: 'local', password, UserId: user.id });
+      return user;
     } catch (e) {
+      sails.log.error(e);
       throw e;
     }
   },
