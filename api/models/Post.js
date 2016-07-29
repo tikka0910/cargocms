@@ -22,7 +22,21 @@ module.exports = {
     Post.belongsToMany(Tag,  {through: 'PostTag'})
   },
   options: {
-    classMethods: {},
+    classMethods: {
+      findByTagId: async (id) => {
+        try {
+          return await Post.findAll({
+            include: {
+              model: Tag,
+              where: { id },
+            }
+          });
+        } catch (e) {
+          sails.log.error(e);
+          throw e;
+        }
+      }
+    },
     instanceMethods: {},
     hooks: {}
   }
