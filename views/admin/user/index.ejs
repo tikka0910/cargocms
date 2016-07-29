@@ -53,7 +53,7 @@
 									<th data-hide="phone,tablet"> 全名</th>
 								</tr>
 							</thead>
-							<tbody id="userTableBody">
+							<tbody id="user_tableBody">
 								<tr v-for="user in items">
 									<td>{{ user.id }}</td>
 									<td>{{ user.username }}</td>
@@ -86,7 +86,7 @@
 
 </section>
 <!-- end widget grid -->
-
+<script src="js/app/user.js"></script>
 <script type="text/javascript">
 
 	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -317,19 +317,5 @@
 			});
 		});
 	});
-
-	var userListData = {
-		items: []
-	}
-
-	var userList = new Vue({
-	  el: '#userTableBody',
-	  data: userListData
-	})
-
-	fetch('/user', {credentials: 'include'})
-	.then(response => response.json())
-	.then(result => userListData.items = result.data.items);
-
 
 </script>
