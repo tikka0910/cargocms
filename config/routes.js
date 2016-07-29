@@ -71,7 +71,11 @@ module.exports.routes = {
   'delete /user/:userId': 'UserController.delete',
   'post /user': 'UserController.create',
 
-
+  //----- PostController -----
+  'post /post': 'PostController.create',
+  'get /post/:postId': 'PostController.findOne',
+  'put /post/:postId': 'PostController.update',
+  'delete /post/:postId': 'PostController.delete',
 
 
   /***************************************************************************
