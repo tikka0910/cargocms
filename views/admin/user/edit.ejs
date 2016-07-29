@@ -61,7 +61,7 @@
 					<div class="widget-body no-padding">
 
 						<form id="user-form" class="smart-form">
-							<input type="text" name="id" id="id" hidden="hidden">
+							<input type="text" name="id" id="id" hidden="hidden" value="<%= req.params.id %>">
 							<header>
 								Update form
 							</header>
@@ -122,7 +122,7 @@
 							</fieldset>
 							<footer>
 								<button type="submit" class="btn btn-primary">
-									Validate Form
+									Submmit Form
 								</button>
 							</footer>
 						</form>
@@ -259,6 +259,11 @@
 			// Do not change code below
 			errorPlacement : function(error, element) {
 				error.insertAfter(element.parent());
+			},
+
+			submitHandler: function(form) {
+				userApp.submit();
+				// return false
 			}
 		});
 
@@ -303,6 +308,26 @@
 					 userAppModel.email = result.data.email
 					 userAppModel.firstName = result.data.firstName
 					 userAppModel.lastName = result.data.lastName
+				 });
+			 },
+			 submit: function (event) {
+				 var data = {
+					 username: userAppModel.username,
+					 email: userAppModel.email,
+					 firstName: userAppModel.firstName,
+					 lastName: userAppModel.lastName,
+				 };
+				 console.log(data);
+				 fetch(`/user/${userId}`, {
+					 credentials: 'include',
+					 method: 'post',
+					 body: JSON.stringify(data)
+				 })
+				 .then(response => response.json())
+				 .then(result => {
+					//  if (result.success) {
+					// 	 loadURL("/admin/user", $('#main'));
+					//  }
 				 });
 			 },
 		 }
