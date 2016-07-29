@@ -35,7 +35,7 @@ module.exports = {
     try {
       sails.log.info('create user service=>', user);
       const createdUser = await User.create(user);
-      return { data: createdUser.dataValues };
+      return createdUser;
     } catch (e) {
       throw e;
     }

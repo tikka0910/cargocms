@@ -1,5 +1,5 @@
 describe('about User Controller operation.', function() {
-  it('create User should success.', async (done) => {
+  it.only('create User should success.', async (done) => {
     const createThisUser = {
       username: 'xxxx',
       email: 'xxx@xxx.xxx',

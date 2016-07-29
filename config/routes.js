@@ -71,7 +71,12 @@ module.exports.routes = {
   'delete /user/:userId': 'UserController.delete',
   'post /user': 'UserController.create',
 
-
+  //----- PostController -----
+  'get /post': 'PostController.index',
+  'post /post': 'PostController.create',
+  'get /post/:postId': 'PostController.findOne',
+  'put /post/:postId': 'PostController.update',
+  'delete /post/:postId': 'PostController.delete',
 
 
   /***************************************************************************
@@ -102,12 +107,14 @@ module.exports.routes = {
     }
   },
 
+//----- Admin User -----
   '/admin/user': {
     view: 'admin/user/index',
     locals: {
       layout: false
     }
   },
+
   '/admin/user/create': {
     view: 'admin/user/create',
     locals: {
@@ -120,5 +127,13 @@ module.exports.routes = {
       layout: false
     }
   },
+
+  '/admin/post': {
+    view: 'admin/post/index',
+    locals: {
+      layout: false
+    }
+  },
+
   '/admin/debug': 'AdminController.debug',
 };
