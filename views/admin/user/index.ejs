@@ -181,14 +181,16 @@
 					  "sExtends": "text",
 						"sButtonText": "Create",
 					  "fnClick": function ( nButton, oConfig, oFlash ) {
-							window.location.replace("/admin/#/admin/user/create");
+							loadURL("/admin/user/create", $('#main'));
 					  }
 					},
 					{
 					  "sExtends": "text",
 						"sButtonText": "edit",
 					  "fnClick": function ( nButton, oConfig, oFlash ) {
-					  	alert( 'Mouse click' );
+							let index = userAppModel.selectIndex;
+					  	let userId = userAppModel.items[index].id;
+					  	loadURL(`/admin/user/edit/${userId}`, $('#main'));
 					  }
 					},
 					{

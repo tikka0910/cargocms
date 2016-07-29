@@ -114,5 +114,11 @@ module.exports.routes = {
       layout: false
     }
   },
+  '/admin/user/edit/:id': {
+    view: 'admin/user/edit',
+    locals: {
+      layout: false
+    }
+  },
   '/admin/debug': 'AdminController.debug',
 };
