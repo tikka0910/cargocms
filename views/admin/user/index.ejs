@@ -262,7 +262,7 @@
            alert(`沒有選擇任何會員！`);
            return false;
          }
-         alert( userAppModel.items[index].id );
+         console.log("id=>", userAppModel.items[index].id);
 
 				 fetch(`/user/${userAppModel.items[index].id}`, {
             credentials: 'include',
