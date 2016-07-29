@@ -1,4 +1,16 @@
 module.exports = {
+  index: async (req, res) => {
+    try {
+      res.ok({
+        message: 'Create post success.',
+        data: await Post.findAll({ include: Tag }),
+      });
+    } catch (e) {
+      sails.log.error(e);
+      res.serverError({ message: e.message, data: {}});
+    }
+  },
+
   create: async (req, res) => {
     try {
       const { post, tags} = req.body

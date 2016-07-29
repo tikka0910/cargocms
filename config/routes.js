@@ -72,6 +72,7 @@ module.exports.routes = {
   'post /user': 'UserController.create',
 
   //----- PostController -----
+  'get /post': 'PostController.index',
   'post /post': 'PostController.create',
   'get /post/:postId': 'PostController.findOne',
   'put /post/:postId': 'PostController.update',
@@ -108,6 +109,13 @@ module.exports.routes = {
 
   '/admin/user': {
     view: 'admin/user/index',
+    locals: {
+      layout: false
+    }
+  },
+
+  '/admin/post': {
+    view: 'admin/post/index',
     locals: {
       layout: false
     }

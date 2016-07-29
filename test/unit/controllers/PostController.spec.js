@@ -47,6 +47,19 @@ describe('about Post Controller operation.', function() {
       }
     });
 
+    it('get all post', async(done) => {
+      try {
+        const res = await request(sails.hooks.http.app)
+        .get(`/post`);
+        sails.log.info(JSON.stringify(res.body, null, 2));
+        res.status.should.be.eq(200);
+        res.body.should.be.Object;
+        done()
+      } catch (e) {
+        done(e)
+      }
+    });
+
     it('findOne Post should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
