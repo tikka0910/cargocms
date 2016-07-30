@@ -36,7 +36,6 @@ let userApp = new Vue({
     update: function (event) {
 
       let body = userAppModel.data.item;
-      console.log(`/user/${userAppModel.data.item.id}`, body);
       fetch(`/user/${userAppModel.data.item.id}`, {
         credentials: 'include',
         method: 'post',
@@ -53,10 +52,12 @@ let userApp = new Vue({
       fetch(`/user/${userAppModel.data.item.id}`, {credentials: 'include'})
       .then(response => response.json())
       .then(result => {
-        userAppModel.data.item.username = result.data.username
-        userAppModel.data.item.email = result.data.email
-        userAppModel.data.item.firstName = result.data.firstName
-        userAppModel.data.item.lastName = result.data.lastName
+        if (result.success) {
+          userAppModel.data.item.username = result.data.username
+          userAppModel.data.item.email = result.data.email
+          userAppModel.data.item.firstName = result.data.firstName
+          userAppModel.data.item.lastName = result.data.lastName
+        }
       });
     },
     setupForm: (type) => {
