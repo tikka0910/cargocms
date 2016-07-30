@@ -2,7 +2,7 @@
 <fieldset>
   <section>
     <label class="input"> <i class="icon-append fa fa-user"></i>
-      <input type="text" name="username" placeholder="Username" v-model="username">
+      <input type="text" name="username" placeholder="Username" v-model="data.item.username">
       <b class="tooltip tooltip-bottom-right">Needed to enter the website</b> </label>
   </section>
 
@@ -10,26 +10,26 @@
 
   <section>
     <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
-      <input type="email" name="email" placeholder="Email address" v-model="email">
+      <input type="email" name="email" placeholder="Email address" v-model="data.item.email">
       <b class="tooltip tooltip-bottom-right">Needed to verify your account</b> </label>
   </section>
 
   <div class="row">
     <section class="col col-6">
       <label class="input">
-        <input type="text" name="firstName" placeholder="First name" v-model="firstName">
+        <input type="text" name="firstName" placeholder="First name" v-model="data.item.firstName">
       </label>
     </section>
     <section class="col col-6">
       <label class="input">
-        <input type="text" name="lastName" placeholder="Last name" v-model="lastName">
+        <input type="text" name="lastName" placeholder="Last name" v-model="data.item.lastName">
       </label>
     </section>
   </div>
 
   <section>
     <label class="input"> <i class="icon-append fa fa-lock"></i>
-      <input type="password" name="password" placeholder="Password" id="password" v-model="password">
+      <input type="password" name="password" placeholder="Password" id="password" v-model="data.item.password">
       <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
   </section>
 
