@@ -63,75 +63,11 @@
 						<form id="smart-form-register" class="smart-form">
 							<input type="text" name="id" id="id" hidden="hidden" value="<%= req.params.id %>">
 							<header>
-								Registration form
+							  Registration form
 							</header>
 
-							<fieldset>
-								<section>
-									<label class="input"> <i class="icon-append fa fa-user"></i>
-										<input type="text" name="username" placeholder="Username" v-model="username">
-										<b class="tooltip tooltip-bottom-right">Needed to enter the website</b> </label>
-								</section>
+							<%- include form.ejs %>
 
-
-
-								<section>
-									<label class="input"> <i class="icon-append fa fa-envelope-o"></i>
-										<input type="email" name="email" placeholder="Email address" v-model="email">
-										<b class="tooltip tooltip-bottom-right">Needed to verify your account</b> </label>
-								</section>
-
-								<div class="row">
-									<section class="col col-6">
-										<label class="input">
-											<input type="text" name="firstName" placeholder="First name" v-model="firstName">
-										</label>
-									</section>
-									<section class="col col-6">
-										<label class="input">
-											<input type="text" name="lastName" placeholder="Last name" v-model="lastName">
-										</label>
-									</section>
-								</div>
-
-								<section>
-									<label class="input"> <i class="icon-append fa fa-lock"></i>
-										<input type="password" name="password" placeholder="Password" id="password" v-model="password">
-										<b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
-								</section>
-
-								<section>
-									<label class="input"> <i class="icon-append fa fa-lock"></i>
-										<input type="password" name="passwordConfirm" placeholder="Confirm password">
-										<b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
-								</section>
-<!--
-								<div class="row">
-									<section class="col col-6">
-										<label class="select">
-											<select name="gender">
-												<option value="0" selected="" disabled="">Gender</option>
-												<option value="1">Male</option>
-												<option value="2">Female</option>
-												<option value="3">Prefer not to answer</option>
-											</select> <i></i> </label>
-									</section>
-									<section class="col col-6">
-										<label class="input"> <i class="icon-append fa fa-calendar"></i>
-											<input type="text" name="request" placeholder="Request activation on" class="datepicker" data-dateformat='dd/mm/yy'>
-										</label>
-									</section>
-								</div>
-
-								<section>
-									<label class="checkbox">
-										<input type="checkbox" name="subscription" id="subscription">
-										<i></i>I want to receive news and special offers</label>
-									<label class="checkbox">
-										<input type="checkbox" name="terms" id="terms">
-										<i></i>I agree with the Terms and Conditions</label>
-								</section> -->
-							</fieldset>
 							<footer>
 								<button type="submit" class="btn btn-primary">
 									Submmit Form
@@ -198,15 +134,13 @@
 	// PAGE RELATED SCRIPTS
 
 	// pagefunction
-
-	var userApp, userAppModel;
 	var pagefunction = function() {
 
 
 		let userId = document.getElementById("id").value;
 
 
-		userAppModel = {
+		let userAppModel = {
 			id: userId,
 			username: '',
 			email: '',
@@ -214,7 +148,7 @@
 			lastName: '',
 			password: '',
 		}
-		userApp = new Vue({
+		let userApp = new Vue({
 			el: '#smart-form-register',
 			data: userAppModel,
 			methods: {
