@@ -61,7 +61,7 @@
 					<div class="widget-body no-padding">
 
 						<form id="smart-form-register" class="smart-form">
-							<input type="text" name="id" id="id" hidden="hidden" value="<%= req.params.id %>">
+							<input type="text" name="id" id="id" v-model="id" hidden="hidden" value="<%= req.params.id %>">
 							<header>
 							  Registration form
 							</header>
@@ -136,12 +136,8 @@
 	// pagefunction
 	var pagefunction = function() {
 
-
-		let userId = document.getElementById("id").value;
-
-
 		let userAppModel = {
-			id: userId,
+			id: '',
 			username: '',
 			email: '',
 			firstName: '',
@@ -161,7 +157,7 @@
 						password: userAppModel.password,
 					};
 
-					fetch(`/user/${userId}`, {
+					fetch(`/user/${userAppModel.id}`, {
 						credentials: 'include',
 						method: 'post',
 						body: JSON.stringify(data)
@@ -174,7 +170,7 @@
 					});
 				},
 				load: function (event) {
-					fetch(`/user/${userId}`, {credentials: 'include'})
+					fetch(`/user/${userAppModel.id}`, {credentials: 'include'})
 					.then(response => response.json())
 					.then(result => {
 						userAppModel.username = result.data.username
@@ -187,6 +183,7 @@
 
 		});
 		userApp.load();
+
 
 		var $registerForm = $("#smart-form-register").validate({
 
