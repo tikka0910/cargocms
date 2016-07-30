@@ -29,7 +29,7 @@ let userApp = new Vue({
       .then(response => response.json())
       .then(result => {
         if (result.success) {
-          loadURL("/admin/user", $('#main'));
+          location.href = `/admin/#/admin/user`
         }
       });
     },
@@ -45,7 +45,7 @@ let userApp = new Vue({
       .then(response => response.json())
       .then(result => {
         if (result.success) {
-          loadURL("/admin/user", $('#main'));
+          location.href = `/admin/#/admin/user`
         }
       });
     },
@@ -169,7 +169,7 @@ let userApp = new Vue({
              "sExtends": "text",
              "sButtonText": "Create",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               loadURL("/admin/user/create", $('#main'));
+               location.href = `/admin/#/admin/user/create`
              }
            },
            {
@@ -178,8 +178,7 @@ let userApp = new Vue({
              "fnClick": function ( nButton, oConfig, oFlash ) {
                let index = userAppModel.view.table.selectIndex;
                let userId = userAppModel.data.items[index].id;
-               console.log("edit userId", userId);
-               loadURL(`/admin/user/edit/${userId}`, $('#main'));
+               location.href = `/admin/#/admin/user/edit/${userId}`
              }
            },
            {
