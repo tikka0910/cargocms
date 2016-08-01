@@ -54,11 +54,35 @@
 		    show: ({type, desc}) => {
 					messageModel.type = type;
 					messageModel.desc = desc;
-		    },
-				close: () => {
-					messageModel.type = "";
-					messageModel.desc = "";
-				}
+					var iconSmall;
+					var color;
+					switch (type) {
+						case 'success':
+							iconSmall = "fa-fw fa fa-check";
+							color = "#356635";
+							break;
+						case 'error':
+							iconSmall = "fa-fw fa fa-times";
+							color = "#953b39";
+							break;
+						case 'warning':
+							iconSmall = "fa-fw fa fa-warning";
+							color = "#dfb56c";
+							break;
+						default:
+							iconSmall = "fa-fw fa fa-info";
+							color = "#305d8c";
+							break;
+					}
+					$.smallBox({
+            title: desc,
+            content: "",
+            color: color,
+            iconSmall: iconSmall,
+            sound: false,
+            timeout: 3000
+          });
+		    }
 			}
 		});
 
