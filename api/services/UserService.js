@@ -49,24 +49,30 @@ module.exports = {
     firstName,
     lastName,
     locale,
+    password,
   }) => {
-    let data = false
-    let message = '';
     try {
       sails.log.info('update user service=>', user);
-      let updatedUser = await User.findById(parseInt(user.id, 10));
+      let updatedUser = await User.findOne({
+        where: {
+          id: parseInt(user.id, 10)
+        },
+        include: Passport,
+      });
       if (updatedUser) {
+        if (updatedUser.Passports[0].password !== user.password) {
+          let passport = await Passport.findById(updatedUser.Passports[0].id);
+          passport.password = user.password;
+          await passport.save();
+        }
         updatedUser.username = user.username;
         updatedUser.email = user.email;
         updatedUser.firstName = user.firstName;
         updatedUser.lastName = user.lastName;
         updatedUser.locale = user.locale;
         updatedUser = await updatedUser.save();
-        data = updatedUser.dataValues;
-      } else {
-        message = `user id ${userId} does not exist`;
       }
-      return { data, message };
+      return updatedUser;
     } catch (e) {
       throw e;
     }

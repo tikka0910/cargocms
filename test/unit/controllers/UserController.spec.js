@@ -101,7 +101,7 @@ describe('about User Controller operation.', function() {
     });
   });
 
-  describe('update user', () => {
+  describe.only('update user', () => {
     let updateThisUser;
     const updatedUser = {
       username: 'updated',
@@ -109,17 +109,20 @@ describe('about User Controller operation.', function() {
       firstName: 'Kent',
       lastName: 'Chen',
       locale: 'hk',
+      password: '000000',
     };
+    let originPassport;
     before(async (done) => {
       try {
-        updateThisUser = await UserService.create({
+        updateThisUser = await User.create({
           username: 'updateThisUser',
           email: 'updateThisUser@xxx.xxx',
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',
         });
-        sails.log.info('updateThisUser.data.id=>', updateThisUser.data.id);
+        originPassport = await Passport.create({provider: 'local', password: '123123', UserId: updateThisUser.id});
+        sails.log.info('updateThisUser.data.id=>', updateThisUser.id);
         done();
       } catch (e) {
         done(e);
@@ -129,8 +132,9 @@ describe('about User Controller operation.', function() {
     it('should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
-        .put(`/user/${updateThisUser.data.id}`)
+        .post(`/user/${updateThisUser.id}`)
         .send(updatedUser);
+        res.status.should.eq(200);
         res.body.data.locale.should.be.equal('hk');
         res.body.data.username.should.be.equal('updated');
         done();

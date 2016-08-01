@@ -46,7 +46,10 @@ module.exports = {
         id: userId,
         ...data,
       });
-      res.ok(user);
+      res.ok({
+        message: 'Update user success.',
+        data: user,
+      });
     } catch (e) {
       res.serverError({ message: e.message, data: {}});
     }

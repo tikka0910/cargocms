@@ -18,7 +18,7 @@ describe('about User Service operation.', function() {
       done(e);
     }
   });
-  
+
   describe('find user', () => {
     let findThisUser;
     before(async (done) => {
@@ -91,7 +91,9 @@ describe('about User Service operation.', function() {
       firstName: 'Kent',
       lastName: 'Chen',
       locale: 'hk',
+      password: '000000',
     };
+    let originPassport;
     before(async (done) => {
       try {
         updateThisUser = await User.create({
@@ -101,6 +103,7 @@ describe('about User Service operation.', function() {
           lastName: 'test',
           locale: 'zh_TW',
         });
+        originPassport = await Passport.create({provider: 'local', password: '123123', UserId: updateThisUser.id});
         sails.log.info('updateThisUser=>', updateThisUser);
         done();
       } catch (e) {
@@ -115,8 +118,13 @@ describe('about User Service operation.', function() {
           ...updatedUserWithJson,
         });
         sails.log.info('update user service spec=>', result);
-        result.data.id.should.be.equal(updateThisUser.dataValues.id);
-        result.data.locale.should.be.equal(updatedUserWithJson.locale);
+        result.id.should.be.equal(updateThisUser.dataValues.id);
+        result.locale.should.be.equal(updatedUserWithJson.locale);
+
+        let resultPassport = await Passport.findById(originPassport.id);
+        resultPassport.password.should.be.not.equal(
+          originPassport.password
+        );
         done();
       } catch (e) {
         done(e);
