@@ -25,9 +25,9 @@ describe('about User model operation.', function() {
         lastName: 'test',
         locale: 'zh_TW',
       });
-      sails.log.info('duplicateUserName.data.id=>', duplicateUserName.dataValues.id);
-      sails.log.info('duplicateUserEmail.data.id=>', duplicateUserEmail.dataValues.id);
-      sails.log.info('duplicateUserNameEmail.data.id=>', duplicateUserNameEmail.dataValues.id);
+      sails.log.info('duplicateUserName.data.id=>', duplicateUserName.id);
+      sails.log.info('duplicateUserEmail.data.id=>', duplicateUserEmail.id);
+      sails.log.info('duplicateUserNameEmail.data.id=>', duplicateUserNameEmail.id);
       done();
     } catch (e) {
       done(e);
@@ -44,8 +44,8 @@ describe('about User model operation.', function() {
         locale: 'zh_TW',
       });
       sails.log.info('create user model spec =>', createThisUser);
-      createThisUser.dataValues.should.be.Object;
-      createThisUser.dataValues.locale.should.be.equal('zh_TW');
+      createThisUser.should.be.Object;
+      createThisUser.locale.should.be.equal('zh_TW');
       done();
     } catch (e) {
       done(e);
@@ -55,16 +55,17 @@ describe('about User model operation.', function() {
   it('create user with duplicate username should failed.', async (done) => {
     try {
       const res = await User.create({
-        username: duplicateUserName.dataValues.username,
+        username: duplicateUserName.username,
         email: 'createThisUserWithDuplicateUserName@xxx.xxx',
         firstName: 'test',
         lastName: 'test',
         locale: 'zh_TW',
       });
       sails.log.info('create user model spec =>', res);
-      done(new Error);
+      done(new Error("should be 'unique violation'"));
     } catch (e) {
-      sails.log.info('error.type=>', e.errors[0].type);
+      sails.log.info('!!!error.type=>', e);
+        sails.log.info('error.type=>', e.errors[0].type);
       const checkError = e.errors[0].type === 'unique violation';
       if (checkError) done();
       else done(e);
@@ -75,12 +76,12 @@ describe('about User model operation.', function() {
     try {
       const res = await User.create({
         username: 'createThisUserWithDuplicateEmail',
-        email: duplicateUserName.dataValues.email,
+        email: duplicateUserName.email,
         firstName: 'test',
         lastName: 'test',
         locale: 'zh_TW',
       });
-      done(new Error);
+      done(new Error("should be 'unique violation'"));
     } catch (e) {
       sails.log.info('error.type=>', e.errors[0].type);
       const checkError = e.errors[0].type === 'unique violation';
@@ -92,13 +93,13 @@ describe('about User model operation.', function() {
   it('create user with duplicate username and email should failed.', async (done) => {
     try {
       const res = await User.create({
-        username: duplicateUserNameEmail.dataValues.username,
-        email: duplicateUserNameEmail.dataValues.email,
+        username: duplicateUserNameEmail.username,
+        email: duplicateUserNameEmail.email,
         firstName: 'test',
         lastName: 'test',
         locale: 'zh_TW',
       });
-      done(new Error);
+      done(new Error("should be 'unique violation'"));
     } catch (e) {
       sails.log.info('error.type=>', e.errors[0].type);
       const checkError = e.errors[0].type === 'unique violation';
