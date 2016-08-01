@@ -225,7 +225,7 @@ let userApp = new Vue({
     delete: function() {
       const index = userAppModel.view.table.selectIndex;
       if (index < 0) {
-        alert(`沒有選擇任何會員！`);
+        messageApp.show({desc: '沒有選擇任何會員！', type: 'error'})
         return false;
       }
 
