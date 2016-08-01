@@ -43,7 +43,20 @@ module.exports = {
     User.belongsToMany(Role, {through: 'UserRole'});
   },
   options: {
-    classMethods: {},
+    classMethods: {
+      findOneWithPassport: async ({userId}) => {
+        console.log("userId", userId);
+        return await User.findOne({
+          where: {
+            id: userId
+          },
+          include: {
+              model: Passport,
+              where: {provider: 'local'}
+          }
+        });
+      }
+    },
     instanceMethods: {},
     hooks: {
       afterCreate: async (user, options) => {
