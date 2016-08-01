@@ -15,7 +15,7 @@ describe('about Post model operation.', function() {
     }
   });
 
-  describe.only('about Post model operation.', function() {
+  describe('about Post model operation.', function() {
     let post;
     let tag;
     before(async (done) => {
