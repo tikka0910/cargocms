@@ -49,7 +49,7 @@ module.exports = {
     firstName,
     lastName,
     locale,
-    password,
+    Passports,
   }) => {
     try {
       sails.log.info('update user service=>', user);
@@ -60,9 +60,10 @@ module.exports = {
         include: Passport,
       });
       if (updatedUser) {
-        if (updatedUser.Passports[0].password !== user.password) {
-          let passport = await Passport.findById(updatedUser.Passports[0].id);
-          passport.password = user.password;
+        const passport = await Passport.findById(updatedUser.Passports[0].id);
+        const isOldPassword = await passport.validatePassword(user.Passports[0].password, passport);
+        if (!isOldPassword) {
+          passport.password = user.Passports[0].password;
           await passport.save();
         }
         updatedUser.username = user.username;

@@ -83,7 +83,7 @@ describe('about User Service operation.', function() {
     });
   });
 
-  describe('update user', () => {
+  describe.only('update user', () => {
     let updateThisUser;
     const updatedUserWithJson = {
       username: 'updatedUserService',
@@ -91,7 +91,7 @@ describe('about User Service operation.', function() {
       firstName: 'Kent',
       lastName: 'Chen',
       locale: 'hk',
-      password: '000000',
+      Passports: [{ password: '000000' }],
     };
     let originPassport;
     before(async (done) => {

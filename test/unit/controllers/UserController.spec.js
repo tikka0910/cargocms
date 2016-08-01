@@ -101,7 +101,7 @@ describe('about User Controller operation.', function() {
     });
   });
 
-  describe.only('update user', () => {
+  describe('update user', () => {
     let updateThisUser;
     const updatedUser = {
       username: 'updated',
@@ -109,7 +109,7 @@ describe('about User Controller operation.', function() {
       firstName: 'Kent',
       lastName: 'Chen',
       locale: 'hk',
-      password: '000000',
+      Passports: [{ password: '000000' }],
     };
     let originPassport;
     before(async (done) => {
