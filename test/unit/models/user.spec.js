@@ -1,88 +1,110 @@
-describe.skip('about User model operation.', function() {
-  it('create User should success.', async (done) => {
+describe('about User model operation.', function() {
+  let duplicateUserName;
+  let duplicateUserEmail;
+  let duplicateUserNameEmail;
+  before(async (done) => {
     try {
-      // let users;
-      let users
-      users.id.should.be.INTEGER;
+      duplicateUserName = await User.create({
+        username: 'aaa',
+        email: 'aaa@aaa.aaa',
+        firstName: 'test',
+        lastName: 'test',
+        locale: 'zh_TW',
+      });
+      duplicateUserEmail = await User.create({
+        username: 'bbb',
+        email: 'bbb@bbb.bbb',
+        firstName: 'test',
+        lastName: 'test',
+        locale: 'zh_TW',
+      });
+      duplicateUserNameEmail = await User.create({
+        username: 'ccc',
+        email: 'ccc@ccc.ccc',
+        firstName: 'test',
+        lastName: 'test',
+        locale: 'zh_TW',
+      });
+      sails.log.info('duplicateUserName.data.id=>', duplicateUserName.dataValues.id);
+      sails.log.info('duplicateUserEmail.data.id=>', duplicateUserEmail.dataValues.id);
+      sails.log.info('duplicateUserNameEmail.data.id=>', duplicateUserNameEmail.dataValues.id);
       done();
     } catch (e) {
       done(e);
     }
   });
 
-  describe('find user', () => {
-    let testFind;
-    before(async (done) => {
-      testFind  = await User.create({
-        username: 'test',
-        email: 'test@gmail.com',
-        age: 18
+  it('create User should success.', async (done) => {
+    try {
+      const createThisUser = await User.create({
+        username: 'createThisUserModel',
+        email: 'createThisUserModel@xxx.xxx',
+        firstName: 'test',
+        lastName: 'test',
+        locale: 'zh_TW',
       });
+      sails.log.info('create user model spec =>', createThisUser);
+      createThisUser.dataValues.should.be.Object;
+      createThisUser.dataValues.locale.should.be.equal('zh_TW');
       done();
-    });
-
-    it('should success.', async (done) => {
-      try {
-        // let users;
-        let findUser;
-        findUser.id.should.be.equal(testFind.id);
-        done();
-      } catch (e) {
-        done(e);
-      }
-    });
-
+    } catch (e) {
+      done(e);
+    }
   });
 
-  describe('delete user', () => {
-
-    let testDel;
-    before(async (done) => {
-      testDel  = await User.create({
-        username: 'test',
-        email: 'test@gmail.com',
-        age: 18
+  it('create user with duplicate username should failed.', async (done) => {
+    try {
+      const res = await User.create({
+        username: duplicateUserName.dataValues.username,
+        email: 'createThisUserWithDuplicateUserName@xxx.xxx',
+        firstName: 'test',
+        lastName: 'test',
+        locale: 'zh_TW',
       });
-      done();
-    });
-
-    it('should success.', async (done) => {
-      try {
-        // let users;
-        let delUser;
-
-        let check = await User.findById(testDel.id);
-        should.not.exist(check);
-        done();
-      } catch (e) {
-        done(e);
-      }
-    });
+      sails.log.info('create user model spec =>', res);
+      done(new Error);
+    } catch (e) {
+      sails.log.info('error.type=>', e.errors[0].type);
+      const checkError = e.errors[0].type === 'unique violation';
+      if (checkError) done();
+      else done(e);
+    }
   });
 
-  describe('update user', () => {
-    let testUpdate;
-    before(async (done) => {
-      testUpdate  = await User.create({
-        username: 'test',
-        email: 'test@gmail.com',
-        age: 18
+  it('create user with duplicate email should failed.', async (done) => {
+    try {
+      const res = await User.create({
+        username: 'createThisUserWithDuplicateEmail',
+        email: duplicateUserName.dataValues.email,
+        firstName: 'test',
+        lastName: 'test',
+        locale: 'zh_TW',
       });
-      done();
-    });
+      done(new Error);
+    } catch (e) {
+      sails.log.info('error.type=>', e.errors[0].type);
+      const checkError = e.errors[0].type === 'unique violation';
+      if (checkError) done();
+      else done(e);
+    }
+  });
 
-    it('update user name、email、age should success.', async (done) => {
-      try {
-        // let users;
-        let updateUser;
-        updateUser.username.should.be.not.equal(testUpdate.username);
-        updateUser.email.should.be.not.equal(testUpdate.email);
-        updateUser.age.should.be.not.equal(testUpdate.age);
-        done();
-      } catch (e) {
-        done(e);
-      }
-    });
+  it('create user with duplicate username and email should failed.', async (done) => {
+    try {
+      const res = await User.create({
+        username: duplicateUserNameEmail.dataValues.username,
+        email: duplicateUserNameEmail.dataValues.email,
+        firstName: 'test',
+        lastName: 'test',
+        locale: 'zh_TW',
+      });
+      done(new Error);
+    } catch (e) {
+      sails.log.info('error.type=>', e.errors[0].type);
+      const checkError = e.errors[0].type === 'unique violation';
+      if (checkError) done();
+      else done(e);
+    }
   });
 
 });

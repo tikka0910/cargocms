@@ -17,7 +17,7 @@ describe('about User Service operation.', function() {
       done(e);
     }
   });
-
+  
   describe('find user', () => {
     let findThisUser;
     before(async (done) => {

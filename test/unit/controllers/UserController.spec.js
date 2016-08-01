@@ -1,38 +1,4 @@
 describe('about User Controller operation.', function() {
-  let duplicateUserName;
-  let duplicateUserEmail;
-  let duplicateUserNameEmail;
-  before(async (done) => {
-    try {
-      duplicateUserName = await UserService.create({
-        username: 'aaa',
-        email: 'aaa@aaa.aaa',
-        firstName: 'test',
-        lastName: 'test',
-        locale: 'zh_TW',
-      });
-      duplicateUserEmail = await UserService.create({
-        username: 'bbb',
-        email: 'bbb@bbb.bbb',
-        firstName: 'test',
-        lastName: 'test',
-        locale: 'zh_TW',
-      });
-      duplicateUserNameEmail = await UserService.create({
-        username: 'ccc',
-        email: 'ccc@ccc.ccc',
-        firstName: 'test',
-        lastName: 'test',
-        locale: 'zh_TW',
-      });
-      sails.log.info('duplicateUserName.data.id=>', duplicateUserName.data.id);
-      sails.log.info('duplicateUserEmail.data.id=>', duplicateUserEmail.data.id);
-      sails.log.info('duplicateUserNameEmail.data.id=>', duplicateUserNameEmail.data.id);
-      done();
-    } catch (e) {
-      done(e);
-    }
-  });
 
   it('create User should success.', async (done) => {
     const createThisUser = {
@@ -50,66 +16,6 @@ describe('about User Controller operation.', function() {
       res.body.should.be.Object;
       res.body.data.email.should.be.equal(createThisUser.email);
       res.body.data.locale.should.be.equal('zh_TW');
-      done();
-    } catch (e) {
-      done(e);
-    }
-  });
-
-  it('create user with duplicate username should failed.', async (done) => {
-    const createThisUser = {
-      username: duplicateUserName.data.username,
-      email: 'createThisUserWithDuplicateUserName@xxx.xxx',
-      firstName: 'test',
-      lastName: 'test',
-      locale: 'zh_TW',
-    };
-    try {
-      const res = await request(sails.hooks.http.app)
-      .post(`/user`)
-      .send(createThisUser);
-      sails.log.info('create user controller spec =>', res.body);
-      res.body.success.should.be.equal(false);
-      done();
-    } catch (e) {
-      done(e);
-    }
-  });
-
-  it('create user with duplicate email should failed.', async (done) => {
-    const createThisUser = {
-      username: 'createThisUserWithDuplicateEmail',
-      email: duplicateUserName.data.email,
-      firstName: 'test',
-      lastName: 'test',
-      locale: 'zh_TW',
-    };
-    try {
-      const res = await request(sails.hooks.http.app)
-      .post(`/user`)
-      .send(createThisUser);
-      sails.log.info('create user controller spec =>', res.body);
-      res.body.success.should.be.equal(false);
-      done();
-    } catch (e) {
-      done(e);
-    }
-  });
-
-  it('create user with duplicate username and email should failed.', async (done) => {
-    const createThisUser = {
-      username: duplicateUserNameEmail.data.username,
-      email: duplicateUserNameEmail.data.email,
-      firstName: 'test',
-      lastName: 'test',
-      locale: 'zh_TW',
-    };
-    try {
-      const res = await request(sails.hooks.http.app)
-      .post(`/user`)
-      .send(createThisUser);
-      sails.log.info('create user controller spec =>', res.body);
-      res.body.success.should.be.equal(false);
       done();
     } catch (e) {
       done(e);
