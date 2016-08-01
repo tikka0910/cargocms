@@ -7,11 +7,12 @@ describe('about User Service operation.', function() {
         firstName: 'test',
         lastName: 'test',
         locale: 'zh_TW',
+        password: '123123123'
       };
       const result = await UserService.create(newUser);
       sails.log.info('create user service spec=>', result);
-      result.data.should.be.Object;
-      result.data.username.should.be.equal(newUser.username);
+      result.should.be.Object;
+      result.username.should.be.equal(newUser.username);
       done();
     } catch (e) {
       done(e);

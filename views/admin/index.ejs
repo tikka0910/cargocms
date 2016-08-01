@@ -28,6 +28,9 @@
 		<!-- END RIBBON -->
 
 		<!-- #MAIN CONTENT -->
+		<div id="message" v-show="desc != ''">
+			<span class="{{type}}">{{desc}}</span>
+		</div>
 		<div id="content"></div>
 		<!-- END #MAIN CONTENT -->
 
@@ -37,6 +40,30 @@
   <% include partials/footer %>
 	<% include partials/scripts %>
 
+
+	<script>
+		var messageModel = {
+			type: "",
+			desc: "",
+		}
+
+		let messageApp = new Vue({
+			el: "#message",
+		  data: messageModel,
+		  methods: {
+		    show: ({type, desc}) => {
+					messageModel.type = type;
+					messageModel.desc = desc;
+		    },
+				close: () => {
+					messageModel.type = "";
+					messageModel.desc = "";
+				}
+			}
+		});
+
+
+	</script>
 </body>
 
 </html>

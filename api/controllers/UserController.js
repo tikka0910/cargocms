@@ -27,7 +27,10 @@ module.exports = {
     try {
       sails.log.info('create user controller=>', data);
       const user = await UserService.create(data);
-      res.ok(user);
+      res.ok({
+        message: 'Create user success.',
+        data: user,
+      });
     } catch (e) {
       res.serverError({ message: e.message, data: {}});
     }
