@@ -1,5 +1,6 @@
 describe('about User Controller operation.', function() {
-  it.only('create User should success.', async (done) => {
+
+  it('create User should success.', async (done) => {
     const createThisUser = {
       username: 'xxxx',
       email: 'xxx@xxx.xxx',
@@ -26,9 +27,9 @@ describe('about User Controller operation.', function() {
       try {
         const res = await request(sails.hooks.http.app).get(`/user`);
         sails.log.info('find users controller spec =>', res.body);
-        res.body.should.be.Array;
-        res.body.length.should.be.Number;
-        res.body.length.should.be.above(0);
+        res.body.data.should.be.Array;
+        res.body.success.should.be.equal(true);
+        res.body.data.items.length.should.be.above(0);
         done();
       } catch (e) {
         done(e);
@@ -41,8 +42,8 @@ describe('about User Controller operation.', function() {
     before(async (done) => {
       try {
         findThisUser = await UserService.create({
-          username: 'xxxx',
-          email: 'xxx@xxx.xxx',
+          username: 'findThisUser',
+          email: 'findThisUser@xxx.xxx',
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',
@@ -74,8 +75,8 @@ describe('about User Controller operation.', function() {
     before(async (done) => {
       try {
         deleteThisUser = await UserService.create({
-          username: 'xxxx',
-          email: 'xxx@xxx.xxx',
+          username: 'deleteThisUser',
+          email: 'deleteThisUser@xxx.xxx',
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',
@@ -112,8 +113,8 @@ describe('about User Controller operation.', function() {
     before(async (done) => {
       try {
         updateThisUser = await UserService.create({
-          username: 'xxxx',
-          email: 'xxx@xxx.xxx',
+          username: 'updateThisUser',
+          email: 'updateThisUser@xxx.xxx',
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',
