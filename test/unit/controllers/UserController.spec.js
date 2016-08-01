@@ -21,6 +21,29 @@ describe('about User Controller operation.', function() {
     }
   });
 
+  it('create duplicate user should failed.', async (done) => {
+    const createThisUser = {
+      username: 'xxxx',
+      email: 'xxx@xxx.xxx',
+      firstName: 'test',
+      lastName: 'test',
+      locale: 'zh_TW',
+    };
+    try {
+      const res1 = await request(sails.hooks.http.app)
+      .post(`/user`)
+      .send(createThisUser);
+      const res = await request(sails.hooks.http.app)
+      .post(`/user`)
+      .send(createThisUser);
+      sails.log.info('create user controller spec =>', res.body);
+      res.body.success.should.be.equal(false);
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
   describe('find all users', () => {
     it('should success.', async (done) => {
       try {
