@@ -1,4 +1,39 @@
 describe('about User Controller operation.', function() {
+  let duplicateUserName;
+  let duplicateUserEmail;
+  let duplicateUserNameEmail;
+  before(async (done) => {
+    try {
+      duplicateUserName = await UserService.create({
+        username: 'aaa',
+        email: 'aaa@aaa.aaa',
+        firstName: 'test',
+        lastName: 'test',
+        locale: 'zh_TW',
+      });
+      duplicateUserEmail = await UserService.create({
+        username: 'bbb',
+        email: 'bbb@bbb.bbb',
+        firstName: 'test',
+        lastName: 'test',
+        locale: 'zh_TW',
+      });
+      duplicateUserNameEmail = await UserService.create({
+        username: 'ccc',
+        email: 'ccc@ccc.ccc',
+        firstName: 'test',
+        lastName: 'test',
+        locale: 'zh_TW',
+      });
+      sails.log.info('duplicateUserName.data.id=>', duplicateUserName.data.id);
+      sails.log.info('duplicateUserEmail.data.id=>', duplicateUserEmail.data.id);
+      sails.log.info('duplicateUserNameEmail.data.id=>', duplicateUserNameEmail.data.id);
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
   it('create User should success.', async (done) => {
     const createThisUser = {
       username: 'xxxx',
@@ -21,18 +56,55 @@ describe('about User Controller operation.', function() {
     }
   });
 
-  it('create duplicate user should failed.', async (done) => {
+  it('create user with duplicate username should failed.', async (done) => {
     const createThisUser = {
-      username: 'xxxx',
-      email: 'xxx@xxx.xxx',
+      username: duplicateUserName.data.username,
+      email: 'createThisUserWithDuplicateUserName@xxx.xxx',
       firstName: 'test',
       lastName: 'test',
       locale: 'zh_TW',
     };
     try {
-      const res1 = await request(sails.hooks.http.app)
+      const res = await request(sails.hooks.http.app)
       .post(`/user`)
       .send(createThisUser);
+      sails.log.info('create user controller spec =>', res.body);
+      res.body.success.should.be.equal(false);
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('create user with duplicate email should failed.', async (done) => {
+    const createThisUser = {
+      username: 'createThisUserWithDuplicateEmail',
+      email: duplicateUserName.data.email,
+      firstName: 'test',
+      lastName: 'test',
+      locale: 'zh_TW',
+    };
+    try {
+      const res = await request(sails.hooks.http.app)
+      .post(`/user`)
+      .send(createThisUser);
+      sails.log.info('create user controller spec =>', res.body);
+      res.body.success.should.be.equal(false);
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('create user with duplicate username and email should failed.', async (done) => {
+    const createThisUser = {
+      username: duplicateUserNameEmail.data.username,
+      email: duplicateUserNameEmail.data.email,
+      firstName: 'test',
+      lastName: 'test',
+      locale: 'zh_TW',
+    };
+    try {
       const res = await request(sails.hooks.http.app)
       .post(`/user`)
       .send(createThisUser);
@@ -49,9 +121,9 @@ describe('about User Controller operation.', function() {
       try {
         const res = await request(sails.hooks.http.app).get(`/user`);
         sails.log.info('find users controller spec =>', res.body);
-        res.body.should.be.Array;
-        res.body.length.should.be.Number;
-        res.body.length.should.be.above(0);
+        res.body.data.should.be.Array;
+        res.body.success.should.be.equal(true);
+        res.body.data.items.length.should.be.above(0);
         done();
       } catch (e) {
         done(e);
@@ -64,8 +136,8 @@ describe('about User Controller operation.', function() {
     before(async (done) => {
       try {
         findThisUser = await UserService.create({
-          username: 'xxxx',
-          email: 'xxx@xxx.xxx',
+          username: 'findThisUser',
+          email: 'findThisUser@xxx.xxx',
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',
@@ -97,8 +169,8 @@ describe('about User Controller operation.', function() {
     before(async (done) => {
       try {
         deleteThisUser = await UserService.create({
-          username: 'xxxx',
-          email: 'xxx@xxx.xxx',
+          username: 'deleteThisUser',
+          email: 'deleteThisUser@xxx.xxx',
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',
@@ -135,8 +207,8 @@ describe('about User Controller operation.', function() {
     before(async (done) => {
       try {
         updateThisUser = await UserService.create({
-          username: 'xxxx',
-          email: 'xxx@xxx.xxx',
+          username: 'updateThisUser',
+          email: 'updateThisUser@xxx.xxx',
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',

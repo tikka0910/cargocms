@@ -2,8 +2,8 @@ describe('about User Service operation.', function() {
   it('create User should success.', async (done) => {
     try {
       const newUser = {
-        username: 'xxxx',
-        email: 'xxx@xxx.xxx',
+        username: 'newUserService',
+        email: 'newUser@xxx.xxx',
         firstName: 'test',
         lastName: 'test',
         locale: 'zh_TW',
@@ -23,12 +23,13 @@ describe('about User Service operation.', function() {
     before(async (done) => {
       try {
         findThisUser = await User.create({
-          username: 'xxxx',
-          email: 'xxx@xxx.xxx',
+          username: 'findThisUserService',
+          email: 'findThisUserService@xxx.xxx',
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',
         });
+        sails.log.info('findThisUser=>', findThisUser);
         done();
       } catch (e) {
         done(e);
@@ -37,11 +38,11 @@ describe('about User Service operation.', function() {
 
     it('should success.', async (done) => {
       try {
-        const result = await UserService.findOne(findThisUser.id);
+        const result = await UserService.findOne(findThisUser.dataValues.id);
         sails.log.info('find user service spec=>', result);
         result.data.should.be.Object;
-        result.data.id.should.be.equal(findThisUser.id);
-        result.data.username.should.be.equal(findThisUser.username);
+        result.data.id.should.be.equal(findThisUser.dataValues.id);
+        result.data.username.should.be.equal(findThisUser.dataValues.username);
         done();
       } catch (e) {
         done(e);
@@ -54,8 +55,8 @@ describe('about User Service operation.', function() {
     before(async (done) => {
       try {
         deleteThisUser = await User.create({
-          username: 'xxxx',
-          email: 'xxx@xxx.xxx',
+          username: 'deleteThisUserService',
+          email: 'deleteThisUser@xxx.xxx',
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',
@@ -83,9 +84,9 @@ describe('about User Service operation.', function() {
 
   describe('update user', () => {
     let updateThisUser;
-    const updatedUser = {
-      username: 'update',
-      email: 'update@update.update',
+    const updatedUserWithJson = {
+      username: 'updatedUserService',
+      email: 'updatedUser@update.update',
       firstName: 'Kent',
       lastName: 'Chen',
       locale: 'hk',
@@ -93,12 +94,13 @@ describe('about User Service operation.', function() {
     before(async (done) => {
       try {
         updateThisUser = await User.create({
-          username: 'xxxx',
-          email: 'xxx@xxx.xxx',
+          username: 'updateThisUserService',
+          email: 'updateThisUserService@xxx.xxx',
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',
         });
+        sails.log.info('updateThisUser=>', updateThisUser);
         done();
       } catch (e) {
         done(e);
@@ -109,12 +111,11 @@ describe('about User Service operation.', function() {
       try {
         const result = await UserService.update({
           id: updateThisUser.id,
-          ...updatedUser,
+          ...updatedUserWithJson,
         });
         sails.log.info('update user service spec=>', result);
-        updateThisUser.locale.should.be.equal('zh_TW');
-        result.data.id.should.be.equal(updateThisUser.id);
-        result.data.locale.should.be.equal('hk');
+        result.data.id.should.be.equal(updateThisUser.dataValues.id);
+        result.data.locale.should.be.equal(updatedUserWithJson.locale);
         done();
       } catch (e) {
         done(e);
