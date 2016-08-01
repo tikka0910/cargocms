@@ -20,6 +20,9 @@ let userAppModel = {
 let userApp = new Vue({
   data: userAppModel,
   methods: {
+    cancel: function (event) {
+      location.href = `/admin/#/admin/user`
+    },
     save: function (event) {
       fetch('/user', {
         credentials: 'include',
@@ -175,20 +178,13 @@ let userApp = new Vue({
            },
            {
              "sExtends": "text",
-             "sButtonText": "edit",
+             "sButtonText": "Edit",
              "fnClick": function ( nButton, oConfig, oFlash ) {
                let index = userAppModel.view.table.selectIndex;
                let userId = userAppModel.data.items[index].id;
                location.href = `/admin/#/admin/user/edit/${userId}`
              }
            },
-           {
-             "sExtends": "text",
-             "sButtonText": "delete",
-             "fnClick": function ( nButton, oConfig, oFlash ) {
-               userApp.delete();
-             }
-           }
          ]
        },
        "autoWidth" : true,
@@ -223,13 +219,13 @@ let userApp = new Vue({
       console.log("userAppModel.view.table.selectIndex", userAppModel.view.table.selectIndex);
     },
     delete: function() {
-      const index = userAppModel.view.table.selectIndex;
+      const index = userAppModel.data.item.id;
       if (index < 0) {
         messageApp.show({desc: '沒有選擇任何會員！', type: 'error'})
         return false;
       }
 
-      fetch(`/user/${userAppModel.data.items[index].id}`, {
+      fetch(`/user/${userAppModel.data.item.id}`, {
          credentials: 'include',
          method: 'DELETE',
       })
@@ -237,7 +233,7 @@ let userApp = new Vue({
       .then(result => {
         this.view.showChart = result.success;
         if (result.success) {
-          userAppModel.data.items.splice(userAppModel.view.table.selectIndex, 1);
+          location.href = `/admin/#/admin/user`
           userAppModel.view.table.selectIndex = -1;
           setTimeout(() => {
             userAppModel.view.showChart = false;
