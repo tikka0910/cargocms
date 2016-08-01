@@ -6,6 +6,11 @@ let userAppModel = {
       firstName: '',
       lastName: '',
       password: '',
+      roles: [
+        {
+          authority: ""
+        }
+      ],
       Passports: [
         {
           password: ""
@@ -61,15 +66,16 @@ let userApp = new Vue({
       fetch(`/user/${userAppModel.data.item.id}`, {credentials: 'include'})
       .then(response => response.json())
       .then(result => {
-
-
+        console.log(result.data);
         if (result.success) {
           userAppModel.data.item.username = result.data.username
           userAppModel.data.item.email = result.data.email
           userAppModel.data.item.firstName = result.data.firstName
           userAppModel.data.item.lastName = result.data.lastName
+          userAppModel.data.item.roles = result.data.roles
           userAppModel.data.item.Passports[0].password = result.data.Passports[0].password
         }
+        console.log("userAppModel.data.item=>",userAppModel.data.item);
       });
     },
     setupForm: (type) => {

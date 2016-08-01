@@ -1,12 +1,21 @@
 
 <fieldset>
+  
+  <label class="label">Role</label>
+  <section>
+		<label class="checkbox state-disabled">
+		<input type="checkbox" id="admin" value="admin" disabled="disabled" v-model="data.item.roles[1]">
+		<i></i>Admin</label>
+	  <label class="checkbox state-disabled">
+		<input type="checkbox" id="user" value="user" disabled="disabled" v-model="data.item.roles[0]">
+		<i></i>User</label>
+	</section>
+
   <section>
     <label class="input"> <i class="icon-append fa fa-user"></i>
       <input type="text" name="username" placeholder="Username" v-model="data.item.username">
       <b class="tooltip tooltip-bottom-right">Needed to enter the website</b> </label>
   </section>
-
-
 
   <section>
     <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
