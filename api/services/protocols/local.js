@@ -112,20 +112,15 @@ exports.login = async (req, identifier, password, next) => {
     })
 
     if (passport) {
-      passport.validatePassword(password, function(err, res) {
-        if (err) throw err;
-        if (!res) {
-          throw new Error('Error.Passport.Password.Wrong');
-        } else {
-          return next(null, user);
-        }
-      });
+      let result = await passport.validatePassword(password, passport);
+      if (result) return next(null, user);
+
     } else {
       throw new Error('Error.Passport.Password.NotSet');
     }
 
   } catch (e) {
-    sails.log.info(e.stack);
+    sails.log.error(e.stack);
     next(err);
   }
 };
