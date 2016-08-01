@@ -6,7 +6,7 @@ let userAppModel = {
       firstName: '',
       lastName: '',
       password: '',
-      roles: [
+      Roles: [
         {
           authority: ""
         }
@@ -72,7 +72,7 @@ let userApp = new Vue({
           userAppModel.data.item.email = result.data.email
           userAppModel.data.item.firstName = result.data.firstName
           userAppModel.data.item.lastName = result.data.lastName
-          userAppModel.data.item.roles = result.data.roles
+          userAppModel.data.item.Roles = result.data.Roles
           userAppModel.data.item.Passports[0].password = result.data.Passports[0].password
         }
         console.log("userAppModel.data.item=>",userAppModel.data.item);
