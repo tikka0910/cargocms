@@ -29,13 +29,13 @@
 
   <section>
     <label class="input"> <i class="icon-append fa fa-lock"></i>
-      <input type="password" name="password" placeholder="Password" id="password" v-model="data.item.password">
+      <input type="password" name="password" placeholder="Password" id="password" v-model="data.item.Passports[0].password">
       <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
   </section>
 
   <section>
     <label class="input"> <i class="icon-append fa fa-lock"></i>
-      <input type="password" name="passwordConfirm" placeholder="Confirm password">
+      <input type="password" name="passwordConfirm" placeholder="Confirm password" v-model="data.item.Passports[0].password">
       <b class="tooltip tooltip-bottom-right">Don't forget your password</b> </label>
   </section>
 <!--

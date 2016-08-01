@@ -14,9 +14,9 @@ module.exports = {
   findOne: async (req, res) => {
     const { userId } = req.params;
     try {
-      sails.log.info('findOne user controller=>', userId);
-      const user = await UserService.findOne(userId);
-      res.ok(user);
+
+      const user = await User.findOneWithPassport({userId})
+      res.ok({data: user});
     } catch (e) {
       res.serverError({ message: e, data: {}});
     }
