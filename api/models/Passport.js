@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt"
+
 module.exports = {
   attributes: {
     protocol: Sequelize.STRING,
@@ -25,15 +27,44 @@ module.exports = {
     Passport.belongsTo(User);
   },
   options: {
-    classMethods: {},
-    instanceMethods: {
-      validatePassword: function(password, next) {
-        if (password === this.getDataValue('password')) {
-          return next(null, true);
-        }
-        return next(null, false);
+    classMethods: {
+      hashPassword: async (passport) => {
+
+        await new Promise((defer, reject) => {
+          if (passport.password) {
+            bcrypt.hash(passport.password, 10, function (err, hash) {
+              passport.password = hash
+              defer();
+            });
+          } else {
+            defer();
+          }
+        });
+
       }
     },
-    hooks: {}
+    instanceMethods: {
+      validatePassword: async (password, passport) => {
+        try {
+          return await new Promise((defer, reject) => {
+            bcrypt.compare(password, passport.password, (err, result) => {
+              if (err) defer(false);
+              else if(!result) reject(new Error('Error.Passport.Password.Wrong'));
+              else  defer(true);
+            });
+          });
+        } catch (e) {
+          throw e;
+        }
+      }
+    },
+    hooks: {
+      beforeCreate: async (passport) => {
+        await Passport.hashPassword(passport);
+      },
+      beforeUpdate: async (passport) => {
+        await Passport.hashPassword(passport);
+      }
+    }
   }
 }
