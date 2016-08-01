@@ -13,7 +13,6 @@ let userAppModel = {
     table: {
       selectIndex: -1
     },
-    showChart: false
   }
 }
 
@@ -220,26 +219,17 @@ let userApp = new Vue({
     },
     delete: function() {
       const index = userAppModel.data.item.id;
-      if (index < 0) {
-        messageApp.show({desc: '沒有選擇任何會員！', type: 'error'})
-        return false;
-      }
-
       fetch(`/user/${userAppModel.data.item.id}`, {
          credentials: 'include',
          method: 'DELETE',
       })
       .then(response => response.json())
       .then(result => {
-        this.view.showChart = result.success;
         if (result.success) {
           location.href = `/admin/#/admin/user`
           userAppModel.view.table.selectIndex = -1;
-          setTimeout(() => {
-            userAppModel.view.showChart = false;
-          }, 2000);
         } else {
-          alert(`刪除會員失敗！errorMessage:${result.message}`);
+          messageApp.show({desc: `刪除會員失敗！errorMessage:${result.message}`, type: 'error'})
         }
       });
     }
