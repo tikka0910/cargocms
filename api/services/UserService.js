@@ -50,6 +50,7 @@ module.exports = {
     lastName,
     locale,
     Passports,
+    Roles
   }) => {
     try {
       sails.log.info('update user service=>', user);
@@ -71,6 +72,17 @@ module.exports = {
         updatedUser.firstName = user.firstName;
         updatedUser.lastName = user.lastName;
         updatedUser.locale = user.locale;
+
+        let userRoles = [];
+        for (const role of user.Roles) {
+            const findRole = await Role.findOne({
+              where: {
+                authority: role,
+              }
+            });
+            userRoles.push(findRole)
+        }
+        await updatedUser.setRoles(userRoles);
         updatedUser = await updatedUser.save();
       }
       return updatedUser;
