@@ -83,7 +83,7 @@ describe('about User Service operation.', function() {
     });
   });
 
-  describe.only('update user', () => {
+  describe('update user', () => {
     let updateThisUser;
     const updatedUserWithJson = {
       username: 'updatedUserService',
@@ -102,6 +102,7 @@ describe('about User Service operation.', function() {
           firstName: 'test',
           lastName: 'test',
           locale: 'zh_TW',
+          Roles: [ 'admin', 'user' ]
         });
         originPassport = await Passport.create({provider: 'local', password: '123123', UserId: updateThisUser.id});
         sails.log.info('updateThisUser=>', updateThisUser);
