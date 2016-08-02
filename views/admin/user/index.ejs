@@ -53,7 +53,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="user in data.items" v-on:click="selection($index)">
+								<tr v-for="user in data.items" v-on:click="selection($index)" v-on:dblclick="edit($index)">
 									<td>{{ user.id }}</td>
 									<td>{{ user.username }}</td>
 									<td>{{ user.email }}</td>

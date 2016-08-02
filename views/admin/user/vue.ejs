@@ -184,19 +184,19 @@ let userApp = new Vue({
                location.href = `/admin/#/admin/user/create`
              }
            },
-           {
-             "sExtends": "text",
-             "sButtonText": "編輯",
-             "fnClick": function ( nButton, oConfig, oFlash ) {
-               if (userAppModel.view.table.selectIndex !== -1) {
-                 let index = userAppModel.view.table.selectIndex;
-                 let userId = userAppModel.data.items[index].id;
-                 location.href = `/admin/#/admin/user/edit/${userId}`
-               } else {
-                 messageApp.show({desc: `請選擇會員`, type: 'warning'});
-               }
-             }
-           },
+          //  {
+          //    "sExtends": "text",
+          //    "sButtonText": "編輯",
+          //    "fnClick": function ( nButton, oConfig, oFlash ) {
+          //      if (userAppModel.view.table.selectIndex !== -1) {
+          //        let index = userAppModel.view.table.selectIndex;
+          //        let userId = userAppModel.data.items[index].id;
+          //        location.href = `/admin/#/admin/user/edit/${userId}`
+          //      } else {
+          //        messageApp.show({desc: `請選擇會員`, type: 'warning'});
+          //      }
+          //    }
+          //  },
          ]
        },
        "autoWidth" : true,
@@ -233,6 +233,10 @@ let userApp = new Vue({
       } else {
         userAppModel.view.table.selectIndex = -1
       }
+    },
+    edit: function (index) {
+      let userId = userAppModel.data.items[index].id;
+      location.href = `/admin/#/admin/user/edit/${userId}`;
     },
     delete: function() {
       messageApp.confirm({
