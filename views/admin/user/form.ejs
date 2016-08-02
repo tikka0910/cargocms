@@ -3,12 +3,13 @@
 
   <label class="label">Role</label>
   <section>
-		<label class="checkbox state-disabled">
-		<input type="checkbox" id="admin" value="admin" disabled="disabled" v-model="data.item.Roles[1]">
+		<label class="checkbox">
+		<input type="checkbox" id="admin" value="admin" v-model="data.item.Roles">
 		<i></i>Admin</label>
-	  <label class="checkbox state-disabled">
-		<input type="checkbox" id="user" value="user" disabled="disabled" v-model="data.item.Roles[0]">
+	  <label class="checkbox">
+		<input type="checkbox" id="user" value="user" v-model="data.item.Roles">
 		<i></i>User</label>
+    <span>data.item.Roles: {{ data.item.Roles | json }}</span>
 	</section>
 
   <section>

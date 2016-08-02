@@ -6,11 +6,7 @@ let userAppModel = {
       firstName: '',
       lastName: '',
       password: '',
-      Roles: [
-        {
-          authority: ""
-        }
-      ],
+      Roles: [],
       Passports: [
         {
           password: ""
@@ -75,9 +71,12 @@ let userApp = new Vue({
           userAppModel.data.item.email = result.data.email
           userAppModel.data.item.firstName = result.data.firstName
           userAppModel.data.item.lastName = result.data.lastName
-          userAppModel.data.item.Roles = result.data.Roles
           userAppModel.data.item.Passports[0].password = result.data.Passports[0].password
           userAppModel.data.option.passwordConfirm = result.data.Passports[0].password
+
+          for (const role of result.data.Roles) {
+            userAppModel.data.item.Roles.push(role.authority);
+          }
         }
         console.log("userAppModel.data.item=>",userAppModel.data.item);
       });
@@ -177,7 +176,7 @@ let userApp = new Vue({
 
        // Tabletools options:
        //   https://datatables.net/extensions/tabletools/button_options
-       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'Tl>r>"+
+       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T <<l>r> >r>"+
            "t"+
            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
        "oLanguage": {
