@@ -49,8 +49,7 @@ module.exports = {
           return await new Promise((defer, reject) => {
             bcrypt.compare(password, passport.password, (err, result) => {
               if (err) defer(false);
-              else if(!result) reject(new Error('Error.Passport.Password.Wrong'));
-              else  defer(true);
+              else defer(result);
             });
           });
         } catch (e) {

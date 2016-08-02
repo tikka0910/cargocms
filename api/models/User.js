@@ -51,8 +51,8 @@ module.exports = {
             id: userId
           },
           include: {
-              model: Passport,
-              where: {provider: 'local'}
+            model: Passport,
+            where: {provider: 'local'}
           }
         });
       }
