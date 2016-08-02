@@ -17,7 +17,10 @@ let userAppModel = {
         }
       ]
     },
-    items: []
+    items: [],
+    option: {
+      passwordConfirm: ''
+    }
   },
   view: {
     table: {
@@ -74,6 +77,7 @@ let userApp = new Vue({
           userAppModel.data.item.lastName = result.data.lastName
           userAppModel.data.item.Roles = result.data.Roles
           userAppModel.data.item.Passports[0].password = result.data.Passports[0].password
+          userAppModel.data.option.passwordConfirm = result.data.Passports[0].password
         }
         console.log("userAppModel.data.item=>",userAppModel.data.item);
       });
@@ -139,19 +143,16 @@ let userApp = new Vue({
           error.insertAfter(element.parent());
         },
 
+        submitHandler: function(form) {
+          if (type == 'create') {
+            userApp.save();
+            return false;
+          } else if(type == 'edit') {
+            userApp.update();
+            return false;
+          }
+        }
       });
-
-      if(type == 'create'){
-        registerForm.submit(() => {
-          userApp.save();
-          return false
-        });
-      } else if(type == 'edit'){
-        registerForm.submit(() => {
-          userApp.update();
-          return false
-        });
-      }
     },
     loadItems: function (event) {
       return fetch('/user', {credentials: 'include'})

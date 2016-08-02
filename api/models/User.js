@@ -45,7 +45,7 @@ module.exports = {
   options: {
     classMethods: {
       findOneWithPassport: async ({userId}) => {
-        console.log("userId", userId);
+        console.log("findOneWithPassport userId=>", userId);
         return await User.findOne({
           where: {
             id: userId
@@ -54,7 +54,7 @@ module.exports = {
               model: Passport,
               where: { provider: 'local' }
           }]
-        });;
+        });
       }
     },
     instanceMethods: {},
