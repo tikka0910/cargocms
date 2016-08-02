@@ -75,9 +75,7 @@ module.exports = {
 
         const userRoles = await Role.findAll({
           where: {
-            authority: {
-              $in: user.Roles,
-            },
+            authority: user.Roles
           }
         });
         await updatedUser.setRoles(userRoles);
