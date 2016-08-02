@@ -45,22 +45,22 @@ module.exports = {
   options: {
     classMethods: {
       findOneWithPassport: async ({userId}) => {
-        console.log("userId", userId);
+        console.log("findOneWithPassport userId=>", userId);
         return await User.findOne({
           where: {
             id: userId
           },
-          include: {
-            model: Passport,
-            where: {provider: 'local'}
-          }
+          include: [ Role, {
+              model: Passport,
+              where: { provider: 'local' }
+          }]
         });
       }
     },
     instanceMethods: {},
     hooks: {
       afterCreate: async (user, options) => {
-        let userRole = await Role.findOne({where: {authority: 'user'}});
+        const userRole = await Role.findOne({where: {authority: 'user'}});
         console.log(userRole.toJSON());
         await user.addRole(userRole);
       }

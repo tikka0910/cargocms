@@ -6,6 +6,7 @@ let userAppModel = {
       firstName: '',
       lastName: '',
       password: '',
+      Roles: [],
       Passports: [
         {
           password: ""
@@ -64,8 +65,7 @@ let userApp = new Vue({
       fetch(`/user/${userAppModel.data.item.id}`, {credentials: 'include'})
       .then(response => response.json())
       .then(result => {
-
-
+        console.log(result.data);
         if (result.success) {
           userAppModel.data.item.username = result.data.username
           userAppModel.data.item.email = result.data.email
@@ -73,7 +73,12 @@ let userApp = new Vue({
           userAppModel.data.item.lastName = result.data.lastName
           userAppModel.data.item.Passports[0].password = result.data.Passports[0].password
           userAppModel.data.option.passwordConfirm = result.data.Passports[0].password
+
+          for (const role of result.data.Roles) {
+            userAppModel.data.item.Roles.push(role.authority);
+          }
         }
+        console.log("userAppModel.data.item=>",userAppModel.data.item);
       });
     },
     setupForm: (type) => {
@@ -171,7 +176,7 @@ let userApp = new Vue({
 
        // Tabletools options:
        //   https://datatables.net/extensions/tabletools/button_options
-       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'Tl>r>"+
+       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T <<l>r> >r>"+
            "t"+
            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
        "oLanguage": {
