@@ -73,15 +73,13 @@ module.exports = {
         updatedUser.lastName = user.lastName;
         updatedUser.locale = user.locale;
 
-        let userRoles = [];
-        for (const role of user.Roles) {
-            const findRole = await Role.findOne({
-              where: {
-                authority: role,
-              }
-            });
-            userRoles.push(findRole)
-        }
+        const userRoles = await Role.findAll({
+          where: {
+            authority: {
+              $in: user.Roles,
+            },
+          }
+        });
         await updatedUser.setRoles(userRoles);
         updatedUser = await updatedUser.save();
       }
