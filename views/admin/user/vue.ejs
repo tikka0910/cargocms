@@ -234,8 +234,7 @@ let userApp = new Vue({
         userAppModel.view.table.selectIndex = -1
       }
     },
-    edit: function (index) {
-      let userId = userAppModel.data.items[index].id;
+    edit: function (userId) {
       location.href = `/admin/#/admin/user/edit/${userId}`;
     },
     delete: function() {
