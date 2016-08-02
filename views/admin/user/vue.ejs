@@ -98,12 +98,10 @@ let userApp = new Vue({
           password : {
             required : true,
             minlength : 3,
-            maxlength : 20
           },
           passwordConfirm : {
             required : true,
             minlength : 3,
-            maxlength : 20,
             equalTo : '#password'
           },
         },
@@ -181,14 +179,14 @@ let userApp = new Vue({
          "aButtons": [
            {
              "sExtends": "text",
-             "sButtonText": "Create",
+             "sButtonText": "新增",
              "fnClick": function ( nButton, oConfig, oFlash ) {
                location.href = `/admin/#/admin/user/create`
              }
            },
            {
              "sExtends": "text",
-             "sButtonText": "Edit",
+             "sButtonText": "編輯",
              "fnClick": function ( nButton, oConfig, oFlash ) {
                if (userAppModel.view.table.selectIndex !== -1) {
                  let index = userAppModel.view.table.selectIndex;
@@ -237,19 +235,28 @@ let userApp = new Vue({
       }
     },
     delete: function() {
-      const index = userAppModel.data.item.id;
-      fetch(`/user/${userAppModel.data.item.id}`, {
-         credentials: 'include',
-         method: 'DELETE',
-      })
-      .then(response => response.json())
-      .then(result => {
-        if (result.success) {
-          location.href = `/admin/#/admin/user`
-          userAppModel.view.table.selectIndex = -1;
-          messageApp.show({desc: `刪除會員成功！`, type: 'success'});
-        } else {
-          messageApp.show({desc: `刪除會員失敗！errorMessage:${result.message}`, type: 'error'});
+      messageApp.confirm({
+        title: '刪除',
+        content: '確認刪除該使用者？',
+        btnArray: ['刪除', '取消'],
+      },
+      function(ButtonPressed) {
+        if (ButtonPressed ==='刪除') {
+          const index = userAppModel.data.item.id;
+          fetch(`/user/${userAppModel.data.item.id}`, {
+             credentials: 'include',
+             method: 'DELETE',
+          })
+          .then(response => response.json())
+          .then(result => {
+            if (result.success) {
+              location.href = `/admin/#/admin/user`
+              userAppModel.view.table.selectIndex = -1;
+              messageApp.show({desc: `刪除會員成功！`, type: 'success'});
+            } else {
+              messageApp.show({desc: `刪除會員失敗！errorMessage:${result.message}`, type: 'error'});
+            }
+          });
         }
       });
     }

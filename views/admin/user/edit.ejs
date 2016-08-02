@@ -42,9 +42,6 @@
 
 				-->
 				<header>
-					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-					<h2>Registration form </h2>
-
 				</header>
 
 				<!-- widget div-->
@@ -62,21 +59,18 @@
 
 						<form id="user-form" class="smart-form">
 							<input type="text" name="id" id="id" v-model="data.item.id" hidden="hidden" value="<%= req.params.id %>">
-							<header>
-							  Registration form
-							</header>
 
 							<%- include form.ejs %>
 
 							<footer>
-								<button type="submit" class="btn btn-primary">
-									Submmit Form
-								</button>
 								<button type="button" v-on:click="delete" class="btn btn-danger">
-									Delete User
+									刪除
 								</button>
 								<button type="button" v-on:click="cancel" class="btn btn-default">
-									Cancel
+									取消
+								</button>
+								<button type="submit" class="btn btn-primary">
+									儲存
 								</button>
 							</footer>
 						</form>
