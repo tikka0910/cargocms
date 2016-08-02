@@ -16,6 +16,7 @@ module.exports = {
     try {
 
       const user = await User.findOneWithPassport({userId})
+      console.log('user=>', user);
       res.ok({data: user});
     } catch (e) {
       res.serverError({ message: e, data: {}});
