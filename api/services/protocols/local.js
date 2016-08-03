@@ -113,7 +113,11 @@ exports.login = async (req, identifier, password, next) => {
 
     if (passport) {
       let result = await passport.validatePassword(password, passport);
-      if (result) return next(null, user);
+      if (result) {
+        const userAgent = req.headers['user-agent'];
+        await user.loginSuccess({ userAgent });
+        return next(null, user);
+      }
 
     } else {
       throw new Error('Error.Passport.Password.NotSet');
