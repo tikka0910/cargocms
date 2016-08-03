@@ -114,7 +114,8 @@ exports.login = async (req, identifier, password, next) => {
     if (passport) {
       let result = await passport.validatePassword(password, passport);
       if (result) {
-        await user.loginSuccess({ req });
+        const userAgent = req.headers['user-agent'];
+        await user.loginSuccess({ userAgent });
         return next(null, user);
       }
 

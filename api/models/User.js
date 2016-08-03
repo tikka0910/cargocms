@@ -64,9 +64,9 @@ module.exports = {
       }
     },
     instanceMethods: {
-      loginSuccess: async function({ req }) {
+      loginSuccess: async function({ userAgent }) {
         const now = new Date();
-        this.userAgent = req.headers['user-agent'];
+        this.userAgent = userAgent;
         this.lastLogin = now.getTime();
         await this.save();
       }
