@@ -189,6 +189,7 @@ let userApp = new Vue({
       } else return cb();
     },
     loadItems: function (event) {
+      window.onbeforeunload = null;
       return fetch('/user', {credentials: 'include'})
       .then(response => response.json())
       .then(result => {
