@@ -75,14 +75,14 @@ describe('about User Controller operation.', function() {
     let deleteThisUser;
     before(async (done) => {
       try {
-        deleteThisUser = await UserService.create({
-          username: 'deleteThisUser',
-          email: 'deleteThisUser@xxx.xxx',
+        deleteThisUser = await User.create({
+          username: `testDeleteController`,
+          email: `testDeleteController@gmail.com`,
           firstName: 'test',
-          lastName: 'test',
-          locale: 'zh_TW',
+          lastName: 'DeleteController'
         });
-        sails.log.info('deleteThisUser.data.id=>', deleteThisUser.data.id);
+        let passport = await Passport.create({provider: 'local', password: 'user', UserId: deleteThisUser.id});
+        sails.log.info('deleteThisUser.id=>', deleteThisUser.id);
         done();
       } catch (e) {
         done(e);
@@ -92,9 +92,9 @@ describe('about User Controller operation.', function() {
     it('should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
-        .delete(`/user/${deleteThisUser.data.id}`);
+        .delete(`/user/${deleteThisUser.id}`);
         sails.log.info('delete user controller spec =>', res.body);
-        res.body.data.id.should.be.equal(deleteThisUser.data.id);
+        res.body.success.should.be.true;
         done();
       } catch (e) {
         done(e);

@@ -60,8 +60,11 @@ module.exports = {
     const { userId } = req.params;
     try {
       sails.log.info('delete user controller=>', userId);
-      const user = await UserService.delete(userId);
-      res.ok(user);
+      const user = await User.deleteById(userId);
+      res.ok({
+        message: 'Delete user success.',
+        data: user,
+      });
     } catch (e) {
       res.serverError({ message: e.message, data: {}});
     }

@@ -19,37 +19,6 @@ describe('about User Service operation.', function() {
     }
   });
 
-  describe('delete user', () => {
-    let deleteThisUser;
-    before(async (done) => {
-      try {
-        deleteThisUser = await User.create({
-          username: 'deleteThisUserService',
-          email: 'deleteThisUser@xxx.xxx',
-          firstName: 'test',
-          lastName: 'test',
-          locale: 'zh_TW',
-        });
-        done();
-      } catch (e) {
-        done(e);
-      }
-    });
-
-    it('should success.', async (done) => {
-      try {
-        const result = await UserService.delete(deleteThisUser.id);
-        sails.log.info('delete user service spec=>', result);
-        const findDeletedUser = await User.findById(deleteThisUser.id);
-        result.data.should.not.be.equal(false);
-        (findDeletedUser === null ).should.be.true;
-        done();
-      } catch (e) {
-        done(e);
-      }
-    });
-  });
-
   describe('update user', () => {
     let updateThisUser;
     const updatedUserWithJson = {
