@@ -83,7 +83,7 @@ module.exports.http = {
   *                                                                          *
   ***************************************************************************/
 
-  // cache: 31557600000
+  cache: 0,
 
   middleware: {
     order: [
@@ -105,8 +105,6 @@ module.exports.http = {
       '500'
     ],
     myPageInjection: function (req, res, next) {
-
-      console.log(">>> myScriptsContainer <<<");
 
       res._stylesheets = [];
       res._stylesheetBlock = '';

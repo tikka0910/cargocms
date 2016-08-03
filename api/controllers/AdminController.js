@@ -10,7 +10,7 @@ const url = require('url');
 module.exports = {
 
   index: function(req, res) {
-    res.ok({}, "admin/index");
+    res.view({}, "admin/index");
   },
 
   debug: function(req, res) {
