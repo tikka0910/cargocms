@@ -81,8 +81,8 @@ module.exports.bootstrap = async (cb) => {
     adminUser[0].addRole(adminRole[0]);
 
     const {environment} = sails.config;
-    if (environment !== 'production') {
-      sails.log.info("init Dev data");
+    if (environment === 'development') {
+      sails.log.info("init Dev data", environment);
 
       for (let i = 0; i < 30; i ++) {
         let user = await User.create({
