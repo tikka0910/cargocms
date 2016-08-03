@@ -175,7 +175,11 @@ let userApp = new Vue({
           btnArray: ['放棄', '取消'],
         };
         const action = (ButtonPressed) => {
-          if (ButtonPressed === '放棄') return cb();
+          if (ButtonPressed === '放棄') {
+            setTimeout(() => {
+              return cb();
+            }, 500);
+          }
         };
         messageApp.confirm(msgInfo, action);
       } else return cb();
