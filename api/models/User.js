@@ -57,9 +57,9 @@ module.exports = {
         });
         const userJson = user.toJSON();
         const roles = userJson.Roles;
-        userJson.Roles = [];
+        userJson.RolesArray = [];
         for (const role of roles) {
-          userJson.Roles.push(role.authority)
+          userJson.RolesArray.push(role.authority)
         }
         return userJson;
       }

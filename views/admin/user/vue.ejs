@@ -75,7 +75,7 @@ let userApp = new Vue({
       });
     },
     loadItem: function (event) {
-      fetch(`/user/${userAppModel.data.item.id}`, {credentials: 'include'})
+      return fetch(`/user/${userAppModel.data.item.id}`, {credentials: 'include'})
       .then(response => response.json())
       .then(result => {
         console.log("loadItem result.data=>", result.data);
@@ -83,10 +83,9 @@ let userApp = new Vue({
           userAppModel.data.item = result.data;
           userAppModel.data.option.passwordConfirm = result.data.Passports[0].password;
           if (!result.data.avatar) userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
-          userApp.onEnterPageEdit();
         }
         console.log("loadItem userAppModel.data.item=>",userAppModel.data.item);
-      });
+      })
     },
     setupForm: (type) => {
       var registerForm = $("#user-form");
@@ -120,18 +119,18 @@ let userApp = new Vue({
 
         // Messages for form validation
         messages : {
-          login : {
-            required : 'Please enter your login'
+          username : {
+            required : '請輸入使用者帳號'
           },
           email : {
-            required : 'Please enter your email address',
-            email : 'Please enter a VALID email address'
+            required : '請輸入 Email',
+            email : '請確認輸入的 Email 格式'
           },
           firstname : {
-            required : 'Please select your first name'
+            required : '請輸入使用者姓'
           },
           lastname : {
-            required : 'Please select your last name'
+            required : '請輸入使用者名'
           },
           password : {
             required : 'Please enter your password'
@@ -304,13 +303,13 @@ let userApp = new Vue({
        }, COMMON.DOUBLE_CLICK_TIME_PERIOD);
      });
 
-     table.on('dblclick', 'tr', () => {
-       const index = userAppModel.view.table.selectIndex;
-       const userId = userAppModel.data.items[index].id;
-       window.clearTimeout(timeoutInstance.resetTrClickStatus);
-       window.clearTimeout(timeoutInstance.resetSelectedIndex);
-       location.href = `/admin/#/admin/user/show/${userId}`
-     });
+    //  table.on('dblclick', 'tr', () => {
+    //    const index = userAppModel.view.table.selectIndex;
+    //    const userId = userAppModel.data.items[index].id;
+    //    window.clearTimeout(timeoutInstance.resetTrClickStatus);
+    //    window.clearTimeout(timeoutInstance.resetSelectedIndex);
+    //    location.href = `/admin/#/admin/user/show/${userId}`
+    //  });
 
      $('#user-table').fadeIn();
     },

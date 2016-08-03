@@ -143,7 +143,9 @@
 	var pagefunction = function() {
 		<%- include vue.ejs %>
 		userApp.$mount("#user-edit");
-		userApp.loadItem();
+		userApp.loadItem()
+    .then(userApp.onEnterPageEdit);
+
 		userApp.setupForm("edit");
 	};
 
