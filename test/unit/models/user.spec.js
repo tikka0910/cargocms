@@ -1,5 +1,34 @@
 describe('about User model operation.', function() {
 
+  describe('test update userAgent', function() {
+    let user;
+    before(async (done) => {
+      try {
+        user = await User.create({
+          username: `testloginSuccess`,
+          email: `testloginSuccess@gmail.com`,
+          firstName: 'test',
+          lastName: 'loginSuccess'
+        });
+        let passport = await Passport.create({provider: 'local', password: 'user', UserId: user.id});
+        done();
+      } catch (e) {
+        done(e)
+      }
+    });
+
+    it.only('should success.', async (done) => {
+      try {
+        await user.loginSuccess({ userAgent: 'test' });
+        let checkUser = await User.findById(user.id);
+        checkUser.userAgent.should.not.eq('');
+        done();
+      } catch (e) {
+        done(e)
+      }
+    });
+  });
+
   describe('User username and email should be unique.', function() {
     let duplicateUserName;
     let duplicateUserEmail;
