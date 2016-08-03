@@ -46,15 +46,22 @@ module.exports = {
     classMethods: {
       findOneWithPassport: async ({userId}) => {
         console.log("findOneWithPassport userId=>", userId);
-        return await User.findOne({
+        const user = await User.findOne({
           where: {
             id: userId
           },
           include: [ Role, {
               model: Passport,
               where: { provider: 'local' }
-          }]
+          }],
         });
+        const userJson = user.toJSON();
+        const roles = userJson.Roles;
+        userJson.Roles = [];
+        for (const role of roles) {
+          userJson.Roles.push(role.authority)
+        }
+        return userJson;
       }
     },
     instanceMethods: {},

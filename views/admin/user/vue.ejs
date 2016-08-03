@@ -1,3 +1,14 @@
+const COMMON = {
+  DOUBLE_CLICK_TIME_PERIOD: 250,
+  INDEX_DEFAULT: -1,
+};
+
+const timeoutInstance = {
+  resetTrClickStatus: 0,
+  resetSelectedIndex: 0,
+};
+
+let itemBeforeEdit = {};
 let userAppModel = {
   data: {
     item: {
@@ -20,7 +31,7 @@ let userAppModel = {
   },
   view: {
     table: {
-      selectIndex: -1
+      selectIndex: COMMON.INDEX_DEFAULT,
     },
   }
 }
@@ -29,7 +40,9 @@ let userApp = new Vue({
   data: userAppModel,
   methods: {
     cancel: function (event) {
-      location.href = `/admin/#/admin/user`
+      userApp.onLeavePageEdit(() => {
+        location.href = `/admin/#/admin/user`;
+      });
     },
     save: function (event) {
       fetch('/user', {
@@ -65,20 +78,13 @@ let userApp = new Vue({
       fetch(`/user/${userAppModel.data.item.id}`, {credentials: 'include'})
       .then(response => response.json())
       .then(result => {
-        console.log(result.data);
+        console.log("loadItem result.data=>", result.data);
         if (result.success) {
-          userAppModel.data.item.username = result.data.username
-          userAppModel.data.item.email = result.data.email
-          userAppModel.data.item.firstName = result.data.firstName
-          userAppModel.data.item.lastName = result.data.lastName
-          userAppModel.data.item.Passports[0].password = result.data.Passports[0].password
-          userAppModel.data.option.passwordConfirm = result.data.Passports[0].password
-
-          for (const role of result.data.Roles) {
-            userAppModel.data.item.Roles.push(role.authority);
-          }
+          userAppModel.data.item = result.data;
+          userAppModel.data.option.passwordConfirm = result.data.Passports[0].password;
+          userApp.onEnterPageEdit();
         }
-        console.log("userAppModel.data.item=>",userAppModel.data.item);
+        console.log("loadItem userAppModel.data.item=>",userAppModel.data.item);
       });
     },
     setupForm: (type) => {
@@ -151,12 +157,33 @@ let userApp = new Vue({
         }
       });
     },
-    onEnterPageEdit: function(){
-      const itemBeforeEdit = userAppModel.data.item;
-      console.log("saveStatusBeforeEdit", itemBeforeEdit);
-      window.onbeforeunload = function(e) {
-        return true;
+    isPageEditDataModified: () => {
+      const itemBeforeLeave = JSON.stringify(userAppModel.data.item);
+      const isDataModified = itemBeforeEdit !== itemBeforeLeave;
+      return isDataModified;
+    },
+    onEnterPageEdit: function() {
+      itemBeforeEdit = JSON.stringify(userAppModel.data.item);
+      window.onbeforeunload = (e) => {
+        if (this.isPageEditDataModified()) {
+          const message = `您已經修改過資料，是否確定要放棄本次的修改？`;
+          e.returnValue = message;
+          return message;
+        }
       };
+    },
+    onLeavePageEdit: function(cb) {
+      if (this.isPageEditDataModified()) {
+        const msgInfo = {
+          title: '注意',
+          content: '您已經修改過資料，是否確定要放棄本次的修改？',
+          btnArray: ['放棄', '取消'],
+        };
+        const action = (ButtonPressed) => {
+          if (ButtonPressed === '放棄') return cb();
+        };
+        messageApp.confirm(msgInfo, action);
+      } else return cb();
     },
     loadItems: function (event) {
       return fetch('/user', {credentials: 'include'})
@@ -178,7 +205,6 @@ let userApp = new Vue({
      };
      /* TABLETOOLS */
      let table = $('#user-table').dataTable({
-
        // Tabletools options:
        //   https://datatables.net/extensions/tabletools/button_options
        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'Tl>r>"+
@@ -194,39 +220,60 @@ let userApp = new Vue({
          	"sLoadingRecords": "載入中...",
          	"sLengthMenu":   "顯示 _MENU_ 項結果　",
          	"sZeroRecords":  "沒有符合的結果",
-         	"sPaginate": {
-         		"first":    "第一頁",
-         		"previous": "上一頁",
-         		"next":     "下一頁",
-         		"last":     "最後一頁"
+         	"oPaginate": {
+         		"sFirst":    "第一頁",
+         		"sPrevious": "上一頁",
+         		"sNext":     "下一頁",
+         		"sLast":     "最後一頁"
          	},
          	"sAria": {
          		"sortAscending":  ": 升冪排列",
          		"sortDescending": ": 降冪排列"
          	}
        },
+      "columnDefs": [
+        {
+          "targets"  : 'no-sort',
+          "orderable": false,
+        },
+      ],
        "oTableTools": {
          "aButtons": [
            {
              "sExtends": "text",
-             "sButtonText": "新增",
+             "sButtonText": "檢視",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               location.href = `/admin/#/admin/user/create`
+               const isSelected = userAppModel.view.table.selectIndex !== COMMON.INDEX_DEFAULT;
+               if (isSelected) {
+                 const index = userAppModel.view.table.selectIndex;
+                 const userId = userAppModel.data.items[index].id;
+                 location.href = `/admin/#/admin/user/show/${userId}`;
+               } else {
+                 messageApp.show({desc: `請選擇會員`, type: 'warning'});
+               }
              }
            },
-          //  {
-          //    "sExtends": "text",
-          //    "sButtonText": "編輯",
-          //    "fnClick": function ( nButton, oConfig, oFlash ) {
-          //      if (userAppModel.view.table.selectIndex !== -1) {
-          //        let index = userAppModel.view.table.selectIndex;
-          //        let userId = userAppModel.data.items[index].id;
-          //        location.href = `/admin/#/admin/user/edit/${userId}`
-          //      } else {
-          //        messageApp.show({desc: `請選擇會員`, type: 'warning'});
-          //      }
-          //    }
-          //  },
+           {
+             "sExtends": "text",
+             "sButtonText": "新增",
+             "fnClick": function ( nButton, oConfig, oFlash ) {
+               location.href = `/admin/#/admin/user/create`;
+             }
+           },
+           {
+             "sExtends": "text",
+             "sButtonText": "編輯",
+             "fnClick": function ( nButton, oConfig, oFlash ) {
+               const isSelected = userAppModel.view.table.selectIndex !== COMMON.INDEX_DEFAULT;
+               if (isSelected) {
+                 const index = userAppModel.view.table.selectIndex;
+                 const userId = userAppModel.data.items[index].id;
+                 location.href = `/admin/#/admin/user/edit/${userId}`;
+               } else {
+                 messageApp.show({desc: `請選擇會員`, type: 'warning'});
+               }
+             }
+           },
          ]
        },
        "autoWidth" : true,
@@ -245,25 +292,35 @@ let userApp = new Vue({
      });
 
      // selection
-     table.on( 'click', 'tr', function () {
-       if ( $(this).hasClass('selected') ) {
-         $(this).removeClass('selected');
-       }
-       else {
-         $('#user-table tbody tr').removeClass('selected');
-         $(this).addClass('selected');
-       }
+     table.on('click', 'tr', function () {
+       timeoutInstance.resetTrClickStatus = window.setTimeout(() => {
+         if ( $(this).hasClass('selected') ) {
+           $(this).removeClass('selected');
+         } else {
+           $('#user-table tbody tr').removeClass('selected');
+           $(this).addClass('selected');
+         }
+       }, COMMON.DOUBLE_CLICK_TIME_PERIOD);
+     });
+
+     table.on('dblclick', 'tr', () => {
+       const index = userAppModel.view.table.selectIndex;
+       const userId = userAppModel.data.items[index].id;
+       window.clearTimeout(timeoutInstance.resetTrClickStatus);
+       window.clearTimeout(timeoutInstance.resetSelectedIndex);
+       location.href = `/admin/#/admin/user/show/${userId}`
      });
 
      $('#user-table').fadeIn();
-
     },
     selection:  function (index) {
       if (index !== userAppModel.view.table.selectIndex) {
         userAppModel.view.table.selectIndex = index;
         console.log("userAppModel.view.table.selectIndex", userAppModel.view.table.selectIndex);
       } else {
-        userAppModel.view.table.selectIndex = -1
+        timeoutInstance.resetSelectedIndex = window.setTimeout(() => {
+          userAppModel.view.table.selectIndex = COMMON.INDEX_DEFAULT;
+        }, COMMON.DOUBLE_CLICK_TIME_PERIOD);
       }
     },
     edit: function (userId) {
@@ -272,7 +329,7 @@ let userApp = new Vue({
     delete: function() {
       messageApp.confirm({
         title: '刪除',
-        content: '確認刪除該使用者？',
+        content: '確認刪除此筆資料？',
         btnArray: ['刪除', '取消'],
       },
       function(ButtonPressed) {
@@ -286,10 +343,10 @@ let userApp = new Vue({
           .then(result => {
             if (result.success) {
               location.href = `/admin/#/admin/user`
-              userAppModel.view.table.selectIndex = -1;
-              messageApp.show({desc: `刪除會員成功！`, type: 'success'});
+              userAppModel.view.table.selectIndex = COMMON.INDEX_DEFAULT;
+              messageApp.show({desc: `刪除資料成功！`, type: 'success'});
             } else {
-              messageApp.show({desc: `刪除會員失敗！errorMessage:${result.message}`, type: 'error'});
+              messageApp.show({desc: `刪除資料失敗！errorMessage:${result.message}`, type: 'error'});
             }
           });
         }
