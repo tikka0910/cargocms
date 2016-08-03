@@ -12,12 +12,14 @@ let itemBeforeEdit = {};
 let userAppModel = {
   data: {
     item: {
+      displayName: '',
       username: '',
       email: '',
       firstName: '',
       lastName: '',
       password: '',
       Roles: [],
+      RolesArray: [],
       Passports: [
         {
           password: ""
@@ -159,10 +161,12 @@ let userApp = new Vue({
     isPageEditDataModified: () => {
       const itemBeforeLeave = JSON.stringify(userAppModel.data.item);
       const isDataModified = itemBeforeEdit !== itemBeforeLeave;
+      if (!isDataModified) window.onbeforeunload = null;
       return isDataModified;
     },
     onEnterPageEdit: function() {
       itemBeforeEdit = JSON.stringify(userAppModel.data.item);
+      console.log("itemBeforeEdit=>", JSON.parse(itemBeforeEdit));
       window.onbeforeunload = (e) => {
         if (this.isPageEditDataModified()) {
           const message = `您已經修改過資料，是否確定要放棄本次的修改？`;
