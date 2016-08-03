@@ -331,9 +331,11 @@ let userApp = new Vue({
           .then(response => response.json())
           .then(result => {
             if (result.success) {
-              location.href = `/admin/#/admin/user`
               userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
               messageApp.show({desc: `刪除資料成功！`, type: 'success'});
+              setTimeout(() => {
+                location.href = `/admin/#/admin/user`
+              }, 500);
             } else {
               messageApp.show({desc: `刪除資料失敗！errorMessage:${result.message}`, type: 'error'});
             }
