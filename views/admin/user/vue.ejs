@@ -6,7 +6,6 @@ const COMMON = {
 
 const timeoutInstance = {
   resetTrClickStatus: 0,
-  resetSelectedIndex: 0,
 };
 
 let itemBeforeEdit = {};
@@ -303,24 +302,19 @@ let userApp = new Vue({
        }, COMMON.DOUBLE_CLICK_TIME_PERIOD);
      });
 
-    //  table.on('dblclick', 'tr', () => {
-    //    const index = userAppModel.view.table.selectIndex;
-    //    const userId = userAppModel.data.items[index].id;
-    //    window.clearTimeout(timeoutInstance.resetTrClickStatus);
-    //    window.clearTimeout(timeoutInstance.resetSelectedIndex);
-    //    location.href = `/admin/#/admin/user/show/${userId}`
-    //  });
-
      $('#user-table').fadeIn();
     },
-    selection:  function (index) {
+    dblclick: function(index) {
+      window.clearTimeout(timeoutInstance.resetTrClickStatus);
+      const userId = userAppModel.data.items[index].id;
+      this.show(userId);
+    },
+    selection: function (index) {
       if (index !== userAppModel.view.table.selectIndex) {
         userAppModel.view.table.selectIndex = index;
         console.log("userAppModel.view.table.selectIndex", userAppModel.view.table.selectIndex);
       } else {
-        timeoutInstance.resetSelectedIndex = window.setTimeout(() => {
-          userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
-        }, COMMON.DOUBLE_CLICK_TIME_PERIOD);
+        userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
       }
     },
     show: (userId) => {
