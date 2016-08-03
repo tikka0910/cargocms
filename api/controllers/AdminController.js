@@ -10,9 +10,7 @@ const url = require('url');
 module.exports = {
 
   index: function(req, res) {
-    res.ok({locals: {
-      layout: false
-    }});
+    res.ok({}, "admin/index");
   },
 
   debug: function(req, res) {
