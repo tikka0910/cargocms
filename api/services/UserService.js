@@ -7,23 +7,6 @@ module.exports = {
     }
   },
 
-  findOne: async (userId) => {
-    let data = false
-    let message = '';
-    try {
-      sails.log.info('findOne user service=>', userId);
-      const findUser = await User.findById(parseInt(userId, 10));
-      if (findUser) {
-        data = findUser.dataValues;
-      } else {
-        message = `user id ${userId} does not exist`;
-      }
-      return { data, message };
-    } catch (e) {
-      throw e;
-    }
-  },
-
   create: async ({
     username,
     email,

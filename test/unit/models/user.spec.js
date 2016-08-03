@@ -17,7 +17,7 @@ describe('about User model operation.', function() {
       }
     });
 
-    it.only('should success.', async (done) => {
+    it('should success.', async (done) => {
       try {
         await user.loginSuccess({ userAgent: 'test' });
         let checkUser = await User.findById(user.id);

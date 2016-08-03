@@ -19,38 +19,6 @@ describe('about User Service operation.', function() {
     }
   });
 
-  describe('find user', () => {
-    let findThisUser;
-    before(async (done) => {
-      try {
-        findThisUser = await User.create({
-          username: 'findThisUserService',
-          email: 'findThisUserService@xxx.xxx',
-          firstName: 'test',
-          lastName: 'test',
-          locale: 'zh_TW',
-        });
-        sails.log.info('findThisUser=>', findThisUser);
-        done();
-      } catch (e) {
-        done(e);
-      }
-    });
-
-    it('should success.', async (done) => {
-      try {
-        const result = await UserService.findOne(findThisUser.dataValues.id);
-        sails.log.info('find user service spec=>', result);
-        result.data.should.be.Object;
-        result.data.id.should.be.equal(findThisUser.dataValues.id);
-        result.data.username.should.be.equal(findThisUser.dataValues.username);
-        done();
-      } catch (e) {
-        done(e);
-      }
-    });
-  });
-
   describe('delete user', () => {
     let deleteThisUser;
     before(async (done) => {
@@ -72,10 +40,9 @@ describe('about User Service operation.', function() {
       try {
         const result = await UserService.delete(deleteThisUser.id);
         sails.log.info('delete user service spec=>', result);
-        const findDeletedUser = await UserService.findOne(deleteThisUser.id);
-        sails.log.info("findDeletedUser service spec=>", findDeletedUser);
+        const findDeletedUser = await User.findById(deleteThisUser.id);
         result.data.should.not.be.equal(false);
-        findDeletedUser.data.should.be.equal(false);
+        (findDeletedUser === null ).should.be.true;
         done();
       } catch (e) {
         done(e);
