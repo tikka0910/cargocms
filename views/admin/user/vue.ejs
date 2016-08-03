@@ -4,10 +4,6 @@ const COMMON = {
   DEFAULT_AVATAR: "img/avatars/default.png",
 };
 
-const timeoutInstance = {
-  resetTrClickStatus: 0,
-};
-
 let itemBeforeEdit = {};
 let userAppModel = {
   data: {
@@ -132,11 +128,11 @@ let userApp = new Vue({
             required : '請輸入使用者名'
           },
           password : {
-            required : 'Please enter your password'
+            required : '請輸入密碼'
           },
           passwordConfirm : {
-            required : 'Please enter your password one more time',
-            equalTo : 'Please enter the same password as above'
+            required : '請再次輸入密碼以便確認',
+            equalTo : '請輸入相同的密碼'
           },
         },
 
@@ -292,20 +288,17 @@ let userApp = new Vue({
 
      // selection
      table.on('click', 'tr', function () {
-       timeoutInstance.resetTrClickStatus = window.setTimeout(() => {
-         if ( $(this).hasClass('selected') ) {
-           $(this).removeClass('selected');
-         } else {
-           $('#user-table tbody tr').removeClass('selected');
-           $(this).addClass('selected');
-         }
-       }, COMMON.DOUBLE_CLICK_TIME_PERIOD);
+       if ( $(this).hasClass('selected') ) {
+         $(this).removeClass('selected');
+       } else {
+         $('#user-table tbody tr').removeClass('selected');
+         $(this).addClass('selected');
+       }
      });
 
-     $('#user-table').fadeIn();
+     $('#user-table-widget').fadeIn();
     },
     dblclick: function(index) {
-      window.clearTimeout(timeoutInstance.resetTrClickStatus);
       const userId = userAppModel.data.items[index].id;
       this.show(userId);
     },
@@ -331,7 +324,6 @@ let userApp = new Vue({
       },
       function(ButtonPressed) {
         if (ButtonPressed ==='刪除') {
-          const index = userAppModel.data.item.id;
           fetch(`/user/${userAppModel.data.item.id}`, {
              credentials: 'include',
              method: 'DELETE',
