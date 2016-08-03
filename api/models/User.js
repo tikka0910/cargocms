@@ -22,7 +22,7 @@ module.exports = {
     },
     displayName: {
       type: Sequelize.VIRTUAL,
-      get: async function() {
+      get: function() {
         const locale = this.getDataValue('locale');
         const firstName = this.getDataValue('firstName');
         const lastName = this.getDataValue('lastName');
@@ -35,16 +35,15 @@ module.exports = {
     },
     RolesArray: {
       type: Sequelize.VIRTUAL,
-      get: async function() {
+      get: async () => {
         const roles = await this.getRoles();
-        const jsonRoles = roles.toJSON();
-        const RolesArray = [];
+        const jsonRoles = await roles.toJSON();
         for (const role of jsonRoles) {
           console.log(this.getDataValue('id'), "role.authority=>", role.authority);
-          RolesArray.push(role.authority);
+          jsonRoles.RolesArray.push(role.authority);
         }
-        console.log("RolesArray=>", RolesArray);
-        return RolesArray;
+        console.log("RolesArray=>", jsonRoles.RolesArray);
+        return jsonRoles.RolesArray;
       }
     },
     userAgent: {
@@ -63,7 +62,7 @@ module.exports = {
     classMethods: {
       findOneWithPassport: async function({userId}) {
         console.log("findOneWithPassport userId=>", userId);
-        const user = await User.findOne({
+        return user = await User.findOne({
           where: {
             id: userId
           },
@@ -72,13 +71,6 @@ module.exports = {
               where: { provider: 'local' }
           }],
         });
-        // const userJson = user.toJSON();
-        // const roles = userJson.Roles;
-        // userJson.RolesArray = [];
-        // for (const role of roles) {
-        //   userJson.RolesArray.push(role.authority)
-        // }
-        return user;
       }
     },
     instanceMethods: {
