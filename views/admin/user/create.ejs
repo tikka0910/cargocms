@@ -42,9 +42,6 @@
 
 				-->
 				<header>
-					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-					<h2>Registration form </h2>
-
 				</header>
 
 				<!-- widget div-->
@@ -61,18 +58,15 @@
 					<div class="widget-body no-padding">
 
 						<form id="user-form" class="smart-form">
-							<header>
-								Registration form
-							</header>
 
 							<%- include form.ejs %>
 
 							<footer>
-								<button type="submit" class="btn btn-primary">
-									Submmit Form
-								</button>
 								<button type="button" v-on:click="cancel" class="btn btn-default">
-									Cancel
+									取消
+								</button>
+								<button type="submit" class="btn btn-primary">
+									送出
 								</button>
 							</footer>
 						</form>

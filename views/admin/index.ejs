@@ -82,7 +82,20 @@
             sound: false,
             timeout: 3000
           });
-		    }
+		    },
+				confirm: ({title, content, btnArray}, cb) => {
+					let buttons = '';
+					btnArray.forEach((btn) => {
+						buttons += `[${btn}]`;
+					});
+					$.SmartMessageBox({
+						title,
+						content,
+						buttons,
+					}, function(ButtonPressed) {
+						cb(ButtonPressed);
+					});
+				}
 			}
 		});
 

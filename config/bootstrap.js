@@ -83,6 +83,18 @@ module.exports.bootstrap = async (cb) => {
     const {environment} = sails.config;
     if (environment !== 'production') {
       sails.log.info("init Dev data");
+
+      for (let i = 0; i < 30; i ++) {
+        let user = await User.create({
+          username: `user${i}`,
+          email: `user${i}@gmail.com`,
+          firstName: '王',
+          lastName: '大明'
+        });
+        let passport = await Passport.create({provider: 'local', password: 'user', UserId: user.id});
+      }
+
+
       const post = await Post.create({
         title: '香味的一沙一世界5',
         content: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材（ex:玫瑰、康乃馨..等)所組成的『這束花的味道』，接著抽出其中的一朵康乃馨',

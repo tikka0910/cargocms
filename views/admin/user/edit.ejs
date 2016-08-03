@@ -41,10 +41,13 @@
 					data-widget-sortable="false"
 
 				-->
-				<header>
-					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-					<h2>Registration form </h2>
-
+        <header role="heading">
+          <div class="jarviswidget-ctrls" role="menu"></div>
+					<span class="widget-icon"><i class="fa fa-edit"></i></span>
+					<h2>會員個人資料維護</h2>
+				  <span class="jarviswidget-loader">
+            <i class="fa fa-refresh fa-spin"></i>
+          </span>
 				</header>
 
 				<!-- widget div-->
@@ -62,21 +65,18 @@
 
 						<form id="user-form" class="smart-form">
 							<input type="text" name="id" id="id" v-model="data.item.id" hidden="hidden" value="<%= req.params.id %>">
-							<header>
-							  Registration form
-							</header>
 
 							<%- include form.ejs %>
 
 							<footer>
-								<button type="submit" class="btn btn-primary">
-									Submmit Form
-								</button>
-								<button type="button" v-on:click="delete" class="btn btn-danger">
-									Delete User
-								</button>
 								<button type="button" v-on:click="cancel" class="btn btn-default">
-									Cancel
+									取消
+								</button>
+								<button type="submit" class="btn btn-primary">
+									儲存
+								</button>
+								<button type="button" v-on:click="delete" class="btn btn-danger pull-left">
+									刪除
 								</button>
 							</footer>
 						</form>
@@ -145,9 +145,14 @@
 		userApp.$mount("#user-edit");
 		userApp.loadItem();
 		userApp.setupForm("edit");
-
-
+    userApp.onEnterPageEdit();
 	};
+
+	// var pagedestroy = function() {
+      // $(window).unload(function() {
+      //   return "Handler for .unload() called.";
+      // });
+	// }
 
 	// end pagefunction
 
