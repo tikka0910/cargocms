@@ -66,6 +66,7 @@ module.exports = {
         try {
           return await User.destroy({ where: { id } });
         } catch (e) {
+          sails.log.error(e);
           throw e;
         }
       },

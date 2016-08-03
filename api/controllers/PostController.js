@@ -36,7 +36,7 @@ module.exports = {
       const { postId } = req.params;
       res.ok({
         message: 'find post success.',
-        data: await PostService.findById({ id: postId }),
+        data: await Post.findByIdHasJoin(postId),
       });
     } catch (e) {
       sails.log.error(e);
@@ -62,7 +62,7 @@ module.exports = {
       const { postId } = req.params;
       res.ok({
         message: 'delete post success.',
-        data: await PostService.destroy({ id: postId }),
+        data: await Post.deleteById(postId ),
       });
     } catch (e) {
       sails.log.error(e);

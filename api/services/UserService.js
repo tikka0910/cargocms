@@ -16,6 +16,14 @@ module.exports = {
     Passports,
   }) => {
     try {
+      sails.log.info({
+        username,
+        email,
+        firstName,
+        lastName,
+        locale,
+        Passports,
+      });
       const user = await User.create({ username, email, firstName, lastName, locale });
       await Passport.create({
         provider: 'local',

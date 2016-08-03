@@ -1,4 +1,4 @@
-describe.only('about User Controller operation.', function() {
+describe('about User Controller operation.', function() {
 
   it('create User should success.', async (done) => {
     const createThisUser = {

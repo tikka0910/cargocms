@@ -14,18 +14,6 @@ module.exports = {
     }
   },
 
-  findById: async ({ id }) => {
-    try {
-      return await Post.findOne({
-        where: { id },
-        include: Tag
-      });
-    } catch (e) {
-      sails.log.error(e);
-      throw e;
-    }
-  },
-
   update: async (postId, data = {
     title,
     content,
@@ -44,13 +32,4 @@ module.exports = {
       throw e;
     }
   },
-
-  destroy: async ({ id }) => {
-    try {
-      return await Post.destroy({ where: { id } });
-    } catch (e) {
-      sails.log.error(e);
-      throw e;
-    }
-  }
 }

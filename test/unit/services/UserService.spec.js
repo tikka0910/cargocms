@@ -7,7 +7,7 @@ describe('about User Service operation.', function() {
         firstName: 'test',
         lastName: 'test',
         locale: 'zh_TW',
-        password: '123123123'
+        Passports: [{ password: '000000' }],
       };
       const result = await UserService.create(newUser);
       sails.log.info('create user service spec=>', result);

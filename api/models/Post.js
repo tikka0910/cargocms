@@ -23,6 +23,17 @@ module.exports = {
   },
   options: {
     classMethods: {
+      findByIdHasJoin: async (id) => {
+        try {
+          return await Post.findOne({
+            where: { id },
+            include: Tag
+          });
+        } catch (e) {
+          sails.log.error(e);
+          throw e;
+        }
+      },
       findByTagId: async (id) => {
         try {
           return await Post.findAll({
@@ -35,7 +46,15 @@ module.exports = {
           sails.log.error(e);
           throw e;
         }
-      }
+      },
+      deleteById: async (id) => {
+        try {
+          return await Post.destroy({ where: { id } });
+        } catch (e) {
+          sails.log.error(e);
+          throw e;
+        }
+      },
     },
     instanceMethods: {},
     hooks: {}
