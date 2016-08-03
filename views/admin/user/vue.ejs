@@ -1,6 +1,7 @@
 const COMMON = {
   DOUBLE_CLICK_TIME_PERIOD: 250,
-  INDEX_DEFAULT: -1,
+  DEFAULT_INDEX: -1,
+  DEFAULT_AVATAR: "img/avatars/default.png",
 };
 
 const timeoutInstance = {
@@ -31,7 +32,7 @@ let userAppModel = {
   },
   view: {
     table: {
-      selectIndex: COMMON.INDEX_DEFAULT,
+      selectIndex: COMMON.DEFAULT_INDEX,
     },
   }
 }
@@ -59,8 +60,7 @@ let userApp = new Vue({
       });
     },
     update: function (event) {
-
-      let body = userAppModel.data.item;
+      const body = userAppModel.data.item;
       fetch(`/user/${userAppModel.data.item.id}`, {
         credentials: 'include',
         method: 'post',
@@ -82,6 +82,7 @@ let userApp = new Vue({
         if (result.success) {
           userAppModel.data.item = result.data;
           userAppModel.data.option.passwordConfirm = result.data.Passports[0].password;
+          if (!result.data.avatar) userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
           userApp.onEnterPageEdit();
         }
         console.log("loadItem userAppModel.data.item=>",userAppModel.data.item);
@@ -243,7 +244,7 @@ let userApp = new Vue({
              "sExtends": "text",
              "sButtonText": "檢視",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               const isSelected = userAppModel.view.table.selectIndex !== COMMON.INDEX_DEFAULT;
+               const isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
                if (isSelected) {
                  const index = userAppModel.view.table.selectIndex;
                  const userId = userAppModel.data.items[index].id;
@@ -264,7 +265,7 @@ let userApp = new Vue({
              "sExtends": "text",
              "sButtonText": "編輯",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               const isSelected = userAppModel.view.table.selectIndex !== COMMON.INDEX_DEFAULT;
+               const isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
                if (isSelected) {
                  const index = userAppModel.view.table.selectIndex;
                  const userId = userAppModel.data.items[index].id;
@@ -319,9 +320,12 @@ let userApp = new Vue({
         console.log("userAppModel.view.table.selectIndex", userAppModel.view.table.selectIndex);
       } else {
         timeoutInstance.resetSelectedIndex = window.setTimeout(() => {
-          userAppModel.view.table.selectIndex = COMMON.INDEX_DEFAULT;
+          userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
         }, COMMON.DOUBLE_CLICK_TIME_PERIOD);
       }
+    },
+    show: (userId) => {
+      location.href = `/admin/#/admin/user/show/${userId}`;
     },
     edit: function (userId) {
       location.href = `/admin/#/admin/user/edit/${userId}`;
@@ -343,7 +347,7 @@ let userApp = new Vue({
           .then(result => {
             if (result.success) {
               location.href = `/admin/#/admin/user`
-              userAppModel.view.table.selectIndex = COMMON.INDEX_DEFAULT;
+              userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
               messageApp.show({desc: `刪除資料成功！`, type: 'success'});
             } else {
               messageApp.show({desc: `刪除資料失敗！errorMessage:${result.message}`, type: 'error'});

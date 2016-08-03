@@ -54,7 +54,7 @@
 							<tbody>
 								<tr v-for="user in data.items" v-on:click="selection($index)">
 									<td>{{ user.id }}</td>
-									<td><a href=`/admin/#/admin/user/show/${userId}`>{{ user.username }}</a></td>
+									<td><a href="/admin/#/admin/user/show/{{user.id}}">{{ user.username }}</a></td>
 									<td>{{ user.displayName }}</td>
 									<td>{{ user.email }}</td>
                   <td>{{ user.lastLogin }}</td>

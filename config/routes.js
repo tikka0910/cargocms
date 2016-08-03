@@ -127,6 +127,12 @@ module.exports.routes = {
       layout: false
     }
   },
+  '/admin/user/show/:id': {
+    view: 'admin/user/show',
+    locals: {
+      layout: false
+    }
+  },
 
   '/admin/post': {
     view: 'admin/post/index',
