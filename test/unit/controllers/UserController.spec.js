@@ -1,4 +1,4 @@
-describe('about User Controller operation.', function() {
+describe.only('about User Controller operation.', function() {
 
   it('create User should success.', async (done) => {
     const createThisUser = {
@@ -42,14 +42,14 @@ describe('about User Controller operation.', function() {
     let findThisUser;
     before(async (done) => {
       try {
-        findThisUser = await UserService.create({
-          username: 'findThisUser',
-          email: 'findThisUser@xxx.xxx',
+        findThisUser = await User.create({
+          username: `testfindController`,
+          email: `testfindController@gmail.com`,
           firstName: 'test',
-          lastName: 'test',
-          locale: 'zh_TW',
+          lastName: 'findController'
         });
-        sails.log.info('findThisUser.data.id=>', findThisUser.data.id);
+        let passport = await Passport.create({provider: 'local', password: 'user', UserId: findThisUser.id});
+        sails.log.info('findThisUser.data.id=>', findThisUser.id);
         done();
       } catch (e) {
         done(e);
@@ -59,11 +59,11 @@ describe('about User Controller operation.', function() {
     it('should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
-        .get(`/user/${findThisUser.data.id}`);
+        .get(`/user/${findThisUser.id}`);
         sails.log.info('find one user controller spec =>', res.body);
         res.body.data.should.be.Object;
         res.body.data.id.should.be.Number;
-        res.body.data.id.should.be.equal(findThisUser.data.id);
+        res.body.data.id.should.be.equal(findThisUser.id);
         done();
       } catch (e) {
         done(e);

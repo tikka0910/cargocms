@@ -14,10 +14,12 @@ module.exports = {
   findOne: async (req, res) => {
     const { userId } = req.params;
     try {
-
       const user = await User.findOneWithPassport({userId})
-      console.log('user=>', user);
-      res.ok({data: user});
+      sails.log.info('get user =>', user);
+      res.ok({
+        message: 'Get user success.',
+        data: user,
+      });
     } catch (e) {
       res.serverError({ message: e, data: {}});
     }
