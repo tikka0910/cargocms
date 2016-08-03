@@ -113,7 +113,10 @@ exports.login = async (req, identifier, password, next) => {
 
     if (passport) {
       let result = await passport.validatePassword(password, passport);
-      if (result) return next(null, user);
+      if (result) {
+        await user.loginSuccess({ req });
+        return next(null, user);
+      }
 
     } else {
       throw new Error('Error.Passport.Password.NotSet');

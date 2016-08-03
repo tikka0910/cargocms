@@ -35,6 +35,12 @@ module.exports = {
         return displayName;
 
       }
+    },
+    userAgent: {
+      type: Sequelize.STRING,
+    },
+    lastLogin: {
+      type: Sequelize.DATE,
     }
   },
   associations: function() {
@@ -57,7 +63,14 @@ module.exports = {
         });
       }
     },
-    instanceMethods: {},
+    instanceMethods: {
+      loginSuccess: async function({ req }) {
+        const now = new Date();
+        this.userAgent = req.headers['user-agent'];
+        this.lastLogin = now.getTime();
+        await this.save();
+      }
+    },
     hooks: {
       afterCreate: async (user, options) => {
         const userRole = await Role.findOne({where: {authority: 'user'}});

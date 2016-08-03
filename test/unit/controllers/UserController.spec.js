@@ -7,6 +7,7 @@ describe('about User Controller operation.', function() {
       firstName: 'test',
       lastName: 'test',
       locale: 'zh_TW',
+      Passports: [{ password: '000000' }],
     };
     try {
       const res = await request(sails.hooks.http.app)
@@ -101,7 +102,7 @@ describe('about User Controller operation.', function() {
     });
   });
 
-  describe.only('update user', () => {
+  describe('update user', () => {
     let updateThisUser;
     const updatedUser = {
       username: 'updated',

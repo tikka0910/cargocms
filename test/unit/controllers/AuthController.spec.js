@@ -1,4 +1,4 @@
-describe.skip('about Auth Controller operation.', function() {
+describe('about Auth Controller operation.', function() {
   it('register user should success.', async (done) => {
 
     try {
@@ -31,7 +31,7 @@ describe.skip('about Auth Controller operation.', function() {
   });
 
   describe('login user use eamil', () => {
-
+    let user;
     before(async (done) => {
       try {
         let testuser = {
@@ -39,7 +39,7 @@ describe.skip('about Auth Controller operation.', function() {
           username: 'testuser'
         }
 
-        let user = await User.create(testuser);
+        user = await User.create(testuser);
         await Passport.create({provider: 'local', password: 'testuser', UserId: user.id});
         done();
 
@@ -65,6 +65,8 @@ describe.skip('about Auth Controller operation.', function() {
         result.status.should.be.equal(302);
         result.headers.location.should.be.equal('/');
 
+        let checkUser = await User.findById(user.id);
+        checkUser.userAgent.should.not.eq('');
         done();
       } catch (e) {
         done(e);
