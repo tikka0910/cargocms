@@ -17,11 +17,40 @@ describe('about User model operation.', function() {
       }
     });
 
-    it.only('should success.', async (done) => {
+    it('should success.', async (done) => {
       try {
         await user.loginSuccess({ userAgent: 'test' });
         let checkUser = await User.findById(user.id);
         checkUser.userAgent.should.not.eq('');
+        done();
+      } catch (e) {
+        done(e)
+      }
+    });
+  });
+
+  describe('test Delete User', function() {
+    let user;
+    before(async (done) => {
+      try {
+        user = await User.create({
+          username: `testDelete`,
+          email: `testDelete@gmail.com`,
+          firstName: 'test',
+          lastName: 'Delete'
+        });
+        let passport = await Passport.create({provider: 'local', password: 'user', UserId: user.id});
+        done();
+      } catch (e) {
+        done(e)
+      }
+    });
+
+    it('should success.', async (done) => {
+      try {
+        await User.deleteById(user.id);
+        let checkUser = await User.findById(user.id);
+        (checkUser === null).should.be.true;
         done();
       } catch (e) {
         done(e)

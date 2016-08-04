@@ -69,7 +69,15 @@ module.exports = {
               where: { provider: 'local' }
           }],
         });
-      }
+      },
+      deleteById: async (id) => {
+        try {
+          return await User.destroy({ where: { id } });
+        } catch (e) {
+          sails.log.error(e);
+          throw e;
+        }
+      },
     },
     instanceMethods: {
       loginSuccess: async function({ userAgent }) {
