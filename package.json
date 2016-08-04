@@ -47,6 +47,7 @@
     "sails-hook-autoreload": "^0.13.2",
     "sails-hook-sequelize": "^1.0.1",
     "sqlite3": "^3.1.1",
+    "tracer": "0.8.3",
     "validator": "^4.3.0"
   },
   "scripts": {

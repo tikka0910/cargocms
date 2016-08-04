@@ -43,7 +43,7 @@ module.exports = function sendOK (data, options) {
   // Otherwise try to guess an appropriate view, or if that doesn't
   // work, just send JSON.
 
-  console.log('=== response ok data ===', data);
+  sails.log.info('=== response ok data ===', data);
   if (options.view) {
     return res.view(options.view, { data: data });
   }
