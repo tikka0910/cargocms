@@ -35,15 +35,13 @@ module.exports = {
     },
     RolesArray: {
       type: Sequelize.VIRTUAL,
-      get: async () => {
-        const roles = await this.getRoles();
-        const jsonRoles = await roles.toJSON();
-        for (const role of jsonRoles) {
-          console.log(this.getDataValue('id'), "role.authority=>", role.authority);
-          jsonRoles.RolesArray.push(role.authority);
+      get: function() {
+        try {
+          const roles = this.Roles ? this.Roles.map((role) => role.authority) : [];
+          return roles;
+        } catch (e) {
+          sails.log.error(e);
         }
-        console.log("RolesArray=>", jsonRoles.RolesArray);
-        return jsonRoles.RolesArray;
       }
     },
     userAgent: {
@@ -62,7 +60,7 @@ module.exports = {
     classMethods: {
       findOneWithPassport: async function({userId}) {
         console.log("findOneWithPassport userId=>", userId);
-        return user = await User.findOne({
+        return await User.findOne({
           where: {
             id: userId
           },
