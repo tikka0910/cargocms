@@ -7,36 +7,32 @@ module.exports = {
     }
   },
 
-  findOne: async (userId) => {
-    let result = false
-    let msg = '';
-    try {
-      sails.log.info('findOne user service=>', userId);
-      const findUser = await User.findById(parseInt(userId, 10));
-      if (findUser) {
-        result = findUser.dataValues;
-      } else {
-        msg = `user id ${userId} does not exist`;
-      }
-      return { result, msg };
-    } catch (e) {
-      throw e;
-    }
-  },
-
-  create: async (user = {
+  create: async ({
     username,
     email,
     firstName,
     lastName,
-    locale
+    locale,
+    Passports,
   }) => {
-    let result = false;
     try {
-      sails.log.info('create user service=>', user);
-      const createdUser = await User.create(user);
-      return { result: createdUser.dataValues };
+      sails.log.info({
+        username,
+        email,
+        firstName,
+        lastName,
+        locale,
+        Passports,
+      });
+      const user = await User.create({ username, email, firstName, lastName, locale });
+      await Passport.create({
+        provider: 'local',
+        password: Passports[0].password,
+        UserId: user.id
+      });
+      return user;
     } catch (e) {
+      sails.log.error(e);
       throw e;
     }
   },
@@ -48,45 +44,41 @@ module.exports = {
     firstName,
     lastName,
     locale,
+    Passports,
+    RolesArray
   }) => {
-    let result = false
-    let msg = '';
     try {
       sails.log.info('update user service=>', user);
-      let updatedUser = await User.findById(parseInt(user.id, 10));
+      let updatedUser = await User.findOne({
+        where: {
+          id: parseInt(user.id, 10)
+        },
+        include: Passport,
+      });
       if (updatedUser) {
+        const passport = await Passport.findById(updatedUser.Passports[0].id);
+        const isOldPassword = await passport.validatePassword(user.Passports[0].password, passport);
+        if (!isOldPassword) {
+          passport.password = user.Passports[0].password;
+          await passport.save();
+        }
         updatedUser.username = user.username;
         updatedUser.email = user.email;
         updatedUser.firstName = user.firstName;
         updatedUser.lastName = user.lastName;
         updatedUser.locale = user.locale;
+
+        const userRoles = await Role.findAll({
+          where: {
+            authority: user.RolesArray
+          }
+        });
+        await updatedUser.setRoles(userRoles);
         updatedUser = await updatedUser.save();
-        result = updatedUser.dataValues;
-      } else {
-        msg = `user id ${userId} does not exist`;
       }
-      return { result, msg };
+      return updatedUser;
     } catch (e) {
       throw e;
     }
   },
-
-  delete: async (userId) => {
-    let result = false
-    let msg = '';
-    try {
-      sails.log.info('delete user service=>', userId);
-      let deletedUser = await User.findById(parseInt(userId, 10));
-      if (deletedUser) {
-        deletedUser = await deletedUser.destroy();
-        result = deletedUser.dataValues;
-      } else {
-        msg = `user id ${userId} does not exist`;
-      }
-      return { result, msg };
-    } catch (e) {
-      throw e;
-    }
-  }
-
 }

@@ -18,26 +18,26 @@
 
 
 module.exports.policies = {
-  '*': ['passport', 'sessionAuth'],
+  '*': ['nocache', 'passport', 'sessionAuth'],
   'AuthController': {
     '*': ['passport']
   },
   'UserController': {
-    'index': [],
-    'findOne': [],
-    'create': [],
-    'update': [],
-    'delete': []
+    'index': ['nocache'],
+    'findOne': ['nocache'],
+    'create': ['nocache'],
+    'update': ['nocache'],
+    'delete': ['nocache']
   },
   'BlogController': {
     'index': true
   },
   'WallController': true,
   'MainController': {
-    'index': []
+    'index': ['nocache']
   },
   'AdminController': {
-    'index': [
+    'index': ['nocache'
       // 'passport', 'sessionAuth', 'isAdmin'
     ],
   },

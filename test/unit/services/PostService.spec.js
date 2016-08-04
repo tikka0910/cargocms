@@ -40,15 +40,6 @@ describe('about Post Service operation.', function() {
         done(e);
       }
     });
-    it('find Post should success.', async (done) => {
-      try {
-        const post = await PostService.findById({ id: targetPost.id });
-        post.id.should.be.eq(targetPost.id);
-        done()
-      } catch (e) {
-        done(e)
-      }
-    });
 
     it('update Post should success.', async (done) => {
       try {
@@ -60,16 +51,6 @@ describe('about Post Service operation.', function() {
           abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
         }
         const post = await PostService.update(targetPost.id, data);
-        done()
-      } catch (e) {
-        done(e)
-      }
-    });
-
-    it('destroy Post should success.', async (done) => {
-      try {
-        const post = await PostService.destroy({ id: targetPost.id });
-        post.should.be.eq(1);
         done()
       } catch (e) {
         done(e)

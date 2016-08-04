@@ -12,7 +12,6 @@
  */
 
 module.exports = function sendOK (data, options) {
-
   // Get access to `req`, `res`, & `sails`
   var req = this.req;
   var res = this.res;
@@ -25,11 +24,14 @@ module.exports = function sendOK (data, options) {
 
   // If appropriate, serve data as JSON(P)
   if (req.wantsJSON) {
-    data.controller = req.options.controller;
-    data.action = req.options.action;
-    data.success = true;
-    if(!data.data)data.data = {};
-    if(!data.message)data.message = "";
+    // data.controller = req.options.controller;
+    // data.action = req.options.action;
+    if(data){
+      data.success = true;
+      if(!data.data)data.data = {};
+      if(!data.message)data.message = "";
+
+    }
     return res.jsonx(data);
   }
 
@@ -41,7 +43,7 @@ module.exports = function sendOK (data, options) {
   // Otherwise try to guess an appropriate view, or if that doesn't
   // work, just send JSON.
 
-  console.log('=== response ok data ===', data);
+  sails.log.info('=== response ok data ===', data);
   if (options.view) {
     return res.view(options.view, { data: data });
   }

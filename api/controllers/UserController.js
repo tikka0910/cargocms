@@ -2,22 +2,26 @@ module.exports = {
   index: async (req, res) => {
     try {
       const users = await UserService.findAll();
-      res.ok({data: {
-        items: users
+      res.ok({
+        data: {
+          items: users
       }});
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e, data: {}});
     }
   },
 
   findOne: async (req, res) => {
     const { userId } = req.params;
     try {
-      sails.log.info('findOne user controller=>', userId);
-      const user = await UserService.findOne(userId);
-      res.ok(user);
+      const user = await User.findOneWithPassport({userId})
+      sails.log.info('get user =>', user);
+      res.ok({
+        message: 'Get user success.',
+        data: user,
+      });
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e, data: {}});
     }
   },
 
@@ -26,9 +30,12 @@ module.exports = {
     try {
       sails.log.info('create user controller=>', data);
       const user = await UserService.create(data);
-      res.ok(user);
+      res.ok({
+        message: 'Create user success.',
+        data: user,
+      });
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e.message, data: {}});
     }
   },
 
@@ -42,9 +49,12 @@ module.exports = {
         id: userId,
         ...data,
       });
-      res.ok(user);
+      res.ok({
+        message: 'Update user success.',
+        data: user,
+      });
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e.message, data: {}});
     }
   },
 
@@ -52,10 +62,13 @@ module.exports = {
     const { userId } = req.params;
     try {
       sails.log.info('delete user controller=>', userId);
-      const user = await UserService.delete(userId);
-      res.ok(user);
+      const user = await User.deleteById(userId);
+      res.ok({
+        message: 'Delete user success.',
+        data: user,
+      });
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e.message, data: {}});
     }
   },
 }

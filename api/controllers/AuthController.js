@@ -8,11 +8,7 @@
 const url = require('url');
 module.exports = {
   login: function(req, res) {
-    // res.ok({
-    //   errors: req.flash('error')
-    // });
-
-    res.ok();
+    res.view({}, "auth/login");
   },
   logout: function(req, res) {
     req.session.authenticated = false;
@@ -24,7 +20,7 @@ module.exports = {
     try {
       passport.endpoint(req, res);
     } catch (e) {
-      console.log(e);
+      sails.log.error(e);
     }
   },
   register: async (req, res) => {

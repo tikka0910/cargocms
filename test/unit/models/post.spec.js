@@ -15,7 +15,7 @@ describe('about Post model operation.', function() {
     }
   });
 
-  describe.only('about Post model operation.', function() {
+  describe('about Post model operation.', function() {
     let post;
     let tag;
     before(async (done) => {
@@ -37,6 +37,15 @@ describe('about Post model operation.', function() {
         done(e)
       }
     });
+    it('find Post by id has join should success.', async (done) => {
+      try {
+        let result = await Post.findByIdHasJoin(post.id);
+        result.id.should.be.eq(post.id)
+        done();
+      } catch (e) {
+        done(e);
+      }
+    });
     it('create Post should success.', async (done) => {
       try {
         let result = await Post.findByTagId(tag.id);
@@ -44,6 +53,15 @@ describe('about Post model operation.', function() {
         done();
       } catch (e) {
         done(e);
+      }
+    });
+    it('destroy Post should success.', async (done) => {
+      try {
+        const result = await Post.deleteById(post.id);
+        result.should.be.eq(1);
+        done()
+      } catch (e) {
+        done(e)
       }
     });
   });
