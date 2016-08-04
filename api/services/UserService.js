@@ -54,7 +54,7 @@ module.exports = {
     lastName,
     locale,
     Passports,
-    Roles
+    RolesArray
   }) => {
     try {
       sails.log.info('update user service=>', user);
@@ -79,7 +79,7 @@ module.exports = {
 
         const userRoles = await Role.findAll({
           where: {
-            authority: user.Roles
+            authority: user.RolesArray
           }
         });
         await updatedUser.setRoles(userRoles);

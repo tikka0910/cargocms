@@ -23,17 +23,25 @@ module.exports = {
     displayName: {
       type: Sequelize.VIRTUAL,
       get: function() {
+        const locale = this.getDataValue('locale');
+        const firstName = this.getDataValue('firstName');
+        const lastName = this.getDataValue('lastName');
 
-        let locale = this.getDataValue('locale');
-        let firstName = this.getDataValue('firstName');
-        let lastName = this.getDataValue('lastName');
-
-        let displayName = firstName + lastName
-        if(locale == 'zh_TW')
-          displayName = lastName + firstName
+        let displayName = firstName + lastName;
+        if (locale === 'zh_TW') displayName = lastName + firstName;
 
         return displayName;
-
+      }
+    },
+    RolesArray: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const roles = this.Roles ? this.Roles.map((role) => role.authority) : [];
+          return roles;
+        } catch (e) {
+          sails.log.error(e);
+        }
       }
     },
     userAgent: {
@@ -50,7 +58,7 @@ module.exports = {
   },
   options: {
     classMethods: {
-      findOneWithPassport: async ({userId}) => {
+      findOneWithPassport: async function({userId}) {
         console.log("findOneWithPassport userId=>", userId);
         return await User.findOne({
           where: {
@@ -59,7 +67,7 @@ module.exports = {
           include: [ Role, {
               model: Passport,
               where: { provider: 'local' }
-          }]
+          }],
         });
       }
     },
@@ -72,7 +80,7 @@ module.exports = {
       }
     },
     hooks: {
-      afterCreate: async (user, options) => {
+      afterCreate: async function(user, options) {
         const userRole = await Role.findOne({where: {authority: 'user'}});
         console.log(userRole.toJSON());
         await user.addRole(userRole);
