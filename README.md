@@ -43,3 +43,10 @@ EJS JS/CSS Injection Issues
 
 http://stackoverflow.com/questions/6609238/is-there-a-way-to-add-css-js-later-using-ejs-with-nodejs-express
 
+## use Cloud front
+
+need to set `cors.origin`
+
+ex: 
+
+cors.origin: 'http://cargo.trunksys.com, https://cargo.trunksys.com',

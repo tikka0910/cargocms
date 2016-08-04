@@ -100,11 +100,12 @@ module.exports.routes = {
   },
 
   '/admin/': {
-    view: 'admin/index',
-    locals: {
-      layout: false
-    }
-  },
+      controller: 'AdminController',
+      action: 'index',
+      locals: {
+       layout: false
+      }
+   },
 
 //----- Admin User -----
   '/admin/user': {

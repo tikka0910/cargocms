@@ -12,7 +12,6 @@
  */
 
 module.exports = function sendOK (data, options) {
-
   // Get access to `req`, `res`, & `sails`
   var req = this.req;
   var res = this.res;
@@ -27,9 +26,12 @@ module.exports = function sendOK (data, options) {
   if (req.wantsJSON) {
     // data.controller = req.options.controller;
     // data.action = req.options.action;
-    data.success = true;
-    if(!data.data)data.data = {};
-    if(!data.message)data.message = "";
+    if(data){
+      data.success = true;
+      if(!data.data)data.data = {};
+      if(!data.message)data.message = "";
+
+    }
     return res.jsonx(data);
   }
 
