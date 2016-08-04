@@ -59,7 +59,7 @@ module.exports = {
   options: {
     classMethods: {
       findOneWithPassport: async function({userId}) {
-        console.log("findOneWithPassport userId=>", userId);
+        sails.log.info("findOneWithPassport userId=>", userId);
         return await User.findOne({
           where: {
             id: userId
@@ -82,7 +82,7 @@ module.exports = {
     hooks: {
       afterCreate: async function(user, options) {
         const userRole = await Role.findOne({where: {authority: 'user'}});
-        console.log(userRole.toJSON());
+        sails.log.info(userRole.toJSON());
         await user.addRole(userRole);
       }
     }
