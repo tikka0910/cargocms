@@ -162,8 +162,7 @@
 
 		<%- include vue.ejs %>
 		userApp.$mount("#user-index");
-		userApp.loadItems()
-		.then(userApp.renderTable);
+		userApp.loadItems(userApp.renderTable);
 
 	};
 
