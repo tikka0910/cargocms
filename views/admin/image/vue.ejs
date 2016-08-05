@@ -43,7 +43,7 @@ let imageApp = new Vue({
         template: 'qq-template-validation',
         autoUpload: false,
         request: {
-          endpoint: '/server/uploads'
+          endpoint: '/upload'
         },
         thumbnails: {
           placeholders: {
@@ -52,7 +52,7 @@ let imageApp = new Vue({
           }
         },
         validation: {
-          allowedExtensions: ['jpeg', 'jpg', 'txt'],
+          allowedExtensions: ['jpeg', 'jpg', 'png'],
           itemLimit: 3,
           sizeLimit: 1024 * 1024 // 50 kB = 50 * 1024 bytes
         },

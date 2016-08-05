@@ -78,6 +78,9 @@ module.exports.routes = {
   'put /post/:postId': 'PostController.update',
   'delete /post/:postId': 'PostController.delete',
 
+  //----- ImageController -----
+  'post /upload': 'ImageController.upload',
+
 
   /***************************************************************************
   *                                                                          *
