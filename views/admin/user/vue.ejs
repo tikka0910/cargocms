@@ -1,4 +1,4 @@
-const COMMON = {
+var COMMON = {
   DOUBLE_CLICK_TIME_PERIOD: 250,
   DEFAULT_INDEX: -1,
   DEFAULT_AVATAR: "img/avatars/default.png",
@@ -57,7 +57,7 @@ let userApp = new Vue({
       });
     },
     update: function (event) {
-      const body = userAppModel.data.item;
+      var body = userAppModel.data.item;
       fetch(`/user/${userAppModel.data.item.id}`, {
         credentials: 'include',
         method: 'post',
@@ -155,8 +155,8 @@ let userApp = new Vue({
       });
     },
     isPageEditDataModified: function() {
-      const itemBeforeLeave = JSON.stringify(userAppModel.data.item);
-      const isDataModified = itemBeforeEdit !== itemBeforeLeave;
+      var itemBeforeLeave = JSON.stringify(userAppModel.data.item);
+      var isDataModified = itemBeforeEdit !== itemBeforeLeave;
       if (!isDataModified) window.onbeforeunload = null;
       return isDataModified;
     },
@@ -165,7 +165,7 @@ let userApp = new Vue({
       console.log("itemBeforeEdit=>", JSON.parse(itemBeforeEdit));
       window.onbeforeunload = function(e) {
         if (this.isPageEditDataModified()) {
-          const message = `您已經修改過資料，是否確定要放棄本次的修改？`;
+          var message = `您已經修改過資料，是否確定要放棄本次的修改？`;
           e.returnValue = message;
           return message;
         }
@@ -173,12 +173,12 @@ let userApp = new Vue({
     },
     onLeavePageEdit: function(cb) {
       if (this.isPageEditDataModified()) {
-        const msgInfo = {
+        var msgInfo = {
           title: '注意',
           content: '您已經修改過資料，是否確定要放棄本次的修改？',
           btnArray: ['放棄', '取消'],
         };
-        const action = function(ButtonPressed) {
+        var action = function(ButtonPressed) {
           if (ButtonPressed === '放棄') {
             setTimeout(function() {
               return cb();
@@ -247,10 +247,10 @@ let userApp = new Vue({
              "sExtends": "text",
              "sButtonText": "檢視",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               const isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
+               var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
                if (isSelected) {
-                 const index = userAppModel.view.table.selectIndex;
-                 const userId = userAppModel.data.items[index].id;
+                 var index = userAppModel.view.table.selectIndex;
+                 var userId = userAppModel.data.items[index].id;
                  location.href = `/admin/#/admin/user/show/${userId}`;
                } else {
                  messageApp.show({desc: `請選擇會員`, type: 'warning'});
@@ -268,10 +268,10 @@ let userApp = new Vue({
              "sExtends": "text",
              "sButtonText": "編輯",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               const isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
+               var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
                if (isSelected) {
-                 const index = userAppModel.view.table.selectIndex;
-                 const userId = userAppModel.data.items[index].id;
+                 var index = userAppModel.view.table.selectIndex;
+                 var userId = userAppModel.data.items[index].id;
                  location.href = `/admin/#/admin/user/edit/${userId}`;
                } else {
                  messageApp.show({desc: `請選擇會員`, type: 'warning'});
@@ -308,7 +308,7 @@ let userApp = new Vue({
      $('#user-table-widget').fadeIn();
     },
     dblclick: function(index) {
-      const userId = userAppModel.data.items[index].id;
+      var userId = userAppModel.data.items[index].id;
       this.show(userId);
     },
     selection: function (index) {
