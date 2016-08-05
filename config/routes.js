@@ -141,5 +141,15 @@ module.exports.routes = {
     }
   },
 
+
+  //----- Admin Image -----
+    '/admin/image': {
+      view: 'admin/image/index',
+      locals: {
+        layout: false
+      }
+    },
+
+
   '/admin/debug': 'AdminController.debug',
 };

@@ -1,0 +1,121 @@
+const COMMON = {
+  DOUBLE_CLICK_TIME_PERIOD: 250,
+  DEFAULT_INDEX: -1,
+  DEFAULT_AVATAR: "img/avatars/default.png",
+};
+
+let itemBeforeEdit = {};
+let imageAppModel = {
+  data: {
+    item: {
+      displayName: '',
+      imagename: '',
+      email: '',
+      firstName: '',
+      lastName: '',
+      password: '',
+      Roles: [],
+      RolesArray: [],
+      Passports: [
+        {
+          password: ""
+        }
+      ]
+    },
+    items: [],
+    option: {
+      passwordConfirm: ''
+    }
+  },
+  view: {
+    table: {
+      selectIndex: COMMON.DEFAULT_INDEX,
+    },
+  }
+}
+
+let imageApp = new Vue({
+  data: imageAppModel,
+  methods: {
+    setup: function() {
+      const restrictedUploader = new qq.FineUploader({
+        element: document.getElementById("fine-uploader-validation"),
+        template: 'qq-template-validation',
+        autoUpload: false,
+        request: {
+          endpoint: '/server/uploads'
+        },
+        thumbnails: {
+          placeholders: {
+            waitingPath: '/source/placeholders/waiting-generic.png',
+            notAvailablePath: '/source/placeholders/not_available-generic.png'
+          }
+        },
+        validation: {
+          allowedExtensions: ['jpeg', 'jpg', 'txt'],
+          itemLimit: 3,
+          sizeLimit: 1024 * 1024 // 50 kB = 50 * 1024 bytes
+        },
+        callbacks: {
+          onError: (id, name, isError) => {
+            messageApp.show({desc: isError, type: 'error'});
+          }
+        }
+      });
+      qq(document.getElementById("trigger-upload")).attach("click", function() {
+        restrictedUploader.uploadStoredFiles();
+      });
+    },
+    cancel: function (event) {
+
+    },
+    save: function (event) {
+      fetch('/image', {
+        credentials: 'include',
+        method: 'post',
+        body: JSON.stringify(imageAppModel.data.item)
+      })
+      .then(response => response.json())
+      .then(result => {
+        if (result.success) {
+          location.href = `/admin/#/admin/image`;
+          messageApp.show({desc: `新增會員成功！`, type: 'success'});
+        }
+      });
+    },
+    isPageEditDataModified: () => {
+      const itemBeforeLeave = JSON.stringify(imageAppModel.data.item);
+      const isDataModified = itemBeforeEdit !== itemBeforeLeave;
+      if (!isDataModified) window.onbeforeunload = null;
+      return isDataModified;
+    },
+    onEnterPageEdit: function() {
+      itemBeforeEdit = JSON.stringify(imageAppModel.data.item);
+      console.log("itemBeforeEdit=>", JSON.parse(itemBeforeEdit));
+      window.onbeforeunload = (e) => {
+        if (this.isPageEditDataModified()) {
+          const message = `您已經修改過資料，是否確定要放棄本次的修改？`;
+          e.returnValue = message;
+          return message;
+        }
+      };
+    },
+    onLeavePageEdit: function(cb) {
+      if (this.isPageEditDataModified()) {
+        const msgInfo = {
+          title: '注意',
+          content: '您已經修改過資料，是否確定要放棄本次的修改？',
+          btnArray: ['放棄', '取消'],
+        };
+        const action = (ButtonPressed) => {
+          if (ButtonPressed === '放棄') {
+            setTimeout(() => {
+              return cb();
+            }, 500);
+          }
+        };
+        messageApp.confirm(msgInfo, action);
+      } else return cb();
+    },
+  },
+});
