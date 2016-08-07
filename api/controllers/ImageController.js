@@ -3,16 +3,22 @@ module.exports = {
     try {
       sails.log.info(req.body);
       let promise = new Promise((resolve, reject) => {
-      req.file("uploadfile").upload(async(err, files) => {
+      req.file('uploadPic').upload(async(err, files) => {
         resolve(files);
       });
     });
-
     let files = await promise.then();
-    sails.log.info(files);
-    res.ok();
+    res.ok({
+      message: 'Upload Success',
+      data: files,
+    });
     } catch (e) {
-      res.serverError(e);
+      res.serverError({
+        // error 是 FineUploader 的格式
+        error: e.message,
+        message: e.message,
+        data: {}
+      });
     }
   },
 }
