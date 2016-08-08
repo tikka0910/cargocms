@@ -26,6 +26,7 @@ var postAppModel = {
   }
 }
 
+
 var postApp = new Vue({
   data: postAppModel,
   methods: {
@@ -44,16 +45,17 @@ var postApp = new Vue({
           withCredentials: true,
         },
         success: ajaxSuccess,
+        error: ajaxError,
       });
 
       function ajaxSuccess(result) {
-        if (result.success) {
-          location.href = '/admin/#/admin/post';
-          messageApp.show({desc: '新增會員成功！', type: 'success'});
-        } else {
-          messageApp.show({desc: '新增資料失敗！errorMessage:' + result.message, type: 'error'});
-        }
+        location.href = '/admin/#/admin/post';
+        messageApp.show({desc: '新增內容成功！', type: 'success'});
       } // end ajaxSuccess
+
+      function ajaxError(result) {
+        messageApp.show({desc: '新增資料失敗！errorMessage: ' + result.responseJSON.message, type: 'error'});
+      }
     },
     update: function (event) {
       $.ajax({
@@ -65,16 +67,18 @@ var postApp = new Vue({
           withCredentials: true,
         },
         success: ajaxSuccess,
+        error: ajaxError,
       });
 
       function ajaxSuccess(result) {
-        if (result.success) {
-          location.href = '/admin/#/admin/post';
-          messageApp.show({desc: '更新會員資料成功！', type: 'success'});
-        } else {
-          messageApp.show({desc: '更新資料失敗！errorMessage:' + result.message, type: 'error'});
-        }
+        location.href = '/admin/#/admin/post';
+        messageApp.show({desc: '更新內容資料成功！', type: 'success'});
       } // end ajaxSuccess
+
+      function ajaxError(result) {
+        console.log(result);
+        messageApp.show({desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message, type: 'error'});
+      }
     },
     loadItem: function (event) {
       window.onbeforeunload = null;
@@ -264,7 +268,7 @@ var postApp = new Vue({
                  var postId = postAppModel.data.items[index].id;
                  location.href = '/admin/#/admin/post/show/' + postId;
                } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
+                 messageApp.show({desc: '請選擇內容', type: 'warning'});
                }
              }
            },
@@ -285,7 +289,7 @@ var postApp = new Vue({
                  var postId = postAppModel.data.items[index].id;
                  location.href = '/admin/#/admin/post/edit/' + postId;
                } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
+                 messageApp.show({desc: '請選擇內容', type: 'warning'});
                }
              }
            },
@@ -352,19 +356,20 @@ var postApp = new Vue({
               withCredentials: true
             },
             success: ajaxSuccess,
+            error: ajaxError,
           });
 
           function ajaxSuccess(result) {
-            if (result.success) {
-              postAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
-              messageApp.show({desc: `刪除資料成功！`, type: 'success'});
-              setTimeout(function() {
-                location.href = '/admin/#/admin/post';
-              }, 500);
-            } else {
-              messageApp.show({desc: '刪除資料失敗！errorMessage:' + result.message, type: 'error'});
-            }
+            postAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
+            messageApp.show({desc: `刪除資料成功！`, type: 'success'});
+            setTimeout(function() {
+              location.href = '/admin/#/admin/post';
+            }, 500);
           } // end ajaxSuccess
+
+          function ajaxError(result) {
+            messageApp.show({desc: '刪除資料失敗！errorMessage: ' + result.responseJSON.message, type: 'error'});
+          }
         }
       });
     }

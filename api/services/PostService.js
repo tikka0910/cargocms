@@ -1,28 +1,16 @@
 module.exports = {
-  create: async (data = {
-    title,
-    content,
-    cover,
-    url,
-    abstract,
-  }) => {
+  create: async ({ title,  content,  cover,  url,  abstract }) => {
     try {
-      return await Post.create(data);
+      return await Post.create({ title, content, cover, url, abstract });
     } catch (e) {
       sails.log.error(e);
       throw e;
     }
   },
 
-  update: async (postId, data = {
-    title,
-    content,
-    cover,
-    url,
-    abstract,
-  }) => {
+  update: async (postId, { title,  content,  cover,  url,  abstract }) => {
     try {
-      return await Post.update(data, {
+      return await Post.update({ title,  content,  cover,  url,  abstract }, {
         where: {
           id: postId,
         }
