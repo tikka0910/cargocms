@@ -148,5 +148,20 @@ module.exports.routes = {
     }
   },
 
+  // labfnp
+  '/admin/labfnp/recipe': {
+    view: 'admin/labfnp/recipe/index',
+    locals: {
+      layout: false
+    }
+  },
+  '/admin/labfnp/recipe/create': {
+    view: 'admin/labfnp/recipe/create',
+    locals: {
+      layout: false
+    }
+  },
+
+
   '/admin/debug': 'AdminController.debug',
 };
