@@ -197,7 +197,7 @@ var userApp = new Vue({
           content: '您已經修改過資料，是否確定要放棄本次的修改？',
           btnArray: ['放棄', '取消'],
         };
-        const action = function(ButtonPressed) {
+        var action = function(ButtonPressed) {
           if (ButtonPressed === '放棄') {
             setTimeout(function() {
               return cb();
