@@ -67,7 +67,7 @@ module.exports.routes = {
   //----- UserController -----
   'get /user': 'UserController.index',
   'get /user/:userId': 'UserController.findOne',
-  'post /user/:userId': 'UserController.update',
+  'put /user/:userId': 'UserController.update',
   'delete /user/:userId': 'UserController.delete',
   'post /user': 'UserController.create',
 
