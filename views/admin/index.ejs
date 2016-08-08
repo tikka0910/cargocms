@@ -83,9 +83,10 @@
             timeout: 3000
           });
 		    },
+				// confirm: ({title, content, btnArray}, cb) => {
 				confirm: function(params, cb) {
 					var buttons = '';
-					btnArray.forEach(function(btn) {
+					params.btnArray.forEach(function(btn) {
 						buttons += '[' + btn + ']';
 					});
 					$.SmartMessageBox({
