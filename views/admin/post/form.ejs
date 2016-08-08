@@ -2,31 +2,34 @@
 <fieldset>
 
   <section>
-    <label class="input"> <i class="icon-append fa fa-user"></i>
-      <input type="text" name="title" placeholder="標題" v-model="data.item.title">
+    <label class="label">標題</label>
+    <label class="input">
+      <input type="text" name="title" placeholder="請輸入標題" v-model="data.item.title">
       <b class="tooltip tooltip-bottom-right">請輸入標題</b> </label>
   </section>
 
   <section>
-    <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
-      <input type="text" name="abstract" placeholder="簡述" v-model="data.item.abstract">
+    <label class="label">簡述</label>
+    <label class="textarea">
+      <textarea rows="3" name="abstract" placeholder="請輸入 100 字以內的簡短的描述" v-model="data.item.abstract"></textarea>
       <b class="tooltip tooltip-bottom-right">請輸入 100 字以內的簡短的描述</b> </label>
   </section>
 
   <section>
-    <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
-      <input type="text" name="content" placeholder="內容" v-model="data.item.content">
+    <label class="label">內容</label>
+    <label class="textarea">
+      <textarea rows="8" name="content" placeholder="請輸入內容" v-model="data.item.content"></textarea>
       <b class="tooltip tooltip-bottom-right">請輸入內容</b> </label>
   </section>
 
   <section>
-    <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
-      <input type="text" name="cover" placeholder="封面" v-model="data.item.cover">
+    <label class="input">
+      <input type="text" name="cover" placeholder="輸入圖片網址" v-model="data.item.cover">
       <b class="tooltip tooltip-bottom-right">輸入圖片網址</b> </label>
   </section>
 
   <section>
-    <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
+    <label class="input">
       <input type="text" name="url" placeholder="網址" v-model="data.item.url">
       <b class="tooltip tooltip-bottom-right">輸入網址</b> </label>
   </section>
