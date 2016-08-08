@@ -14,7 +14,7 @@ describe.only('test LabfnpRecipe.spec model operation', function() {
       }
 
 
-      let createdLabfnpRecipe = await LabfnpRecipe.create(newLabfnpRecipe);
+      let createdLabfnpRecipe = await Recipe.create(newLabfnpRecipe);
       done();
     } catch (e) {
       done(e);
@@ -26,7 +26,7 @@ describe.only('test LabfnpRecipe.spec model operation', function() {
       let perfumeName = '香水配方名';
 
 
-      let createdLabfnpRecipe = await LabfnpRecipe.findOne({where: {perfumeName}});
+      let createdLabfnpRecipe = await Recipe.findOne({where: {perfumeName}});
       console.log(createdLabfnpRecipe.toJSON());
 
       done();
