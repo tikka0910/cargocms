@@ -1,14 +1,19 @@
 module.exports = {
   attributes: {
-    name: {
+    code: {
+      type: Sequelize.STRING
+    },
+    title: {
       type: Sequelize.STRING
     },
     description: {
       type: Sequelize.STRING
     }
+
+
   },
   associations: function() {
-    Formula.hasMany(Scent);
+    ScentNote.hasMany(Scent);
   },
   options: {
     classMethods: {},

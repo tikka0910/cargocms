@@ -1,32 +1,13 @@
-describe.only('test Color.spec model operation', function() {
+describe.only('test ScentNote.spec model operation', function() {
 
-  let createdColor, createdFormulas, createdScents;
-  it('create Color Formula Scent should be success.', async (done) => {
+  let createdScentNote, createdScents, createdFeels;
+  it('create ScentNote Scent Feel should be success.', async (done) => {
     try {
-      let newColor = {
+      let newScentNote = {
           code: "#FFA500",
           title: "Cirtus 柑橘色"
       }
-      createdColor = await Color.create(newColor);
-      done();
-    } catch (e) {
-      done(e);
-    }
-  });
-
-  it('create Formula should be success.', async (done) => {
-    try {
-      let newFormulas = [
-        {name: "T12"},
-        {name: "M6"},
-        {name: "TA53"}
-      ]
-
-      let promises = newFormulas.map((newFormula) => {
-        return Formula.create(newFormula);
-      })
-      createdFormulas = await Promise.all(promises);
-
+      createdScentNote = await ScentNote.create(newScentNote);
       done();
     } catch (e) {
       done(e);
@@ -36,8 +17,9 @@ describe.only('test Color.spec model operation', function() {
   it('create Scent should be success.', async (done) => {
     try {
       let newScents = [
-        {title: "柚子清香"},
-        {title: "清新"}
+        {name: "T12"},
+        {name: "M6"},
+        {name: "TA53"}
       ]
 
       let promises = newScents.map((newScent) => {
@@ -51,10 +33,28 @@ describe.only('test Color.spec model operation', function() {
     }
   });
 
-  it('set relation of Color Formula Scent should be success.', async (done) => {
+  it('create Feel should be success.', async (done) => {
     try {
-      await createdColor.setFormulas(createdFormulas);
-      await createdFormulas[0].setScents(createdScents);
+      let newFeels = [
+        {title: "柚子清香"},
+        {title: "清新"}
+      ]
+
+      let promises = newFeels.map((newFeel) => {
+        return Feel.create(newFeel);
+      })
+      createdFeels = await Promise.all(promises);
+
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('set relation of ScentNote Scent Feel should be success.', async (done) => {
+    try {
+      await createdScentNote.setScents(createdScents);
+      await createdScents[0].setFeels(createdFeels);
       done();
     } catch (e) {
       done(e);
@@ -67,22 +67,22 @@ describe.only('test Color.spec model operation', function() {
   it('findOne should be success.', async (done) => {
     try {
       let perfumeName = '香水配方名';
-      let {id} = createdColor
+      let {id} = createdScentNote
 
-      let findColor = await Color.findOne({
+      let findScentNote = await ScentNote.findOne({
         where: {id},
         include: [{
-          model: Formula,
-          include: Scent
+          model: Scent,
+          include: Feel
         }]
       });
-      let findFormulas = findColor.toJSON().Formulas
-      let findScents = findFormulas[0].Scents;
+      let findScents = findScentNote.toJSON().Scents
+      let findFeels = findScents[0].Feels;
 
 
-      (findFormulas.length == 3).should.be.true;
-      (findScents.length == 2).should.be.true;
-      console.log(JSON.stringify(findColor.toJSON(), null, 2));
+      (findScents.length == 3).should.be.true;
+      (findFeels.length == 2).should.be.true;
+      console.log("ScentNote: ", JSON.stringify(findScentNote.toJSON(), null, 2));
 
       done();
     } catch (e) {
