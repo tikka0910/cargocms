@@ -11,6 +11,9 @@ module.exports = {
          return JSON.parse(formula);
       }
     },
+    formulaLogs: {
+      type: Sequelize.TEXT
+    },
     authorName: {
       type: Sequelize.STRING,
     },

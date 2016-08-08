@@ -7,7 +7,8 @@ describe.only('test LabfnpRecipe.spec model operation', function() {
   it('create should be success.', async (done) => {
     try {
       let newLabfnpRecipe = {
-        formula: [{ name: 'B5', drop: 3}, { name: 'B5', drop: 2 }, { name: 'T14', drop: 5 }],
+        formula: [ 'B5:3', 'T14:3' ],
+        formulaLogs: "+B4:3;+T14:2;-B4:3",
         authorName: '作者名',
         perfumeName: '香水配方名'
       }
