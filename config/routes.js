@@ -40,7 +40,7 @@ module.exports.routes = {
     view: 'labfnp/creator/index'
   },
 
-  '/explore': {
+  '/lab': {
     view: 'labfnp/explore'
   },
 
