@@ -8,6 +8,7 @@ module.exports = {
     }
   },
   associations: function() {
+    Scent.belongsTo(ScentNote);
     Scent.hasMany(Feel);
   },
   options: {
