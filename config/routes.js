@@ -100,7 +100,7 @@ module.exports.routes = {
     }
   },
 
-  '/admin/': {
+  '/admin': {
       controller: 'AdminController',
       action: 'index',
       locals: {

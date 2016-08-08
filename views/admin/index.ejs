@@ -40,12 +40,8 @@
   <% include partials/footer %>
 	<% include partials/scripts %>
 
-
-	<script>
-		var messageModel = {
-			type: "",
-			desc: "",
-		}
+	<script type="text/javascript">
+		var messageModel = { type: "", desc: "" };
 
 		var messageApp = new Vue({
 			el: "#message",
@@ -99,8 +95,6 @@
 				}
 			}
 		});
-
-
 	</script>
 </body>
 
