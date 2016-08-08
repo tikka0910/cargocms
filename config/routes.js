@@ -114,6 +114,13 @@ module.exports.routes = {
       layout: false
     }
   },
+  '/admin/dashboard': {
+    view: 'admin/dashboard/index',
+    locals: {
+      layout: false
+    }
+  },
+
 
   '/admin/user/create': {
     view: 'admin/user/create',
