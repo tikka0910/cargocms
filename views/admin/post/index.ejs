@@ -47,8 +47,8 @@
 									<th class="" data-class="expand"><i class="fa fa-fw fa-post text-muted hidden-md hidden-sm hidden-xs"></i>標題</th>
 									<th class="" >簡述</th>
 									<th class="" data-hide="phone,tablet">內容</th>
-									<th class="" data-hide="phone,tablet">封面</th>
-									<th class="" data-hide="phone,tablet">網址</th>
+									<!-- <th class="" data-hide="phone,tablet">封面</th> -->
+									<!-- <th class="" data-hide="phone,tablet">網址</th> -->
 									<th class="no-sort"></th>
 								</tr>
 							</thead>
@@ -58,8 +58,8 @@
 									<td><a href="/admin/#/admin/post/show/{{post.id}}">{{ post.title }}</a></td>
 									<td>{{ post.abstract }}</td>
 									<td>{{ post.content }}</td>
-									<td>{{ post.cover }}</td>
-                  <td>{{ post.url }}</td>
+									<!-- <td>{{ post.cover }}</td> -->
+                  <!-- <td>{{ post.url }}</td> -->
 									<td align="center" style="cursor: pointer;">
                     <div class="row">
                       <a class="btn btn-default btn-xs" role="button" v-on:click="show(post.id)">

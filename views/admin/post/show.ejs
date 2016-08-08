@@ -4,9 +4,9 @@
     <h1 class="page-title txt-color-blueDark">
 			<!-- PAGE HEADER -->
 			<i class="fa-fw fa fa-pencil-square-o"></i>
-				會員資料
+				內容資料
 			<span>>
-				詳細資料
+				詳細
 			</span>
 		</h1>
   </div>
@@ -26,7 +26,21 @@
             <div class="well well-light well-sm no-margin no-padding">
               <div class="row">
                 <div class="col-sm-12">
-                  <div id="myCarousel" class="carousel fade profile-carousel">
+									<div id="myCarousel" class="carousel fade profile-carousel">
+										<!-- <div class="air air-top-left padding-10">
+											<h4 class="txt-color-white font-md">Jan 1, 2014</h4>
+										</div> -->
+										<!-- <ol class="carousel-indicators">
+											<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+											<li data-target="#myCarousel" data-slide-to="1" class=""></li>
+											<li data-target="#myCarousel" data-slide-to="2" class=""></li>
+										</ol> -->
+										<!-- <div class="carousel-inner"> -->
+											<!-- Slide 1 -->
+											<div class="item active">
+												<img src="{{data.item.cover}}" alt="" class="img-responsive">
+											</div>
+										<!-- </div> -->
                     <div class="air air-bottom-right padding-10">
                       <a href="/admin/#/admin/post" class="btn btn-default">
                         取消
@@ -35,59 +49,35 @@
                         編輯
                       </a>
                     </div>
-                    <!-- end row -->
-                  </div>
+									</div>
+								</div>
+                <div class="col-sm-12">
                   <div class="col-sm-12">
                     <div class="row">
-                      <div class="col-sm-3 profile-pic">
-                        <img src="{{data.item.avatar}}" class="img-thumbnail">
-                        <!-- <div class="padding-10">
-                          <h4 class="font-md"><strong>1,543</strong>
-  												<br>
-  												<small>Followers</small></h4>
-                          <br>
-                          <h4 class="font-md"><strong>419</strong>
-												  <br>
-												  <small>Connections</small></h4>
-                        </div> -->
-                        <div class="row">
-                          <div class="col-sm-4 col-md-offset-8 text-left">
-                            <label class="text-left">
-                              <h4 class="font-md"><strong>權限</strong></h4>
-                            </label>
-                            <label class="checkbox state-disabled text-left">
-                              <input type="checkbox" id="admin" value="admin" v-model="data.item.RolesArray" disabled>管理員
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <h1>{{ data.item.firstName }} <span class="semi-bold">{{ data.item.lastName }}</span>
+                      <div class="col-sm-12">
+                        <h1>{{ data.item.title }}
 											  <br>
-                        <strong>{{ data.item.postname }}</strong>
                         </h1>
                         <ul class="list-unstyled">
-                          <!-- <li>
-                            <p class="text-muted">
-                              <i class="fa fa-phone"></i>&nbsp;&nbsp;(<span class="txt-color-darken">313</span>) <span class="txt-color-darken">464</span> - <span class="txt-color-darken">6473</span>
-                            </p>
-                          </li> -->
                           <li>
                             <p class="text-muted">
-                              <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{ data.item.email }}">{{ data.item.email }}</a>
-                            </p>
-                          </li>
-                          <li>
-                            <p class="text-muted">
-                              <i class="fa fa-flag"></i>&nbsp;&nbsp;<span class="semi-bold">{{ data.item.postAgent }}</span>
-                            </p>
-                          </li>
-                          <li>
-                            <p class="text-muted">
-                              <i class="fa fa-calendar"></i>&nbsp;&nbsp;
-                              <span class="txt-color-darken">上次登入時間
-                                <a href="javascript:void(0);" rel="tooltip" title="" data-placement="top" data-original-title="Create an Appointment">{{ data.item.lastLogin }}</a>
+                              <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;
+                              <span class="txt-color-darken">
+                                {{ data.item.abstract }}
                               </span>
+                            </p>
+                          </li>
+                          <li>
+                            <p class="text-muted">
+                              <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;
+                              <span class="txt-color-darken">
+                                {{ data.item.content }}
+                              </span>
+                            </p>
+                          </li>
+                          <li>
+                            <p class="text-muted">
+                              <i class="fa fa-link"></i>&nbsp;&nbsp;{{data.item.url}}
                             </p>
                           </li>
                         </ul>
