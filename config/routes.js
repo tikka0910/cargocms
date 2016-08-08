@@ -134,8 +134,28 @@ module.exports.routes = {
     }
   },
 
+//----- Admin Post -----
   '/admin/post': {
     view: 'admin/post/index',
+    locals: {
+      layout: false
+    }
+  },
+
+  '/admin/post/create': {
+    view: 'admin/post/create',
+    locals: {
+      layout: false
+    }
+  },
+  '/admin/post/edit/:id': {
+    view: 'admin/post/edit',
+    locals: {
+      layout: false
+    }
+  },
+  '/admin/post/show/:id': {
+    view: 'admin/post/show',
     locals: {
       layout: false
     }
