@@ -31,6 +31,7 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
+  '/api/labfnp/scent': 'labfnp/ScentController.index',
 
   '/': {
     view: 'index'
