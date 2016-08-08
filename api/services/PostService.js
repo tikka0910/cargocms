@@ -8,13 +8,18 @@ module.exports = {
     }
   },
 
-  update: async (postId, { title,  content,  cover,  url,  abstract }) => {
+  update: async (postId, { title,  content,  cover,  url,  abstract, TagsArray }) => {
     try {
-      return await Post.update({ title,  content,  cover,  url,  abstract }, {
+      await Post.update({ title,  content,  cover,  url,  abstract }, {
         where: {
           id: postId,
         }
       });
+      await TagService.updateOrCreate({
+        postId,
+        datas: TagsArray
+      });
+      return true;
     } catch (e) {
       sails.log.error(e);
       throw e;

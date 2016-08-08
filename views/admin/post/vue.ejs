@@ -13,6 +13,8 @@ var postAppModel = {
       cover: '',
       url: '',
       abstract: '',
+      tags: [],
+      TagsArray: []
     },
     items: [],
     option: {
@@ -36,6 +38,7 @@ var postApp = new Vue({
       });
     },
     save: function (event) {
+      postAppModel.data.item.TagsArray = $('#tagsinput').tagsinput('items');
       $.ajax({
         url: '/post',
         type: 'POST',
@@ -58,6 +61,8 @@ var postApp = new Vue({
       }
     },
     update: function (event) {
+      postAppModel.data.item.TagsArray = $('#tagsinput').tagsinput('items');
+      console.log(postAppModel.data.item.TagsArray);
       $.ajax({
         url: '/post/' + postAppModel.data.item.id,
         type: 'PUT',
@@ -80,7 +85,7 @@ var postApp = new Vue({
         messageApp.show({desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message, type: 'error'});
       }
     },
-    loadItem: function (event) {
+    loadItem: function (cb) {
       window.onbeforeunload = null;
       $.get('/post/' + postAppModel.data.item.id, ajaxSuccess);
 
@@ -88,20 +93,14 @@ var postApp = new Vue({
         console.log("loadItem result.data=>", result.data);
         if (result.success) {
           postAppModel.data.item = result.data;
-          postAppModel.data.option.passwordConfirm = result.data.Passports[0].password;
-          var hasAvatar = typeof result.data.avatar === 'string';
-          if (!hasAvatar) {
-            postAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
-          }
         }
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
         console.log("loadItem postAppModel.data.item=>", postAppModel.data.item);
       } // end ajaxSuccess
     },
     setupForm: function(type) {
-      // $('.tagsinput').tagsinput('refresh')
       $('#tagsinput').tagsinput({
-        tagClass: 'tagsInputLabel'
+        tagClass: 'tagsInputLabel',
       });
       var registerForm = $("#post-form");
       registerForm.validate({
@@ -179,6 +178,9 @@ var postApp = new Vue({
       return isDataModified;
     },
     onEnterPageEdit: function() {
+      postAppModel.data.item.TagsArray.forEach(function(tag){
+        $('#tagsinput').tagsinput('add', tag);
+      })
       itemBeforeEdit = JSON.stringify(postAppModel.data.item);
       console.log("itemBeforeEdit=>", JSON.parse(itemBeforeEdit));
       window.onbeforeunload = function(e) {

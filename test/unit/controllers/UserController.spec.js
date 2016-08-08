@@ -134,7 +134,7 @@ describe('about User Controller operation.', function() {
     it('should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
-        .post(`/user/${updateThisUser.id}`)
+        .put(`/user/${updateThisUser.id}`)
         .send(updatedUser);
         res.status.should.eq(200);
         res.body.data.locale.should.be.equal('hk');

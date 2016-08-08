@@ -88,7 +88,7 @@ var userApp = new Vue({
         messageApp.show({desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message, type: 'error'});
       }
     },
-    loadItem: function (event) {
+    loadItem: function (cb) {
       window.onbeforeunload = null;
       $.get('/user/' + userAppModel.data.item.id, ajaxSuccess);
 

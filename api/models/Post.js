@@ -16,7 +16,18 @@ module.exports = {
     },
     abstract: {
       type: Sequelize.STRING,
-    }
+    },
+    TagsArray: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const tags = this.Tags ? this.Tags.map((tag) => tag.title) : [];
+          return tags;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
   },
   associations: () => {
     Post.belongsToMany(Tag,  {through: 'PostTag'})

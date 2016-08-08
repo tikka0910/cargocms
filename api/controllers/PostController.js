@@ -15,14 +15,12 @@ module.exports = {
 
   create: async (req, res) => {
     try {
-      const { tags } = req.body;
+      const { TagsArray } = req.body;
       let newPost = await PostService.create(req.body);
-      if (tags) {
-        await TagService.updateOrCreate({
-          postId: newPost.id,
-          datas: tags
-        });
-      }
+      await TagService.updateOrCreate({
+        postId: newPost.id,
+        datas: TagsArray
+      });
       res.ok({
         message: 'Create post success.',
         data: newPost,

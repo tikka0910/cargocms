@@ -19,17 +19,13 @@ describe('about Tag Service operation.', function() {
     });
     it('add to Post should success.', async (done) => {
       try {
-        const datas = [{
-          title: 'A',
-        }, {
-          title: 'B',
-        }];
+        const datas = [ 'A', 'B' ];
         const result = await TagService.updateOrCreate({
           postId: targetPost.id,
           datas,
         });
-        result[0].title.should.be.eq(datas[0].title);
-        result[1].title.should.be.eq(datas[1].title);
+        result[0].title.should.be.eq(datas[0]);
+        result[1].title.should.be.eq(datas[1]);
         done()
       } catch (e) {
         done(e)
@@ -48,11 +44,7 @@ describe('about Tag Service operation.', function() {
           url: 'http://localhost:5001/blog/flower',
           abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
         })
-        const datas = [{
-          title: 'A',
-        }, {
-          title: 'B',
-        }];
+        const datas = [ 'A', 'B' ];
         await TagService.updateOrCreate({
           postId: targetPost.id,
           datas,
@@ -64,17 +56,13 @@ describe('about Tag Service operation.', function() {
     });
     it('update Post tags should success.', async (done) => {
       try {
-        const datas = [{
-          title: 'A',
-        }, {
-          title: 'C',
-        }];
+        const datas = [ 'A', 'C' ];
         const result = await TagService.updateOrCreate({
           postId: targetPost.id,
           datas,
         });
-        result[0].title.should.be.eq(datas[0].title);
-        result[1].title.should.be.eq(datas[1].title);
+        result[0].title.should.be.eq(datas[0]);
+        result[1].title.should.be.eq(datas[1]);
         done()
       } catch (e) {
         done(e)

@@ -49,6 +49,7 @@ describe('about Post Service operation.', function() {
           cover: 'http://www.labfnp.com/modules/core/img/update1.jpg',
           url: 'http://localhost:5001/blog/flower',
           abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
+          TagsArray: [ '香水', '花' ],
         }
         const post = await PostService.update(targetPost.id, data);
         done()
