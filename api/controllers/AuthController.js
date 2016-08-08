@@ -20,7 +20,7 @@ module.exports = {
     try {
       passport.endpoint(req, res);
     } catch (e) {
-      console.log(e);
+      sails.log.error(e);
     }
   },
   register: async (req, res) => {

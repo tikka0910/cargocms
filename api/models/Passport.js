@@ -18,7 +18,7 @@ module.exports = {
         }
       },
       set: function(value) {
-        console.log('value', value);
+        sails.log.info('value', value);
         return this.setDataValue('tokens', JSON.stringify(value));
       }
     }

@@ -9,6 +9,16 @@
  * For more information on the Sails logger, check out:
  * http://sailsjs.org/#!/documentation/concepts/Logging
  */
+const colors = require('colors');
+const logger = require('tracer').colorConsole({
+  stackIndex : 1,
+  dateformat : "yyyy-mm-dd HH:MM:ss.L",
+  preprocess :  function(data){
+    if (data.args['0'] instanceof Error) {
+      data.args['0'] = data.args['0'].message || data.args['0'];
+    }
+  }
+});
 
 module.exports.log = {
 
@@ -24,6 +34,8 @@ module.exports.log = {
   *                                                                          *
   ***************************************************************************/
 
-  level: 'info'
+  level: 'info',
+  custom: logger,
+  inspect: false
 
 };

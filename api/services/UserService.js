@@ -7,23 +7,6 @@ module.exports = {
     }
   },
 
-  findOne: async (userId) => {
-    let data = false
-    let message = '';
-    try {
-      sails.log.info('findOne user service=>', userId);
-      const findUser = await User.findById(parseInt(userId, 10));
-      if (findUser) {
-        data = findUser.dataValues;
-      } else {
-        message = `user id ${userId} does not exist`;
-      }
-      return { data, message };
-    } catch (e) {
-      throw e;
-    }
-  },
-
   create: async ({
     username,
     email,
@@ -33,6 +16,14 @@ module.exports = {
     Passports,
   }) => {
     try {
+      sails.log.info({
+        username,
+        email,
+        firstName,
+        lastName,
+        locale,
+        Passports,
+      });
       const user = await User.create({ username, email, firstName, lastName, locale });
       await Passport.create({
         provider: 'local',
@@ -90,23 +81,4 @@ module.exports = {
       throw e;
     }
   },
-
-  delete: async (userId) => {
-    let data = false
-    let message = '';
-    try {
-      sails.log.info('delete user service=>', userId);
-      let deletedUser = await User.findById(parseInt(userId, 10));
-      if (deletedUser) {
-        deletedUser = await deletedUser.destroy();
-        data = deletedUser.dataValues;
-      } else {
-        message = `user id ${userId} does not exist`;
-      }
-      return { data, message };
-    } catch (e) {
-      throw e;
-    }
-  }
-
 }
