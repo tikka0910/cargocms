@@ -17,4 +17,14 @@ module.exports = {
     res.ok({a: 3});
   },
 
+  config: function(req, res) {
+    let config = {
+      title: 'CargoCMS 雲端管理系統',
+      copyright: '© Laboratory of Fragrance &amp; Perfume',
+    };
+
+    res.set('Content-Type', 'text/javascript');
+    res.send(new Buffer('var __ADMIN_CONFIG__='+JSON.stringify(config)+';'));
+  },
+
 };

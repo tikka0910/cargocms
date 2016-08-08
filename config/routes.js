@@ -108,6 +108,11 @@ module.exports.routes = {
       }
    },
 
+   '/admin/config.js': {
+     controller: 'AdminController',
+      action: 'config'
+   },
+
 //----- Admin User -----
   '/admin/user': {
     view: 'admin/user/index',

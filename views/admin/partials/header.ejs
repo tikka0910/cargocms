@@ -3,13 +3,15 @@
 	<div id="logo-group">
 
 		<!-- PLACE YOUR LOGO HERE -->
-		<span id="logo"> <img src="/assets/admin/img/logo-white.png" alt="SmartAdmin"> </span>
+		<span id="logo"> <img src="/assets/img/admin-logo.png" alt="logo"> </span>
 		<!-- END LOGO PLACEHOLDER -->
 
   </div>
 
   <div class="hidden-xs">
-    <h2 style="font-size:15px;margin:15px 0;padding:0;color:#ffffff;letter-spacing:.5px">CargoCMS Web Management</h2>
+    <h2 id="admin-title">
+    	<!--CargoCMS Web Management-->
+  	</h2>
   </div>
 
 	<!-- #TOGGLE LAYOUT BUTTONS -->
@@ -58,7 +60,7 @@
 			<a href="#">
 				<img src="/assets/admin/img/avatars/default.png" alt="me" class="online" />
 				<span>
-					<%= req.session.passport.user.displayName %>
+					<%= req.session.passport?req.session.passport.user.displayName:'Undefined' %>
 				</span>
 				<i class="fa fa-angle-right"></i>
 			</a>
