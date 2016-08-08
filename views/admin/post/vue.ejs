@@ -99,6 +99,10 @@ var postApp = new Vue({
       } // end ajaxSuccess
     },
     setupForm: function(type) {
+      // $('.tagsinput').tagsinput('refresh')
+      $('#tagsinput').tagsinput({
+        tagClass: 'tagsInputLabel'
+      });
       var registerForm = $("#post-form");
       registerForm.validate({
 

@@ -67,7 +67,7 @@
 							<input type="text" name="id" id="id" v-model="data.item.id" hidden="hidden" value="<%= req.params.id %>">
 
 							<%- include form.ejs %>
-
+							
 							<footer>
 								<button type="button" v-on:click="cancel" class="btn btn-default">
 									取消
@@ -157,6 +157,8 @@
 	// end pagefunction
 
 	// Load form valisation dependency
-	loadScript("js/plugin/jquery-form/jquery-form.min.js", pagefunction);
+	loadScript("js/plugin/jquery-form/jquery-form.min.js", function () {
+		loadScript("js/plugin/bootstrap-tags/bootstrap-tagsinput.min.js", pagefunction);
+	});
 
 </script>
