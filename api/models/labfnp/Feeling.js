@@ -5,7 +5,7 @@ module.exports = {
     }
   },
   associations: function() {
-    Feel.belongsTo(Scent);
+    Feeling.belongsTo(Scent);
   },
   options: {
     classMethods: {},

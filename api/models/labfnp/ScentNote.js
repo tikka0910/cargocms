@@ -1,6 +1,6 @@
 module.exports = {
   attributes: {
-    code: {
+    color: {
       type: Sequelize.STRING
     },
     title: {
@@ -16,7 +16,17 @@ module.exports = {
     ScentNote.hasMany(Scent);
   },
   options: {
-    classMethods: {},
+    classMethods: {
+      findAllWithRelation: async function(){
+        let findScentNotes = await ScentNote.findAll({
+          include: [{
+            model: Scent,
+            include: Feel
+          }]
+        });
+        return findScentNotes;
+      }
+    },
     instanceMethods: {},
     hooks: {}
   }
