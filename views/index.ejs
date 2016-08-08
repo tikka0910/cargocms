@@ -45,6 +45,15 @@ p.lead {
   font-size: 16px;
   line-height: 200%;
 }
+
+.btn-u {
+  font-size: 18px;
+}
+
+.feature-buttons {
+  position: relative;
+  top: -50px;
+}
 </style>
 
 <!-- Interactive Slider v2 -->
@@ -55,6 +64,23 @@ p.lead {
     <h1>Laboratory of Fragrance & Perfume</h1>
     <p>我們提供香味分子、不同香調與課程，協助您創作專屬的個人香水</p>
     -->
+    <div class="feature-buttons">
+      <% if (!req.session.authenticated) { %>
+        <a href="/login" class="btn-u btn-brd btn-brd-hover btn-u-light">
+          <i class="fa fa-flask fa-fw"></i>
+          開始香水創作
+        </a>
+      <% } else { %>
+        <a href="/lab" class="btn-u btn-brd btn-brd-hover btn-u-light">
+            <i class="fa fa-flask fa-fw"></i>
+            開始香水創作
+        </a>
+      <% } %>
+      <a href="https://www.facebook.com/LabFnP" target="_blank" class="btn-u btn-brd btn-brd-hover btn-u-light">
+        <i class="fa fa-facebook fa-fw"></i>
+        FACEBOOK
+      </a>
+    </div>
   </div>
 </div>
 <!-- End Interactive Slider v2 -->
