@@ -73,20 +73,6 @@ let imageApp = new Vue({
     cancel: function (event) {
 
     },
-    save: function (event) {
-      fetch('/image', {
-        credentials: 'include',
-        method: 'post',
-        body: JSON.stringify(imageAppModel.data.item)
-      })
-      .then(response => response.json())
-      .then(result => {
-        if (result.success) {
-          location.href = '/admin/#/admin/image';
-          messageApp.show({desc: '新增會員成功！', type: 'success'});
-        }
-      });
-    },
     isPageEditDataModified: function() {
       var itemBeforeLeave = JSON.stringify(imageAppModel.data.item);
       var isDataModified = itemBeforeEdit !== itemBeforeLeave;
