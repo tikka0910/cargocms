@@ -82,6 +82,7 @@ module.exports.routes = {
 
   //----- ImageController -----
   'post /upload': 'ImageController.upload',
+  'delete /upload/:id': 'ImageController.destroy',
 
 
   /***************************************************************************

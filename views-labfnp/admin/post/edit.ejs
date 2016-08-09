@@ -62,10 +62,10 @@
 
 					<!-- widget content -->
 					<div class="widget-body no-padding">
-
+						<img src="{{data.item.coverUrl}}" alt="" class="img-responsive">
 						<form id="post-form" class="smart-form">
 							<input type="text" name="id" id="id" v-model="data.item.id" hidden="hidden" value="<%= req.params.id %>">
-							
+
 							<%- include form.ejs %>
 
 							<footer>

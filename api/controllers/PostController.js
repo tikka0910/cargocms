@@ -19,7 +19,7 @@ module.exports = {
       const data = req.body;
       const user = AuthService.getSessionUser(req);
       data.UserId = user ? user.id : null;
-      let newPost = await PostService.create(req.body);
+      let newPost = await PostService.create(data);
       await TagService.updateOrCreate({
         postId: newPost.id,
         datas: TagsArray

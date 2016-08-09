@@ -11,6 +11,7 @@ var postAppModel = {
       title: '',
       content: '',
       cover: '',
+      coverUrl: '',
       url: '',
       abstract: '',
       tags: [],
@@ -80,7 +81,6 @@ var postApp = new Vue({
     update: function (event) {
       postAppModel.data.item.TagsArray = $('#tagsinput').tagsinput('items');
       postAppModel.data.item.content = $('.summernote').summernote('code');
-      console.log(postAppModel.data.item.TagsArray);
       $.ajax({
         url: '/api/post/' + postAppModel.data.item.id,
         type: 'PUT',
@@ -119,8 +119,13 @@ var postApp = new Vue({
     setupForm: function(type) {
       uploadImageApp.updateModel('itemLimit', 1);
       uploadImageApp.updateModel('onComplete', function(id, name, response){
-        postAppModel.data.item.cover = response.url;
-        console.log("!!!!!!!!!!!!!!!!!!!!!!");
+        postAppModel.data.item.cover = response.data.id;
+        postAppModel.data.item.coverUrl = response.data.url;
+      })
+      uploadImageApp.updateModel('onDeleteComplete', function(id, name, response){
+        console.log(id, name, response);
+        postAppModel.data.item.cover = null;
+        postAppModel.data.item.coverUrl = '';
       })
       uploadImageApp.setup();
       $('#tagsinput').tagsinput({

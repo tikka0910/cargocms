@@ -13,8 +13,8 @@ module.exports = {
     const { size, type, fd } = files[0];
     const user = AuthService.getSessionUser(req);
     const UserId = user ? user.id : null;
-    const upload = await Upload.create({ filePath: fd, size, type, UserId });
-    
+    const upload = await Image.create({ filePath: fd, size, type, UserId });
+
     res.ok({
       message: 'Upload Success',
       data: upload,
@@ -28,4 +28,11 @@ module.exports = {
       });
     }
   },
+  destroy: async (req, res) => {
+    sails.log.info('Not implemented');
+    res.ok({
+      message: 'Delete Success',
+      data: true,
+    });
+  }
 }

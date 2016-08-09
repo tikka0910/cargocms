@@ -7,15 +7,21 @@ module.exports = {
     content: {
       type: Sequelize.TEXT,
     },
-    // 特色圖片
-    cover: {
-      type: Sequelize.STRING,
-    },
     url: {
       type: Sequelize.STRING,
     },
     abstract: {
       type: Sequelize.STRING,
+    },
+    coverUrl: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          return this.Image ? this.Image.url : '';
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
     },
     TagsArray: {
       type: Sequelize.VIRTUAL,
@@ -36,7 +42,12 @@ module.exports = {
         name: 'PostId',
         as: 'Tags'
       }
-    })
+    }),
+    Post.belongsTo(Image, {
+      foreignKey: {
+        name: 'cover'
+      }
+    });
   },
   options: {
     classMethods: {
@@ -44,7 +55,7 @@ module.exports = {
         try {
           return await Post.findOne({
             where: { id },
-            include: Tag
+            include: [ Tag, Image ]
           });
         } catch (e) {
           sails.log.error(e);

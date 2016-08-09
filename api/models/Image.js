@@ -10,7 +10,7 @@ module.exports = {
       type: Sequelize.STRING(30),
     },
     storage: {
-      type: Sequelize.ENUM('local', 's3'),
+      type: Sequelize.ENUM('local', 's3', 'url'),
       defaultValue: 'local',
     },
     fileName: {
@@ -25,8 +25,10 @@ module.exports = {
         try {
           if (this.storage === 'local') {
             return this.filePath.split('/public')[1];
+          } else if (this.storage ==='url') {
+            return this.filePath;
           } else {
-            throw Error('Not implemented')
+            throw Error('Not implemented');
           }
         } catch (e) {
           salis.log.error(e);

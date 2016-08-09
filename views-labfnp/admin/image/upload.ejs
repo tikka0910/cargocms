@@ -11,6 +11,7 @@
     itemLimit: 3,
     onError: function(){},
     onComplete: function(){},
+    onDeleteComplete: function(){},
   }
 
   var uploadImageApp = new Vue({
@@ -27,6 +28,10 @@
           request: {
             endpoint: '/upload',
             inputName: 'uploadPic'
+          },
+          deleteFile: {
+            enabled: true,
+            endpoint: '/upload',
           },
           thumbnails: {
             placeholders: {
@@ -46,8 +51,12 @@
             },
             onComplete: function(id, name, response) {
               console.log(id, name, response);
-              uploadImageAppModel.onComplete(id, name, response)
-            }
+              uploadImageAppModel.onComplete(id, name, response);
+            },
+            onDeleteComplete: function(id, name, response) {
+              console.log(id, name, response);
+              uploadImageAppModel.onDeleteComplete(id, name, response);
+            },
           },
           messages: {
             emptyError: '{file} 檔案是空的, 請選擇其他檔案',

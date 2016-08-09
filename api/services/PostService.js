@@ -1,5 +1,5 @@
 module.exports = {
-  create: async ({ title,  content,  cover,  url,  abstract, UserId }) => {
+  create: async function ({ title,  content,  cover = null,  url,  abstract, UserId }) {
     try {
       return await Post.create({ title, content, cover, url, abstract, UserId });
     } catch (e) {
@@ -8,9 +8,15 @@ module.exports = {
     }
   },
 
-  update: async (postId, { title,  content,  cover,  url,  abstract, TagsArray }) => {
+  update: async function (postId, { title,  content,  cover,  url,  abstract, TagsArray }) {
     try {
-      await Post.update({ title,  content,  cover,  url,  abstract }, {
+      await Post.update({
+        title, 
+        content,
+        cover: cover === '' ? null : cover,
+        url,
+        abstract
+      }, {
         where: {
           id: postId,
         }

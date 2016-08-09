@@ -3,7 +3,6 @@ describe('about Post Controller operation.', function() {
     const data = {
       title: '香味的一沙一世界6',
       content: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材（ex:玫瑰、康乃馨..等)所組成的『這束花的味道』，接著抽出其中的一朵康乃馨',
-      cover: 'http://www.labfnp.com/modules/core/img/update1.jpg',
       url: 'http://localhost:5001/blog/flower',
       abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
       TagsArray: [ '香水', '花' ],
@@ -24,10 +23,17 @@ describe('about Post Controller operation.', function() {
     let targetPost;
     before(async (done) => {
       try {
+
+        const image = await Image.create({
+          filePath: 'http://www.labfnp.com/modules/core/img/update1.jpg',
+          type: 'image/jpeg',
+          storage: 'url',
+        });
+
         targetPost = await Post.create({
           title: '香味的一沙一世界2',
           content: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材（ex:玫瑰、康乃馨..等)所組成的『這束花的味道』，接著抽出其中的一朵康乃馨',
-          cover: 'http://www.labfnp.com/modules/core/img/update1.jpg',
+          cover: image.id,
           url: 'http://localhost:5001/blog/flower',
           abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
         })
@@ -72,7 +78,6 @@ describe('about Post Controller operation.', function() {
         const data = {
           title: 'new Title',
           content: 'new content',
-          cover: 'http://www.labfnp.com/modules/core/img/update1.jpg',
           url: 'http://localhost:5001/blog/flower',
           abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
           TagsArray: [ '香水', '花' ],
@@ -94,7 +99,6 @@ describe('about Post Controller operation.', function() {
         const data = {
           title: 'new Title',
           content: 'new content',
-          cover: 'http://www.labfnp.com/modules/core/img/update1.jpg',
           url: 'http://localhost:5001/blog/flower',
           abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
         }
@@ -116,10 +120,16 @@ describe('about Post Controller operation.', function() {
     let targetPost;
     before(async (done) => {
       try {
+        const image = await Image.create({
+          filePath: 'http://www.labfnp.com/modules/core/img/update1.jpg',
+          type: 'image/jpeg',
+          storage: 'url',
+        });
+
         targetPost = await Post.create({
           title: '香味的一沙一世界2',
           content: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材（ex:玫瑰、康乃馨..等)所組成的『這束花的味道』，接著抽出其中的一朵康乃馨',
-          cover: 'http://www.labfnp.com/modules/core/img/update1.jpg',
+          cover: image.id,
           url: 'http://localhost:5001/blog/flower',
           abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
         })

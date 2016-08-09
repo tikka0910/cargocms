@@ -52,7 +52,7 @@ module.exports = {
     }
   },
   associations: function() {
-    User.hasMany(Upload, {
+    User.hasMany(Image, {
       foreignKey: {
         name: 'UserId'
       }
