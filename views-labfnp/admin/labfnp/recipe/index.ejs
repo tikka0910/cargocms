@@ -54,7 +54,7 @@
                 <tr v-for="recipe in data.items" v-on:click="selection($index)" v-on:dblclick="dblclick($index)">
                   <td>{{ recipe.id }}</td>
                   <td><a href="/admin/#/admin/labfnp/recipe/show/{{recipe.id}}">{{ recipe.perfumeName }}</a></td>
-                  <td>{{ recipe.authorName }}</td>
+                  <td><a href="/admin/#/admin/user/show/{{recipe.userId}}">{{ recipe.authorName }}</a></td>
                   <td>{{ recipe.formulaLogs }}</td>
                   <td align="center" style="cursor: pointer;">
                     <div class="row">
