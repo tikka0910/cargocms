@@ -1,4 +1,5 @@
 describe('About Slogan Controller operation',function(){
+
   describe('Get one Slogan',function(){
     let test_slogan = null;
     before(async (done) => {
@@ -19,8 +20,9 @@ describe('About Slogan Controller operation',function(){
         const result = await request(sails.hooks.http.app)
         .get(`/slogan/${test_slogan.id}`);
 
-        result.data.content.should.be.eq(test_slogan.content);
-        result.data.source.should.be.eq(test_slogan.source);
+        //slogan data in the result.body
+        result.body.data.content.should.be.eq(test_slogan.content);
+        result.body.data.source.should.be.eq(test_slogan.source);
         done();
       }
       catch(e){
