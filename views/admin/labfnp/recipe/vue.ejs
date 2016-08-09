@@ -1,31 +1,32 @@
 var COMMON = {
 	DOUBLE_CLICK_TIME_PERIOD: 250,
 	DEFAULT_INDEX: -1,
-	DEFAULT_AVATAR: "img/avatars/default.png",
+  PAGE_NAME: 'labfnp-recipe-',
+};
+
+var LINK = {
+  PAGE_INDEX: '/admin/#/admin/labfnp-recipe',
+  PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
+  PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit',
+  PAGE_SHOW: '/admin/#/admin/labfnp-recipe/show/',
+  API_LIST: '/labfnp-recipe',
+  API_ITEM: '/labfnp-recipe/',
+  API_SAVE: '/labfnp-recipe',
+  API_UPDATE: '/labfnp-recipe/',
 };
 
 var itemBeforeEdit = {};
 var userAppModel = {
 	data: {
 		item: {
-			avatar: '',
-			displayName: '',
-			username: '',
-			email: '',
-			firstName: '',
-			lastName: '',
-			password: '',
-			Roles: [],
-			RolesArray: [],
-			Passports: [
-				{
-					password: ""
-        }
-      ]
+      authorName: '',
+			perfumeName: '',
+			formulaLogs: '',
+			ingredient: [],
+			drops: [],
 		},
 		items: [],
 		option: {
-			passwordConfirm: ''
 		}
 	},
 	view: {
@@ -33,41 +34,19 @@ var userAppModel = {
 			selectIndex: COMMON.DEFAULT_INDEX,
 		},
 	}
-}
+};
 
 var userApp = new Vue({
 	data: userAppModel,
 	methods: {
-		addRow: function () {
-			var recipeList = $('.recipe-combo');
-			var rowCount = 'row-' + $(".recipe-combo .row").length;
-			var rowTmp = $(".recipe-combo .row").first();
-			var aRow = '<div class="row '+ rowCount + '">' +
-				rowTmp.html() +
-				'</div>';
-			recipeList.append(aRow);
-
-      var newRow = $(".recipe-combo ." + rowCount);
-			newRow.find(".btnAddRow").addClass('hidden');
-			newRow.find(".btnCutRow").attr('id', rowCount);
-
-			$(".recipe-combo .row").last().find(".btnCutRow, .btnAddRow").removeClass('hidden');
-		},
-		cutRow: function (id) {
-			console.log("id=>", id);
-			var recipeList = $('.recipe-combo');
-      recipeList.find('.' + id).remove();
-
-
-		},
 		cancel: function (event) {
 			userApp.onLeavePageEdit(function () {
-				location.href = '/admin/#/admin/user';
+				location.href = LINK.PAGE_INDEX;
 			});
 		},
 		save: function (event) {
 			$.ajax({
-				url: '/user',
+				url: LINK.API_SAVE,
 				type: 'POST',
 				dataType: 'json',
 				data: userAppModel.data.item,
@@ -79,7 +58,7 @@ var userApp = new Vue({
 			});
 
 			function ajaxSuccess(result) {
-				location.href = '/admin/#/admin/user';
+				location.href = LINK.PAGE_INDEX;
 				messageApp.show({
 					desc: '新增會員成功！',
 					type: 'success'
@@ -95,7 +74,7 @@ var userApp = new Vue({
 		},
 		update: function (event) {
 			$.ajax({
-				url: '/user/' + userAppModel.data.item.id,
+				url: LINK.API_UPDATE + userAppModel.data.item.id,
 				type: 'PUT',
 				dataType: 'json',
 				data: userAppModel.data.item,
@@ -107,7 +86,7 @@ var userApp = new Vue({
 			});
 
 			function ajaxSuccess(result) {
-				location.href = '/admin/#/admin/user';
+				location.href = LINK.PAGE_INDEX;
 				messageApp.show({
 					desc: '更新會員資料成功！',
 					type: 'success'
@@ -124,7 +103,7 @@ var userApp = new Vue({
 		},
 		loadItem: function (event) {
 			window.onbeforeunload = null;
-			$.get('/user/' + userAppModel.data.item.id, ajaxSuccess);
+			$.get(LINK.API_ITEM + userAppModel.data.item.id, ajaxSuccess);
 
 			function ajaxSuccess(result) {
 				console.log("loadItem result.data=>", result.data);
@@ -141,63 +120,43 @@ var userApp = new Vue({
 			} // end ajaxSuccess
 		},
 		setupForm: function (type) {
-			$('.recipe-combo').delegate('.btnAddRow', 'click', function (e) {
-				userApp.addRow();
-			});
-			$('.recipe-combo').delegate('.btnCutRow', 'click', function (e) {
-				userApp.cutRow(e.target.id);
-			});
-
-			var registerForm = $("#user-form");
+			var registerForm = $('#' + COMMON.PAGE_NAME + 'form');
 			registerForm.validate({
-
 				// Rules for form validation
 				rules: {
-					username: {
+          authorName: {
+            required: true,
+          },
+					perfumeName: {
 						required: true
 					},
-					email: {
+					formulaLogs: {
 						required: true,
-						email: true
 					},
-					firstname: {
+					ingredient: {
 						required: true
 					},
-					lastname: {
+					drops: {
 						required: true
-					},
-					password: {
-						required: true,
-						minlength: 3,
-					},
-					passwordConfirm: {
-						required: true,
-						minlength: 3,
-						equalTo: '#password'
 					},
 				},
 
 				// Messages for form validation
 				messages: {
-					username: {
-						required: '請輸入使用者帳號'
+					authorName: {
+						required: '請輸入作者名稱'
 					},
-					email: {
-						required: '請輸入 Email',
-						email: '請確認輸入的 Email 格式'
+					perfumeName: {
+						required: '請輸入香水名稱'
 					},
-					firstname: {
-						required: '請輸入使用者姓'
+					formulaLogs: {
+						required: '請輸入formulaLogs',
 					},
-					lastname: {
-						required: '請輸入使用者名'
+					ingredient: {
+						required: '請選擇配方種類'
 					},
-					password: {
-						required: '請輸入密碼'
-					},
-					passwordConfirm: {
-						required: '請再次輸入密碼以便確認',
-						equalTo: '請輸入相同的密碼'
+					drops: {
+						required: '請輸入配方滴量'
 					},
 				},
 
@@ -227,7 +186,7 @@ var userApp = new Vue({
 			itemBeforeEdit = JSON.stringify(userAppModel.data.item);
 			console.log("itemBeforeEdit=>", JSON.parse(itemBeforeEdit));
 			window.onbeforeunload = function (e) {
-				if (this.isPageEditDataModified()) {
+				if (userApp.isPageEditDataModified()) {
 					var message = '您已經修改過資料，是否確定要放棄本次的修改？';
 					e.returnValue = message;
 					return message;
@@ -235,7 +194,7 @@ var userApp = new Vue({
 			};
 		},
 		onLeavePageEdit: function (cb) {
-			if (this.isPageEditDataModified()) {
+			if (userApp.isPageEditDataModified()) {
 				var msgInfo = {
 					title: '注意',
 					content: '您已經修改過資料，是否確定要放棄本次的修改？',
@@ -253,7 +212,7 @@ var userApp = new Vue({
 		},
 		loadItems: function (cb) {
 			window.onbeforeunload = null;
-			$.get('/user', ajaxSuccess);
+			$.get(LINK.API_LIST, ajaxSuccess);
 
 			function ajaxSuccess(result) {
 				userAppModel.data.items = result.data.items;
@@ -272,7 +231,7 @@ var userApp = new Vue({
 				phone: 480
 			};
 			/* TABLETOOLS */
-			var table = $('#user-table').dataTable({
+			var table = $('#' + COMMON.PAGE_NAME + 'table').dataTable({
 				// Tabletools options:
 				//   https://datatables.net/extensions/tabletools/button_options
 				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'Tl>r>" +
@@ -315,7 +274,7 @@ var userApp = new Vue({
 								if (isSelected) {
 									var index = userAppModel.view.table.selectIndex;
 									var userId = userAppModel.data.items[index].id;
-									location.href = '/admin/#/admin/user/show/' + userId;
+									location.href = LINK.PAGE_SHOW + userId;
 								} else {
 									messageApp.show({
 										desc: '請選擇會員',
@@ -328,7 +287,7 @@ var userApp = new Vue({
 							"sExtends": "text",
 							"sButtonText": "新增",
 							"fnClick": function (nButton, oConfig, oFlash) {
-								location.href = '/admin/#/admin/user/create';
+								location.href = LINK.PAGE_CREATE;
 							}
            },
 						{
@@ -339,7 +298,7 @@ var userApp = new Vue({
 								if (isSelected) {
 									var index = userAppModel.view.table.selectIndex;
 									var userId = userAppModel.data.items[index].id;
-									location.href = '/admin/#/admin/user/edit/' + userId;
+									location.href = LINE.PAGE_EDIT + userId;
 								} else {
 									messageApp.show({
 										desc: '請選擇會員',
@@ -354,7 +313,7 @@ var userApp = new Vue({
 				"preDrawCallback": function () {
 					// Initialize the responsive datatables helper once.
 					if (!responsiveHelper_datatable_tabletools) {
-						responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#user-table'), breakpointDefinition);
+						responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#' + COMMON.PAGE_NAME + 'table'), breakpointDefinition);
 					}
 				},
 				"rowCallback": function (nRow) {
@@ -370,12 +329,12 @@ var userApp = new Vue({
 				if ($(this).hasClass('selected')) {
 					$(this).removeClass('selected');
 				} else {
-					$('#user-table tbody tr').removeClass('selected');
+					$('#' + COMMON.PAGE_NAME + 'table tbody tr').removeClass('selected');
 					$(this).addClass('selected');
 				}
 			});
 
-			$('#user-table-widget').fadeIn();
+			$('#' + COMMON.PAGE_NAME + 'table-widget').fadeIn();
 		},
 		dblclick: function (index) {
 			var userId = userAppModel.data.items[index].id;
@@ -390,10 +349,10 @@ var userApp = new Vue({
 			}
 		},
 		show: function (userId) {
-			location.href = '/admin/#/admin/user/show/' + userId;
+			location.href = LINK.PAGE_SHOW + userId;
 		},
 		edit: function (userId) {
-			location.href = '/admin/#/admin/user/edit/' + userId;
+			location.href = LINK.PAGE_EDIT + userId;
 		},
 		delete: function () {
 			messageApp.confirm({
@@ -404,7 +363,7 @@ var userApp = new Vue({
 				function (ButtonPressed) {
 					if (ButtonPressed === '刪除') {
 						$.ajax({
-							url: '/user/' + userAppModel.data.item.id,
+							url: LINK.API_UPDATE + userAppModel.data.item.id,
 							type: 'DELETE',
 							dataType: 'json',
 							xhrFields: {
@@ -421,7 +380,7 @@ var userApp = new Vue({
 								type: 'success'
 							});
 							setTimeout(function () {
-								location.href = '/admin/#/admin/user';
+								location.href = LINK.PAGE_INDEX;
 							}, 500);
 						} // end ajaxSuccess
 

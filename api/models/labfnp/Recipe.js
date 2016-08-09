@@ -25,7 +25,16 @@ module.exports = {
     Recipe.belongsTo(User)
   },
   options: {
-    classMethods: {},
+    classMethods: {
+      deleteById: async (id) => {
+        try {
+          return await Recipe.destroy({ where: { id } });
+        } catch (e) {
+          sails.log.error(e);
+          throw e;
+        }
+      },
+    },
     instanceMethods: {},
     hooks: {}
   }

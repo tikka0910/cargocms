@@ -14,7 +14,7 @@
 </div>
 
 <!-- widget grid -->
-<section id="user-create" class="">
+<section id="labfnp-recipe-create" class="">
 
 
   <!-- START ROW -->
@@ -61,21 +61,19 @@
 
           <!-- widget content -->
           <div class="widget-body no-padding">
-
-            <form id="user-form" class="smart-form">
-
-						  <%- include form.ejs %>
-              
-              <footer>
-                <button type="button" v-on:click="cancel" class="btn btn-default">
-                  取消
-                </button>
-                <button type="submit" class="btn btn-primary">
-                  送出
-                </button>
-              </footer>
-            </form>
-
+           <validator name="validation1">
+              <form id="labfnp-recipe-form" class="smart-form">
+  						  <%- include form.ejs %>
+                <footer>
+                  <button type="button" v-on:click="cancel" class="btn btn-default">
+                    取消
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    送出
+                  </button>
+                </footer>
+              </form>
+            </validator>
           </div>
           <!-- end widget content -->
 
