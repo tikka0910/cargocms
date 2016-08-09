@@ -9,7 +9,11 @@ module.exports = {
   },
   associations: function() {
     Scent.belongsTo(ScentNote);
-    Scent.hasMany(Feeling);
+    Scent.hasMany(Feeling, {
+      foreignKey: {
+        name: 'ScentId'
+      }
+    });
   },
   options: {
     classMethods: {
