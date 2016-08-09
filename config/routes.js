@@ -31,6 +31,9 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
+  '/admin/mock': "admin/MockController.index",
+  '/api/mock': "admin/MockController.find",
+
   '/api/labfnp/scent': 'labfnp/ScentController.index',
 
   '/': {
