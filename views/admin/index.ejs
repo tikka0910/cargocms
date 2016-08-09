@@ -2,13 +2,26 @@
 <html lang="en-us">
 <head>
 <meta charset="utf-8">
-<title> SmartAdmin (AJAX)</title>
-<meta name="description" content="">
-<meta name="author" content="">
+<title>CargoCMS Web Management</title>
+<meta name="description" content="CargoCMS Web Management">
+<meta name="author" content="Trunk Studio">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <% include partials/styles.ejs %>
+
+<style type="text/css">
+#admin-title {
+	font-size: 15px;
+	margin: 15px 0;
+	padding: 0;
+	color: #ffffff;
+	letter-spacing: .5px;
+}
+#admin-copyright {
+	color: #ffffff;
+}
+</style>
 </head>
 <body class="smart-style-2">
 
@@ -40,12 +53,15 @@
   <% include partials/footer %>
 	<% include partials/scripts %>
 
+	<script type="text/javascript" src="/admin/config.js"></script>
+	<script type="text/javascript">
 
-	<script>
-		var messageModel = {
-			type: "",
-			desc: "",
-		}
+	$(function() {
+    $('#admin-title').html(__ADMIN_CONFIG__.title);
+    $('#admin-copyright').html(__ADMIN_CONFIG__.copyright);
+	});
+
+		var messageModel = { type: "", desc: "" };
 
 		var messageApp = new Vue({
 			el: "#message",
@@ -83,6 +99,7 @@
             timeout: 3000
           });
 		    },
+				// confirm: ({title, content, btnArray}, cb) => {
 				confirm: function(params, cb) {
 					var buttons = '';
 					params.btnArray.forEach(function(btn) {
@@ -98,8 +115,6 @@
 				}
 			}
 		});
-
-
 	</script>
 </body>
 

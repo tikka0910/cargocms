@@ -31,6 +31,7 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
+  '/api/labfnp/scent': 'labfnp/ScentController.index',
 
   '/': {
     view: 'index'
@@ -40,7 +41,7 @@ module.exports.routes = {
     view: 'labfnp/creator/index'
   },
 
-  '/explore': {
+  '/lab': {
     view: 'labfnp/explore'
   },
 
@@ -99,12 +100,17 @@ module.exports.routes = {
     }
   },
 
-  '/admin/': {
+  '/admin': {
       controller: 'AdminController',
       action: 'index',
       locals: {
        layout: false
       }
+   },
+
+   '/admin/config.js': {
+     controller: 'AdminController',
+      action: 'config'
    },
 
 //----- Admin User -----
@@ -114,6 +120,13 @@ module.exports.routes = {
       layout: false
     }
   },
+  '/admin/dashboard': {
+    view: 'admin/dashboard/index',
+    locals: {
+      layout: false
+    }
+  },
+
 
   '/admin/user/create': {
     view: 'admin/user/create',

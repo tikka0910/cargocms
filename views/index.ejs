@@ -45,16 +45,42 @@ p.lead {
   font-size: 16px;
   line-height: 200%;
 }
+
+.btn-u {
+  font-size: 18px;
+}
+
+.feature-buttons {
+  position: relative;
+  top: -50px;
+}
 </style>
 
 <!-- Interactive Slider v2 -->
 <div class="interactive-slider-v2">
   <div class="container">
-    <img src="custom/labfnp/img/hero-bg.png" alt="" class="img-responsive animated zoomIn" />
+    <img src="assets/labfnp/img/hero-bg.png" alt="" class="img-responsive animated zoomIn" />
     <!--
     <h1>Laboratory of Fragrance & Perfume</h1>
     <p>我們提供香味分子、不同香調與課程，協助您創作專屬的個人香水</p>
     -->
+    <div class="feature-buttons">
+      <% if (!req.session.authenticated) { %>
+        <a href="/login" class="btn-u btn-brd btn-brd-hover btn-u-light">
+          <i class="fa fa-flask fa-fw"></i>
+          開始香水創作
+        </a>
+      <% } else { %>
+        <a href="/lab" class="btn-u btn-brd btn-brd-hover btn-u-light">
+            <i class="fa fa-flask fa-fw"></i>
+            開始香水創作
+        </a>
+      <% } %>
+      <a href="https://www.facebook.com/LabFnP" target="_blank" class="btn-u btn-brd btn-brd-hover btn-u-light">
+        <i class="fa fa-facebook fa-fw"></i>
+        FACEBOOK
+      </a>
+    </div>
   </div>
 </div>
 <!-- End Interactive Slider v2 -->
@@ -87,7 +113,7 @@ p.lead {
     </div>
 
     <div class="col-md-6">
-      <img src="custom/labfnp/img/ipad.png" alt="" class="img-responsive" />
+      <img src="assets/labfnp/img/ipad.png" alt="" class="img-responsive" />
     </div>
 
   </div>
@@ -99,7 +125,7 @@ p.lead {
 
     <div class="row">
       <div class="col-md-6">
-        <img src="custom/labfnp/img/product_item1.jpg" alt="" class="img-responsive img-rounded" />
+        <img src="assets/labfnp/img/product_item1.jpg" alt="" class="img-responsive img-rounded" />
       </div>
 
       <div class="col-md-6">
@@ -143,7 +169,7 @@ p.lead {
 
     <div class="row">
       <div class="col-md-6">
-        <img src="custom/labfnp/img/chart-01.png" alt="" class="img-responsive" />
+        <img src="assets/labfnp/img/chart-01.png" alt="" class="img-responsive" />
       </div>
 
       <div class="col-md-6">
@@ -197,7 +223,7 @@ p.lead {
 	</div>
 </div>
 
-<% LayoutUtils.addScripts('/unify/js/app.js', '/unify/js/plugins/owl-carousel.js'); %>
+<% LayoutUtils.addScripts('/assets/unify/js/app.js', '/assets/unify/js/plugins/owl-carousel.js'); %>
 <% LayoutUtils.addScriptBlock(`
 jQuery(document).ready(function() {
   App.init();
