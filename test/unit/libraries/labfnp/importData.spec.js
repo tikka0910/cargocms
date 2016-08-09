@@ -13,8 +13,6 @@ describe.only('import data.', () => {
 
 
   it('import feeling', async (done) => {
-    console.log(feelingData.length);
-
     try {
       for (let feelingRow of feelingData) {
 
