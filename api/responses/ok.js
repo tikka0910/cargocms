@@ -46,12 +46,24 @@ module.exports = function sendOK (data, options) {
   // Otherwise try to guess an appropriate view, or if that doesn't
   // work, just send JSON.
 
+  // 指定 layout sample 
+  // res.ok({
+  //   view: true,
+  //   layout: 'layoutAdmin'
+  // });
+
   var params = { data: data };
-  if(isAdminView)params.layout = false;
+
+  if(isAdminView && !data.layout){
+    params.layout = false;
+  } else if(data.layout){
+    params.layout = data.layout;
+  }
 
   if (options.view) {
     return res.view(options.view, params);
   }
+
   // If no second argument provided, try to serve the implied view,
   // but fall back to sending JSON(P) if no view can be inferred.
   else return res.guessView(params, function couldNotGuessView () {
