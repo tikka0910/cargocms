@@ -212,7 +212,7 @@ var userApp = new Vue({
     },
     loadItems: function (cb) {
       window.onbeforeunload = null;
-      $.get('/user', ajaxSuccess);
+      $.get('/api/user', ajaxSuccess);
 
       function ajaxSuccess(result) {
         userAppModel.data.items = result.data.items;

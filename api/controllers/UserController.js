@@ -1,12 +1,7 @@
 module.exports = {
 
-  debug: async(req, res) => {
-    res.ok({
-      user: req.session.passport.user
-    });
-  },
-
-  findAll: async (req, res) => {
+  find: async (req, res) => {
+    console.log("=== find ===");
     try {
       const users = await UserService.findAll();
       res.ok({
@@ -17,8 +12,8 @@ module.exports = {
       res.serverError({ message: e, data: {}});
     }
   },
-  find: async (req, res) => {
-    console.log("=== user find ===");
+  findOne: async (req, res) => {
+    console.log("=== findOne ===");
     const { id } = req.params;
     try {
       const user = await User.findOneWithPassport({id})
@@ -47,13 +42,13 @@ module.exports = {
   },
 
   update: async (req, res) => {
-    const { userId } = req.params;
+    const { id } = req.params;
     const data = req.body;
     try {
-      sails.log.info('update user controller userId=>', userId);
+      sails.log.info('update user controller id=>', id);
       sails.log.info('update user controller data=>', data);
       const user = await UserService.update({
-        id: userId,
+        id: id,
         ...data,
       });
       res.ok({
@@ -66,10 +61,10 @@ module.exports = {
   },
 
   destroy: async (req, res) => {
-    const { userId } = req.params;
+    const { id } = req.params;
     try {
-      sails.log.info('delete user controller=>', userId);
-      const user = await User.deleteById(userId);
+      sails.log.info('delete user controller=>', id);
+      const user = await User.deleteById(id);
       res.ok({
         message: 'Delete user success.',
         data: user,
