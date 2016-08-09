@@ -13,7 +13,11 @@ module.exports = {
 
   },
   associations: function() {
-    ScentNote.hasMany(Scent);
+    ScentNote.hasMany(Scent, {
+      foreignKey: {
+        name: 'ScentNoteId'
+      }
+    });
   },
   options: {
     classMethods: {

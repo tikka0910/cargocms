@@ -1,4 +1,4 @@
-describe('about Post Controller operation.', function() {
+describe.only('about Post Controller operation.', function() {
   it('create Post should success.', async (done) => {
     const data = {
       title: '香味的一沙一世界6',
@@ -10,7 +10,7 @@ describe('about Post Controller operation.', function() {
     };
     try {
       const res = await request(sails.hooks.http.app)
-      .post(`/post`)
+      .post(`/api/post`)
       .send(data);
       res.status.should.be.eq(200);
       res.body.should.be.Object;
@@ -44,7 +44,7 @@ describe('about Post Controller operation.', function() {
     it('get all post', async(done) => {
       try {
         const res = await request(sails.hooks.http.app)
-        .get(`/post`);
+        .get(`/api/post`);
         sails.log.info(JSON.stringify(res.body, null, 2));
         res.status.should.be.eq(200);
         res.body.should.be.Object;
@@ -57,7 +57,7 @@ describe('about Post Controller operation.', function() {
     it('findOne Post should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
-        .get(`/post/${targetPost.id}`);
+        .get(`/api/post/${targetPost.id}`);
         sails.log.info(JSON.stringify(res.body, null, 2));
         res.status.should.be.eq(200);
         res.body.should.be.Object;
@@ -78,7 +78,7 @@ describe('about Post Controller operation.', function() {
           TagsArray: [ '香水', '花' ],
         }
         const res = await request(sails.hooks.http.app)
-        .put(`/post/${targetPost.id}`)
+        .put(`/api/post/${targetPost.id}`)
         .send(data);
         sails.log.info(JSON.stringify(res.body, null, 2));
         res.status.should.be.eq(200);
@@ -99,7 +99,7 @@ describe('about Post Controller operation.', function() {
           abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
         }
         const res = await request(sails.hooks.http.app)
-        .put(`/post/${targetPost.id}`)
+        .put(`/api/post/${targetPost.id}`)
         .send(data);
         sails.log.info(JSON.stringify(res.body, null, 2));
         res.status.should.be.eq(200);
@@ -136,7 +136,7 @@ describe('about Post Controller operation.', function() {
     it('delete Post should success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
-        .delete(`/post/${targetPost.id}`);
+        .delete(`/api/post/${targetPost.id}`);
         sails.log.info(JSON.stringify(res.body, null, 2));
         res.status.should.be.eq(200);
         res.body.should.be.Object;

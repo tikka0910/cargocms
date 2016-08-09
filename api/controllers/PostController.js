@@ -1,5 +1,5 @@
 module.exports = {
-  index: async (req, res) => {
+  find: async (req, res) => {
     try {
       res.ok({
         message: 'Create post success.',
@@ -33,10 +33,10 @@ module.exports = {
 
   findOne: async (req, res) => {
     try {
-      const { postId } = req.params;
+      const { id } = req.params;
       res.ok({
         message: 'find post success.',
-        data: await Post.findByIdHasJoin(postId),
+        data: await Post.findByIdHasJoin(id),
       });
     } catch (e) {
       sails.log.error(e);
@@ -46,10 +46,10 @@ module.exports = {
 
   update: async (req, res) => {
     try {
-      const { postId } = req.params;
+      const { id } = req.params;
       res.ok({
         message: 'update post success.',
-        data: await PostService.update(postId, req.body),
+        data: await PostService.update(id, req.body),
       });
     } catch (e) {
       sails.log.error(e);
@@ -57,12 +57,12 @@ module.exports = {
     }
   },
 
-  delete: async (req, res) => {
+  destroy: async (req, res) => {
     try {
-      const { postId } = req.params;
+      const { id } = req.params;
       res.ok({
         message: 'delete post success.',
-        data: await Post.deleteById(postId ),
+        data: await Post.deleteById(id),
       });
     } catch (e) {
       sails.log.error(e);
