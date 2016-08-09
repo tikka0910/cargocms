@@ -80,6 +80,11 @@
                               <i class="fa fa-link"></i>&nbsp;&nbsp;{{data.item.url}}
                             </p>
                           </li>
+                          <li>
+                            <p class="text-muted">
+                              <span class="label label-info" v-for="tag in data.item.TagsArray" style="margin-right: 10px"> {{ tag }} </span>
+                            </p>
+                          </li>
                         </ul>
                         <br>
                         <!-- <p class="font-md">
