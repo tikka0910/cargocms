@@ -50,7 +50,7 @@ module.exports.routes = {
   'get /logout': 'AuthController.logout',
   'get /register': 'AuthController.register',
 
-  'get /auth/status': 'AuthController.status',
+  // 'get /auth/status': 'AuthController.status',
 
   'post /auth/local': 'AuthController.callback',
   'post /auth/local/:action': 'AuthController.callback',
@@ -60,13 +60,13 @@ module.exports.routes = {
   'get /auth/:provider/:action': 'AuthController.callback',
 
   //----- BlogController -----
-  'get /blog': 'BlogController.index',
+  // 'get /blog': 'BlogController.index',
 
-  'get /wall': 'WallController.index',
+  // 'get /wall': 'WallController.index',
 
 
   //----- UserController -----
-  'get /user': 'UserController.index',
+  // 'get /user': 'UserController.index',
   'get /user/:userId': 'UserController.findOne',
   'put /user/:userId': 'UserController.update',
   'delete /user/:userId': 'UserController.delete',
@@ -79,6 +79,12 @@ module.exports.routes = {
   'put /post/:postId': 'PostController.update',
   'delete /post/:postId': 'PostController.delete',
 
+  '/admin/config.js': "AdminController.config",
+
+  "/api/:controller/:action/:id?": {},
+  "/admin/:controller/:action/:id?": {},
+  "/:controller/:action/:id?": {}
+
 
   /***************************************************************************
   *                                                                          *
@@ -90,69 +96,5 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  //----- Admin -----
 
-
-  '/admin/login': {
-    view: 'admin/login',
-    locals: {
-      layout: false
-    }
-  },
-
-  '/admin': {
-      controller: 'AdminController',
-      action: 'index',
-      locals: {
-       layout: false
-      }
-   },
-
-   '/admin/config.js': {
-     controller: 'AdminController',
-      action: 'config'
-   },
-
-//----- Admin User -----
-  '/admin/user': {
-    view: 'admin/user/index',
-    locals: {
-      layout: false
-    }
-  },
-  '/admin/dashboard': {
-    view: 'admin/dashboard/index',
-    locals: {
-      layout: false
-    }
-  },
-
-
-  '/admin/user/create': {
-    view: 'admin/user/create',
-    locals: {
-      layout: false
-    }
-  },
-  '/admin/user/edit/:id': {
-    view: 'admin/user/edit',
-    locals: {
-      layout: false
-    }
-  },
-  '/admin/user/show/:id': {
-    view: 'admin/user/show',
-    locals: {
-      layout: false
-    }
-  },
-
-  '/admin/post': {
-    view: 'admin/post/index',
-    locals: {
-      layout: false
-    }
-  },
-
-  '/admin/debug': 'AdminController.debug',
 };
