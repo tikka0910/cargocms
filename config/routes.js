@@ -40,13 +40,8 @@ module.exports.routes = {
     view: 'index'
   },
 
-  '/creator': {
-    view: 'labfnp/creator/index'
-  },
-
-  '/lab': {
-    view: 'labfnp/explore'
-  },
+  '/creator': 'labfnp/ScentController.creator',
+  '/lab':     'labfnp/ScentController.explore',
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
@@ -61,6 +56,8 @@ module.exports.routes = {
   'get /auth/:provider/:action': 'AuthController.callback',
 
   '/admin/config.js': "AdminController.config",
+
+  '/admin': 'AdminController.index',
 
 
   /***************************************************************************

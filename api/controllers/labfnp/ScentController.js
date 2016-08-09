@@ -9,5 +9,13 @@ module.exports = {
       console.log(e);
       res.serverError(e);
     }
-  }
+  },
+
+  creator: async function(req, res) {
+    return res.view({});
+  },
+
+  explore: async function(req, res) {
+
+  },
 }

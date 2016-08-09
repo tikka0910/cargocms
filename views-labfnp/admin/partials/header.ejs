@@ -71,37 +71,27 @@
 	<!-- end user info -->
 
 	<nav>
+
 		<ul>
-			<li class="">
-				<a href="/admin/dashboard" title="Dashboard">
-					<i class="fa fa-lg fa-fw fa-home"></i>
-					<span class="menu-item-parent">控制台</span>
+		<% data.menuItems.forEach(function(item) { %>
+		  <li>
+				<a href="<%= item.href %>" title="<%= item.title %>">
+					<i class="fa fa-lg fa-fw fa-<%= item.icon %>"></i>
+					<span class="menu-item-parent"><%= item.title %></span>
 				</a>
-			</li>
-
-			<li class="">
-				<a href="#" title="Dashboard">
-					<i class="fa fa-lg fa-fw fa-wrench"></i>
-					<span class="menu-item-parent">資料維護</span>
-				</a>
+				<% if (item.subItems) { %>
 				<ul>
-
-					<li class="">
-						<a href="/admin/user" title="Dashboard"><span class="menu-item-parent">會員資料</span></a>
+					<% item.subItems.forEach(function(subItem) { %>
+					<li>
+						<a href="<%= subItem.href %>" title="<%= subItem.title %>"><span class="menu-item-parent"><%= subItem.title %></span></a>
 					</li>
-					<li class="">
-						<a href="/admin/post" title="Dashboard"><span class="menu-item-parent">物品清單</span></a>
-					</li>
-					<li class="">
-						<a href="/admin/mock" title="Dashboard"><span class="menu-item-parent">其他</span></a>
-					</li>
-
-					<li class="">
-						<a href="ajax/dashboard-social.html" title="Dashboard"><span class="menu-item-parent">Social Wall</span></a>
-					</li>
+					<% }); %>
 				</ul>
-			</li>
+				<% } %>
+		  </li>
+		<% }); %>
 		</ul>
+
 	</nav>
 
 	<span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
