@@ -78,7 +78,8 @@ module.exports.routes = {
   'put /post/:postId': 'PostController.update',
   'delete /post/:postId': 'PostController.delete',
 
-
+  //----- SloganController -----
+  'get /slogan/:id':'SloganController.findOne',
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
