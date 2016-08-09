@@ -74,10 +74,10 @@
 
                         <h2 class="name">
                           <small>香水名稱</small>
-                          {{ data.item.perfumeName }}
+                            <p class="padding-5">{{ data.item.perfumeName }}</p>
                           <hr>
             							<small>創作人</small>
-                            <a href="/admin/#/admin/user/show/{{data.item.UserId}}">{{ data.item.authorName }}</a>
+                            <a class="padding-5" href="/admin/#/admin/user/show/{{data.item.UserId}}">{{ data.item.authorName }}</a>
                           <hr>
                           <!-- <small>評級</small>
             							<i class="fa fa-star fa-2x text-primary"></i>
@@ -87,13 +87,23 @@
             							<i class="fa fa-star fa-2x text-muted"></i>
             							<span class="fa fa-2x"><h5>(109) Votes</h5></span>
                           <hr> -->
-                          <small>配方描述</small>
-                          <h4>{{ data.item.formulaLogs }}</h4>
-                          <hr>
-                          <small>配方成份</small>
-                          <h4>{{ data.item.formula }}</h4>
-                          <hr>
             						</h2>
+                        <h2 class="name">
+                          <small>配方描述</small>
+                          <h4 class="padding-5">{{ data.item.formulaLogs }}</h4>
+                          <hr>
+                        </h2>
+                        <h2 class="name">
+                          <small>配方成份</small>
+                          <h4 class="padding-5">
+                            <div class="row" v-for="formula in data.item.formula">
+                              <div class="col col-xs-2"><string>・</string>{{ formula.scent }}</div>
+                              <div class="col col-xs-1"> : </div>
+                              <div class="col col-xs-2">{{ formula.drops }}</div>
+                            </div>
+                          </h4>
+                          <hr>
+                        </h2>
 
 
                         <!-- <div class="description description-tabs">

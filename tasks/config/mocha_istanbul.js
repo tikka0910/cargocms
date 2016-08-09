@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   grunt.config.set('mocha_istanbul', {
     coveralls: {
-      src: ['test/unit'],
+      src: ['test/unit', 'test/library'],
       options: {
         coverage: true,
         root: 'api/',

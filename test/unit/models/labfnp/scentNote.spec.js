@@ -1,4 +1,4 @@
-describe.only('test ScentNote.spec model operation', function() {
+describe('test ScentNote.spec model operation', function() {
 
   let createdScentNote, createdScents, createdFeelings;
   it('create ScentNote Scent Feeling should be success.', async (done) => {

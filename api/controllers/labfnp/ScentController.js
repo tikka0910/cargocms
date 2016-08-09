@@ -15,7 +15,12 @@ module.exports = {
     console.log("=== find ===");
     try {
       const scents = await Scent.findAll();
-      const scentArray = scents.map((scent) => scent.name);
+      const scentArray = scents.map((scent) => {
+        return {
+          name: scent.name,
+          id: scent.id,
+        };
+      });
       res.ok({
         data: {
           items: scentArray,
@@ -25,4 +30,11 @@ module.exports = {
     }
   },
 
+  creator: async function(req, res) {
+    return res.view({});
+  },
+
+  explore: async function(req, res) {
+
+  },
 }

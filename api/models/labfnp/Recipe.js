@@ -34,15 +34,15 @@ module.exports = {
             id
           },
         });
-        if (recipes) {
-          recipeWithScent = recipes.toJSON();
-          const scents = await Scent.findAll();
-          const scentArray = scents.map((scent) => scent.name);
-          recipeWithScent.scents = scentArray;
-
-          console.log("recipeWithScent=>", recipeWithScent);
-        }
-        return recipeWithScent;
+        // if (recipes) {
+        //   recipeWithScent = recipes.toJSON();
+        //   const scents = await Scent.findAll();
+        //   const scentArray = scents.map((scent) => scent.name);
+        //   recipeWithScent.scents = scentArray;
+        //
+        //   console.log("recipeWithScent=>", recipeWithScent);
+        // }
+        return recipes;
       },
       deleteById: async (id) => {
         try {

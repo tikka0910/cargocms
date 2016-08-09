@@ -9,26 +9,53 @@ var LINK = {
   PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
   PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit/',
   PAGE_SHOW: '/admin/#/admin/labfnp/recipe/show/',
-  API_LIST: '/api/recipe',
-  API_ITEM: '/api/recipe/',
-  API_SAVE: '/api/recipe',
-  API_UPDATE: '/api/recipe/',
-  API_LIST_SCENT: '/api/labfnp/scent',
+  API_LIST_SCENT: '/api/labfnp/scent/simpleList',
+  API_LIST: '/api/labfnp/recipe',
+  API_ITEM: '/api/labfnp/recipe/',
+  API_CREATE: '/api/labfnp/recipe',
+  API_UPDATE: '/api/labfnp/recipe/',
 };
 
 var itemBeforeEdit = {};
+var formula = [
+  {
+    scent: '',
+    drops: 0,
+  },
+  {
+    scent: '',
+    drops: 0,
+  },
+  {
+    scent: '',
+    drops: 0,
+  },
+  {
+    scent: '',
+    drops: 0,
+  },
+  {
+    scent: '',
+    drops: 0,
+  },
+  {
+    scent: '',
+    drops: 0,
+  },
+];
 var userAppModel = {
 	data: {
 		item: {
       authorName: '',
 			perfumeName: '',
 			formulaLogs: '',
-      formula: '',
-      UserId: '',
-			scent: [],
-			drops: [],
+      formula: formula,
+      userId: '',
 		},
 		items: [],
+    select: {
+      scents: [],
+    },
 		option: {
 		}
 	},
@@ -49,7 +76,7 @@ var userApp = new Vue({
 		},
 		save: function (event) {
 			$.ajax({
-				url: LINK.API_SAVE,
+				url: LINK.API_CREATE,
 				type: 'POST',
 				dataType: 'json',
 				data: userAppModel.data.item,
@@ -104,25 +131,28 @@ var userApp = new Vue({
 				});
 			}
 		},
+    loadSelectOptions: function (cb) {
+      $.get(LINK.API_LIST_SCENT, ajaxSuccess);
+
+      function ajaxSuccess(result) {
+        userAppModel.data.select.scents = result.data.items;
+                console.log("userAppModel stringify=>", JSON.parse(JSON.stringify(userAppModel.data.item)));
+        if (typeof cb !== 'undefined') setTimeout(cb, 1);
+      } // end ajaxSuccess
+    },
 		loadItem: function (cb) {
 			window.onbeforeunload = null;
 			$.get(LINK.API_ITEM + userAppModel.data.item.id, ajaxSuccess);
 
 			function ajaxSuccess(result) {
-				console.log("loadItem result.data=>", result.data);
 				if (result.success) {
 					userAppModel.data.item = result.data;
 					var hasAvatar = typeof result.data.avatar === 'string';
 					if (!hasAvatar) {
 						userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
 					}
-
-          $.get(LINK.API_LIST_SCENT + userAppModel.data.item.id, function(){
-            userAppModel.data.item.scents = result.data.items;
-          });
+          if (typeof cb !== 'undefined') setTimeout(cb, 1);
 				}
-				if (typeof cb !== 'undefined') setTimeout(cb, 0);
-				console.log("loadItem userAppModel.data.item=>", userAppModel.data.item);
 			} // end ajaxSuccess
 		},
 		setupForm: function (type) {
@@ -199,6 +229,8 @@ var userApp = new Vue({
 				}
 			};
 		},
+    onEnterPageCreare: function () {
+    },
 		onLeavePageEdit: function (cb) {
 			if (userApp.isPageEditDataModified()) {
 				var msgInfo = {
@@ -284,7 +316,7 @@ var userApp = new Vue({
 									location.href = LINK.PAGE_SHOW + id;
 								} else {
 									messageApp.show({
-										desc: '請選擇會員',
+										desc: '請選擇一筆資料',
 										type: 'warning'
 									});
 								}
@@ -294,7 +326,7 @@ var userApp = new Vue({
 							"sExtends": "text",
 							"sButtonText": "新增",
 							"fnClick": function (nButton, oConfig, oFlash) {
-								location.href = LINK.PAGE_CREATE;
+                location.href = LINK.PAGE_CREATE;
 							}
            },
 						{
@@ -305,10 +337,10 @@ var userApp = new Vue({
 								if (isSelected) {
 									var index = userAppModel.view.table.selectIndex;
 									var id = userAppModel.data.items[index].id;
-									location.href = LINE.PAGE_EDIT + id;
+									location.href = LINK.PAGE_EDIT + id;
 								} else {
 									messageApp.show({
-										desc: '請選擇會員',
+										desc: '請選擇一筆資料',
 										type: 'warning'
 									});
 								}

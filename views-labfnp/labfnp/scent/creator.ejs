@@ -1,0 +1,195 @@
+<script src="//d3js.org/d3.v3.min.js"></script>
+
+<style>
+.sky-form section {
+  margin-bottom: 0;
+}
+</style>
+
+<!--=== Content Part ===-->
+<div class="container content">
+	<div class="row">
+
+		<!-- Begin Content -->
+		<div class="col-md-8">
+			<!-- General Unify Forms -->
+			<form action="#" class="sky-form">
+				<header>新香水配方</header>
+
+				<fieldset>
+					<section>
+						<label class="label">創作者姓名（必填）</label>
+						<label class="input">
+							<input type="text" placeholder="Enter Name" />
+						</label>
+					</section>
+
+					<section>
+						<label class="label">香水品名（必填）</label>
+						<label class="input">
+							<input type="text" placeholder="Enter Perfume Name" />
+						</label>
+					</section>
+
+				</fieldset>
+
+				<fieldset>
+				  <% for (var i = 1; i <= 6; i++) { %>
+				  <div class="row">
+  					<section class="col col-6">
+  						<label class="label">所選之香味分子<%= i %></label>
+  						<label class="select">
+  							<select>
+  							  <% include scents-list.ejs %>
+  							</select>
+  							<i></i>
+  						</label>
+  					</section>
+  					<section class="col col-6">
+  						<label class="label">滴數</label>
+  						<label class="input">
+  							<input type="text" value="0">
+  						</label>
+  				  </section>
+				  </div>
+				  <% } %>
+				</fieldset>
+
+				<fieldset>
+
+					<section>
+						<label class="label">其他訊息</label>
+						<label class="textarea textarea-resizable">
+							<textarea rows="3"></textarea>
+						</label>
+					</section>
+
+				</fieldset>
+
+				<footer>
+					<button type="submit" class="btn-u">Submit</button>
+					<button type="button" class="btn-u btn-u-default" onclick="window.history.back();">Back</button>
+				</footer>
+			</form>
+			<!-- General Unify Forms -->
+
+		</div>
+		<div class="col-md-4">
+		  LFP account:Yan-hong Lin<br/>
+		  目前滴數總和 0 drops
+
+      <!-- create container element for visualization -->
+      <div id="d3-container"></div>
+
+    <svg id="svgVisualize" width="500" height="500"></svg>
+
+	  </div>
+		<!-- End Content -->
+	</div>
+</div><!--/container-->
+<!--=== End Content Part ===-->
+
+<script type="text/javascript">
+
+var diameter = parseInt(d3.select('#d3-container').style('width')),
+    format = d3.format(",d"),
+    color = d3.scale.category20c();
+
+// console.log(d3.scale.linear()
+//     .range([10, 20])
+//     .domain([0, 480])(diameter));
+
+var bubble = d3.layout.pack()
+    .sort(null)
+    .size([diameter, diameter])
+    .radius(function(d) { return 10 + 3*Math.random(); })
+    .padding(1.5);
+
+//var scale = d3.scale.linear().domain([ 5, 5 ]).range([ 10, 10 ]);
+
+var svg = d3.select("#d3-container")
+    .append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .attr("class", "bubble");
+
+var drawBubbles = function(root) {
+
+  var node = svg.selectAll(".node")
+      .data(bubble.nodes(root).filter(function(d) { return !d.children; }))
+      .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+  // node.append("title")
+  //     .text(function(d) { return d.className + ": " + format(d.value); });
+
+  node.append("circle")
+      .attr("r", function(d) { return d.r; })
+      .style("fill", function(d) { return d.color; });
+
+  // node.append("text")
+  //     //.attr("dy", ".3em")
+  //     .style("text-anchor", "middle")
+  //     .style("fill", "#ffffff")
+  //     .style("font-weight", "normal")
+  //     .style("font-size", "5px")
+  //     .text(function(d) { return d.className.substring(0, d.r / 3); });
+
+};
+
+var changebubble = function (root) {
+
+    var node = svg.selectAll(".node")
+      .data(bubble.nodes(root).filter(function(d) { return !d.children; }))
+
+    // capture the enter selection
+    var nodeEnter = node.enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+    // re-use enter selection for circles
+    nodeEnter
+      .append("circle")
+      .attr("r", function(d) { return d.r; })
+      .style("fill", function(d) { return d.color; });
+
+	  node.select("circle")
+      .transition()
+      .duration(500)
+      .attr("r", function (d) {
+          return d.r;
+      })
+      .style("fill", function (d, i) {
+          return d.color;
+      });
+
+		node.transition().attr("class", "node")
+	    .attr("transform", function (d) {
+	    return "translate(" + d.x + "," + d.y + ")";
+		});
+
+    node.exit().remove();
+
+};
+
+d3.json("/assets/labfnp/test.json", function(error, root) {
+  if (error) throw error;
+
+	drawBubbles(root);
+
+	window.setTimeout(function() {
+		console.log('alarm...');
+		d3.json("/assets/labfnp/test2.json", function(error, root) {
+		  if (error) throw error;
+
+			changebubble(root);
+		});
+
+	}, 1000);
+
+});
+
+d3.select(self.frameElement).style("height", diameter + "px");
+
+</script>

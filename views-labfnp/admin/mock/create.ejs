@@ -5,9 +5,9 @@
 
 			<!-- PAGE HEADER -->
 			<i class="fa-fw fa fa-pencil-square-o"></i>
-				配方資料
+				會員資料
 			<span>>
-				編輯
+				建立
 			</span>
 		</h1>
 	</div>
@@ -15,7 +15,7 @@
 </div>
 
 <!-- widget grid -->
-<section id="labfnp-recipe-edit" class="">
+<section id="user-create" class="">
 
 
 	<!-- START ROW -->
@@ -44,7 +44,7 @@
         <header role="heading">
           <div class="jarviswidget-ctrls" role="menu"></div>
 					<span class="widget-icon"><i class="fa fa-edit"></i></span>
-					<h2>配方資料維護</h2>
+					<h2>新增會員資料</h2>
 				  <span class="jarviswidget-loader">
             <i class="fa fa-refresh fa-spin"></i>
           </span>
@@ -63,8 +63,7 @@
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 
-						<form id="labfnp-recipe-form" class="smart-form">
-							<input type="text" name="id" id="id" v-model="data.item.id" hidden="hidden" value="<%= req.params.id %>">
+						<form id="user-form" class="smart-form">
 
 							<%- include form.ejs %>
 
@@ -73,10 +72,7 @@
 									取消
 								</button>
 								<button type="submit" class="btn btn-primary">
-									儲存
-								</button>
-								<button type="button" v-on:click="delete" class="btn btn-danger pull-left">
-									刪除
+									送出
 								</button>
 							</footer>
 						</form>
@@ -141,22 +137,17 @@
 
 	// pagefunction
 	var pagefunction = function() {
-		<%- include vue.ejs %>
-		userApp.$mount("#labfnp-recipe-edit");
-    userApp.loadSelectOptions();
-		userApp.loadItem(userApp.onEnterPageEdit);
-		userApp.setupForm("edit");
-	};
 
-	// var pagedestroy = function() {
-      // $(window).unload(function() {
-      //   return "Handler for .unload() called.";
-      // });
-	// }
+		<%- include vue.ejs %>
+		userApp.$mount("#user-create");
+		userApp.setupForm("create");
+		userApp.onEnterPageEdit();
+
+	};
 
 	// end pagefunction
 
 	// Load form valisation dependency
-	loadScript("js/plugin/jquery-form/jquery-form.min.js", pagefunction);
+	loadScript("/assets/admin/js/plugin/jquery-form/jquery-form.min.js", pagefunction);
 
 </script>

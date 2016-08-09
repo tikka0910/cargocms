@@ -61,7 +61,7 @@
 
           <!-- widget content -->
           <div class="widget-body no-padding">
-           <validator name="validation1">
+           <!-- <validator name="validation1"> -->
               <form id="labfnp-recipe-form" class="smart-form">
   						  <%- include form.ejs %>
                 <footer>
@@ -73,7 +73,7 @@
                   </button>
                 </footer>
               </form>
-            </validator>
+            <!-- </validator> -->
           </div>
           <!-- end widget content -->
 
@@ -128,7 +128,6 @@
 
   pageSetUp();
 
-
   // PAGE RELATED SCRIPTS
 
   // pagefunction
@@ -136,8 +135,8 @@
 
     <%- include vue.ejs %>
     userApp.$mount("#labfnp-recipe-create");
+    userApp.loadSelectOptions();
     userApp.setupForm("create");
-    userApp.onEnterPageEdit();
   };
 
   // end pagefunction
