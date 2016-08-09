@@ -117,6 +117,12 @@ var postApp = new Vue({
       } // end ajaxSuccess
     },
     setupForm: function(type) {
+      uploadImageApp.updateModel('itemLimit', 1);
+      uploadImageApp.updateModel('onComplete', function(id, name, response){
+        postAppModel.data.item.cover = response.url;
+        console.log("!!!!!!!!!!!!!!!!!!!!!!");
+      })
+      uploadImageApp.setup();
       $('#tagsinput').tagsinput({
         tagClass: 'tagsInputLabel',
       });

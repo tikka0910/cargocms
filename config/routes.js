@@ -80,6 +80,9 @@ module.exports.routes = {
   //   model: 'admin_user'
   // }
 
+  //----- ImageController -----
+  'post /upload': 'ImageController.upload',
+
 
   /***************************************************************************
   *                                                                          *
