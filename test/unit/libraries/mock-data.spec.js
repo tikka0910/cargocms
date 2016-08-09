@@ -2,7 +2,7 @@
 import MockData from 'mockup-data';
 
 
-describe.only('test mockup', () => {
+describe.skip('test mockup', () => {
 
   let mockData;
   let count = 3;
