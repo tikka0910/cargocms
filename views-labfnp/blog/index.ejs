@@ -46,9 +46,7 @@
 			<!-- Blog All Posts -->
 			<div class="col-md-9">
 				<!-- Blog Posts -->
-				<% data.items.forEach(function(post){ %>
-			    <%- include("post.ejs", {post: post}); %>
-			  <% }); %>
+				<%- include post.ejs %>
 				<!-- End Blog Posts -->
 
 				<!-- Blog Posts -->
