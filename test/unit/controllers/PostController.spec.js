@@ -1,4 +1,4 @@
-describe.only('about Post Controller operation.', function() {
+describe('about Post Controller operation.', function() {
   it('create Post should success.', async (done) => {
     const data = {
       title: '香味的一沙一世界6',

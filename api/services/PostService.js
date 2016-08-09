@@ -1,7 +1,7 @@
 module.exports = {
-  create: async ({ title,  content,  cover,  url,  abstract }) => {
+  create: async ({ title,  content,  cover,  url,  abstract, UserId }) => {
     try {
-      return await Post.create({ title, content, cover, url, abstract });
+      return await Post.create({ title, content, cover, url, abstract, UserId });
     } catch (e) {
       sails.log.error(e);
       throw e;

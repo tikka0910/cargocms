@@ -16,6 +16,9 @@ module.exports = {
   create: async (req, res) => {
     try {
       const { TagsArray } = req.body;
+      const data = req.body;
+      const user = AuthService.getSessionUser(req);
+      data.UserId = user ? user.id : null;
       let newPost = await PostService.create(req.body);
       await TagService.updateOrCreate({
         postId: newPost.id,
