@@ -31,10 +31,18 @@ module.exports = {
   },
 
   creator: async function(req, res) {
-    return res.view({});
+    try {
+      return res.view({
+        scents: await Scent.findAllWithRelationFormatForApp()
+      });
+    }
+    catch (e) {
+      console.log(e);
+      res.serverError(e);
+    }
   },
 
   explore: async function(req, res) {
-
+    return res.view({});
   },
 }
