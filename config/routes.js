@@ -50,8 +50,6 @@ module.exports.routes = {
   'get /logout': 'AuthController.logout',
   'get /register': 'AuthController.register',
 
-  // 'get /auth/status': 'AuthController.status',
-
   'post /auth/local': 'AuthController.callback',
   'post /auth/local/:action': 'AuthController.callback',
 
@@ -59,14 +57,8 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback',
   'get /auth/:provider/:action': 'AuthController.callback',
 
-  //----- BlogController -----
-  // 'get /blog': 'BlogController.index',
-
-  // 'get /wall': 'WallController.index',
-
-
   //----- UserController -----
-  // 'get /user': 'UserController.index',
+  'get /user': 'UserController.index',
   'get /user/:userId': 'UserController.findOne',
   'put /user/:userId': 'UserController.update',
   'delete /user/:userId': 'UserController.delete',
