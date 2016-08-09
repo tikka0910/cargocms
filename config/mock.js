@@ -16,5 +16,6 @@ module.exports.mock = {
       { key: 'report', name: '報表', type: 'icon', className: 'fa fa-print' },
     ]
   },
-  count: 1000
+  count: 1000,
+  title: "測驗管理"
 };

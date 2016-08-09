@@ -2,7 +2,8 @@
 var userAppModel = {
   data: {
     cols: [],
-    items: []
+    items: [],
+    title: ""
   }
 }
 
@@ -16,6 +17,7 @@ var userApp = new Vue({
       function ajaxSuccess(result) {
         userAppModel.data.cols = result.data.cols;
         userAppModel.data.items = result.data.items;
+        userAppModel.data.title = result.data.title;
 
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
       } // end ajaxSuccess
