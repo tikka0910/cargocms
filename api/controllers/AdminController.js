@@ -10,11 +10,24 @@ const url = require('url');
 module.exports = {
 
   index: function(req, res) {
-    res.view({}, "admin/index");
+    res.ok({view: true});
+  },
+  login: function(req, res) {
+    res.ok({view: true});
   },
 
-  debug: function(req, res) {
-    res.ok({a: 3});
+  dashboard: function(req, res) {
+    res.ok({view: true});
+  },
+
+  config: function(req, res) {
+    let config = {
+      title: 'CargoCMS 雲端管理系統',
+      copyright: '© Laboratory of Fragrance &amp; Perfume',
+    };
+
+    res.set('Content-Type', 'text/javascript');
+    res.send(new Buffer('var __ADMIN_CONFIG__='+JSON.stringify(config)+';'));
   },
 
 };

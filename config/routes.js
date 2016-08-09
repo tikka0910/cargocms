@@ -31,6 +31,7 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
+  '/api/labfnp/scent': 'labfnp/ScentController.index',
 
   '/': {
     view: 'index'
@@ -49,8 +50,6 @@ module.exports.routes = {
   'get /logout': 'AuthController.logout',
   'get /register': 'AuthController.register',
 
-  'get /auth/status': 'AuthController.status',
-
   'post /auth/local': 'AuthController.callback',
   'post /auth/local/:action': 'AuthController.callback',
 
@@ -58,25 +57,28 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback',
   'get /auth/:provider/:action': 'AuthController.callback',
 
-  //----- BlogController -----
-  'get /blog': 'BlogController.index',
+  // //----- UserController -----
+  // 'get /api/user': 'UserController.index',
+  // 'get /api/user/:userId': 'UserController.findOne',
+  // 'put /api/user/:userId': 'UserController.update',
+  // 'delete /api/user/:userId': 'UserController.delete',
+  // 'post /api/user': 'UserController.create',
+  //
+  // //----- PostController -----
+  // 'get /api/post': 'PostController.index',
+  // 'post /api/post': 'PostController.create',
+  // 'get /api/post/:postId': 'PostController.findOne',
+  // 'put /api/post/:postId': 'PostController.update',
+  // 'delete /api/post/:postId': 'PostController.delete',
 
-  'get /wall': 'WallController.index',
+  '/admin/config.js': "AdminController.config",
 
-
-  //----- UserController -----
-  'get /user': 'UserController.index',
-  'get /user/:userId': 'UserController.findOne',
-  'put /user/:userId': 'UserController.update',
-  'delete /user/:userId': 'UserController.delete',
-  'post /user': 'UserController.create',
-
-  //----- PostController -----
-  'get /post': 'PostController.index',
-  'post /post': 'PostController.create',
-  'get /post/:postId': 'PostController.findOne',
-  'put /post/:postId': 'PostController.update',
-  'delete /post/:postId': 'PostController.delete',
+  // "/api/:controller/:action/:id?": {},
+  // "/admin/:controller/:action/:id?": {},
+  // "/:controller/:action/:id?": {},
+  // 'admin/user': {
+  //   model: 'admin_user'
+  // }
 
 
   /***************************************************************************
@@ -88,80 +90,4 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
-
-  //----- Admin -----
-
-
-  '/admin/login': {
-    view: 'admin/login',
-    locals: {
-      layout: false
-    }
-  },
-
-  '/admin/': {
-      controller: 'AdminController',
-      action: 'index',
-      locals: {
-       layout: false
-      }
-   },
-
-//----- Admin User -----
-  '/admin/user': {
-    view: 'admin/user/index',
-    locals: {
-      layout: false
-    }
-  },
-  '/admin/dashboard': {
-    view: 'admin/dashboard/index',
-    locals: {
-      layout: false
-    }
-  },
-
-
-  '/admin/user/create': {
-    view: 'admin/user/create',
-    locals: {
-      layout: false
-    }
-  },
-  '/admin/user/edit/:id': {
-    view: 'admin/user/edit',
-    locals: {
-      layout: false
-    }
-  },
-  '/admin/user/show/:id': {
-    view: 'admin/user/show',
-    locals: {
-      layout: false
-    }
-  },
-
-  '/admin/post': {
-    view: 'admin/post/index',
-    locals: {
-      layout: false
-    }
-  },
-
-  // labfnp
-  '/admin/labfnp/recipe': {
-    view: 'admin/labfnp/recipe/index',
-    locals: {
-      layout: false
-    }
-  },
-  '/admin/labfnp/recipe/create': {
-    view: 'admin/labfnp/recipe/create',
-    locals: {
-      layout: false
-    }
-  },
-
-
-  '/admin/debug': 'AdminController.debug',
 };
