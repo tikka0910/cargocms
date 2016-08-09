@@ -28,6 +28,28 @@ var postAppModel = {
   }
 }
 
+Vue.directive('summernote', {
+  update: function (value) {
+    if (value !== '') {
+      setTimeout(function() {
+        $('.summernote').summernote({
+          height: 300,
+          placeholder: '請輸入內容',
+          toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['table', ['table']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+          ]
+        });
+      },0);
+    }
+  }
+})
 
 var postApp = new Vue({
   data: postAppModel,
@@ -39,6 +61,7 @@ var postApp = new Vue({
     },
     save: function (event) {
       postAppModel.data.item.TagsArray = $('#tagsinput').tagsinput('items');
+      postAppModel.data.item.content = $('.summernote').summernote('code');
       $.ajax({
         url: '/post',
         type: 'POST',
@@ -62,6 +85,7 @@ var postApp = new Vue({
     },
     update: function (event) {
       postAppModel.data.item.TagsArray = $('#tagsinput').tagsinput('items');
+      postAppModel.data.item.content = $('.summernote').summernote('code');
       console.log(postAppModel.data.item.TagsArray);
       $.ajax({
         url: '/post/' + postAppModel.data.item.id,

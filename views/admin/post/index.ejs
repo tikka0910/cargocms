@@ -46,7 +46,8 @@
 									<th class="" data-hide="phone">#</th>
 									<th class="" data-class="expand"><i class="fa fa-fw fa-post text-muted hidden-md hidden-sm hidden-xs"></i>標題</th>
 									<th class="" >簡述</th>
-									<th class="" data-hide="phone,tablet">內容</th>
+									<th class="" >標籤</th>
+									<!-- <th class="" data-hide="phone,tablet">內容</th> -->
 									<!-- <th class="" data-hide="phone,tablet">封面</th> -->
 									<!-- <th class="" data-hide="phone,tablet">網址</th> -->
 									<th class="no-sort"></th>
@@ -57,7 +58,8 @@
 									<td>{{ post.id }}</td>
 									<td><a href="/admin/#/admin/post/show/{{post.id}}">{{ post.title }}</a></td>
 									<td>{{ post.abstract }}</td>
-									<td>{{ post.content }}</td>
+									<td><span class="label label-info" v-for="tag in post.TagsArray" style="margin-right: 10px"> {{ tag }} </span></td>
+									<!-- <td>{{ post.content }}</td> -->
 									<!-- <td>{{ post.cover }}</td> -->
                   <!-- <td>{{ post.url }}</td> -->
 									<td align="center" style="cursor: pointer;">

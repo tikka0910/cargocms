@@ -17,9 +17,11 @@
 
   <section>
     <label class="label">內容</label>
-    <label class="textarea">
-      <textarea rows="8" name="content" placeholder="請輸入內容" v-model="data.item.content"></textarea>
-      <b class="tooltip tooltip-bottom-right">請輸入內容</b> </label>
+    <div style="border: 1px solid #a9a9a9;">
+      <div v-summernote="data.item.content" class="summernote">
+        {{{ data.item.content }}}
+      </div>
+    </div>
   </section>
 
   <section>
