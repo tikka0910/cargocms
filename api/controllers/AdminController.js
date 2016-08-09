@@ -10,11 +10,14 @@ const url = require('url');
 module.exports = {
 
   index: function(req, res) {
-    res.view({}, "admin/index");
+    res.ok({view: true});
+  },
+  login: function(req, res) {
+    res.ok({view: true});
   },
 
-  debug: function(req, res) {
-    res.ok({a: 3});
+  dashboard: function(req, res) {
+    res.ok({view: true});
   },
 
   config: function(req, res) {
