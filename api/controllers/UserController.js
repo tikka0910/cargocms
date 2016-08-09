@@ -77,5 +77,5 @@ module.exports = {
     } catch (e) {
       res.serverError({ message: e.message, data: {}});
     }
-  },
+  }
 }
