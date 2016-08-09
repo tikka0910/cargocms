@@ -1,4 +1,11 @@
 module.exports = {
+
+  debug: async(req, res) => {
+    res.ok({
+      user: req.session.passport.user
+    });
+  },
+
   index: async (req, res) => {
     try {
       const users = await UserService.findAll();
