@@ -58,18 +58,18 @@ module.exports.routes = {
   'get /auth/:provider/:action': 'AuthController.callback',
 
   //----- UserController -----
-  'get /user': 'UserController.index',
-  'get /user/:userId': 'UserController.findOne',
-  'put /user/:userId': 'UserController.update',
-  'delete /user/:userId': 'UserController.delete',
-  'post /user': 'UserController.create',
+  // 'get /api/user': 'UserController.index',
+  'get /api/user/:userId': 'UserController.findOne',
+  'put /api/user/:userId': 'UserController.update',
+  'delete /api/user/:userId': 'UserController.delete',
+  'post /api/user': 'UserController.create',
 
   //----- PostController -----
-  'get /post': 'PostController.index',
-  'post /post': 'PostController.create',
-  'get /post/:postId': 'PostController.findOne',
-  'put /post/:postId': 'PostController.update',
-  'delete /post/:postId': 'PostController.delete',
+  // 'get /api/post': 'PostController.index',
+  'post /api/post': 'PostController.create',
+  'get /api/post/:postId': 'PostController.findOne',
+  'put /api/post/:postId': 'PostController.update',
+  'delete /api/post/:postId': 'PostController.delete',
 
   '/admin/config.js': "AdminController.config",
 
