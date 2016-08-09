@@ -5,14 +5,15 @@ var COMMON = {
 };
 
 var LINK = {
-  PAGE_INDEX: '/admin/#/admin/labfnp-recipe',
+  PAGE_INDEX: '/admin/#/admin/labfnp/recipe',
   PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
-  PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit',
-  PAGE_SHOW: '/admin/#/admin/labfnp-recipe/show/',
-  API_LIST: '/labfnp-recipe',
-  API_ITEM: '/labfnp-recipe/',
-  API_SAVE: '/labfnp-recipe',
-  API_UPDATE: '/labfnp-recipe/',
+  PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit/',
+  PAGE_SHOW: '/admin/#/admin/labfnp/recipe/show/',
+  API_LIST: '/api/recipe',
+  API_ITEM: '/api/recipe/',
+  API_SAVE: '/api/recipe',
+  API_UPDATE: '/api/recipe/',
+  API_LIST_SCENT: '/api/labfnp/scent',
 };
 
 var itemBeforeEdit = {};
@@ -22,7 +23,9 @@ var userAppModel = {
       authorName: '',
 			perfumeName: '',
 			formulaLogs: '',
-			ingredient: [],
+      formula: '',
+      UserId: '',
+			scent: [],
 			drops: [],
 		},
 		items: [],
@@ -101,7 +104,7 @@ var userApp = new Vue({
 				});
 			}
 		},
-		loadItem: function (event) {
+		loadItem: function (cb) {
 			window.onbeforeunload = null;
 			$.get(LINK.API_ITEM + userAppModel.data.item.id, ajaxSuccess);
 
@@ -109,11 +112,14 @@ var userApp = new Vue({
 				console.log("loadItem result.data=>", result.data);
 				if (result.success) {
 					userAppModel.data.item = result.data;
-					userAppModel.data.option.passwordConfirm = result.data.Passports[0].password;
 					var hasAvatar = typeof result.data.avatar === 'string';
 					if (!hasAvatar) {
 						userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
 					}
+
+          $.get(LINK.API_LIST_SCENT + userAppModel.data.item.id, function(){
+            userAppModel.data.item.scents = result.data.items;
+          });
 				}
 				if (typeof cb !== 'undefined') setTimeout(cb, 0);
 				console.log("loadItem userAppModel.data.item=>", userAppModel.data.item);
@@ -133,12 +139,12 @@ var userApp = new Vue({
 					formulaLogs: {
 						required: true,
 					},
-					ingredient: {
-						required: true
-					},
-					drops: {
-						required: true
-					},
+					// ingredient: {
+					// 	required: true
+					// },
+					// drops: {
+					// 	required: true
+					// },
 				},
 
 				// Messages for form validation
@@ -152,12 +158,12 @@ var userApp = new Vue({
 					formulaLogs: {
 						required: '請輸入formulaLogs',
 					},
-					ingredient: {
-						required: '請選擇配方種類'
-					},
-					drops: {
-						required: '請輸入配方滴量'
-					},
+					// ingredient: {
+					// 	required: '請選擇配方種類'
+					// },
+					// drops: {
+					// 	required: '請輸入配方滴量'
+					// },
 				},
 
 				// Do not change code below
@@ -216,6 +222,7 @@ var userApp = new Vue({
 
 			function ajaxSuccess(result) {
 				userAppModel.data.items = result.data.items;
+        console.log("result=>", result);
 				if (typeof cb !== 'undefined') setTimeout(cb, 0);
 			} // end ajaxSuccess
 		},
@@ -273,8 +280,8 @@ var userApp = new Vue({
 								var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
 								if (isSelected) {
 									var index = userAppModel.view.table.selectIndex;
-									var userId = userAppModel.data.items[index].id;
-									location.href = LINK.PAGE_SHOW + userId;
+									var id = userAppModel.data.items[index].id;
+									location.href = LINK.PAGE_SHOW + id;
 								} else {
 									messageApp.show({
 										desc: '請選擇會員',
@@ -297,8 +304,8 @@ var userApp = new Vue({
 								var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
 								if (isSelected) {
 									var index = userAppModel.view.table.selectIndex;
-									var userId = userAppModel.data.items[index].id;
-									location.href = LINE.PAGE_EDIT + userId;
+									var id = userAppModel.data.items[index].id;
+									location.href = LINE.PAGE_EDIT + id;
 								} else {
 									messageApp.show({
 										desc: '請選擇會員',
@@ -337,8 +344,8 @@ var userApp = new Vue({
 			$('#' + COMMON.PAGE_NAME + 'table-widget').fadeIn();
 		},
 		dblclick: function (index) {
-			var userId = userAppModel.data.items[index].id;
-			this.show(userId);
+			var id = userAppModel.data.items[index].id;
+			this.show(id);
 		},
 		selection: function (index) {
 			if (index !== userAppModel.view.table.selectIndex) {
@@ -348,11 +355,11 @@ var userApp = new Vue({
 				userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
 			}
 		},
-		show: function (userId) {
-			location.href = LINK.PAGE_SHOW + userId;
+		show: function (id) {
+			location.href = LINK.PAGE_SHOW + id;
 		},
-		edit: function (userId) {
-			location.href = LINK.PAGE_EDIT + userId;
+		edit: function (id) {
+			location.href = LINK.PAGE_EDIT + id;
 		},
 		delete: function () {
 			messageApp.confirm({

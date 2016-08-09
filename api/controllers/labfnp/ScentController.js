@@ -9,5 +9,20 @@ module.exports = {
       console.log(e);
       res.serverError(e);
     }
-  }
+  },
+
+  find: async (req, res) => {
+    console.log("=== find ===");
+    try {
+      const scents = await Scent.findAll();
+      const scentArray = scents.map((scent) => scent.name);
+      res.ok({
+        data: {
+          items: scentArray,
+      }});
+    } catch (e) {
+      res.serverError({ message: e, data: {}});
+    }
+  },
+
 }

@@ -26,6 +26,24 @@ module.exports = {
   },
   options: {
     classMethods: {
+      findOneWithScent: async function({id}) {
+        sails.log.info("findOneWithUser id=>", id);
+        let recipeWithScent = '';
+        const recipes = await Recipe.findOne({
+          where: {
+            id
+          },
+        });
+        if (recipes) {
+          recipeWithScent = recipes.toJSON();
+          const scents = await Scent.findAll();
+          const scentArray = scents.map((scent) => scent.name);
+          recipeWithScent.scents = scentArray;
+
+          console.log("recipeWithScent=>", recipeWithScent);
+        }
+        return recipeWithScent;
+      },
       deleteById: async (id) => {
         try {
           return await Recipe.destroy({ where: { id } });

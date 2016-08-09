@@ -5,7 +5,7 @@
 
 			<!-- PAGE HEADER -->
 			<i class="fa-fw fa fa-pencil-square-o"></i>
-				會員資料
+				配方資料
 			<span>>
 				編輯
 			</span>
@@ -15,7 +15,7 @@
 </div>
 
 <!-- widget grid -->
-<section id="user-edit" class="">
+<section id="labfnp-recipe-edit" class="">
 
 
 	<!-- START ROW -->
@@ -44,7 +44,7 @@
         <header role="heading">
           <div class="jarviswidget-ctrls" role="menu"></div>
 					<span class="widget-icon"><i class="fa fa-edit"></i></span>
-					<h2>會員個人資料維護</h2>
+					<h2>配方資料維護</h2>
 				  <span class="jarviswidget-loader">
             <i class="fa fa-refresh fa-spin"></i>
           </span>
@@ -63,7 +63,7 @@
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 
-						<form id="user-form" class="smart-form">
+						<form id="labfnp-recipe-form" class="smart-form">
 							<input type="text" name="id" id="id" v-model="data.item.id" hidden="hidden" value="<%= req.params.id %>">
 
 							<%- include form.ejs %>
@@ -142,7 +142,7 @@
 	// pagefunction
 	var pagefunction = function() {
 		<%- include vue.ejs %>
-		userApp.$mount("#user-edit");
+		userApp.$mount("#labfnp-recipe-edit");
 		userApp.loadItem(userApp.onEnterPageEdit);
 
 		userApp.setupForm("edit");

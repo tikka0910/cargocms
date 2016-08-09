@@ -4,19 +4,19 @@
     <section>
       <label class="label">香水名稱</label>
       <label class="input">
-        <input type="text" name="perfumeName" class="perfumeName input-lg" placeholder="請輸入名稱">
+        <input type="text" name="perfumeName" class="perfumeName input-lg" placeholder="請輸入名稱" v-model="data.item.perfumeName">
       </label>
     </section>
     <section>
       <label class="label">作者名稱</label>
       <label class="input">
-        <input type="text" name="authorName" class="authorName input-lg" placeholder="請輸入作者名稱">
+        <input type="text" name="authorName" class="authorName input-lg" placeholder="請輸入作者名稱" v-model="data.item.authorName">
       </label>
     </section>
     <section>
-      <label class="label">紀錄</label>
+      <label class="label">配方描述</label>
       <label class="textarea textarea-expandable">
-        <textarea rows="3" name="formulaLogs" class="formulaLogs custom-scroll"></textarea>
+        <textarea rows="3" name="formulaLogs" class="formulaLogs custom-scroll" placeholder="請輸入配方描述"  v-model="data.item.formulaLogs"></textarea>
       </label>
     </section>
   </section>
@@ -25,20 +25,21 @@
     <!-- row-0 -->
     <div class="row">
       <section class="col col-6">
-        <label class="label">成分種類</label>
+        <label class="label">配方成份</label>
         <label class="select">
-          <select name="ingredient" id="ingredient" class="ingredient input-sm">
+          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[0].scent">
             <option value="">選取一種成份</option>
-            <option value="1">Alexandra</option>
-            <option value="2">Alice</option>
-            <option value="3">Anastasia</option>
-            <option value="4">Avelina</option>
+            <div v-for="scent in data.item.scents">
+              <option value="{{scent}}">
+                {{scent}}
+              </option>
+            </div>
           </select> <i></i> </label>
       </section>
       <section class="col col-6">
         <label class="label">滴數</label>
         <label class="input">
-          <input type="number" value="0" name="drops" id="drops" class="drops">
+          <input type="number" value="0" name="drops" id="drops" class="drops" v-model="data.item.formula[0].drops">
         </label>
       </section>
     </div>
@@ -48,7 +49,7 @@
     <div class="row">
       <section class="col col-6">
         <label class="select">
-          <select name="ingredient" id="ingredient" class="ingredient input-sm">
+          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[0].scent">
             <option value="">選取一種成份</option>
             <option value="1">Alexandra</option>
             <option value="2">Alice</option>
@@ -58,7 +59,7 @@
       </section>
       <section class="col col-6">
         <label class="input">
-          <input type="number" value="0" name="drops" id="drops" class="drops">
+          <input type="number" value="0" name="drops" id="drops" class="drops" v-model="data.item.formula[0].drops">
         </label>
       </section>
     </div>
@@ -68,7 +69,7 @@
     <div class="row">
       <section class="col col-6">
         <label class="select">
-          <select name="ingredient" id="ingredient" class="ingredient input-sm">
+          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[0].scent">
             <option value="">選取一種成份</option>
             <option value="1">Alexandra</option>
             <option value="2">Alice</option>
@@ -78,7 +79,7 @@
       </section>
       <section class="col col-6">
         <label class="input">
-          <input type="number" value="0" name="drops" id="drops" class="drops">
+          <input type="number" value="0" name="drops" id="drops" class="drops" v-model="data.item.formula[0].drops">
         </label>
       </section>
     </div>
@@ -88,7 +89,7 @@
     <div class="row">
       <section class="col col-6">
         <label class="select">
-          <select name="ingredient" id="ingredient" class="ingredient input-sm">
+          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[0].scent">
             <option value="">選取一種成份</option>
             <option value="1">Alexandra</option>
             <option value="2">Alice</option>
@@ -98,7 +99,7 @@
       </section>
       <section class="col col-6">
         <label class="input">
-          <input type="number" value="0" name="drops" id="drops" class="drops">
+          <input type="number" value="0" name="drops" id="drops" class="drops" v-model="data.item.formula[0].drops">
         </label>
       </section>
     </div>
@@ -108,7 +109,7 @@
     <div class="row">
       <section class="col col-6">
         <label class="select">
-          <select name="ingredient" id="ingredient" class="ingredient input-sm">
+          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[0].scent">
             <option value="">選取一種成份</option>
             <option value="1">Alexandra</option>
             <option value="2">Alice</option>
@@ -118,7 +119,7 @@
       </section>
       <section class="col col-6">
         <label class="input">
-          <input type="number" value="0" name="drops" id="drops" class="drops">
+          <input type="number" value="0" name="drops" id="drops" class="drops" v-model="data.item.formula[0].drops">
         </label>
       </section>
     </div>
@@ -128,7 +129,7 @@
     <div class="row">
       <section class="col col-6">
         <label class="select">
-          <select name="ingredient" id="ingredient" class="ingredient input-sm">
+          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[0].scent">
             <option value="">選取一種成份</option>
             <option value="1">Alexandra</option>
             <option value="2">Alice</option>
@@ -138,7 +139,7 @@
       </section>
       <section class="col col-6">
         <label class="input">
-          <input type="number" value="0" name="drops" id="drops" id class="drops">
+          <input type="number" value="0" name="drops" id="drops" id class="drops" v-model="data.item.formula[0].drops">
         </label>
       </section>
     </div>

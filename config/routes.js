@@ -32,9 +32,23 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
   '/api/labfnp/scent': 'labfnp/ScentController.index',
+  'get /api/labfnp/scent': 'labfnp/ScentController.find',
 
-  // '/api/labfnp/recipe': 'labfnp/RecipeController.index',
-  // '/api/labfnp/:id': 'labfnp/RecipeController.find',
+  // recipe
+  '/labfnp/recipe': {
+    view: 'admin/labfnp/recipe/index'
+  },
+  '/labfnp/recipe/create': {
+    view: 'admin/labfnp/recipe/create'
+  },
+  '/labfnp/recipe/edit': {
+    view: 'admin/labfnp/recipe/edit'
+  },
+  'get /api/labfnp/recipe': 'labfnp/RecipeController.find',
+  'get /api/labfnp/recipe/:id': 'labfnp/RecipeController.findOne',
+  'post /api/labfnp/recipe/:id': 'labfnp/RecipeController.create',
+  'put /api/labfnp/recipe/:id': 'labfnp/RecipeController.update',
+  'delete /api/labfnp/recipe/:id': 'labfnp/RecipeController.destroy',
 
   '/': {
     view: 'index'
