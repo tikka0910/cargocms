@@ -52,11 +52,24 @@ module.exports = {
     }
   },
   associations: function() {
-    User.hasMany(Post);
-    User.hasMany(Passport);
-    User.belongsToMany(Role, {through: 'UserRole'});
+    // User.hasMany(Post);
+    User.hasMany(Passport, {
+      foreignKey: {
+        name: 'UserId'
+      }
+    });
+    User.belongsToMany(Role, {
+      // as: 'Roles',
+      // to: 'Users',
+      through: 'UserRole',
+      foreignKey: {
+        name: 'UserId',
+        as: 'Roles'
+      }
+    });
   },
   options: {
+    // tableName: 'Users',
     classMethods: {
       findOneWithPassport: async function({userId}) {
         sails.log.info("findOneWithPassport userId=>", userId);

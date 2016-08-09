@@ -6,7 +6,7 @@ module.exports = {
     });
   },
 
-  index: async (req, res) => {
+  findAll: async (req, res) => {
     try {
       const users = await UserService.findAll();
       res.ok({
@@ -17,11 +17,11 @@ module.exports = {
       res.serverError({ message: e, data: {}});
     }
   },
-
-  findOne: async (req, res) => {
-    const { userId } = req.params;
+  find: async (req, res) => {
+    console.log("=== user find ===");
+    const { id } = req.params;
     try {
-      const user = await User.findOneWithPassport({userId})
+      const user = await User.findOneWithPassport({id})
       sails.log.info('get user =>', user);
       res.ok({
         message: 'Get user success.',
@@ -65,7 +65,7 @@ module.exports = {
     }
   },
 
-  delete: async (req, res) => {
+  destroy: async (req, res) => {
     const { userId } = req.params;
     try {
       sails.log.info('delete user controller=>', userId);
