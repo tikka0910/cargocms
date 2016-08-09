@@ -62,6 +62,11 @@ module.exports = {
         name: 'UserId'
       }
     });
+    User.hasMany(Recipe, {
+      foreignKey: {
+        name: 'UserId'
+      }
+    });
     User.belongsToMany(Role, {
       through: 'UserRole',
       foreignKey: {

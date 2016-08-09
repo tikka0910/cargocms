@@ -22,7 +22,7 @@ module.exports = {
     }
   },
   associations: function() {
-    Recipe.belongsTo(User)
+    // Recipe.belongsTo(User);
   },
   options: {
     classMethods: {

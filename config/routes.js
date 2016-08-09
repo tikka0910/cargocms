@@ -33,6 +33,9 @@ module.exports.routes = {
   ***************************************************************************/
   '/api/labfnp/scent': 'labfnp/ScentController.index',
 
+  // '/api/labfnp/recipe': 'labfnp/RecipeController.index',
+  // '/api/labfnp/:id': 'labfnp/RecipeController.find',
+
   '/': {
     view: 'index'
   },
