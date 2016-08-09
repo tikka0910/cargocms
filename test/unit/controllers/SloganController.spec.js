@@ -19,8 +19,8 @@ describe('About Slogan Controller operation',function(){
         const result = await request(sails.hooks.http.app)
         .get(`/slogan/${test_slogan.id}`);
 
-        result.content.should.be.eq(test_slogan.content);
-        result.source.should.be.eq(test_slogan.source);
+        result.data.content.should.be.eq(test_slogan.content);
+        result.data.source.should.be.eq(test_slogan.source);
         done();
       }
       catch(e){
