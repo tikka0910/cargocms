@@ -79,7 +79,8 @@
 		  <p>目前滴數總和 <span id="total-drops">0</span> drops</p>
 
       <!-- create container element for visualization -->
-      <div id="d3-container"></div>
+      <div id="d3-container" class="animated"></div>
+
 
 	  </div>
 		<!-- End Content -->
@@ -263,7 +264,11 @@ $(function() {
 	});
 
 	$('.scents-drops').change(function() {
-	  $(this).val(parseInt($(this).val(), 10) || 0);
+		var newVal = parseInt($(this).val(), 10) || 0
+		if (newVal < 0) {
+			newVal = 0;
+		}
+	  $(this).val(newVal);
     drawBubbles(getScentsData());
 	});
 });
