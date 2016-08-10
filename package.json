@@ -48,7 +48,6 @@
     "sails-disk": "~0.10.0",
     "sails-hook-autoreload": "^0.13.2",
     "sails-hook-sequelize": "^1.0.1",
-    "sails-hook-sequelize-blueprints": "^0.3.0",
     "sqlite3": "^3.1.1",
     "tracer": "0.8.3",
     "validator": "^4.3.0"
@@ -56,7 +55,7 @@
   "scripts": {
     "debug": "node debug app.js",
     "test": "grunt test",
-    "test-junit": "mocha test",
+    "test-junit": "mocha test --reporter mocha-junit-reporter",
     "build": "npm i && node_modules/grunt-cli/bin/grunt build",
     "start": "node app.js",
     "pm2-start": "pm2 start -f app.js --name 'cargocms'",
@@ -86,12 +85,12 @@
     "grunt-bower-task": "^0.4.0",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-sass": "^0.9.2",
-    "grunt-mocha-istanbul": "^3.0.1",
-    "istanbul": "^0.4.0",
+    "grunt-mocha-istanbul": "^5.0.2",
+    "istanbul": "^1.1.0-alpha.1",
     "mocha": "^2.3.4",
     "mocha-junit-reporter": "^1.11.1",
     "sinon": "^1.17.2",
-    "supertest": "^1.2.0",
+    "supertest": "^2.0.0",
     "supertest-as-promised": "^2.0.2"
   }
 }

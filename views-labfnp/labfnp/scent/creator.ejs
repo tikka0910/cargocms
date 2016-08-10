@@ -36,7 +36,7 @@
 				<fieldset>
 				  <% for (var i = 0; i < 6; i++) { %>
 				  <div class="row">
-  					<section class="col col-6">
+  					<section class="col col-8">
   						<label class="label">所選之香味分子<%= i + 1 %></label>
   						<label class="select">
   							<select class="scents-dropdown" data-index="<%= i %>">
@@ -45,10 +45,10 @@
   							<i></i>
   						</label>
   					</section>
-  					<section class="col col-6">
+  					<section class="col col-4">
   						<label class="label">滴數</label>
   						<label class="input">
-  							<input type="text" value="0" class="scents-drops" data-index="<%= i %>">
+  							<input type="number" value="0" class="scents-drops" data-index="<%= i %>">
   						</label>
   				  </section>
 				  </div>
@@ -75,8 +75,8 @@
 
 		</div>
 		<div class="col-md-4">
-		  LFP account:Yan-hong Lin<br/>
-		  目前滴數總和 0 drops
+		  <p>LFP account: </p>
+		  <p>目前滴數總和 <span id="total-drops">0</span> drops</p>
 
       <!-- create container element for visualization -->
       <div id="d3-container"></div>
@@ -100,8 +100,8 @@ var diameter = parseInt(d3.select('#d3-container').style('width')),
 var bubble = d3.layout.pack()
     .sort(null)
     .size([diameter, diameter])
-    .radius(function(d) { return 10 + 2*Math.random(); })
-    .padding(1.5);
+    .radius(function(d) { return 8 + 4*Math.random(); })
+    .padding(1);
 
 //var scale = d3.scale.linear().domain([ 5, 5 ]).range([ 10, 10 ]);
 
@@ -153,6 +153,18 @@ var drawBubbles = function (root) {
       .attr("r", function(d) { return d.r; })
       .style("fill", function(d) { return d.color; });
 
+	  nodeEnter.append("title")
+      .text(function(d) { return d.className });
+
+		nodeEnter.on("click", function(d) {
+		  if (d3.event.defaultPrevented) return; // click suppressed
+		  //console.log("clicked!" + d.formIndex);
+
+		  var $input = $('.scents-drops[data-index='+d.formIndex+']');
+		  $input.val(parseInt($input.val())+1);
+		  $input.trigger('change');
+		});
+
 	  node.select("circle")
       .transition()
       .attr("r", function (d) {
@@ -178,9 +190,30 @@ var drawBubbles = function (root) {
 
 d3.select(self.frameElement).style("height", diameter + "px");
 
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 var getScentsData = function() {
 
   var scentsData = [];
+
+  var totalDrops = 0;
 
   $('.scents-dropdown').each(function() {
     if ($(this).val()) {
@@ -194,16 +227,20 @@ var getScentsData = function() {
 		      "packageName": "",
 		      "className": $(this).val(),
 		      "value": 1,
-		      "color": color
+		      "color": color,
+		      "formIndex": idx
 		    });
 			}
 
+			totalDrops = totalDrops + parseInt(drops);
     }
   });
 
   // console.log(scentsData);
 
-  return { children: scentsData };
+  $('#total-drops').text(totalDrops);
+
+  return { children: shuffle(scentsData) };
 };
 
 $(function() {
