@@ -81,7 +81,7 @@ module.exports.bootstrap = async (cb) => {
     adminUser[0].addRole(adminRole[0]);
 
     const {environment} = sails.config;
-    if (environment === 'development') {
+    if (environment === 'development' && sails.config.models.migrate == 'drop') {
       sails.log.info("init Dev data", environment);
 
       for (let i = 0; i < 30; i ++) {
@@ -112,35 +112,17 @@ module.exports.bootstrap = async (cb) => {
         title: '花'
       });
       await post.addTag(tag.id);
+      const execSync = require('child_process').execSync;
+      execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scentNote.sql`);
+      execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scent.sql`);
+      execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/feeling.sql`);
+
+      // let path = "";
+      // await ScentNote.importFeelingFromFile({path});
+
+
+
     }
-
-    let createdScentNote, createdScents, createdFeelings;
-    let newScentNote = {
-        color: "#FFA500",
-        title: "Cirtus 柑橘色"
-    }
-    createdScentNote = await ScentNote.create(newScentNote);
-    let newScents = [
-      {name: "T12"},
-      {name: "M6"},
-      {name: "TA53"}
-    ]
-
-    let promises = newScents.map((newScent) => {
-      return Scent.create(newScent);
-    })
-    createdScents = await Promise.all(promises);
-    let newFeelings = [
-      {title: "柚子清香"},
-      {title: "清新"}
-    ]
-
-    promises = newFeelings.map((newFeeling) => {
-      return Feeling.create(newFeeling);
-    })
-    createdFeelings = await Promise.all(promises);
-    await createdScentNote.setScents(createdScents);
-    await createdScents[0].setFeelings(createdFeelings);
 
     cb();
   } catch (e) {

@@ -60,11 +60,10 @@ describe('about Post Controller operation.', function() {
       }
     });
 
-    it('findOne Post should success.', async (done) => {
+    it('findOne Post should be success.', async (done) => {
       try {
         const res = await request(sails.hooks.http.app)
         .get(`/api/post/${targetPost.id}`);
-        sails.log.info(JSON.stringify(res.body, null, 2));
         res.status.should.be.eq(200);
         res.body.should.be.Object;
         done();

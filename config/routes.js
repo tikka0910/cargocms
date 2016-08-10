@@ -31,19 +31,15 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
+  '/api/admin/mock': "admin/MockController.find",
   '/api/labfnp/scent': 'labfnp/ScentController.index',
 
   '/': {
     view: 'index'
   },
 
-  '/creator': {
-    view: 'labfnp/creator/index'
-  },
-
-  '/lab': {
-    view: 'labfnp/explore'
-  },
+  '/creator': 'labfnp/ScentController.creator',
+  '/lab':     'labfnp/ScentController.explore',
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
@@ -57,28 +53,31 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback',
   'get /auth/:provider/:action': 'AuthController.callback',
 
-  // //----- UserController -----
-  // 'get /api/user': 'UserController.index',
-  // 'get /api/user/:userId': 'UserController.findOne',
-  // 'put /api/user/:userId': 'UserController.update',
-  // 'delete /api/user/:userId': 'UserController.delete',
-  // 'post /api/user': 'UserController.create',
-  //
-  // //----- PostController -----
-  // 'get /api/post': 'PostController.index',
-  // 'post /api/post': 'PostController.create',
-  // 'get /api/post/:postId': 'PostController.findOne',
-  // 'put /api/post/:postId': 'PostController.update',
-  // 'delete /api/post/:postId': 'PostController.delete',
+  //----- UserController -----
+  'get /api/user': 'UserController.find',
+  'get /api/user/:id': 'UserController.findOne',
+
+  'post /api/user': 'UserController.create',
+  'put /api/user/:id': 'UserController.update',
+  'delete /api/user/:id': 'UserController.destroy',
+
+
+  //----- PostController -----
+  'get /api/post': 'PostController.find',
+  'get /api/post/:id': 'PostController.findOne',
+
+  'post /api/post': 'PostController.create',
+  'put /api/post/:id': 'PostController.update',
+  'delete /api/post/:id': 'PostController.destroy',
 
   '/admin/config.js': "AdminController.config",
 
-  // "/api/:controller/:action/:id?": {},
-  // "/admin/:controller/:action/:id?": {},
-  // "/:controller/:action/:id?": {},
-  // 'admin/user': {
-  //   model: 'admin_user'
-  // }
+  "/api/:controller/:action/:id?": {},
+  "/labfnp/:controller/:action/:id?": {},
+  "/admin/:controller/:action/:id?": {},
+  "/:controller/:action/:id?": {},
+
+  '/admin': 'AdminController.index',
 
   //----- ImageController -----
   'post /upload': 'ImageController.upload',

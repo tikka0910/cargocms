@@ -9,5 +9,21 @@ module.exports = {
       console.log(e);
       res.serverError(e);
     }
-  }
+  },
+
+  creator: async function(req, res) {
+    try {
+      return res.view({
+        scents: await Scent.findAllWithRelationFormatForApp()
+      });
+    }
+    catch (e) {
+      console.log(e);
+      res.serverError(e);
+    }
+  },
+
+  explore: async function(req, res) {
+    return res.view({});
+  },
 }
