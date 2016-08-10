@@ -94,8 +94,8 @@ module.exports.routes = {
   '/admin/config.js': "AdminController.config",
 
   "/api/:controller/:action/:id?": {},
-  "/admin/:controller/:action/:id?": {},
   "/labfnp/:controller/:action/:id?": {},
+  "/admin/:controller/:action/:id?": {},
   "/:controller/:action/:id?": {},
 
   '/admin': 'AdminController.index',
