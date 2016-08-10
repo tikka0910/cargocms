@@ -46,7 +46,7 @@
                   <th class="" data-hide="">#</th>
                   <th class="" data-hide="phone,tablet">香水名稱</th>
                   <th class="" data-hide="">創作人</th>
-                  <th class="" data-hide="phone" style="">配方描述</th>
+                  <!-- <th class="" data-hide="phone" style="">配方描述</th> -->
                   <th class="no-sort" data-hide="phone"></th>
                 </tr>
               </thead>
@@ -54,8 +54,8 @@
                 <tr v-for="recipe in data.items" v-on:click="selection($index)" v-on:dblclick="dblclick($index)">
                   <td>{{ recipe.id }}</td>
                   <td><a href="/admin/#/admin/labfnp/recipe/show/{{recipe.id}}">{{ recipe.perfumeName }}</a></td>
-                  <td><a href="/admin/#/admin/user/show/{{recipe.userId}}">{{ recipe.authorName }}</a></td>
-                  <td>{{ recipe.formulaLogs }}</td>
+                  <td>{{ recipe.authorName }}</td>
+                  <!-- <td>{{ recipe.formulaLogs }}</td> -->
                   <td align="center" style="cursor: pointer;">
                     <div class="row">
                       <a class="btn btn-default btn-xs" role="button" v-on:click="show(recipe.id)">

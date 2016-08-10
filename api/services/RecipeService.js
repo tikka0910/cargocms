@@ -12,15 +12,17 @@ module.exports = {
     formulaLogs,
     authorName,
     perfumeName,
+    UserId
   }) => {
     try {
       sails.log.info({
         formula,
         formulaLogs,
         authorName,
-        perfumeName
+        perfumeName,
+        UserId,
       });
-      return await Recipe.create({ formula, formulaLogs, authorName, perfumeName });
+      return await Recipe.create({ formula, formulaLogs, authorName, perfumeName, UserId });
     } catch (e) {
       sails.log.error(e);
       throw e;

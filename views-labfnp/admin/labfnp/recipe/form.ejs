@@ -10,7 +10,8 @@
     <section>
       <label class="label">作者名稱</label>
       <label class="input">
-        <input type="text" name="authorName" class="authorName input-lg" placeholder="請輸入作者名稱" v-model="data.item.authorName">
+        <input type="text" name="authorName" class="authorName input-lg" placeholder="請輸入作者名稱" v-model="data.item.authorName"
+        value="<%= req.session.passport?req.session.passport.user.displayName:'' %>">
       </label>
     </section>
     <section>
@@ -28,7 +29,7 @@
         <label class="label">配方成份</label>
         <label class="select">
           <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[0].scent">
-            <option value="">選取一種成份</option>
+            <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
             </option>
@@ -48,7 +49,7 @@
       <section class="col col-6">
         <label class="select">
           <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[1].scent">
-            <option value="">選取一種成份</option>
+            <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
             </option>
@@ -67,7 +68,7 @@
       <section class="col col-6">
         <label class="select">
           <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[2].scent">
-            <option value="">選取一種成份</option>
+            <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
             </option>
@@ -86,7 +87,7 @@
       <section class="col col-6">
         <label class="select">
           <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[3].scent">
-            <option value="">選取一種成份</option>
+            <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
             </option>
@@ -105,7 +106,7 @@
       <section class="col col-6">
         <label class="select">
           <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[4].scent">
-            <option value="">選取一種成份</option>
+            <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
             </option>
@@ -124,7 +125,7 @@
       <section class="col col-6">
         <label class="select">
           <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[5].scent">
-            <option value="">選取一種成份</option>
+            <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
             </option>

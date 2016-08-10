@@ -30,7 +30,7 @@
                   <div id="myCarousel" class="carousel fade profile-carousel">
                     <div class="air air-bottom-right padding-10">
                       <a href="/admin/#/admin/labfnp/recipe" class="btn btn-default">
-                        取消
+                        返回
                       </a>
                       <a href="/admin/#/admin/labfnp/recipe/edit/{{data.item.id}}" class="btn btn-default">
                         編輯
@@ -76,8 +76,14 @@
                           <small>香水名稱</small>
                             <p class="padding-5">{{ data.item.perfumeName }}</p>
                           <hr>
-            							<small>創作人</small>
-                            <a class="padding-5" href="/admin/#/admin/user/show/{{data.item.userId}}">{{ data.item.authorName }}</a>
+                          <div class="row">
+                            <div class="col col-xs-3">
+              							  <small>創作人</small>{{ data.item.authorName }}
+                            </div>
+                            <div class="col col-xs-3">
+              							  <small>建立者</small>{{ data.item.User.displayName }}
+                            </div>
+                          </div>
                           <hr>
                           <!-- <small>評級</small>
             							<i class="fa fa-star fa-2x text-primary"></i>
@@ -88,18 +94,20 @@
             							<span class="fa fa-2x"><h5>(109) Votes</h5></span>
                           <hr> -->
             						</h2>
-                        <h2 class="name">
+                        <!-- <h2 class="name">
                           <small>配方描述</small>
                           <h4 class="padding-5">{{ data.item.formulaLogs }}</h4>
                           <hr>
-                        </h2>
+                        </h2> -->
                         <h2 class="name">
                           <small>配方成份</small>
                           <h4 class="padding-5">
                             <div class="row" v-for="formula in data.item.formula">
-                              <div class="col col-xs-2"><string>・</string>{{ formula.scent }}</div>
-                              <div class="col col-xs-1"> : </div>
-                              <div class="col col-xs-2">{{ formula.drops }}</div>
+                              <div v-if="formula.scent">
+                                <div class="col col-xs-2"><string>・</string>{{ formula.scent }}</div>
+                                <div class="col col-xs-1"> : </div>
+                                <div class="col col-xs-2">{{ formula.drops }}</div>
+                              </div>
                             </div>
                           </h4>
                           <hr>

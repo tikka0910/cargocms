@@ -22,7 +22,7 @@ module.exports = {
     }
   },
   associations: function() {
-    // Recipe.belongsTo(User);
+    Recipe.belongsTo(User);
   },
   options: {
     classMethods: {
@@ -33,7 +33,9 @@ module.exports = {
           where: {
             id
           },
+          include: User,
         });
+        console.log("displayName=>", recipes.User.displayName);
         // if (recipes) {
         //   recipeWithScent = recipes.toJSON();
         //   const scents = await Scent.findAll();

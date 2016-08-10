@@ -50,7 +50,8 @@ var userAppModel = {
 			perfumeName: '',
 			formulaLogs: '',
       formula: formula,
-      userId: '',
+      UserId: '',
+      User: {},
 		},
 		items: [],
     select: {
@@ -90,7 +91,7 @@ var userApp = new Vue({
 			function ajaxSuccess(result) {
 				location.href = LINK.PAGE_INDEX;
 				messageApp.show({
-					desc: '新增會員成功！',
+					desc: '新增資料成功！',
 					type: 'success'
 				});
 			} // end ajaxSuccess
@@ -169,12 +170,10 @@ var userApp = new Vue({
 					formulaLogs: {
 						required: true,
 					},
-					// ingredient: {
-					// 	required: true
-					// },
-					// drops: {
-					// 	required: true
-					// },
+					formula: {
+						required: true,
+            minlength: 1,
+					},
 				},
 
 				// Messages for form validation
@@ -188,12 +187,10 @@ var userApp = new Vue({
 					formulaLogs: {
 						required: '請輸入formulaLogs',
 					},
-					// ingredient: {
-					// 	required: '請選擇配方種類'
-					// },
-					// drops: {
-					// 	required: '請輸入配方滴量'
-					// },
+					formula: {
+						required: '請選擇配方',
+            minlength: "Enter at leas",
+					},
 				},
 
 				// Do not change code below

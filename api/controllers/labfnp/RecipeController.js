@@ -31,10 +31,10 @@ module.exports = {
   create: async (req, res) => {
     const data = req.body;
     try {
-      const loginedUser = req.user;
+      const loginedUser = AuthService.getSessionUser(req);
       console.log("loginedUser=>", loginedUser);
       if (loginedUser) {
-        data.userId = loginedUser.id;
+        data.UserId = loginedUser.id;
       }
       sails.log.info('create recipe controller=>', data);
       const recipe = await RecipeService.create(data);
