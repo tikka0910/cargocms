@@ -1,9 +1,13 @@
 <% data.items.forEach(function(post){ %>
   <div class="news-v3 bg-color-white margin-bottom-60">
-    <img class="img-responsive full-width" src="<%= post.cover %>" alt="">
+    <% if (post.coverUrl) { %>
+      <img class="img-responsive full-width" src="<%= post.coverUrl %>" alt="">
+    <% } %>
     <div class="news-v3-in">
       <ul class="list-inline posted-info">
-        <li>By <a href="#">William</a></li>
+        <% if (post.UserId) { %>
+          <li>By <a href="#"><%= post.User.displayName %></a></li>
+        <% } %>
         <li><%= post.createdAt %></li>
       </ul>
       <h2><a href="#"><%= post.title %></a></h2>

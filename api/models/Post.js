@@ -48,14 +48,32 @@ module.exports = {
         name: 'cover'
       }
     });
+    Post.belongsTo(User, {
+      foreignKey: {
+        name: 'UserId'
+      }
+    });
   },
   options: {
     classMethods: {
+      findAllHasJoin: async (order, offset, limit) => {
+        try {
+          return await Post.findAll({
+            offset,
+            limit,
+            order: [['createdAt', order || 'DESC']],
+            include: [Tag, Image, User],
+          });
+        } catch (e) {
+          sails.log.error(e);
+          throw e;
+        }
+      },
       findByIdHasJoin: async (id) => {
         try {
           return await Post.findOne({
             where: { id },
-            include: [ Tag, Image ]
+            include: [ Tag, Image, User ]
           });
         } catch (e) {
           sails.log.error(e);

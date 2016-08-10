@@ -24,9 +24,16 @@ describe('about Post model operation.', function() {
   describe('about Post model operation.', function() {
     let post;
     let tag;
+    let user;
     before(async (done) => {
       try {
         await Post.destroy({ where: { id: { $gt:0 } } });
+        user = await User.create({
+          username: 'postModelTest',
+          email: 'postModelTest@gmail.com',
+          firstName: '王',
+          lastName: '大明'
+        });
         const image = await Image.create({
           filePath: 'http://www.labfnp.com/modules/core/img/update1.jpg',
           type: 'image/jpeg',
@@ -38,6 +45,7 @@ describe('about Post model operation.', function() {
           cover: image.id,
           url: 'http://localhost:5001/blog/flower',
           abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材',
+          UserId: user.id,
         })
         tag = await Tag.create({
           title: 'A'
@@ -52,6 +60,17 @@ describe('about Post model operation.', function() {
       try {
         let result = await Post.findByIdHasJoin(post.id);
         result.id.should.be.eq(post.id)
+        done();
+      } catch (e) {
+        done(e);
+      }
+    });
+    it.only('find All Post by id has join should success.', async (done) => {
+      try {
+        let result = await Post.findAllHasJoin();
+        result.length.should.be.not.eq(0);
+        result[0].id.should.be.eq(post.id);
+        result[0].User.id.should.be.eq(user.id)
         done();
       } catch (e) {
         done(e);

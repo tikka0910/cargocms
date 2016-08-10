@@ -5,7 +5,7 @@ module.exports = {
       res.view('blog/index', {
         message: 'blog index',
         data: {
-          items: await Post.findAll({ include: Tag }),
+          items: await Post.findAllHasJoin('DESC'),
         }
       });
     } catch (e) {
