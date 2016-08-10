@@ -87,6 +87,10 @@ module.exports.routes = {
   'put /api/post/:id': 'PostController.update',
   'delete /api/post/:id': 'PostController.destroy',
 
+  //----- ImageController -----
+  'post /api/upload': 'ImageController.upload',
+  'delete /api/upload/:id': 'ImageController.destroy',
+
   '/admin/config.js': "AdminController.config",
 
   "/api/:controller/:action/:id?": {},
@@ -95,6 +99,7 @@ module.exports.routes = {
   "/:controller/:action/:id?": {},
 
   '/admin': 'AdminController.index',
+
 
 
   /***************************************************************************
@@ -106,6 +111,5 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
-
 
 };
