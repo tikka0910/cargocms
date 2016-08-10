@@ -230,10 +230,6 @@ $(function() {
     var authorName = $('input[name=authorName]').val();
     var perfumeName = $('input[name=perfumeName]').val();
 
-    if (!authorName) {
-      
-    }
-
     $.ajax({
       url: endpoint,
       method: 'post', //create
@@ -245,12 +241,10 @@ $(function() {
         perfumeName: perfumeName,
         formulaLogs: '',
         formula: getFormulaData()
-        //TODO message
-        //TODO totalDrops
       }
     }).done(function(result) {
       console.log(result);
-      //location.href='/lab';
+      location.href='/lab';
     });
 
   });

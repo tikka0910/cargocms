@@ -1,5 +1,9 @@
 module.exports = {
   attributes: {
+    //TODO message(string)
+    //TODO totalDrops (int)
+    //TODO coverPhoto (url as string)
+    //TODO authorAvatar
     formula: {
       // from `full_picture`
       type: Sequelize.TEXT,

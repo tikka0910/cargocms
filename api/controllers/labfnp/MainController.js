@@ -31,4 +31,18 @@ module.exports = {
     }
   },
 
+  recipe: async function(req, res) {
+    const { id } = req.params;
+
+    try {
+      return res.view({
+        recipe: await Recipe.findById(id)
+      });
+    }
+    catch (e) {
+      console.log(e);
+      res.serverError(e);
+    }
+  },
+
 }
