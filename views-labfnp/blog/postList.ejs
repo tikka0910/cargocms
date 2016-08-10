@@ -37,6 +37,9 @@
           </a>
         </li>
       </ul> -->
+      <% post.TagsArray.forEach(function(tag){ %>
+        <span class="label label-default"><%= tag %></span>
+      <% }); %>
     </div>
   </div>
 <% }); %>
