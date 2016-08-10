@@ -3,7 +3,11 @@ module.exports = {
     try {
       console.log("=== enter index ===");
       let data = await Scent.findAllWithRelationFormatForApp();
-      return res.ok({data})
+      return res.ok({
+        data:{
+          items: data,
+        }
+      })
 
     } catch (e) {
       console.log(e);

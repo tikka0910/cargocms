@@ -43,7 +43,7 @@
                   <!-- product -->
                   <div class="product-wrap clearfix product-deatil">
                     <div class="row">
-                      <div class="col-md-4 col-sm-12 col-xs-12 ">
+                      <div class="col-md-6 col-sm-12 col-xs-12 ">
                         <div class="product-image">
                           <div id="myCarousel-2" class="carousel slide">
                             <ol class="carousel-indicators">
@@ -51,10 +51,11 @@
                               <li data-target="#myCarousel-2" data-slide-to="1" class="active"></li>
                               <li data-target="#myCarousel-2" data-slide-to="2" class=""></li>
                             </ol>
-                            <div class="carousel-inner pull-right" style="width:150px;">
+                            <div class="carousel-inner pull-right">
                               <!-- Slide 1 -->
                               <div class="item active">
-                                <img src="/assets/labfnp/img/perfume_512.png" alt="">
+                                <!-- <img src="/assets/labfnp/img/perfume_512.png" alt=""> -->
+                                <canvas id="pieChart" height="300px" width="350px"></canvas>
                               </div>
                               <!-- Slide 2 -->
                               <!-- <div class="item">
@@ -70,10 +71,10 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-8 col-sm-12 col-xs-12">
+                      <div class="col-md-6 col-sm-12 col-xs-12">
 
                         <h2 class="name">
-                          <small>香水名稱</small>
+                          <small>配方名稱</small>
                             <p class="padding-5">{{ data.item.perfumeName }}</p>
                           <hr>
                           <div class="row">
@@ -94,22 +95,25 @@
             							<span class="fa fa-2x"><h5>(109) Votes</h5></span>
                           <hr> -->
             						</h2>
-                        <!-- <h2 class="name">
-                          <small>配方描述</small>
-                          <h4 class="padding-5">{{ data.item.formulaLogs }}</h4>
-                          <hr>
-                        </h2> -->
                         <h2 class="name">
                           <small>配方成份</small>
                           <h4 class="padding-5">
-                            <div class="row" v-for="formula in data.item.formula">
-                              <div v-if="formula.scent">
-                                <div class="col col-xs-2"><string>・</string>{{ formula.scent }}</div>
+                            <div class="row" v-for="data in data.item.formula">
+                              <div v-if="data.drops > 0">
+                                <div class="col col-xs-3">
+                                  <string>・</string>
+                                  <label style="background:{{ data.color }}">{{ data.scent }}</label>
+                                </div>
                                 <div class="col col-xs-1"> : </div>
-                                <div class="col col-xs-2">{{ formula.drops }}</div>
+                                <div class="col col-xs-2">{{ data.drops }}</div>
                               </div>
                             </div>
                           </h4>
+                          <hr>
+                        </h2>
+                        <h2 class="name">
+                          <small>其他訊息</small>
+                          <h4 class="padding-5">{{ data.item.message }}</h4>
                           <hr>
                         </h2>
 
@@ -284,7 +288,7 @@
   var pagefunction = function() {
     <%- include vue.ejs %>
     userApp.$mount("#labfnp-recipe-show");
-    userApp.loadItem();
+    userApp.loadItemWithSelectOptions(userApp.onEnterPageShow);
   };
 
   // var pagedestroy = function() {
@@ -296,5 +300,8 @@
   // end pagefunction
 
   // Load form valisation dependency
-  loadScript("js/plugin/jquery-form/jquery-form.min.js", pagefunction);
+  loadScript("/assets/admin/js/plugin/jquery-form/jquery-form.min.js", function() {
+  	loadScript("/assets/admin/js/plugin/moment/moment.min.js", function() {
+  		loadScript("/assets/admin/js/plugin/chartjs/chart.min.js", pagefunction)});
+  });
 </script>

@@ -2,6 +2,9 @@ var COMMON = {
 	DOUBLE_CLICK_TIME_PERIOD: 250,
 	DEFAULT_INDEX: -1,
   PAGE_NAME: 'labfnp-recipe-',
+  DROPS_MAX: 9,
+  DROPS_MIN: 1,
+
 };
 
 var LINK = {
@@ -9,7 +12,7 @@ var LINK = {
   PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
   PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit/',
   PAGE_SHOW: '/admin/#/admin/labfnp/recipe/show/',
-  API_LIST_SCENT: '/api/labfnp/scent/simpleList',
+  API_LIST_SCENT: '/api/labfnp/scent',
   API_LIST: '/api/labfnp/recipe',
   API_ITEM: '/api/labfnp/recipe/',
   API_CREATE: '/api/labfnp/recipe',
@@ -50,6 +53,7 @@ var userAppModel = {
 			perfumeName: '',
 			formulaLogs: '',
       formula: formula,
+      message: '',
       UserId: '',
       User: {},
 		},
@@ -119,25 +123,38 @@ var userApp = new Vue({
 			function ajaxSuccess(result) {
 				location.href = LINK.PAGE_INDEX;
 				messageApp.show({
-					desc: '更新會員資料成功！',
+					desc: '更新資料成功！',
 					type: 'success'
 				});
 			} // end ajaxSuccess
 
 			function ajaxError(result) {
-				console.log(result);
 				messageApp.show({
 					desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message,
 					type: 'error'
 				});
 			}
 		},
+    loadItemWithSelectOptions: function (cb) {
+      userApp.loadSelectOptions(userApp.loadItem(function(){
+        var formula = userAppModel.data.item.formula;
+        var scents = userAppModel.data.select.scents;
+        for (var x=0;x<formula.length;x++) {
+          for (var y=0;y<scents.length;y++) {
+            var equal = formula[x].scent === scents[y].name;
+            if (equal) formula[x].color = scents[y].color;
+          }
+        }
+
+        console.log("userAppModel.data.item.formula=>",JSON.parse(JSON.stringify(userAppModel.data.item.formula)));
+        if (typeof cb !== 'undefined') setTimeout(cb, 1);
+      }));
+    },
     loadSelectOptions: function (cb) {
       $.get(LINK.API_LIST_SCENT, ajaxSuccess);
 
       function ajaxSuccess(result) {
         userAppModel.data.select.scents = result.data.items;
-                console.log("userAppModel stringify=>", JSON.parse(JSON.stringify(userAppModel.data.item)));
         if (typeof cb !== 'undefined') setTimeout(cb, 1);
       } // end ajaxSuccess
     },
@@ -146,18 +163,17 @@ var userApp = new Vue({
 			$.get(LINK.API_ITEM + userAppModel.data.item.id, ajaxSuccess);
 
 			function ajaxSuccess(result) {
-				if (result.success) {
-					userAppModel.data.item = result.data;
-					var hasAvatar = typeof result.data.avatar === 'string';
-					if (!hasAvatar) {
-						userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
-					}
-          if (typeof cb !== 'undefined') setTimeout(cb, 1);
+				userAppModel.data.item = result.data;
+				var hasAvatar = typeof result.data.avatar === 'string';
+				if (!hasAvatar) {
+					userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
 				}
+        if (typeof cb !== 'undefined') setTimeout(cb, 1);
 			} // end ajaxSuccess
 		},
 		setupForm: function (type) {
 			var registerForm = $('#' + COMMON.PAGE_NAME + 'form');
+
 			registerForm.validate({
 				// Rules for form validation
 				rules: {
@@ -167,12 +183,15 @@ var userApp = new Vue({
 					perfumeName: {
 						required: true
 					},
-					formulaLogs: {
-						required: true,
-					},
-					formula: {
+					scent: {
 						required: true,
             minlength: 1,
+					},
+          drops:{
+						required: true,
+            minlength: 1,
+            min: COMMON.DROPS_MIN,
+            max: COMMON.DROPS_MAX,
 					},
 				},
 
@@ -184,18 +203,28 @@ var userApp = new Vue({
 					perfumeName: {
 						required: '請輸入香水名稱'
 					},
-					formulaLogs: {
-						required: '請輸入formulaLogs',
+					scent: {
+						required: '請至少選擇一種香味分子',
+            minlength: '請至少選擇一種香味分子',
 					},
-					formula: {
-						required: '請選擇配方',
-            minlength: "Enter at leas",
-					},
+          drops: {
+						required: '請至少給予 1 滴香味分子',
+            min: '請至少給予 1 滴香味分子',
+            max: '請至多只給予 9 滴',
+          }
 				},
 
 				// Do not change code below
 				errorPlacement: function (error, element) {
 					error.insertAfter(element.parent());
+
+          // error message style
+          // $('label.error').css("color","red");
+          // $('label.error').css("font-weight","900");
+          // $('label.error').css("border","solid 1px #AAA");
+          // $('label.error').css("background","#fff");
+          // $('label.error').css("box-shadow","0px 2px 6px rgba(0, 0, 0, .7)");
+          // $('label.error').css("padding","2px 5px");
 				},
 
 				submitHandler: function (form) {
@@ -226,6 +255,50 @@ var userApp = new Vue({
 				}
 			};
 		},
+    onEnterPageShow: function () {
+      var formula = userAppModel.data.item.formula;
+      var labelArray = [];
+      var dropsArray = [];
+      var scentColorArray = [];
+      console.log("formula=>", JSON.parse(JSON.stringify(formula)));
+      for (var i=0;i<formula.length;i++) {
+        if (formula[i].drops > 0) {
+          dropsArray.push(formula[i].drops);
+          labelArray.push(formula[i].scent);
+          scentColorArray.push(formula[i].color);
+        }
+      }
+      console.log("labelArray=>", labelArray);
+	    var perfumePieConfig = {
+	        type: 'pie',
+	        data: {
+            datasets: [{
+              data: dropsArray,
+              backgroundColor: scentColorArray,
+            }],
+            labels: labelArray,
+	        },
+          animation:{
+              animateScale:true,
+          },
+	        options: {
+            title: {
+                display: true,
+                text: '配方成份圓餅圖'
+            },
+            legend: {
+                display: false,
+            },
+            circumference: 1.5 * Math.PI,
+            responsive: true,
+            responsiveAnimationDuration: 2,
+            hover: {
+              mode: 'label',
+            }
+	        }
+	    };
+      var perfumePie = new Chart(document.getElementById("pieChart"), perfumePieConfig);
+    },
     onEnterPageCreare: function () {
     },
 		onLeavePageEdit: function (cb) {
@@ -370,6 +443,7 @@ var userApp = new Vue({
 				}
 			});
 
+      // animate table
 			$('#' + COMMON.PAGE_NAME + 'table-widget').fadeIn();
 		},
 		dblclick: function (index) {
