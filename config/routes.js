@@ -55,9 +55,10 @@ module.exports.routes = {
     view: 'index'
   },
 
-  '/creator': 'labfnp/MainController.creator',
-  '/lab':     'labfnp/MainController.explore',
-  '/recipe/:id': 'labfnp/MainController.recipe',
+  '/creator':     'labfnp/MainController.creator',
+  '/lab':         'labfnp/MainController.explore',
+  '/recipe/:id':  'labfnp/MainController.recipe',
+  '/me/:id':      'labfnp/MainController.portfolio',
 
   //----- AuthController -----
   'get /login': 'AuthController.login',

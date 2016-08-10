@@ -14,7 +14,7 @@
 		    <i class="fa fa-flask fa-fw"></i>
 		    創作一個新配方
 		  </a>
-		  <a href="/profile" class="btn btn-default">
+		  <a href="/me/<%= req.session.passport.user.id %>" class="btn btn-default">
 		    <i class="fa fa-user fa-fw"></i>
 		    我的配方
 		  </a>

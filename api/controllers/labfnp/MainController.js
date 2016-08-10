@@ -45,4 +45,15 @@ module.exports = {
     }
   },
 
+  portfolio: async function(req, res) {
+    try {
+      return res.view({
+        recipes: await Recipe.findAll()
+      });
+    }
+    catch (e) {
+      console.log(e);
+      res.serverError(e);
+    }
+  },
 }
