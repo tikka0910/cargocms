@@ -1,95 +1,3 @@
-<script src="//d3js.org/d3.v3.min.js"></script>
-
-<style>
-.sky-form section {
-  margin-bottom: 0;
-}
-</style>
-
-<!--=== Content Part ===-->
-<div class="container content">
-	<div class="row">
-
-		<!-- Begin Content -->
-		<div class="col-md-8">
-			<!-- General Unify Forms -->
-			<form action="#" class="sky-form">
-				<header>新香水配方</header>
-
-				<fieldset>
-					<section>
-						<label class="label">創作者姓名（必填）</label>
-						<label class="input">
-							<input type="text" placeholder="Enter Name" />
-						</label>
-					</section>
-
-					<section>
-						<label class="label">香水品名（必填）</label>
-						<label class="input">
-							<input type="text" placeholder="Enter Perfume Name" />
-						</label>
-					</section>
-
-				</fieldset>
-
-				<fieldset>
-				  <% for (var i = 0; i < 6; i++) { %>
-				  <div class="row">
-  					<section class="col col-8">
-  						<label class="label">所選之香味分子<%= i + 1 %></label>
-  						<label class="select">
-  							<select class="scents-dropdown" data-index="<%= i %>">
-  							  <% include scents-list.ejs %>
-  							</select>
-  							<i></i>
-  						</label>
-  					</section>
-  					<section class="col col-4">
-  						<label class="label">滴數</label>
-  						<label class="input">
-  							<input type="number" value="0" class="scents-drops" data-index="<%= i %>">
-  						</label>
-  				  </section>
-				  </div>
-				  <% } %>
-				</fieldset>
-
-				<fieldset>
-
-					<section>
-						<label class="label">其他訊息</label>
-						<label class="textarea textarea-resizable">
-							<textarea rows="3"></textarea>
-						</label>
-					</section>
-
-				</fieldset>
-
-				<footer>
-					<button type="submit" class="btn-u">Submit</button>
-					<button type="button" class="btn-u btn-u-default" onclick="window.history.back();">Back</button>
-				</footer>
-			</form>
-			<!-- General Unify Forms -->
-
-		</div>
-		<div class="col-md-4">
-		  <p>LFP account: </p>
-		  <p>目前滴數總和 <span id="total-drops">0</span> drops</p>
-
-      <!-- create container element for visualization -->
-      <div id="d3-container" class="animated"></div>
-
-
-	  </div>
-		<!-- End Content -->
-	</div>
-</div><!--/container-->
-<!--=== End Content Part ===-->
-
-<% LayoutUtils.addScriptBlock(`
-
 var diameter = parseInt(d3.select('#d3-container').style('width')),
     format = d3.format(",d"),
     color = d3.scale.category20c();
@@ -210,7 +118,7 @@ function shuffle(array) {
   return array;
 }
 
-var getScentsData = function() {
+var getScentsVisualData = function() {
 
   var scentsData = [];
 
@@ -244,6 +152,27 @@ var getScentsData = function() {
   return { children: shuffle(scentsData) };
 };
 
+var getFormulaData = function() {
+  var result = [];
+
+  $('.scents-dropdown').each(function() {
+    if ($(this).val()) {
+      var idx = $(this).data('index');
+
+      var scent = $(this).val();
+      var drops = $('.scents-drops[data-index='+idx+']').val();
+
+	    result.push({
+	      "scent": scent,
+	      "drops": drops,
+	    });
+    }
+  });
+
+  return result;
+};
+
+
 $(function() {
 	$('.scents-dropdown').change(function() {
     $(this).css('color', $('option:selected', this).data('color'));
@@ -260,7 +189,7 @@ $(function() {
 	    drops.val(0);
     }
 
-    drawBubbles(getScentsData());
+    drawBubbles(getScentsVisualData());
 	});
 
 	$('.scents-drops').change(function() {
@@ -269,7 +198,61 @@ $(function() {
 			newVal = 0;
 		}
 	  $(this).val(newVal);
-    drawBubbles(getScentsData());
+    drawBubbles(getScentsVisualData());
 	});
+
+	$('.scents-categories').change(function() {
+
+		var idx = $(this).data('index');
+		var prefix = $(this).val();
+
+		if (prefix) {
+			var dropdown = $('.scents-dropdown[data-index='+idx+']');
+
+			console.log(prefix);
+			$('option', dropdown)
+				.show()
+				.filter(function(index, element) { return element.value && element.value.substring(0,1)!==prefix; })
+				.hide();
+		}
+	});
+
+  $('#main-form').on('submit', function(event) {
+
+    event.preventDefault();
+
+    var endpoint = $(this).attr('action');
+    var method = $(this).attr('method');
+
+    console.log(endpoint + ':' + method);
+    console.log( $(this).serializeArray() );
+
+    var authorName = $('input[name=authorName]').val();
+    var perfumeName = $('input[name=perfumeName]').val();
+
+    if (!authorName) {
+      
+    }
+
+    $.ajax({
+      url: endpoint,
+      method: 'post', //create
+      dataType: 'json',
+      //contentType: 'application/json',
+      cache: false,
+      data: {
+        authorName: authorName,
+        perfumeName: perfumeName,
+        formulaLogs: '',
+        formula: getFormulaData()
+        //TODO message
+        //TODO totalDrops
+      }
+    }).done(function(result) {
+      console.log(result);
+      //location.href='/lab';
+    });
+
+  });
+
 });
-`); %>
