@@ -1,27 +1,21 @@
 var COMMON = {
   DOUBLE_CLICK_TIME_PERIOD: 250,
   DEFAULT_INDEX: -1,
-  DEFAULT_AVATAR: "/assets/admin/img/avatars/default.png",
+  DEFAULT_AVATAR: "img/avatars/default.png",
 };
 
 var itemBeforeEdit = {};
-var userAppModel = {
+var postAppModel = {
   data: {
     item: {
-      avatar: '',
-      displayName: '',
-      username: '',
-      email: '',
-      firstName: '',
-      lastName: '',
-      password: '',
-      Roles: [],
-      RolesArray: [],
-      Passports: [
-        {
-          password: ""
-        }
-      ]
+      title: '',
+      content: '',
+      cover: '',
+      coverUrl: '',
+      url: '',
+      abstract: '',
+      tags: [],
+      TagsArray: []
     },
     items: [],
     option: {
@@ -35,20 +29,39 @@ var userAppModel = {
   }
 }
 
-var userApp = new Vue({
-  data: userAppModel,
+var newSummernote = function() {
+  $('.summernote').summernote({
+    height: 300,
+    placeholder: '請輸入內容',
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'italic', 'underline', 'clear']],
+      ['fontname', ['fontname']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['height', ['height']],
+      ['table', ['table']],
+      ['view', ['fullscreen', 'codeview', 'help']]
+    ]
+  });
+};
+
+var postApp = new Vue({
+  data: postAppModel,
   methods: {
     cancel: function (event) {
-      userApp.onLeavePageEdit(function() {
-        location.href = '/admin/#/admin/user';
+      postApp.onLeavePageEdit(function() {
+        location.href = '/admin/#/admin/post';
       });
     },
     save: function (event) {
+      postAppModel.data.item.TagsArray = $('#tagsinput').tagsinput('items');
+      postAppModel.data.item.content = $('.summernote').summernote('code');
       $.ajax({
-        url: '/api/user',
+        url: '/api/post',
         type: 'POST',
         dataType: 'json',
-        data: userAppModel.data.item,
+        data: postAppModel.data.item,
         xhrFields: {
           withCredentials: true,
         },
@@ -57,8 +70,8 @@ var userApp = new Vue({
       });
 
       function ajaxSuccess(result) {
-        location.href = '/admin/#/admin/user';
-        messageApp.show({desc: '新增會員成功！', type: 'success'});
+        location.href = '/admin/#/admin/post';
+        messageApp.show({desc: '新增內容成功！', type: 'success'});
       } // end ajaxSuccess
 
       function ajaxError(result) {
@@ -66,11 +79,13 @@ var userApp = new Vue({
       }
     },
     update: function (event) {
+      postAppModel.data.item.TagsArray = $('#tagsinput').tagsinput('items');
+      postAppModel.data.item.content = $('.summernote').summernote('code');
       $.ajax({
-        url: '/api/user/' + userAppModel.data.item.id,
+        url: '/api/post/' + postAppModel.data.item.id,
         type: 'PUT',
         dataType: 'json',
-        data: userAppModel.data.item,
+        data: postAppModel.data.item,
         xhrFields: {
           withCredentials: true,
         },
@@ -79,8 +94,8 @@ var userApp = new Vue({
       });
 
       function ajaxSuccess(result) {
-        location.href = '/admin/#/admin/user';
-        messageApp.show({desc: '更新會員資料成功！', type: 'success'});
+        location.href = '/admin/#/admin/post';
+        messageApp.show({desc: '更新內容資料成功！', type: 'success'});
       } // end ajaxSuccess
 
       function ajaxError(result) {
@@ -90,29 +105,41 @@ var userApp = new Vue({
     },
     loadItem: function (cb) {
       window.onbeforeunload = null;
-      $.get('/api/user/' + userAppModel.data.item.id, ajaxSuccess);
+      $.get('/api/post/' + postAppModel.data.item.id, ajaxSuccess);
 
       function ajaxSuccess(result) {
         console.log("loadItem result.data=>", result.data);
         if (result.success) {
-          userAppModel.data.item = result.data;
-          userAppModel.data.option.passwordConfirm = result.data.Passports[0].password;
-          var hasAvatar = typeof result.data.avatar === 'string';
-          if (!hasAvatar) {
-            userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
-          }
+          postAppModel.data.item = result.data;
         }
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
-        console.log("loadItem userAppModel.data.item=>", userAppModel.data.item);
+        console.log("loadItem postAppModel.data.item=>", postAppModel.data.item);
       } // end ajaxSuccess
     },
     setupForm: function(type) {
-      var registerForm = $("#user-form");
+      uploadImageApp.updateModel('itemLimit', 1);
+      uploadImageApp.updateModel('onComplete', function(id, name, response){
+        postAppModel.data.item.cover = response.data.id;
+        postAppModel.data.item.coverUrl = response.data.url;
+      })
+      uploadImageApp.updateModel('onDeleteComplete', function(id, name, response){
+        console.log(id, name, response);
+        postAppModel.data.item.cover = null;
+        postAppModel.data.item.coverUrl = '';
+      })
+      uploadImageApp.setup();
+      $('#tagsinput').tagsinput({
+        tagClass: 'tagsInputLabel',
+      });
+      if(type == 'create') {
+        this.newSummernote();
+      }
+      var registerForm = $("#post-form");
       registerForm.validate({
 
         // Rules for form validation
         rules : {
-          username : {
+          postname : {
             required : true
           },
           email : {
@@ -138,7 +165,7 @@ var userApp = new Vue({
 
         // Messages for form validation
         messages : {
-          username : {
+          postname : {
             required : '請輸入使用者帳號'
           },
           email : {
@@ -167,23 +194,27 @@ var userApp = new Vue({
 
         submitHandler: function(form) {
           if (type == 'create') {
-            userApp.save();
+            postApp.save();
             return false;
           } else if(type == 'edit') {
-            userApp.update();
+            postApp.update();
             return false;
           }
         }
       });
+      $('#wid-id-4').fadeIn();
     },
     isPageEditDataModified: function() {
-      var itemBeforeLeave = JSON.stringify(userAppModel.data.item);
+      var itemBeforeLeave = JSON.stringify(postAppModel.data.item);
       var isDataModified = itemBeforeEdit !== itemBeforeLeave;
       if (!isDataModified) window.onbeforeunload = null;
       return isDataModified;
     },
     onEnterPageEdit: function() {
-      itemBeforeEdit = JSON.stringify(userAppModel.data.item);
+      postAppModel.data.item.TagsArray.forEach(function(tag){
+        $('#tagsinput').tagsinput('add', tag);
+      })
+      itemBeforeEdit = JSON.stringify(postAppModel.data.item);
       console.log("itemBeforeEdit=>", JSON.parse(itemBeforeEdit));
       window.onbeforeunload = function(e) {
         if (this.isPageEditDataModified()) {
@@ -212,16 +243,17 @@ var userApp = new Vue({
     },
     loadItems: function (cb) {
       window.onbeforeunload = null;
-      $.get('/api/user', ajaxSuccess);
+      $.get('/api/post', ajaxSuccess);
 
       function ajaxSuccess(result) {
-        userAppModel.data.items = result.data.items;
+        console.log(result);
+        postAppModel.data.items = result.data.items;
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
       } // end ajaxSuccess
     },
     renderTable: function() {
       /* BASIC ;*/
-     var responsiveHelper_user_table = undefined;
+     var responsiveHelper_post_table = undefined;
      var responsiveHelper_datatable_fixed_column = undefined;
      var responsiveHelper_datatable_col_reorder = undefined;
      var responsiveHelper_datatable_tabletools = undefined;
@@ -231,7 +263,7 @@ var userApp = new Vue({
        phone : 480
      };
      /* TABLETOOLS */
-     var table = $('#user-table').dataTable({
+     var table = $('#post-table').dataTable({
        // Tabletools options:
        //   https://datatables.net/extensions/tabletools/button_options
        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'Tl>r>"+
@@ -270,13 +302,13 @@ var userApp = new Vue({
              "sExtends": "text",
              "sButtonText": "檢視",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
+               var isSelected = postAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
                if (isSelected) {
-                 var index = userAppModel.view.table.selectIndex;
-                 var userId = userAppModel.data.items[index].id;
-                 location.href = '/admin/#/admin/user/show/' + userId;
+                 var index = postAppModel.view.table.selectIndex;
+                 var postId = postAppModel.data.items[index].id;
+                 location.href = '/admin/#/admin/post/show/' + postId;
                } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
+                 messageApp.show({desc: '請選擇內容', type: 'warning'});
                }
              }
            },
@@ -284,20 +316,20 @@ var userApp = new Vue({
              "sExtends": "text",
              "sButtonText": "新增",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               location.href = '/admin/#/admin/user/create';
+               location.href = '/admin/#/admin/post/create';
              }
            },
            {
              "sExtends": "text",
              "sButtonText": "編輯",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
+               var isSelected = postAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
                if (isSelected) {
-                 var index = userAppModel.view.table.selectIndex;
-                 var userId = userAppModel.data.items[index].id;
-                 location.href = '/admin/#/admin/user/edit/' + userId;
+                 var index = postAppModel.view.table.selectIndex;
+                 var postId = postAppModel.data.items[index].id;
+                 location.href = '/admin/#/admin/post/edit/' + postId;
                } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
+                 messageApp.show({desc: '請選擇內容', type: 'warning'});
                }
              }
            },
@@ -307,7 +339,7 @@ var userApp = new Vue({
        "preDrawCallback" : function() {
          // Initialize the responsive datatables helper once.
          if (!responsiveHelper_datatable_tabletools) {
-           responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#user-table'), breakpointDefinition);
+           responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#post-table'), breakpointDefinition);
          }
        },
        "rowCallback" : function(nRow) {
@@ -323,30 +355,30 @@ var userApp = new Vue({
        if ( $(this).hasClass('selected') ) {
          $(this).removeClass('selected');
        } else {
-         $('#user-table tbody tr').removeClass('selected');
+         $('#post-table tbody tr').removeClass('selected');
          $(this).addClass('selected');
        }
      });
 
-     $('#user-table-widget').fadeIn();
+     $('#post-table-widget').fadeIn();
     },
     dblclick: function(index) {
-      var userId = userAppModel.data.items[index].id;
-      this.show(userId);
+      var postId = postAppModel.data.items[index].id;
+      this.show(postId);
     },
     selection: function (index) {
-      if (index !== userAppModel.view.table.selectIndex) {
-        userAppModel.view.table.selectIndex = index;
-        console.log("userAppModel.view.table.selectIndex", userAppModel.view.table.selectIndex);
+      if (index !== postAppModel.view.table.selectIndex) {
+        postAppModel.view.table.selectIndex = index;
+        console.log("postAppModel.view.table.selectIndex", postAppModel.view.table.selectIndex);
       } else {
-        userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
+        postAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
       }
     },
-    show: function (userId) {
-      location.href = '/admin/#/admin/user/show/' + userId;
+    show: function (postId) {
+      location.href = '/admin/#/admin/post/show/' + postId;
     },
-    edit: function (userId) {
-      location.href = '/admin/#/admin/user/edit/' + userId;
+    edit: function (postId) {
+      location.href = '/admin/#/admin/post/edit/' + postId;
     },
     delete: function() {
       messageApp.confirm({
@@ -357,7 +389,7 @@ var userApp = new Vue({
       function(ButtonPressed) {
         if (ButtonPressed ==='刪除') {
           $.ajax({
-            url: '/api/user/' + userAppModel.data.item.id,
+            url: '/api/post/' + postAppModel.data.item.id,
             type: 'DELETE',
             dataType: 'json',
             xhrFields: {
@@ -368,10 +400,10 @@ var userApp = new Vue({
           });
 
           function ajaxSuccess(result) {
-            userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
+            postAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
             messageApp.show({desc: `刪除資料成功！`, type: 'success'});
             setTimeout(function() {
-              location.href = '/admin/#/admin/user';
+              location.href = '/admin/#/admin/post';
             }, 500);
           } // end ajaxSuccess
 
@@ -380,6 +412,30 @@ var userApp = new Vue({
           }
         }
       });
-    }
+    },
+    newSummernote: function() {
+      $('.summernote').summernote({
+        height: 300,
+        placeholder: '請輸入內容',
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'italic', 'underline', 'clear']],
+          ['fontname', ['fontname']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']],
+          ['table', ['table']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+      });
+    },
   },
 });
+
+Vue.directive('summernote', {
+  update: function (value) {
+    if (value !== '') {
+      setTimeout(postApp.newSummernote,0);
+    }
+  }
+})

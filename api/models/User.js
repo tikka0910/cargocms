@@ -52,6 +52,11 @@ module.exports = {
     }
   },
   associations: function() {
+    User.hasMany(Image, {
+      foreignKey: {
+        name: 'UserId'
+      }
+    });
     User.hasMany(Post, {
       foreignKey: {
         name: 'UserId'
