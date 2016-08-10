@@ -1,5 +1,5 @@
 module.exports = {
-  index: async (req, res) => {
+  find: async (req, res) => {
     try {
       res.ok({
         message: 'Create post success.',
@@ -57,7 +57,7 @@ module.exports = {
     }
   },
 
-  delete: async (req, res) => {
+  destroy: async (req, res) => {
     try {
       const { postId } = req.params;
       res.ok({

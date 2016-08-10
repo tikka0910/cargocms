@@ -29,6 +29,13 @@ module.exports.policies = {
     'update': ['nocache'],
     'delete': ['nocache']
   },
+  'RecipeController': {
+    'index': ['nocache'],
+    'findOne': ['nocache'],
+    'create': ['nocache'],
+    'update': ['nocache'],
+    'delete': ['nocache']
+  },
   'BlogController': {
     'index': true
   },

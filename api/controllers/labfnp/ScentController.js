@@ -11,6 +11,25 @@ module.exports = {
     }
   },
 
+  find: async (req, res) => {
+    console.log("=== find ===");
+    try {
+      const scents = await Scent.findAll();
+      const scentArray = scents.map((scent) => {
+        return {
+          name: scent.name,
+          id: scent.id,
+        };
+      });
+      res.ok({
+        data: {
+          items: scentArray,
+      }});
+    } catch (e) {
+      res.serverError({ message: e, data: {}});
+    }
+  },
+
   creator: async function(req, res) {
     try {
       return res.view({

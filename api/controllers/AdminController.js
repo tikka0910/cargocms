@@ -19,6 +19,7 @@ module.exports = {
         { icon: 'wrench', href: '#', title: '資料維護', subItems: [
           { href: '/admin/user', title: '會員資料' },
           { href: '/admin/post', title: '內容資料' },
+          { href: '/admin/labfnp/recipe', title: '配方資料' },
           { href: '/admin/mock', title: '實驗室' },
         ]},
       ],
