@@ -8,7 +8,7 @@
         <% if (post.UserId) { %>
           <li>By <a href="#"><%= post.User.displayName %></a></li>
         <% } %>
-        <li><%= post.createdAt %></li>
+        <li><%= post.createdAtFormat %></li>
       </ul>
       <h2><a href="#"><%= post.title %></a></h2>
 
