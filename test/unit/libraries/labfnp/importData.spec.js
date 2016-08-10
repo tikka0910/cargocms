@@ -1,6 +1,6 @@
 var feelingData = require("./feeling.json");
 
-describe.only('import data.', () => {
+describe('import data.', () => {
   /*
   {
     "Scent":"BU2",
@@ -26,7 +26,7 @@ describe.only('import data.', () => {
     }
   });
 
-  it.only('import feeling', async (done) => {
+  it('import feeling', async (done) => {
     try {
       let path = __dirname+"/feeling.json";
       await ScentNote.importFeelingFromFile({path});
