@@ -136,19 +136,21 @@ var userApp = new Vue({
 			}
 		},
     loadItemWithSelectOptions: function (cb) {
-      userApp.loadSelectOptions(userApp.loadItem(function(){
-        var formula = userAppModel.data.item.formula;
-        var scents = userAppModel.data.select.scents;
-        for (var x=0;x<formula.length;x++) {
-          for (var y=0;y<scents.length;y++) {
-            var equal = formula[x].scent === scents[y].name;
-            if (equal) formula[x].color = scents[y].color;
+      userApp.loadSelectOptions(userApp.loadItem(mixData));
+      
+      function mixData() {
+          var formula = userAppModel.data.item.formula;
+          var scents = userAppModel.data.select.scents;
+          for (var x=0;x<formula.length;x++) {
+            for (var y=0;y<scents.length;y++) {
+              var equal = formula[x].scent === scents[y].name;
+              if (equal) formula[x].color = scents[y].color;
+            }
           }
-        }
 
         console.log("userAppModel.data.item.formula=>",JSON.parse(JSON.stringify(userAppModel.data.item.formula)));
         if (typeof cb !== 'undefined') setTimeout(cb, 1);
-      }));
+      } // end mixData
     },
     loadSelectOptions: function (cb) {
       $.get(LINK.API_LIST_SCENT, ajaxSuccess);
