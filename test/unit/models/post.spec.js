@@ -65,7 +65,7 @@ describe('about Post model operation.', function() {
         done(e);
       }
     });
-    it.only('find All Post by id has join should success.', async (done) => {
+    it('find All Post by id has join should success.', async (done) => {
       try {
         let result = await Post.findAllHasJoin();
         result.length.should.be.not.eq(0);
