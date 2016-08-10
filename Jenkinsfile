@@ -3,9 +3,6 @@ node {
   try {
     slackSend message: "started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
 
-    stage 'checkout project'
-    git url: 'https://github.com/TrunkWorkshop/sailsSample.git'
-
     stage 'check env'
     sh "node -v"
 
