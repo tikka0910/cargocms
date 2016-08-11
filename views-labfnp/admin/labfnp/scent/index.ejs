@@ -50,7 +50,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="scent in data.items" v-on:click="selection($index)" v-on:dblclick="dblclick($index)">
+								<tr v-for="scent in data.items" v-on:click="selection($index)">
 									<td><a href="/admin/#/admin/labfnp/scent/show/{{scent.id}}">{{ scent.id }}</a></td>
 									<td>{{ scent.name }}</td>
 									<td ><span style="background-color: {{scent.color}}; color: #fff;">{{ scent.color }}</span></td>
