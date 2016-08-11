@@ -31,14 +31,13 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-
+  //----- index -----
   '/': {
     view: 'index'
   },
 
-  '/api/admin/mock': "admin/MockController.find",
-
-  //----- ImageController -----
+  //----- api -----
+  '/api/admin/mock': "api/admin/MockController.find",
   'post /api/upload': 'api/admin/ImageController.upload',
   'delete /api/upload/:id': 'api/admin/ImageController.destroy',
 
@@ -50,13 +49,28 @@ module.exports.routes = {
 
   'get /api/labfnp/scent/simpleList': 'api/labfnp/ScentController.find',
   'get /api/labfnp/scent': 'api/labfnp/ScentController.find',
-
   'get /api/labfnp/scentnote': 'api/labfnp/ScentNoteController.find',
 
+  'get /api/admin/user': 'api/admin/UserController.find',
+  'get /api/admin/user/:id': 'api/admin/UserController.findOne',
+  'post /api/admin/user': 'api/admin/UserController.create',
+  'put /api/admin/user/:id': 'api/admin/UserController.update',
+  'delete /api/admin/user/:id': 'api/admin/UserController.destroy',
+
+  'get /api/admin/post': 'api/admin/PostController.find',
+  'get /api/admin/post/:id': 'api/admin/PostController.findOne',
+  'post /api/admin/post': 'api/admin/PostController.create',
+  'put /api/admin/post/:id': 'api/admin/PostController.update',
+  'delete /api/admin/post/:id': 'api/admin/PostController.destroy',
+
+
+  //----- custom -----
   '/creator':     'labfnp/MainController.creator',
   '/lab':         'labfnp/MainController.explore',
   '/recipe/:id':  'labfnp/MainController.recipe',
   '/me/:id':      'labfnp/MainController.portfolio',
+  '/admin/config.js': "AdminController.config",
+  '/admin': 'AdminController.index',
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
@@ -70,32 +84,12 @@ module.exports.routes = {
   'get /auth/:provider/callback': 'AuthController.callback',
   'get /auth/:provider/:action': 'AuthController.callback',
 
-  //----- UserController -----
-  'get /api/admin/user': 'api/admin/UserController.find',
-  'get /api/admin/user/:id': 'api/admin/UserController.findOne',
-
-  'post /api/admin/user': 'api/admin/UserController.create',
-  'put /api/admin/user/:id': 'api/admin/UserController.update',
-  'delete /api/admin/user/:id': 'api/admin/UserController.destroy',
-
-
-  //----- PostController -----
-  'get /api/admin/post': 'api/admin/PostController.find',
-  'get /api/admin/post/:id': 'api/admin/PostController.findOne',
-
-  'post /api/admin/post': 'api/admin/PostController.create',
-  'put /api/admin/post/:id': 'api/admin/PostController.update',
-  'delete /api/admin/post/:id': 'api/admin/PostController.destroy',
-
-
-  '/admin/config.js': "AdminController.config",
-
-  "/api/:controller/:action/:id?": {},
+  //----- view -----
   "/labfnp/:controller/:action/:id?": {},
   "/admin/:controller/:action/:id?": {},
   "/:controller/:action/:id?": {},
 
-  '/admin': 'AdminController.index',
+
 
 
 
