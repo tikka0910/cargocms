@@ -1,5 +1,22 @@
+
+
+/*
+// Sample data
+{
+  notes: 'FLORAL',
+  color: '',
+  keywords: '',
+  title: 'Fruity',
+  title2: '果香調',
+  description: ''
+}
+*/
+
 module.exports = {
   attributes: {
+    notes: {
+      type: Sequelize.ENUM('FLORAL', 'ORIENTAL', 'WOODY', 'FRESH')
+    },
     color: {
       type: Sequelize.STRING
     },
@@ -7,6 +24,9 @@ module.exports = {
       type: Sequelize.STRING
     },
     title: {
+      type: Sequelize.STRING
+    },
+    title2: {
       type: Sequelize.STRING
     },
     description: {

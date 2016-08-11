@@ -10,26 +10,11 @@
       <img class="img-responsive img-bordered margin-bottom-20" src="http://htmlstream.com/preview/unify-v1.9.5/assets/img/team/img32-md.jpg" alt="">
 
 			<ul class="list-group sidebar-nav-v1 margin-bottom-40" id="sidebar-nav-1">
-				<li class="list-group-item">
-					<a href="page_profile.html"><i class="fa fa-bar-chart-o"></i> Overall</a>
-				</li>
-				<li class="list-group-item">
-					<a href="page_profile_me.html"><i class="fa fa-user"></i> Profile</a>
-				</li>
 				<li class="list-group-item active">
-					<a href="page_profile_users.html"><i class="fa fa-group"></i> Users</a>
+					<a href="page_profile.html"><i class="fa fa-bar-chart-o"></i> 作品集</a>
 				</li>
 				<li class="list-group-item">
-					<a href="page_profile_projects.html"><i class="fa fa-cubes"></i> My Projects</a>
-				</li>
-				<li class="list-group-item">
-					<a href="page_profile_comments.html"><i class="fa fa-comments"></i> Comments</a>
-				</li>
-				<li class="list-group-item">
-					<a href="page_profile_history.html"><i class="fa fa-history"></i> History</a>
-				</li>
-				<li class="list-group-item">
-					<a href="page_profile_settings.html"><i class="fa fa-cog"></i> Settings</a>
+					<a href="page_profile_users.html"><i class="fa fa-group"></i> 粉絲</a>
 				</li>
 			</ul>
 
@@ -40,34 +25,45 @@
     <div class="col-md-9">
 
 
-    	<ul class="timeline-v1">
+			<% if (recipes && recipes.length > 0) { %>
 
-        <% var i = 0; recipes.forEach(function(recipe) { %>
-    		<li class="timeline<%= i%2?'-inverted':'' %>">
-    			<div class="timeline-badge primary"><i class="glyphicon glyphicon-record<%= i%2?' invert':'' %>"></i></div>
-    			<div class="timeline-panel">
-    				<div class="timeline-heading">
-    					<img class="img-responsive" src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt=""/>
-    				</div>
-    				<div class="timeline-body text-justify">
-    					<h2><a href="#"><%= recipe.perfumeName %></a></h2>
-    					<p>Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-    					<a class="btn-u btn-u-sm" href="#">Read More</a>
-    				</div>
-    				<div class="timeline-footer">
-    					<ul class="list-unstyled list-inline blog-info">
-    						<li><i class="fa fa-clock-o"></i> March 16, 2014</li>
-    						<li><i class="fa fa-comments-o"></i> <a href="#">12 Comments</a></li>
-    					</ul>
-    					<a class="likes" href="#"><i class="fa fa-heart"></i>87</a>
-    				</div>
-    			</div>
-    		</li>
-        <% i++; }); %>
+	    	<ul class="timeline-v1">
 
+	        <% var i = 0; recipes.forEach(function(recipe) { %>
+	    		<li class="timeline<%= i%2?'-inverted':'' %>">
+	    			<div class="timeline-badge primary"><i class="glyphicon glyphicon-record<%= i%2?' invert':'' %>"></i></div>
+	    			<div class="timeline-panel">
+	    				<div class="timeline-heading">
+	    					<img class="img-responsive" src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt=""/>
+	    				</div>
+	    				<div class="timeline-body text-justify">
+	    					<h2><a href="#"><%= recipe.perfumeName %></a></h2>
+	    					<p>Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+	    					<a class="btn-u btn-u-sm" href="#">Read More</a>
+	    				</div>
+	    				<div class="timeline-footer">
+	    					<ul class="list-unstyled list-inline blog-info">
+	    						<li><i class="fa fa-clock-o"></i> March 16, 2014</li>
+	    						<li><i class="fa fa-comments-o"></i> <a href="#">12 Comments</a></li>
+	    					</ul>
+	    					<a class="likes" href="#"><i class="fa fa-heart"></i>87</a>
+	    				</div>
+	    			</div>
+	    		</li>
+	        <% i++; }); %>
 
-    		<li class="clearfix" style="float: none;"></li>
-    	</ul>
+	    		<li class="clearfix" style="float: none;"></li>
+	    	</ul>
+
+	    	<% } else { %>
+
+					<div class="alert alert-success fade in margin-bottom-40">
+						<h2>還沒有任何創作</h2>
+						<p>空的！</p>
+					</div>
+
+	    	<% } %>
+
     </div>
     <!-- End Content -->
 
