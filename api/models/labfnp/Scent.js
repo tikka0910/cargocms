@@ -63,8 +63,8 @@ module.exports = {
           let color = ""
           let scentNote = ""
           if(scent.ScentNote){
-            scentNote = scent.ScentNote.id
-            color = scent.ScentNote.color
+            scentNote = scent.ScentNote.toJSON();
+            color = scent.ScentNote.color;
           }
 
           // let feelings = scent.Feelings.map((feeling) => {
