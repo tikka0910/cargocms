@@ -107,9 +107,13 @@ var userApp = new Vue({
       } // end ajaxSuccess
     },
     setupForm: function(type) {
+      if (type === 'edit') {
+        $('label.user').removeClass('state-disabled');
+        $('input[name="user"]').removeAttr('chekced');
+        $('input[name="user"]').removeAttr('disabled');
+      }
       var registerForm = $("#user-form");
       registerForm.validate({
-
         // Rules for form validation
         rules : {
           username : {
@@ -186,7 +190,7 @@ var userApp = new Vue({
       itemBeforeEdit = JSON.stringify(userAppModel.data.item);
       console.log("itemBeforeEdit=>", JSON.parse(itemBeforeEdit));
       window.onbeforeunload = function(e) {
-        if (this.isPageEditDataModified()) {
+        if (userApp.isPageEditDataModified()) {
           var message = '您已經修改過資料，是否確定要放棄本次的修改？';
           e.returnValue = message;
           return message;
@@ -194,7 +198,7 @@ var userApp = new Vue({
       };
     },
     onLeavePageEdit: function(cb) {
-      if (this.isPageEditDataModified()) {
+      if (userApp.isPageEditDataModified()) {
         var msgInfo = {
           title: '注意',
           content: '您已經修改過資料，是否確定要放棄本次的修改？',
