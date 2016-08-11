@@ -53,6 +53,8 @@ module.exports.routes = {
 
   'get /api/labfnp/scent': 'labfnp/ScentController.find',
 
+  'get /api/labfnp/scentnote': 'labfnp/ScentNoteController.find',
+
   '/': {
     view: 'index'
   },

@@ -26,7 +26,7 @@ module.exports = {
         let findScentNotes = await ScentNote.findAll({
           include: [{
             model: Scent,
-            include: Feel
+            include: Feeling
           }]
         });
         return findScentNotes;
