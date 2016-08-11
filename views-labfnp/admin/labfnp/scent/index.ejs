@@ -72,7 +72,7 @@
 									<td><span class="color" style="background: {{ scent.color }};">{{ scent.color }}</span></td>
 									<td>
 										<div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:280px;">
-											<span v-for="feeling in scent.feelings"> {{ feeling }}, </span>
+											<span title="{{ scent.feelings.join(', ') }}">{{ scent.feelings.join(', ') }}</span>
 										</div>
 									</td>
 									<!-- <td align="center" style="cursor: pointer;">
