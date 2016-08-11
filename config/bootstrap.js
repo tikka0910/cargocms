@@ -94,23 +94,13 @@ module.exports.bootstrap = async (cb) => {
     });
 
     const {environment} = sails.config;
+
     if (environment === 'development' && sails.config.models.migrate == 'drop') {
       sails.log.info("init Dev data", environment);
 
-      for (let i = 0; i < 30; i ++) {
-        // User.create({
-        //   username: `user${i}`,
-        //   email: `user${i}@gmail.com`,
-        //   firstName: '王',
-        //   lastName: '大明'
-        // }).then(function(user) {
-        //   Passport.create({
-        //     provider: 'local',
-        //     password: 'passport',
-        //     UserId: user.id
-        //   });
-        // });
-      }
+
+      // 大量假帳號
+      require('./init/fakeusers').init();
 
       const image = await Image.create({
         filePath: 'http://www.labfnp.com/modules/core/img/update1.jpg',
@@ -124,7 +114,7 @@ module.exports.bootstrap = async (cb) => {
         cover: image.id,
         url: 'http://localhost:5001/blog/flower',
         abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材（ex:玫瑰、康乃馨..等)所組成的『這束花的味道』，接著抽出其中的一朵康乃馨，聞到的則是這『一朵康乃馨的味道』，而事實上，若深入去探究此康乃馨的氣味組成，則可小到香味分子的程度：花香由多種香味分子所組成。而這樣的組成就像香水、香料以及香味分子的不同級距來看，香水聞起來是一種味道而細究卻是多種香味分子的組成',
-        UserId: await User.findOne({ where: {username: 'admin'} }).id,
+        UserId: 1,
       });
 
       const tag = await Tag.create({
@@ -156,7 +146,7 @@ module.exports.bootstrap = async (cb) => {
     }
 
     // import site-specified data
-    await require('./init/labfnp').init();
+    require('./init/labfnp').init();
 
     cb();
   } catch (e) {

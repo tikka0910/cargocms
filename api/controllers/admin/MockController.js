@@ -1,4 +1,5 @@
 import MockData from 'mockup-data';
+
 module.exports = {
   index: async (req, res) => {
     res.ok({view: true});
