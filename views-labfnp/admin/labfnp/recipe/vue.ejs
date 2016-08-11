@@ -1,7 +1,11 @@
+<%- include ../metadata.js.ejs %>
+
 var COMMON = {
 	DOUBLE_CLICK_TIME_PERIOD: 250,
 	DEFAULT_INDEX: -1,
   PAGE_NAME: 'labfnp-recipe-',
+  DROPS_MAX: 9,
+  DROPS_MIN: 1,
 };
 
 var LINK = {
@@ -9,193 +13,247 @@ var LINK = {
   PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
   PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit/',
   PAGE_SHOW: '/admin/#/admin/labfnp/recipe/show/',
-  API_LIST_SCENT: '/api/labfnp/scent/simpleList',
+  API_LIST_SCENT: '/api/labfnp/scent',
   API_LIST: '/api/labfnp/recipe',
   API_ITEM: '/api/labfnp/recipe/',
   API_CREATE: '/api/labfnp/recipe',
   API_UPDATE: '/api/labfnp/recipe/',
 };
 
-var itemBeforeEdit = {};
-var formula = [
-  {
-    scent: '',
-    drops: 0,
-  },
-  {
-    scent: '',
-    drops: 0,
-  },
-  {
-    scent: '',
-    drops: 0,
-  },
-  {
-    scent: '',
-    drops: 0,
-  },
-  {
-    scent: '',
-    drops: 0,
-  },
-  {
-    scent: '',
-    drops: 0,
-  },
-];
 var userAppModel = {
 	data: {
+    status: {
+      itemBeforeEdit: {},
+    },
 		item: {
+      id: '',
       authorName: '',
 			perfumeName: '',
 			formulaLogs: '',
-      formula: formula,
-      UserId: '',
+      formula: [],
+      message: '',
       User: {},
 		},
 		items: [],
-    select: {
-      scents: [],
-    },
-		option: {
-		}
+    scentData: {},
+    scentColor: {},
+		option: {}
 	},
 	view: {
 		table: {
 			selectIndex: COMMON.DEFAULT_INDEX,
 		},
-	}
+	},
 };
 
 var userApp = new Vue({
 	data: userAppModel,
+  computed: {
+    requiredErrorMsg: function () {
+      return 'Required fruit !!'
+    },
+    minlengthErrorMsg: function () {
+      return 'Please chose at least 1 fruit !!'
+    },
+    maxlengthErrorMsg: function () {
+      return 'Please chose at most 2 fruits !!'
+    }
+  },
 	methods: {
 		cancel: function (event) {
-			userApp.onLeavePageEdit(function () {
+			userApp.onLeavePage(function () {
 				location.href = LINK.PAGE_INDEX;
 			});
 		},
+    verifySendData: function () {
+      var scentColor = userAppModel.data.scentColor;
+      var dataJson = JSON.parse(JSON.stringify(userAppModel.data.item));
+      var newFormula = [];
+      for (var i=0;i<dataJson.formula.length;i++) {
+        var checkDrops = dataJson.formula[i].drops !== "0";
+        var checkScent = dataJson.formula[i].scent !== '';
+        if (checkDrops && checkScent) newFormula.push(dataJson.formula[i]);
+      }
+      for (var i=0;i<newFormula.length;i++) {
+        newFormula[i].color = scentColor[newFormula[i].scent];
+      }
+      dataJson.formula = newFormula;
+      return dataJson;
+    },
 		save: function (event) {
+      var ajaxSuccess = function (result) {
+        location.href = LINK.PAGE_INDEX;
+        messageApp.show({
+          desc: '新增資料成功！',
+          type: 'success'
+        });
+      };
+
+      var ajaxError = function (result) {
+        messageApp.show({
+          desc: '新增資料失敗！errorMessage: ' + result.responseJSON.message,
+          type: 'error'
+        });
+      };
+
 			$.ajax({
 				url: LINK.API_CREATE,
 				type: 'POST',
 				dataType: 'json',
-				data: userAppModel.data.item,
+				data: userApp.verifySendData(),
 				xhrFields: {
 					withCredentials: true,
 				},
 				success: ajaxSuccess,
 				error: ajaxError,
 			});
-
-			function ajaxSuccess(result) {
-				location.href = LINK.PAGE_INDEX;
-				messageApp.show({
-					desc: '新增資料成功！',
-					type: 'success'
-				});
-			} // end ajaxSuccess
-
-			function ajaxError(result) {
-				messageApp.show({
-					desc: '新增資料失敗！errorMessage: ' + result.responseJSON.message,
-					type: 'error'
-				});
-			}
 		},
 		update: function (event) {
-			$.ajax({
-				url: LINK.API_UPDATE + userAppModel.data.item.id,
-				type: 'PUT',
-				dataType: 'json',
-				data: userAppModel.data.item,
-				xhrFields: {
-					withCredentials: true,
-				},
-				success: ajaxSuccess,
-				error: ajaxError,
-			});
-
-			function ajaxSuccess(result) {
+			var ajaxSuccess = function(result) {
 				location.href = LINK.PAGE_INDEX;
 				messageApp.show({
-					desc: '更新會員資料成功！',
+					desc: '更新資料成功！',
 					type: 'success'
 				});
-			} // end ajaxSuccess
+			};
 
-			function ajaxError(result) {
-				console.log(result);
+			var ajaxError = function(result) {
 				messageApp.show({
 					desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message,
 					type: 'error'
 				});
-			}
+			};
+
+			$.ajax({
+				url: LINK.API_UPDATE + userAppModel.data.item.id,
+				type: 'PUT',
+				dataType: 'json',
+				data: userApp.verifySendData(),
+				xhrFields: {
+					withCredentials: true,
+				},
+				success: ajaxSuccess,
+				error: ajaxError,
+			});
 		},
     loadSelectOptions: function (cb) {
-      $.get(LINK.API_LIST_SCENT, ajaxSuccess);
+      var bindDefaultFormlaValue = function () {
+        for (var i=0;i<6;i++) {
+          var checkFormula = typeof userAppModel.data.item.formula[i] !== 'undefined';
+          if (!checkFormula) userAppModel.data.item.formula[i] = {};
 
-      function ajaxSuccess(result) {
-        userAppModel.data.select.scents = result.data.items;
-                console.log("userAppModel stringify=>", JSON.parse(JSON.stringify(userAppModel.data.item)));
-        if (typeof cb !== 'undefined') setTimeout(cb, 1);
-      } // end ajaxSuccess
+          var checkScent = typeof userAppModel.data.item.formula[i].scent !== 'undefined';
+          var checkDrops = userAppModel.data.item.formula[i].drops !== '0';
+          if (!checkFormula || !checkScent) userAppModel.data.item.formula[i].scent = '';
+          if (!checkFormula || !checkDrops) userAppModel.data.item.formula[i].drops = 0;
+        }
+      };
+      bindDefaultFormlaValue();
+
+      var ajaxSuccess = function (result) {
+        userAppModel.data.scentData = result.data.items;
+        userAppModel.data.scentColor = new Object();
+
+        var scentData = userAppModel.data.scentData;
+        for (var i=0;i<scentData.length;i++) {
+          userAppModel.data.scentColor[scentData[i].name] = scentData[i].color;
+        }
+        console.log("userAppModel.data.scentColor->", userAppModel.data.scentColor);
+
+        if (typeof cb !== 'undefined') setTimeout(cb, 0);
+      };
+
+      $.ajax({
+        url: LINK.API_LIST_SCENT,
+        async: false,
+        success: ajaxSuccess,
+        // error: ajaxError,
+      });
     },
 		loadItem: function (cb) {
 			window.onbeforeunload = null;
-			$.get(LINK.API_ITEM + userAppModel.data.item.id, ajaxSuccess);
 
-			function ajaxSuccess(result) {
-				if (result.success) {
-					userAppModel.data.item = result.data;
-					var hasAvatar = typeof result.data.avatar === 'string';
-					if (!hasAvatar) {
-						userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
-					}
-          if (typeof cb !== 'undefined') setTimeout(cb, 1);
+      // var bindScentColor = function() {
+      //   // var scentColor = LABFNP.SCENT_COLOR();
+      //   var scentColor = userAppModel.data.scentColor;
+      //   var formula = userAppModel.data.item.formula;
+      //   for (var i=0;i<formula.length;i++) {
+      //     formula[i].color = scentColor[formula[i].scent];
+      //   }
+      // };
+
+			var ajaxSuccess = function(result) {
+				userAppModel.data.item = result.data;
+				var hasAvatar = typeof result.data.avatar === 'string';
+				if (!hasAvatar) {
+					userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
 				}
-			} // end ajaxSuccess
+        if (typeof cb !== 'undefined') setTimeout(cb, 0);
+			};
+
+      $.ajax({
+        url: LINK.API_ITEM + userAppModel.data.item.id,
+        async: false,
+        success: ajaxSuccess,
+        // error: ajaxError,
+      });
 		},
 		setupForm: function (type) {
-			var registerForm = $('#' + COMMON.PAGE_NAME + 'form');
+			var registerForm = $('#main-form');
+
 			registerForm.validate({
 				// Rules for form validation
+        // ignore: [],
 				rules: {
           authorName: {
-            required: true,
+            required: true
           },
-					perfumeName: {
-						required: true
-					},
-					formulaLogs: {
-						required: true,
-					},
-					formula: {
+          perfumeName: {
+            required: true
+          },
+					'scent[]': {
 						required: true,
             minlength: 1,
+					},
+          'drops[]':{
+						required: true,
+            minlength: 1,
+            min: COMMON.DROPS_MIN,
+            max: COMMON.DROPS_MAX,
 					},
 				},
 
 				// Messages for form validation
 				messages: {
-					authorName: {
-						required: '請輸入作者名稱'
+          authorName: {
+            required: '請輸入作者名稱'
+          },
+          perfumeName: {
+            required: '請輸入香水名稱'
+          },
+					'scent[]': {
+						required: '請至少選擇一種香味分子',
+            minlength: '請至少選擇一種香味分子',
 					},
-					perfumeName: {
-						required: '請輸入香水名稱'
-					},
-					formulaLogs: {
-						required: '請輸入formulaLogs',
-					},
-					formula: {
-						required: '請選擇配方',
-            minlength: "Enter at leas",
-					},
+          'drops[]': {
+						required: '請至少給予 1 滴香味分子',
+            minlength: '請至少選擇一種香味分子',
+            min: '請至少給予 1 滴香味分子',
+            max: '請至多只給予 9 滴',
+          }
 				},
 
 				// Do not change code below
 				errorPlacement: function (error, element) {
 					error.insertAfter(element.parent());
+
+          // error message style
+          $('label.error').css("color","red");
+          $('label.error').css("font-weight","900");
+          $('label.error').css("border","solid 1px #AAA");
+          $('label.error').css("background","#fff");
+          $('label.error').css("box-shadow","0px 2px 6px rgba(0, 0, 0, .7)");
+          $('label.error').css("padding","2px 5px");
 				},
 
 				submitHandler: function (form) {
@@ -210,14 +268,21 @@ var userApp = new Vue({
 			});
 		},
 		isPageEditDataModified: function () {
-			var itemBeforeLeave = JSON.stringify(userAppModel.data.item);
-			var isDataModified = itemBeforeEdit !== itemBeforeLeave;
-			if (!isDataModified) window.onbeforeunload = null;
-			return isDataModified;
+      var isDataModified = false;
+      var itemBeforeEdit = userAppModel.data.status.itemBeforeEdit;
+      if (itemBeforeEdit) {
+  			var itemBeforeLeave = JSON.stringify(userAppModel.data.item);
+  			isDataModified = itemBeforeEdit !== itemBeforeLeave;
+      }
+     return isDataModified;
 		},
+    onEnterPageCreare: function () {
+      userAppModel.data.status.itemBeforeEdit = null;
+      this.loadSelectOptions();
+    },
 		onEnterPageEdit: function () {
-			itemBeforeEdit = JSON.stringify(userAppModel.data.item);
-			console.log("itemBeforeEdit=>", JSON.parse(itemBeforeEdit));
+      userAppModel.data.status.itemBeforeEdit = JSON.stringify(userAppModel.data.item);
+      this.loadSelectOptions();
 			window.onbeforeunload = function (e) {
 				if (userApp.isPageEditDataModified()) {
 					var message = '您已經修改過資料，是否確定要放棄本次的修改？';
@@ -226,9 +291,48 @@ var userApp = new Vue({
 				}
 			};
 		},
-    onEnterPageCreare: function () {
+    onEnterPageShow: function () {
+      var formula = userAppModel.data.item.formula;
+      var labelArray = [];
+      var dropsArray = [];
+      var scentColorArray = [];
+      for (var i=0;i<formula.length;i++) {
+        if (formula[i].drops > 0) {
+          dropsArray.push(formula[i].drops);
+          labelArray.push(formula[i].scent);
+          scentColorArray.push(formula[i].color);
+        }
+      }
+	    var perfumePieConfig = {
+	        type: 'pie',
+	        data: {
+            datasets: [{
+              data: dropsArray,
+              backgroundColor: scentColorArray,
+            }],
+            labels: labelArray,
+	        },
+          animation:{
+              animateScale:true,
+          },
+	        options: {
+            title: {
+                display: true,
+                text: ''
+            },
+            legend: {
+                display: false,
+            },
+            circumference: 1.5 * Math.PI,
+            responsive: true,
+            hover: {
+              mode: 'label',
+            }
+	        }
+	    };
+      var perfumePie = new Chart(document.getElementById("pieChart"), perfumePieConfig);
     },
-		onLeavePageEdit: function (cb) {
+		onLeavePage: function (cb) {
 			if (userApp.isPageEditDataModified()) {
 				var msgInfo = {
 					title: '注意',
@@ -243,17 +347,18 @@ var userApp = new Vue({
 					}
 				};
 				messageApp.confirm(msgInfo, action);
-			} else return cb();
+			} else {
+		    window.onbeforeunload = null;
+        return cb();
+      };
 		},
 		loadItems: function (cb) {
 			window.onbeforeunload = null;
-			$.get(LINK.API_LIST, ajaxSuccess);
-
-			function ajaxSuccess(result) {
+			var ajaxSuccess = function(result) {
 				userAppModel.data.items = result.data.items;
-        console.log("result=>", result);
 				if (typeof cb !== 'undefined') setTimeout(cb, 0);
-			} // end ajaxSuccess
+			};
+      $.get(LINK.API_LIST, ajaxSuccess);
 		},
 		renderTable: function () {
 			/* BASIC ;*/
@@ -270,7 +375,7 @@ var userApp = new Vue({
 			var table = $('#' + COMMON.PAGE_NAME + 'table').dataTable({
 				// Tabletools options:
 				//   https://datatables.net/extensions/tabletools/button_options
-				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'Tl>r>" +
+				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f>T<'hidden-xs'l>r>" +
 					"t" +
 					"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
 				"oLanguage": {
@@ -370,6 +475,7 @@ var userApp = new Vue({
 				}
 			});
 
+      // animate table
 			$('#' + COMMON.PAGE_NAME + 'table-widget').fadeIn();
 		},
 		dblclick: function (index) {
@@ -398,18 +504,7 @@ var userApp = new Vue({
 				},
 				function (ButtonPressed) {
 					if (ButtonPressed === '刪除') {
-						$.ajax({
-							url: LINK.API_UPDATE + userAppModel.data.item.id,
-							type: 'DELETE',
-							dataType: 'json',
-							xhrFields: {
-								withCredentials: true
-							},
-							success: ajaxSuccess,
-							error: ajaxError,
-						});
-
-						function ajaxSuccess(result) {
+						var ajaxSuccess = function(result) {
 							userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
 							messageApp.show({
 								desc: `刪除資料成功！`,
@@ -420,12 +515,23 @@ var userApp = new Vue({
 							}, 500);
 						} // end ajaxSuccess
 
-						function ajaxError(result) {
+						var ajaxError = function(result) {
 							messageApp.show({
 								desc: '刪除資料失敗！errorMessage: ' + result.responseJSON.message,
 								type: 'error'
 							});
 						}
+
+						$.ajax({
+							url: LINK.API_UPDATE + userAppModel.data.item.id,
+							type: 'DELETE',
+							dataType: 'json',
+							xhrFields: {
+								withCredentials: true
+							},
+							success: ajaxSuccess,
+							error: ajaxError,
+						});
 					}
 				});
 		}

@@ -50,7 +50,7 @@
 												  <br>
 												  <small>Connections</small></h4>
                         </div> -->
-                        <div class="row">
+                        <!-- <div class="row hidden-xs">
                           <div class="col-sm-4 col-md-offset-8 text-left">
                             <label class="text-left">
                               <h4 class="font-md"><strong>權限</strong></h4>
@@ -59,13 +59,14 @@
                               <input type="checkbox" id="admin" value="admin" v-model="data.item.RolesArray" disabled>管理員
                             </label>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                       <div class="col-sm-6">
                         <h1>{{ data.item.firstName }} <span class="semi-bold">{{ data.item.lastName }}</span>
 											  <br>
                         <strong>{{ data.item.username }}</strong>
                         </h1>
+                        <hr class="visible-xs-*">
                         <ul class="list-unstyled">
                           <!-- <li>
                             <p class="text-muted">
@@ -78,17 +79,38 @@
                             </p>
                           </li>
                           <li>
-                            <p class="text-muted">
+                            <p class="text-muted" v-show="data.item.userAgent">
                               <i class="fa fa-flag"></i>&nbsp;&nbsp;<span class="semi-bold">{{ data.item.userAgent }}</span>
                             </p>
                           </li>
                           <li>
                             <p class="text-muted">
                               <i class="fa fa-calendar"></i>&nbsp;&nbsp;
-                              <span class="txt-color-darken">上次登入時間
-                                <a href="javascript:void(0);" rel="tooltip" title="" data-placement="top" data-original-title="Create an Appointment">{{ data.item.lastLogin }}</a>
+                              <span class="txt-color-darken">上次登入時間：
+                                <a href="javascript:void(0);" rel="tooltip" title="" data-placement="top" data-original-title="Create an Appointment"
+                                v-if="data.item.lastLogin">
+                                  {{ data.item.lastLogin }}</a>
+                                <label for="" v-else><strong>從未登入</strong></label>
                               </span>
                             </p>
+                          </li>
+                          <li class="visible-xs-*">
+                            <hr>
+                            <p class="text-muted">
+                              <i class="fa fa-group"></i>&nbsp;&nbsp;<span class="txt-color-darken">權限：</span>
+                            </p>
+                            <ul>
+                              <li>
+                                <label class="checkbox state-disabled">
+                                  <input type="checkbox" id="admin" value="admin" v-model="data.item.RolesArray" disabled>管理員<i></i>
+                                </label>
+                              </li>
+                              <li>
+                                <label class="checkbox state-disabled">
+                                  <input type="checkbox" id="user" value="user" v-model="data.item.RolesArray" disabled>使用者<i></i>
+                                </label>
+                              </li>
+                            </ul>
                           </li>
                         </ul>
                         <br>
