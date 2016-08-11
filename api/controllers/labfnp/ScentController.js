@@ -1,8 +1,9 @@
 module.exports = {
   index: async function(req, res) {
     try {
-      console.log("=== enter index ===");
+      sails.log.info("=== enter index ===");
       let data = await Scent.findAllWithRelationFormatForApp();
+      sails.log.info(data);
       return res.ok({
         data: {
           items: data,
@@ -16,7 +17,7 @@ module.exports = {
   },
 
   find: async (req, res) => {
-    console.log("=== find ===");
+    sails.log.info("=== find ===");
     try {
       const scents = await Scent.findAll();
       const scentArray = scents.map((scent) => {
