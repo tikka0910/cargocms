@@ -3,14 +3,15 @@ module.exports = {
     color: {
       type: Sequelize.STRING
     },
+    keywords: {
+      type: Sequelize.STRING
+    },
     title: {
       type: Sequelize.STRING
     },
     description: {
       type: Sequelize.STRING
     }
-
-
   },
   associations: function() {
     ScentNote.hasMany(Scent, {
@@ -33,7 +34,7 @@ module.exports = {
       importFeelingFromFile: async function({path}){
         var feelingData = require(path);
         try {
-          console.log(feelingData.length);
+          sails.log.info(feelingData.length);
           for (let feelingRow of feelingData) {
 
             let newScentNote = {
