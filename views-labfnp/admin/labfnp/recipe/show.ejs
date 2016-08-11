@@ -38,49 +38,23 @@
                     <!-- end row -->
                   </div>
 
-                  <!-- new -->
                   <!-- product -->
                   <div class="product-wrap clearfix product-deatil">
-                    <div class="row">
-                      <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
-                        <div class="product-image">
-                          <div id="myCarousel-2" class="carousel slide">
-                            <ol class="carousel-indicators">
-                              <li data-target="#myCarousel-2" data-slide-to="0" class=""></li>
-                              <li data-target="#myCarousel-2" data-slide-to="1" class="active"></li>
-                              <li data-target="#myCarousel-2" data-slide-to="2" class=""></li>
-                            </ol>
-                            <div class="carousel-inner pull-right">
-                              <!-- Slide 1 -->
-                              <div class="item active text-center">
-                                <!-- <img src="/assets/labfnp/img/perfume_512.png" alt=""> -->
-                                <canvas id="pieChart" height="300px" width="350px"></canvas>
-                              </div>
-                              <!-- Slide 2 -->
-                              <!-- <div class="item">
-                                  <img src="img/demo/e-comm/detail-2.png" alt="">
-                                </div> -->
-                              <!-- Slide 3 -->
-                              <!-- <div class="item">
-                                  <img src="img/demo/e-comm/detail-3.png" alt="">
-                                </div> -->
-                            </div>
-                            <!-- <a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
-                              <a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a> -->
-                          </div>
-                        </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                      <div class="product-image">
+                        <canvas id="pieChart" height="300px" width="350px"></canvas></div>
                       </div>
-                      <div class="col-lg-5 col-md-6 col-sm-5 col-xs-12">
 
+                      <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12">
                         <h2 class="name">
                           <small>配方名稱</small>
                             <p class="padding-5">{{ data.item.perfumeName }}</p>
                           <hr>
                           <div class="row">
-                            <div class="col col-xs-3 vcol-md-3 col-sm-12 col-lg-3">
+                            <div class="col col-xs-6 vcol-md-3 col-sm-12 col-lg-3">
               							  <small>創作人</small>{{ data.item.authorName }}
                             </div>
-                            <div class="col col-xs-3 vcol-md-3 col-sm-12 col-lg-3">
+                            <div class="col col-xs-6 vcol-md-3 col-sm-12 col-lg-3">
               							  <small>建立者</small>{{ data.item.User.displayName }}
                             </div>
                           </div>
@@ -99,7 +73,7 @@
                           <h4 class="padding-5" >
                             <div class="row" v-for="item in data.item.formula" track-by="$index">
                               <div v-if="item.drops > 0">
-                                <div class="col col-xs-3 col-md-4 col-sm-5 col-lg-2">
+                                <div class="col col-xs-5 col-sm-4 col-md-4 col-lg-2">
                                   <stronge>・</stronge>
                                     <label
                                     style="

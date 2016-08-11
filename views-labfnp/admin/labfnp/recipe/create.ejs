@@ -132,7 +132,7 @@
   var pagefunction = function() {
     <%- include vue.ejs %>
     userApp.$mount("#main-create");
-    userApp.loadSelectOptions();
+    userApp.onEnterPageCreare();
     userApp.setupForm("create");
   };
 

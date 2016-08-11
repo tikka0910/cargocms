@@ -20,35 +20,11 @@ var LINK = {
   API_UPDATE: '/api/labfnp/recipe/',
 };
 
-var itemBeforeEdit = {};
-var formula = [
-  {
-    scent: '',
-    drops: 0,
-  },
-  {
-    scent: '',
-    drops: 0,
-  },
-  {
-    scent: '',
-    drops: 0,
-  },
-  {
-    scent: '',
-    drops: 0,
-  },
-  {
-    scent: '',
-    drops: 0,
-  },
-  {
-    scent: '',
-    drops: 0,
-  },
-];
 var userAppModel = {
 	data: {
+    status: {
+      itemBeforeEdit: {},
+    },
 		item: {
       id: '',
       authorName: '',
@@ -59,11 +35,9 @@ var userAppModel = {
       User: {},
 		},
 		items: [],
-    select: {
-      scents: [],
-    },
-		option: {
-		}
+    scentData: {},
+    scentColor: {},
+		option: {}
 	},
 	view: {
 		table: {
@@ -87,10 +61,25 @@ var userApp = new Vue({
   },
 	methods: {
 		cancel: function (event) {
-			userApp.onLeavePageEdit(function () {
+			userApp.onLeavePage(function () {
 				location.href = LINK.PAGE_INDEX;
 			});
 		},
+    verifySendData: function () {
+      var scentColor = userAppModel.data.scentColor;
+      var dataJson = JSON.parse(JSON.stringify(userAppModel.data.item));
+      var newFormula = [];
+      for (var i=0;i<dataJson.formula.length;i++) {
+        var checkDrops = dataJson.formula[i].drops !== "0";
+        var checkScent = dataJson.formula[i].scent !== '';
+        if (checkDrops && checkScent) newFormula.push(dataJson.formula[i]);
+      }
+      for (var i=0;i<newFormula.length;i++) {
+        newFormula[i].color = scentColor[newFormula[i].scent];
+      }
+      dataJson.formula = newFormula;
+      return dataJson;
+    },
 		save: function (event) {
       var ajaxSuccess = function (result) {
         location.href = LINK.PAGE_INDEX;
@@ -107,23 +96,11 @@ var userApp = new Vue({
         });
       };
 
-      var spliceEmptyData = (function () {
-        var dataJson = JSON.parse(JSON.stringify(userAppModel.data.item));
-        var newFormula = [];
-        for (var i=0;i<dataJson.formula.length;i++) {
-          var checkDrops = dataJson.formula[i].drops > 0;
-          var checkScent = dataJson.formula[i].scent !== '';
-          if (checkDrops && checkScent) newFormula.push(dataJson.formula[i]);
-        }
-        dataJson.formula = newFormula;
-        return dataJson;
-      })();
-
 			$.ajax({
 				url: LINK.API_CREATE,
 				type: 'POST',
 				dataType: 'json',
-				data: spliceEmptyData,
+				data: userApp.verifySendData(),
 				xhrFields: {
 					withCredentials: true,
 				},
@@ -151,7 +128,7 @@ var userApp = new Vue({
 				url: LINK.API_UPDATE + userAppModel.data.item.id,
 				type: 'PUT',
 				dataType: 'json',
-				data: userAppModel.data.item,
+				data: userApp.verifySendData(),
 				xhrFields: {
 					withCredentials: true,
 				},
@@ -159,23 +136,33 @@ var userApp = new Vue({
 				error: ajaxError,
 			});
 		},
-    bindDefaultFormlaValue: function () {
-      for (var i=0;i<6;i++) {
-        var checkFormula = typeof userAppModel.data.item.formula[i] !== 'undefined';
-        if (!checkFormula) userAppModel.data.item.formula[i] = {};
-
-        var checkScent = typeof userAppModel.data.item.formula[i].scent !== 'undefined';
-        var checkDrops = userAppModel.data.item.formula[i].drops !== 0;
-        if (!checkFormula || !checkScent) userAppModel.data.item.formula[i].scent = '';
-        if (!checkFormula || !checkDrops) userAppModel.data.item.formula[i].drops = 0;
-      }
-    },
     loadSelectOptions: function (cb) {
-      this.bindDefaultFormlaValue();
+      var bindDefaultFormlaValue = function () {
+        for (var i=0;i<6;i++) {
+          var checkFormula = typeof userAppModel.data.item.formula[i] !== 'undefined';
+          if (!checkFormula) userAppModel.data.item.formula[i] = {};
+
+          var checkScent = typeof userAppModel.data.item.formula[i].scent !== 'undefined';
+          var checkDrops = userAppModel.data.item.formula[i].drops !== '0';
+          if (!checkFormula || !checkScent) userAppModel.data.item.formula[i].scent = '';
+          if (!checkFormula || !checkDrops) userAppModel.data.item.formula[i].drops = 0;
+        }
+      };
+      bindDefaultFormlaValue();
+
       var ajaxSuccess = function (result) {
-        userAppModel.data.select.scents = result.data.items;
+        userAppModel.data.scentData = result.data.items;
+        userAppModel.data.scentColor = new Object();
+
+        var scentData = userAppModel.data.scentData;
+        for (var i=0;i<scentData.length;i++) {
+          userAppModel.data.scentColor[scentData[i].name] = scentData[i].color;
+        }
+        console.log("userAppModel.data.scentColor->", userAppModel.data.scentColor);
+
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
       };
+
       $.ajax({
         url: LINK.API_LIST_SCENT,
         async: false,
@@ -183,15 +170,17 @@ var userApp = new Vue({
         // error: ajaxError,
       });
     },
-    bindScentColor: function() {
-      var scentColor = LABFNP.SCENT_COLOR();
-      var formula = userAppModel.data.item.formula;
-      for (var i=0;i<formula.length;i++) {
-        formula[i].color = scentColor[formula[i].scent];
-      }
-    },
 		loadItem: function (cb) {
 			window.onbeforeunload = null;
+
+      // var bindScentColor = function() {
+      //   // var scentColor = LABFNP.SCENT_COLOR();
+      //   var scentColor = userAppModel.data.scentColor;
+      //   var formula = userAppModel.data.item.formula;
+      //   for (var i=0;i<formula.length;i++) {
+      //     formula[i].color = scentColor[formula[i].scent];
+      //   }
+      // };
 
 			var ajaxSuccess = function(result) {
 				userAppModel.data.item = result.data;
@@ -199,7 +188,6 @@ var userApp = new Vue({
 				if (!hasAvatar) {
 					userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
 				}
-        userApp.bindScentColor();
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
 			};
 
@@ -280,14 +268,21 @@ var userApp = new Vue({
 			});
 		},
 		isPageEditDataModified: function () {
-			var itemBeforeLeave = JSON.stringify(userAppModel.data.item);
-			var isDataModified = itemBeforeEdit !== itemBeforeLeave;
-			if (!isDataModified) window.onbeforeunload = null;
-			return isDataModified;
+      var isDataModified = false;
+      var itemBeforeEdit = userAppModel.data.status.itemBeforeEdit;
+      if (itemBeforeEdit) {
+  			var itemBeforeLeave = JSON.stringify(userAppModel.data.item);
+  			isDataModified = itemBeforeEdit !== itemBeforeLeave;
+      }
+     return isDataModified;
 		},
+    onEnterPageCreare: function () {
+      userAppModel.data.status.itemBeforeEdit = null;
+      this.loadSelectOptions();
+    },
 		onEnterPageEdit: function () {
-			itemBeforeEdit = JSON.stringify(userAppModel.data.item);
-			console.log("itemBeforeEdit=>", JSON.parse(itemBeforeEdit));
+      userAppModel.data.status.itemBeforeEdit = JSON.stringify(userAppModel.data.item);
+      this.loadSelectOptions();
 			window.onbeforeunload = function (e) {
 				if (userApp.isPageEditDataModified()) {
 					var message = '您已經修改過資料，是否確定要放棄本次的修改？';
@@ -329,7 +324,7 @@ var userApp = new Vue({
                 display: false,
             },
             circumference: 1.5 * Math.PI,
-            responsive: false,
+            responsive: true,
             hover: {
               mode: 'label',
             }
@@ -337,9 +332,7 @@ var userApp = new Vue({
 	    };
       var perfumePie = new Chart(document.getElementById("pieChart"), perfumePieConfig);
     },
-    onEnterPageCreare: function () {
-    },
-		onLeavePageEdit: function (cb) {
+		onLeavePage: function (cb) {
 			if (userApp.isPageEditDataModified()) {
 				var msgInfo = {
 					title: '注意',
@@ -354,13 +347,15 @@ var userApp = new Vue({
 					}
 				};
 				messageApp.confirm(msgInfo, action);
-			} else return cb();
+			} else {
+		    window.onbeforeunload = null;
+        return cb();
+      };
 		},
 		loadItems: function (cb) {
 			window.onbeforeunload = null;
 			var ajaxSuccess = function(result) {
 				userAppModel.data.items = result.data.items;
-        console.log("result=>", result);
 				if (typeof cb !== 'undefined') setTimeout(cb, 0);
 			};
       $.get(LINK.API_LIST, ajaxSuccess);
