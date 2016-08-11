@@ -50,7 +50,14 @@ module.exports = {
     lastLogin: {
       type: Sequelize.DATE,
     },
+    facebookId: {
+      type: Sequelize.STRING,
+    },
     avatar: {
+      type: Sequelize.STRING,
+      defaultValues: '/assets/admin/img/avatars/default.png'
+    },
+    avatarThumb: {
       type: Sequelize.STRING,
       defaultValues: '/assets/admin/img/avatars/default.png'
     }
