@@ -8,6 +8,7 @@ module.exports = {
           items: data,
         },
       });
+
     } catch (e) {
       console.log(e);
       res.serverError(e);

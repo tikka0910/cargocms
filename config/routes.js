@@ -31,6 +31,20 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
+  '/api/admin/mock': "admin/MockController.find",
+  '/api/labfnp/scent': 'labfnp/ScentController.index',
+  'get /api/labfnp/scent/simpleList': 'labfnp/ScentController.find',
+
+  'get /api/labfnp/recipe': 'labfnp/RecipeController.find',
+  'post /api/labfnp/recipe': 'labfnp/RecipeController.create',
+  'get /api/labfnp/recipe/:id': 'labfnp/RecipeController.findOne',
+  'put /api/labfnp/recipe/:id': 'labfnp/RecipeController.update',
+  'delete /api/labfnp/recipe/:id': 'labfnp/RecipeController.destroy',
+
+  'get /api/labfnp/scent': 'labfnp/ScentController.find',
+
+  'get /api/labfnp/scentnote': 'labfnp/ScentNoteController.find',
+
   '/': {
     view: 'index'
   },

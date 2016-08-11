@@ -1,8 +1,5 @@
 module.exports = {
   attributes: {
-    //TODO message(string)
-    //TODO totalDrops (int)
-    //TODO coverPhoto (url as string)
     //TODO authorAvatar
     formula: {
       // from `full_picture`
@@ -30,6 +27,12 @@ module.exports = {
       type: Sequelize.STRING,
     },
     message: {
+      type: Sequelize.STRING,
+    },
+    totalDrops: {
+      type: Sequelize.INTEGER,
+    },
+    coverPhoto: {
       type: Sequelize.STRING,
     }
   },

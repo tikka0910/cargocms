@@ -10,7 +10,9 @@
  */
 
 module.exports.bootstrap = async (cb) => {
-  if(!sails.config.urls) sails.config.urls = {afterSignIn: "/"};
+
+  // 這個已經用 config/urls.js 定義預設值
+  //if(!sails.config.urls) sails.config.urls = {afterSignIn: "/"};
 
   console.log("=== Setup express-helpers ===");
   _.extend(sails.hooks.http.app.locals, sails.config.http.locals);
@@ -40,56 +42,74 @@ module.exports.bootstrap = async (cb) => {
 
     sails.log.info("=== start bootstrap ===");
     sails.services.passport.loadStrategies();
+
     await porductionInitDb();
 
     let adminRole = await Role.findOrCreate({
       where: {authority: 'admin'},
       defaults: {authority: 'admin'}
     });
+
     let userRole = await Role.findOrCreate({
       where: {authority: 'user'},
       defaults: {authority: 'user'}
     });
 
-    let user = await User.create({
+    User.create({
       username: 'user',
-      email: 'user@gmail.com',
+      email: 'user@example.com',
       firstName: '王',
       lastName: '大明'
-    });
-    let passport = await Passport.create({provider: 'local', password: 'user', UserId: user.id});
-
-    let admin = {
-      username: 'admin',
-      email: 'admin@gmail.com',
-      firstName: '管',
-      lastName: '李仁'
-    };
-
-    let adminUser = await User.findOrCreate({
-      where: {username: 'admin'},
-      defaults: admin
+    }).then(function(user) {
+      Passport.create({
+        provider: 'local',
+        password: 'user',
+        UserId: user.id
+      });
     });
 
-    await Passport.findOrCreate({
-      where: {provider: 'local', UserId: adminUser[0].id},
-      defaults: {provider: 'local', password: 'admin', UserId: adminUser[0].id}
+    User.findOrCreate({
+      where: {
+        username: 'admin'
+      },
+      defaults: {
+        username: 'admin',
+        email: 'admin@example.com',
+        firstName: '管',
+        lastName: '李仁'
+      }
+    }).then(function(adminUsers) {
+      Passport.findOrCreate({
+        where: {
+          provider: 'local',
+          UserId: adminUsers[0].id
+        },
+        defaults: {
+          provider: 'local',
+          password: 'admin',
+          UserId: adminUsers[0].id
+        }
+      });
+      //adminUsers[0].addRole(adminRole[0]);
     });
-
-    adminUser[0].addRole(adminRole[0]);
 
     const {environment} = sails.config;
     if (environment === 'development' && sails.config.models.migrate == 'drop') {
       sails.log.info("init Dev data", environment);
 
       for (let i = 0; i < 30; i ++) {
-        let user = await User.create({
-          username: `user${i}`,
-          email: `user${i}@gmail.com`,
-          firstName: '王',
-          lastName: '大明'
-        });
-        let passport = await Passport.create({provider: 'local', password: 'user', UserId: user.id});
+        // User.create({
+        //   username: `user${i}`,
+        //   email: `user${i}@gmail.com`,
+        //   firstName: '王',
+        //   lastName: '大明'
+        // }).then(function(user) {
+        //   Passport.create({
+        //     provider: 'local',
+        //     password: 'passport',
+        //     UserId: user.id
+        //   });
+        // });
       }
 
       const image = await Image.create({
@@ -104,19 +124,14 @@ module.exports.bootstrap = async (cb) => {
         cover: image.id,
         url: 'http://localhost:5001/blog/flower',
         abstract: '我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材（ex:玫瑰、康乃馨..等)所組成的『這束花的味道』，接著抽出其中的一朵康乃馨，聞到的則是這『一朵康乃馨的味道』，而事實上，若深入去探究此康乃馨的氣味組成，則可小到香味分子的程度：花香由多種香味分子所組成。而這樣的組成就像香水、香料以及香味分子的不同級距來看，香水聞起來是一種味道而細究卻是多種香味分子的組成',
-        UserId: user.id
-      })
+        UserId: await User.findOne({ where: {username: 'admin'} }).id,
+      });
+
       const tag = await Tag.create({
         title: '花'
       });
-      await post.addTag(tag.id);
-      const execSync = require('child_process').execSync;
-      execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scentNote.sql`);
-      execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scent.sql`);
-      execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/feeling.sql`);
 
-      // let path = "";
-      // await ScentNote.importFeelingFromFile({path});
+      await post.addTag(tag.id);
 
       const recipe = {
         formula:[
@@ -133,8 +148,17 @@ module.exports.bootstrap = async (cb) => {
       await RecipeService.create(recipe);
 
 
+      // const execSync = require('child_process').execSync;
+      // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scentNote.sql`);
+      // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scent.sql`);
+      // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/feeling.sql`);
 
+      // let path = "";
+      // await ScentNote.importFeelingFromFile({path});
     }
+
+    // import site-specified data
+    await require('./init/labfnp').init();
 
     cb();
   } catch (e) {

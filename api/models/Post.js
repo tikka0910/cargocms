@@ -1,3 +1,4 @@
+import moment from 'moment';
 module.exports = {
   attributes: {
     title: {
@@ -29,6 +30,16 @@ module.exports = {
         try {
           const tags = this.Tags ? this.Tags.map((tag) => tag.title) : [];
           return tags;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+    createdAtFormat: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          return moment(this.createdAt).format("YYYY/MM/DD");
         } catch (e) {
           sails.log.error(e);
         }
