@@ -98,18 +98,18 @@ module.exports.bootstrap = async (cb) => {
       sails.log.info("init Dev data", environment);
 
       for (let i = 0; i < 30; i ++) {
-        // User.create({
-        //   username: `user${i}`,
-        //   email: `user${i}@gmail.com`,
-        //   firstName: '王',
-        //   lastName: '大明'
-        // }).then(function(user) {
-        //   Passport.create({
-        //     provider: 'local',
-        //     password: 'passport',
-        //     UserId: user.id
-        //   });
-        // });
+        User.create({
+          username: `user${i}`,
+          email: `user${i}@gmail.com`,
+          firstName: '王',
+          lastName: '大明'
+        }).then(function(user) {
+          Passport.create({
+            provider: 'local',
+            password: 'passport',
+            UserId: user.id
+          });
+        });
       }
 
       const image = await Image.create({
