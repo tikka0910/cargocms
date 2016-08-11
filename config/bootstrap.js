@@ -98,20 +98,9 @@ module.exports.bootstrap = async (cb) => {
     if (environment === 'development' && sails.config.models.migrate == 'drop') {
       sails.log.info("init Dev data", environment);
 
-      for (let i = 0; i < 100; i ++) {
-        User.create({
-          username: `user${i}`,
-          email: `user${i}@gmail.com`,
-          firstName: '王',
-          lastName: '大明'
-        }).then(function(user) {
-          Passport.create({
-            provider: 'local',
-            password: 'passport',
-            UserId: user.id
-          });
-        });
-      }
+
+      // 大量假帳號
+      require('./init/fakeusers').init();
 
       const image = await Image.create({
         filePath: 'http://www.labfnp.com/modules/core/img/update1.jpg',
