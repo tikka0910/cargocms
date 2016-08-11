@@ -1,6 +1,12 @@
+
 @font-face{
 	font-family:"Bell MT";
-	src:url("http://www.myfontfree.com/data/54/b/bell-mt/BELL.TTF");
+	src: url('../fonts/BellMT.eot'); /* IE9 Compat Modes */
+	src: url('../fonts/BellMT.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	     url('../fonts/BellMT.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/BellMT.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/BellMT.svg') format('svg'); /* Legacy iOS */
+
 }
 
 /*
