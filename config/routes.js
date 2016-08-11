@@ -38,8 +38,8 @@ module.exports.routes = {
 
   //----- api -----
   '/api/admin/mock': "api/admin/MockController.find",
-  'post /api/upload': 'api/admin/ImageController.upload',
-  'delete /api/upload/:id': 'api/admin/ImageController.destroy',
+  'post /api/admin/upload': 'api/admin/ImageController.upload',
+  'delete /api/admin/upload/:id': 'api/admin/ImageController.destroy',
 
   'get /api/labfnp/recipe': 'api/labfnp/RecipeController.find',
   'post /api/labfnp/recipe': 'api/labfnp/RecipeController.create',
