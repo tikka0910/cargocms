@@ -3,14 +3,15 @@ module.exports = {
     color: {
       type: Sequelize.STRING
     },
+    keywords: {
+      type: Sequelize.STRING
+    },
     title: {
       type: Sequelize.STRING
     },
     description: {
       type: Sequelize.STRING
     }
-
-
   },
   associations: function() {
     ScentNote.hasMany(Scent, {
