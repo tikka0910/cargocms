@@ -135,8 +135,8 @@ module.exports.bootstrap = async (cb) => {
 
       const recipe = {
         formula:[
-          {"drops":"1","scent":"M6"},
-          {"drops":"2","scent":"M10"}
+          {"drops":"1","scent":"BA69","color":"#E87728"},
+          {"drops":"2","scent":"BA70","color":"#B35721"}
         ],
         formulaLogs: '',
         authorName: '王大明',
