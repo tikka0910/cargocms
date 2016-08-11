@@ -49,6 +49,9 @@ module.exports = {
     },
     lastLogin: {
       type: Sequelize.DATE,
+    },
+    avatar: {
+      type: Sequelize.STRING
     }
   },
   associations: function() {
