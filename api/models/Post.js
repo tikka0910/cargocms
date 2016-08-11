@@ -25,7 +25,7 @@ module.exports = {
           if (this.coverType === 'img') {
             return this.Image ? this.Image.url : '';
           } else {
-            return this.coverUrl;
+            return this.getDataValue('coverUrl');
           }
         } catch (e) {
           sails.log.error(e);
