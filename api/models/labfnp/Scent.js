@@ -16,6 +16,7 @@ module.exports = {
     });
   },
   options: {
+    timestamps: false,
     classMethods: {
       findAllWithRelation: async function(){
         let findScents = await Scent.findAll({
