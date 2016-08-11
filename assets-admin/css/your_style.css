@@ -29,3 +29,8 @@
  table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
    background-color: #aab7d1;
  }
+
+
+nav ul span.menu-item-parent {
+ font-size: 13px;
+}
