@@ -53,46 +53,53 @@ module.exports = {
         return findScentNotes;
       },
       importFeelingFromFile: async function({path}){
-        var feelingData = require(path);
-        try {
-          sails.log.info(feelingData.length);
-          for (let feelingRow of feelingData) {
+        
+        
+        /**
+         * Deprecated! 這個已經被標準匯入資料的功能給取代
+         */
+        
+        
+        // var feelingData = require(path);
+        // try {
+        //   sails.log.info(feelingData.length);
+        //   for (let feelingRow of feelingData) {
 
-            let newScentNote = {
-                color: feelingRow.color,
-                title: feelingRow.color
-            }
+        //     let newScentNote = {
+        //         color: feelingRow.color,
+        //         title: feelingRow.color
+        //     }
 
-            let newScent = {
-              name: feelingRow.Scent
-            }
-            let newFeeling = {
-                title: feelingRow.cfeeling
-            }
+        //     let newScent = {
+        //       name: feelingRow.Scent
+        //     }
+        //     let newFeeling = {
+        //         title: feelingRow.cfeeling
+        //     }
 
-            let scentNote = (await ScentNote.findOrCreate({
-              where: {color: newScentNote.color},
-              defaults: newScentNote
-            }))[0];
+        //     let scentNote = (await ScentNote.findOrCreate({
+        //       where: {color: newScentNote.color},
+        //       defaults: newScentNote
+        //     }))[0];
 
 
-            let scent = (await Scent.findOrCreate({
-              where: {name: newScent.name},
-              defaults: newScent
-            }))[0];
+        //     let scent = (await Scent.findOrCreate({
+        //       where: {name: newScent.name},
+        //       defaults: newScent
+        //     }))[0];
 
-            let feeling = (await Feeling.findOrCreate({
-              where: {title: newFeeling.title},
-              defaults: newFeeling
-            }))[0];
+        //     // let feeling = (await Feeling.findOrCreate({
+        //     //   where: {title: newFeeling.title},
+        //     //   defaults: newFeeling
+        //     // }))[0];
 
-            await scentNote.addScent(scent);
-            await scent.addFeeling(feeling);
-          }
+        //     await scentNote.addScent(scent);
+        //     //await scent.addFeeling(feeling);
+        //   }
 
-        } catch (e) {
-          throw e;
-        }
+        // } catch (e) {
+        //   throw e;
+        // }
 
 
       }
