@@ -1,3 +1,15 @@
+<style>
+.color {
+	color:white;
+	padding: 2px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: none;
+	font-family: monospace;
+}
+</style>
+
 <!-- widget grid -->
 <section id="scent-index" class="">
 
@@ -53,7 +65,7 @@
 								<tr v-for="scent in data.items" v-on:click="selection($index)">
 									<td><a href="/admin/#/admin/labfnp/scent/show/{{scent.id}}">{{ scent.id }}</a></td>
 									<td>{{ scent.name }}</td>
-									<td ><span style="background-color: {{scent.color}}; color: #fff;">{{ scent.color }}</span></td>
+									<td ><span class="color" style="background: {{ scentNote.color }};">{{ scent.color }}</span></td>
 									<td><span v-for="feeling in scent.feelings"> {{ feeling.title }}、</span></td>
 									<!-- <td align="center" style="cursor: pointer;">
                     <div class="row">
