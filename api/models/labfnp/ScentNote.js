@@ -34,7 +34,7 @@ module.exports = {
       importFeelingFromFile: async function({path}){
         var feelingData = require(path);
         try {
-          console.log(feelingData.length);
+          sails.log.info(feelingData.length);
           for (let feelingRow of feelingData) {
 
             let newScentNote = {
