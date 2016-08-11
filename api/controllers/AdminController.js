@@ -10,8 +10,15 @@ const url = require('url');
 module.exports = {
 
   index: function(req, res) {
-    console.log('>>> admin index >>>');
+    let loginUser = null;
+    let displayName = '未登入';
+    let avatar = '/assets/admin/img/avatars/default.png';
+    loginUser = AuthService.getSessionUser(req);
 
+    if(loginUser != null){
+      avatar = loginUser.avatar
+      displayName = loginUser.displayName
+    }
     res.ok({
       view: true,
       menuItems: [
@@ -25,6 +32,7 @@ module.exports = {
           { href: '/admin/labfnp/scentnote', title: '香調' },
         ]},
       ],
+      loginUser, avatar, displayName
     });
   },
 
