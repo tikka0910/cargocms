@@ -80,12 +80,12 @@ module.exports.routes = {
 
 
   //----- PostController -----
-  'get /api/post': 'PostController.find',
-  'get /api/post/:id': 'PostController.findOne',
+  'get /api/admin/post': 'api/admin/PostController.find',
+  'get /api/admin/post/:id': 'api/admin/PostController.findOne',
 
-  'post /api/post': 'PostController.create',
-  'put /api/post/:id': 'PostController.update',
-  'delete /api/post/:id': 'PostController.destroy',
+  'post /api/admin/post': 'api/admin/PostController.create',
+  'put /api/admin/post/:id': 'api/admin/PostController.update',
+  'delete /api/admin/post/:id': 'api/admin/PostController.destroy',
 
 
   '/admin/config.js': "AdminController.config",
