@@ -112,6 +112,11 @@ passport.connect = async function(req, query, profile, next) {
       user.username = user.lastName + user.firstName;
     }
 
+    if (profile.hasOwnProperty('photos') && profile.photos.length > 0) {
+      user.avatar = profile.photos[0].value;
+    }
+    console.log("new user", user);
+
 
 
     if (!user.username && !user.email) {
@@ -168,6 +173,8 @@ passport.connect = async function(req, query, profile, next) {
 
       let newUser = await User.create(user);
       query.UserId = newUser.id;
+
+      await Passport.createDefaultLocalProviderIfNotExist(newUser);
 
       newUser = await User.findOne({
         where:{

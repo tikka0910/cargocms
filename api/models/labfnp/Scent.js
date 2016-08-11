@@ -5,22 +5,52 @@ module.exports = {
     },
     description: {
       type: Sequelize.STRING
-    }
+    },
+    sequence: {
+      type: Sequelize.INTEGER
+    },
+    feelings: {
+      type: Sequelize.TEXT,
+      set: function (val) {
+        if (val) {
+          this.setDataValue('feelings', JSON.stringify(val));
+        }
+        else {
+          this.setDataValue('feelings', "[]");
+        }
+      },
+      get: function () {
+        try {
+          var feelings = this.getDataValue('feelings');
+          if (feelings) {
+            return JSON.parse(feelings);
+          }
+          else {
+            return [];
+          }
+        }
+        catch (e) {
+          console.log(e);
+          return [];
+        }
+      }
+    },
   },
   associations: function() {
     Scent.belongsTo(ScentNote);
-    Scent.hasMany(Feeling, {
-      foreignKey: {
-        name: 'ScentId'
-      }
-    });
+    // Scent.hasMany(Feeling, {
+    //   foreignKey: {
+    //     name: 'ScentId'
+    //   }
+    // });
   },
   options: {
     timestamps: false,
     classMethods: {
       findAllWithRelation: async function(){
         let findScents = await Scent.findAll({
-          include: [Feeling, ScentNote]
+          //include: [Feeling, ScentNote]
+          include: [ScentNote]
         });
 
         return findScents;
@@ -29,7 +59,7 @@ module.exports = {
       formatForApp: async function({scents}){
 
         let result = scents.map((scent) => {
-          let {id, name} = scent
+          let {id, name, feelings} = scent
           let color = ""
           let scentNote = ""
           if(scent.ScentNote){
@@ -37,10 +67,11 @@ module.exports = {
             color = scent.ScentNote.color;
           }
 
-          let feelings = scent.Feelings.map((feeling) => {
-            let {id, title} = feeling;
-            return {id, title}
-          })
+          // let feelings = scent.Feelings.map((feeling) => {
+          //   let {id, title} = feeling;
+          //   return {id, title}
+          // });
+
           return {id, name, color, feelings, scentNote}
         });
         return result
