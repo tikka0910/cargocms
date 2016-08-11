@@ -43,7 +43,14 @@ module.exports = {
   options: {
     timestamps: false,
     classMethods: {
-    
+      findAllWithRelation: async function(){
+        let findScentNotes = await ScentNote.findAll({
+          include: [{
+            model: Scent
+          }]
+        });
+        return findScentNotes;
+      }
     },
     instanceMethods: {},
     hooks: {}
