@@ -31,33 +31,24 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-  '/api/admin/mock': "admin/MockController.find",
-  '/api/labfnp/scent': 'labfnp/ScentController.index',
-  'get /api/labfnp/scent/simpleList': 'labfnp/ScentController.find',
-
-  // recipe
-  // '/labfnp/recipe': {
-  //   view: 'admin/labfnp/recipe/index'
-  // },
-  // '/labfnp/recipe/create': {
-  //   view: 'admin/labfnp/recipe/create'
-  // },
-  // '/labfnp/recipe/edit': {
-  //   view: 'admin/labfnp/recipe/edit'
-  // },
-  'get /api/labfnp/recipe': 'labfnp/RecipeController.find',
-  'post /api/labfnp/recipe': 'labfnp/RecipeController.create',
-  'get /api/labfnp/recipe/:id': 'labfnp/RecipeController.findOne',
-  'put /api/labfnp/recipe/:id': 'labfnp/RecipeController.update',
-  'delete /api/labfnp/recipe/:id': 'labfnp/RecipeController.destroy',
-
-  'get /api/labfnp/scent': 'labfnp/ScentController.find',
-
-  'get /api/labfnp/scentnote': 'labfnp/ScentNoteController.find',
 
   '/': {
     view: 'index'
   },
+
+  '/api/admin/mock': "admin/MockController.find",
+
+
+  'get /api/labfnp/recipe': 'api/labfnp/RecipeController.find',
+  'post /api/labfnp/recipe': 'api/labfnp/RecipeController.create',
+  'get /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.findOne',
+  'put /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.update',
+  'delete /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.destroy',
+
+  'get /api/labfnp/scent/simpleList': 'api/labfnp/ScentController.find',
+  'get /api/labfnp/scent': 'api/labfnp/ScentController.find',
+
+  'get /api/labfnp/scentnote': 'api/labfnp/ScentNoteController.find',
 
   '/creator':     'labfnp/MainController.creator',
   '/lab':         'labfnp/MainController.explore',
