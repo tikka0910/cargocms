@@ -1,13 +1,15 @@
 module.exports = {
-  create: async function ({ title,  content,  cover = null,  url,  abstract, UserId }) {
+  create: async function ({ title,  content,  cover = null, coverType, coverUrl, url,  abstract, UserId }) {
     try {
       return await Post.create({
         title,
         content,
         cover: cover === '' ? null : cover,
+        coverType,
+        coverUrl,
         url,
         abstract,
-        UserId
+        UserId,
       });
     } catch (e) {
       sails.log.error(e);
@@ -15,12 +17,14 @@ module.exports = {
     }
   },
 
-  update: async function (postId, { title,  content,  cover,  url,  abstract, TagsArray }) {
+  update: async function (postId, { title,  content,  cover, coverType, coverUrl, url,  abstract, TagsArray }) {
     try {
       await Post.update({
         title,
         content,
         cover: cover === '' ? null : cover,
+        coverType,
+        coverUrl,
         url,
         abstract
       }, {

@@ -4,7 +4,7 @@
   <section>
     <label class="label">封面類型</label>
     <label class="select">
-      <select v-model="data.item.coverType">
+      <select v-model="data.item.coverType" v-on:change="selectOnChange">
         <option value="img" selected>圖片</option>
         <option value="video">影片</option>
       </select> <i></i> </label>
