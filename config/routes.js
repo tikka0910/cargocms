@@ -71,12 +71,12 @@ module.exports.routes = {
   'get /auth/:provider/:action': 'AuthController.callback',
 
   //----- UserController -----
-  'get /api/user': 'UserController.find',
-  'get /api/user/:id': 'UserController.findOne',
+  'get /api/admin/user': 'api/admin/UserController.find',
+  'get /api/admin/user/:id': 'api/admin/UserController.findOne',
 
-  'post /api/user': 'UserController.create',
-  'put /api/user/:id': 'UserController.update',
-  'delete /api/user/:id': 'UserController.destroy',
+  'post /api/admin/user': 'api/admin/UserController.create',
+  'put /api/admin/user/:id': 'api/admin/UserController.update',
+  'delete /api/admin/user/:id': 'api/admin/UserController.destroy',
 
 
   //----- PostController -----
