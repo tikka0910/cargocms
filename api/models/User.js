@@ -51,7 +51,8 @@ module.exports = {
       type: Sequelize.DATE,
     },
     avatar: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      defaultValues: '/assets/admin/img/avatars/default.png'
     }
   },
   associations: function() {

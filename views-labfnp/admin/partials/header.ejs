@@ -59,9 +59,9 @@
 		<span> <!-- User image size is adjusted inside CSS, it should stay as is -->
 
 			<a href="#">
-				<img src="/assets/admin/img/avatars/default.png" alt="me" class="online" />
+				<img src="<%= (req.session.passport && req.session.passport.user)?req.session.passport.user.avatar:'/assets/admin/img/avatars/default.png' %>" alt="me" class="online" />
 				<span>
-					<%= req.session.passport?req.session.passport.user.displayName:'未登入' %>
+					<%= (req.session.passport && req.session.passport.user) ? req.session.passport.user.displayName:'未登入' %>
 				</span>
 				<i class="fa fa-angle-right"></i>
 			</a>
