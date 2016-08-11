@@ -1,14 +1,23 @@
 module.exports = {
   attributes: {
+    //TODO message(string)
+    //TODO totalDrops (int)
+    //TODO coverPhoto (url as string)
+    //TODO authorAvatar
     formula: {
       // from `full_picture`
       type: Sequelize.TEXT,
       set: function (val) {
-         this.setDataValue('formula', JSON.stringify(val));
+        if (val) {
+          this.setDataValue('formula', JSON.stringify(val));
+        }
+        else {
+          this.setDataValue('formula', "[]");
+        }
       },
       get: function () {
         var formula = this.getDataValue('formula');
-         return JSON.parse(formula);
+        return JSON.parse(formula);
       }
     },
     formulaLogs: {

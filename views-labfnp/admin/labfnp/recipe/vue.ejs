@@ -159,19 +159,21 @@ var userApp = new Vue({
 				error: ajaxError,
 			});
 		},
+    bindDefaultFormlaValue: function () {
+      for (var i=0;i<6;i++) {
+        var checkFormula = typeof userAppModel.data.item.formula[i] !== 'undefined';
+        if (!checkFormula) userAppModel.data.item.formula[i] = {};
+
+        var checkScent = typeof userAppModel.data.item.formula[i].scent !== 'undefined';
+        var checkDrops = userAppModel.data.item.formula[i].drops !== 0;
+        if (!checkFormula || !checkScent) userAppModel.data.item.formula[i].scent = '';
+        if (!checkFormula || !checkDrops) userAppModel.data.item.formula[i].drops = 0;
+      }
+    },
     loadSelectOptions: function (cb) {
+      this.bindDefaultFormlaValue();
       var ajaxSuccess = function (result) {
         userAppModel.data.select.scents = result.data.items;
-        for (var i=0;i<6;i++) {
-          var checkFormula = typeof userAppModel.data.item.formula[i] !== 'undefined';
-          if (!checkFormula) userAppModel.data.item.formula[i] = {};
-          
-          var checkScent = typeof userAppModel.data.item.formula[i].scent !== 'undefined';
-          var checkDrops = userAppModel.data.item.formula[i].drops !== 0;
-          if (!checkFormula || !checkScent) userAppModel.data.item.formula[i].scent = '';
-          if (!checkFormula || !checkDrops) userAppModel.data.item.formula[i].drops = 0;
-          console.log(checkFormula, checkScent, checkDrops);
-        }
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
       };
       $.ajax({

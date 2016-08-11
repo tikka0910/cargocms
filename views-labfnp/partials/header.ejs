@@ -18,7 +18,7 @@
           <li><a href="/logout">登出</a></li>
           <li class="topbar-devider"></li>
           <li>
-            <a href="/user/<%= req.session.passport.user.id %>">
+            <a href="/me/<%= req.session.passport.user.id %>">
               <%= req.session.passport.user.displayName %>
             </a>
           </li>

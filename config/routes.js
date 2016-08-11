@@ -46,8 +46,10 @@ module.exports.routes = {
   'put /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.update',
   'delete /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.destroy',
 
-  '/creator': 'api/labfnp/ScentController.creator',
-  '/lab':     'api/labfnp/ScentController.explore',
+  '/creator':     'labfnp/MainController.creator',
+  '/lab':         'labfnp/MainController.explore',
+  '/recipe/:id':  'labfnp/MainController.recipe',
+  '/me/:id':      'labfnp/MainController.portfolio',
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
