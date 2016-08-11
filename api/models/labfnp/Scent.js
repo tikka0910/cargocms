@@ -16,6 +16,7 @@ module.exports = {
     });
   },
   options: {
+    timestamps: false,
     classMethods: {
       findAllWithRelation: async function(){
         let findScents = await Scent.findAll({
@@ -28,7 +29,7 @@ module.exports = {
       formatForApp: async function({scents}){
 
         let result = scents.map((scent) => {
-          let {name} = scent
+          let {id, name} = scent
           let color = ""
           let scentNote = ""
           if(scent.ScentNote){
@@ -40,7 +41,7 @@ module.exports = {
             let {id, title} = feeling;
             return {id, title}
           })
-          return {name, color, feelings, scentNote}
+          return {id, name, color, feelings, scentNote}
         });
         return result
       },

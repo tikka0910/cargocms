@@ -8,6 +8,7 @@ module.exports = {
     Feeling.belongsTo(Scent);
   },
   options: {
+    timestamps: false,
     classMethods: {},
     instanceMethods: {},
     hooks: {}
