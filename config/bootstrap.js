@@ -144,9 +144,7 @@ module.exports.bootstrap = async (cb) => {
         message: 'this is love',
         UserId: 1,
       };
-
       await RecipeService.create(recipe);
-
 
       // const execSync = require('child_process').execSync;
       // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scentNote.sql`);
