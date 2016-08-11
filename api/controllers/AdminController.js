@@ -20,22 +20,12 @@ module.exports = {
       displayName = loginUser.displayName
     }
 
-    let menuItems = MenuItem.findAllWithSubMenu();
+    MenuItem.findAllWithSubMenu().then((menuItems) => {
+      res.ok({
+        view: true,
+        menuItems, loginUser, avatar, displayName
+      });
 
-    res.ok({
-      view: true,
-      menuItems: [
-        { icon: 'home', href: '/admin/dashboard', title: '控制台' },
-        { icon: 'wrench', href: '#', title: '資料維護', subItems: [
-          { href: '/admin/user', title: '會員資料' },
-          { href: '/admin/post', title: '內容資料' },
-          { href: '/admin/labfnp/recipe', title: '配方資料' },
-          { href: '/admin/mock', title: '實驗室' },
-          { href: '/admin/labfnp/scent', title: '香味分子' },
-          { href: '/admin/labfnp/scentnote', title: '香調' },
-        ]},
-      ],
-      loginUser, avatar, displayName
     });
   },
 

@@ -9,6 +9,10 @@ module.exports = {
     title: {
       type: Sequelize.STRING,
     },
+    sequence: {
+      type: Sequelize.INTEGER,
+      defaultValues: 0
+    },
   },
   associations: function() {
     MenuItem.hasMany(MenuItem, {
@@ -21,14 +25,21 @@ module.exports = {
   options: {
     classMethods: {
       findAllWithSubMenu: async function () {
-        let menuItems = await MenuItem.findAll({
-          where: {
-            ParentMenuItemId: null
-          },
-          include: {model: MenuItem, as: 'SubMenuItems'}
-        });
+        try {
+          let menuItems = await MenuItem.findAll({
+            where: {
+              ParentMenuItemId: null
+            },
+            include: {model: MenuItem, as: 'SubMenuItems'},
+            order: ['MenuItem.sequence', 'SubMenuItems.sequence']
+          });
 
-        return menuItems;
+          return menuItems;
+
+        } catch (e) {
+          console.log(e);
+          throw e;
+        }
       }
     },
     instanceMethods: {},
