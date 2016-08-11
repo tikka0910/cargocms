@@ -37,6 +37,7 @@ module.exports = {
     formulaLogs,
     authorName,
     perfumeName,
+    message
   }) => {
     try {
       sails.log.info('update recipe service=>', recipe);
@@ -50,6 +51,7 @@ module.exports = {
         updatedRecipe.formulaLogs = recipe.formulaLogs;
         updatedRecipe.authorName = recipe.authorName;
         updatedRecipe.perfumeName = recipe.perfumeName;
+        updatedRecipe.message = recipe.message;
 
         updatedRecipe = await updatedRecipe.save();
       }
