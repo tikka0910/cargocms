@@ -1,5 +1,5 @@
 var feelingData = require("./feeling.json");
-describe.only('import data.', () => {
+describe('import data.', () => {
   /*
   {
     "Scent":"BU2",
