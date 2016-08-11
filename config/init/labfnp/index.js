@@ -1,8 +1,7 @@
-var fs = require('fs');
 
-var ScentNoteData = require('./data/ScentNote')
-var ScentData = require('./data/Scent')
-
+const ScentNoteData = require('./data/ScentNote');
+const ScentData = require('./data/Scent');
+const FeelingData = require('./data/Feeling');
 
 module.exports.init = async () => {
   try {
@@ -16,16 +15,14 @@ module.exports.init = async () => {
             row.scents.forEach(function(scentName) {
 
               Scent.create({
+                sequence: parseInt(scentName.replace(/[^0-9]+/, '')),
                 name: scentName,
+                feelings: FeelingData[scentName] || []
               })
               .then(function(scent) {
-
                 scentNote.addScent(scent);
-
-                //console.log(JSON.stringify(scent));
-
+                console.log(JSON.stringify(scent));
               });
-
 
             })
           }
