@@ -22,7 +22,7 @@ module.exports = {
           { href: '/admin/labfnp/recipe', title: '配方資料' },
           { href: '/admin/mock', title: '實驗室' },
           { href: '/admin/labfnp/scent', title: '香水' },
-          // { href: '/admin/labfnp/scentnote', title: '香水' },
+          { href: '/admin/labfnp/scentnote', title: '香調' },
         ]},
       ],
     });

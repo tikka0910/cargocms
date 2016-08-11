@@ -267,20 +267,20 @@ var scentNoteApp = new Vue({
       ],
        "oTableTools": {
          "aButtons": [
-           {
-             "sExtends": "text",
-             "sButtonText": "檢視",
-             "fnClick": function ( nButton, oConfig, oFlash ) {
-               var isSelected = scentNoteAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
-               if (isSelected) {
-                 var index = scentNoteAppModel.view.table.selectIndex;
-                 var scentNoteId = scentNoteAppModel.data.items[index].id;
-                 location.href = '/admin/#/admin/labfnp/scentnote/show/' + scentNoteId;
-               } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
-               }
-             }
-           },
+          //  {
+          //    "sExtends": "text",
+          //    "sButtonText": "檢視",
+          //    "fnClick": function ( nButton, oConfig, oFlash ) {
+          //      var isSelected = scentNoteAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
+          //      if (isSelected) {
+          //        var index = scentNoteAppModel.view.table.selectIndex;
+          //        var scentNoteId = scentNoteAppModel.data.items[index].id;
+          //        location.href = '/admin/#/admin/labfnp/scentnote/show/' + scentNoteId;
+          //      } else {
+          //        messageApp.show({desc: '請選擇會員', type: 'warning'});
+          //      }
+          //    }
+          //  },
           //  {
           //    "sExtends": "text",
           //    "sButtonText": "新增",
