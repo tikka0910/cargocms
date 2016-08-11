@@ -4,31 +4,27 @@
     <section>
       <label class="label">香水名稱</label>
       <label class="input">
-        <input type="text" name="perfumeName" class="perfumeName input-lg" placeholder="請輸入名稱" v-model="data.item.perfumeName">
+        <input type="text" name="perfumeName" class="perfumeName input-lg" placeholder="請輸入名稱"
+        v-model="data.item.perfumeName" required>
       </label>
     </section>
     <section>
       <label class="label">作者名稱</label>
       <label class="input">
-        <input type="text" name="authorName" class="authorName input-lg" placeholder="請輸入作者名稱" v-model="data.item.authorName"
-        value="<%= req.session.passport?req.session.passport.user.displayName:'' %>">
-      </label>
-    </section>
-    <section>
-      <label class="label">配方描述</label>
-      <label class="textarea textarea-expandable">
-        <textarea rows="3" name="formulaLogs" class="formulaLogs custom-scroll" placeholder="請輸入配方描述"  v-model="data.item.formulaLogs"></textarea>
+        <input type="text" name="authorName" class="authorName input-lg" placeholder="請輸入作者名稱"
+        v-model="data.item.authorName"
+        value="<%= req.session.passport?req.session.passport.user.displayName:'' %>" required>
       </label>
     </section>
   </section>
 
   <section class="recipe-combo">
     <!-- row-0 -->
-    <div class="row">
+    <div class="row form-group">
       <section class="col col-6">
         <label class="label">配方成份</label>
         <label class="select">
-          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[0].scent">
+          <select name="scent[]" id="scent" class="form-control input-sm" v-model="data.item.formula[0].scent">
             <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
@@ -38,17 +34,20 @@
       <section class="col col-6">
         <label class="label">滴數</label>
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops" id="drops" class="drops" v-model="data.item.formula[0].drops">
+          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" class="drops form-control" v-model="data.item.formula[0].drops">
         </label>
       </section>
     </div>
     <!-- end-row -->
 
     <!-- row-1 -->
-    <div class="row">
+    <div class="row form-group">
       <section class="col col-6">
+        {{ data.item.formula[0].drops }}
+          {{ data.item.formula[1].drops }}
         <label class="select">
-          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[1].scent">
+          <select name="scent[]" id="scent" class="form-control input-sm" v-model="data.item.formula[1].scent"
+           v-bind:disabled="data.item.formula[0].drops === '0'">
             <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
@@ -57,17 +56,19 @@
       </section>
       <section class="col col-6">
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops" id="drops" class="drops" v-model="data.item.formula[1].drops">
+          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[1].drops"
+          v-bind:disabled="data.item.formula[0].drops === '0'">
         </label>
       </section>
     </div>
     <!-- end-row -->
 
     <!-- row-2 -->
-    <div class="row">
+    <div class="row form-group">
       <section class="col col-6">
         <label class="select">
-          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[2].scent">
+          <select name="scent[]" id="scent" class="form-control input-sm" v-model="data.item.formula[2].scent"
+          v-bind:disabled="data.item.formula[1].drops === '0'">
             <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
@@ -76,17 +77,19 @@
       </section>
       <section class="col col-6">
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops" id="drops" class="drops" v-model="data.item.formula[2].drops">
+          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[2].drops"
+          v-bind:disabled="data.item.formula[1].drops === '0'">
         </label>
       </section>
     </div>
     <!-- end-row -->
 
     <!-- row-3 -->
-    <div class="row">
+    <div class="row form-group">
       <section class="col col-6">
         <label class="select">
-          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[3].scent">
+          <select name="scent[]" id="scent" class="form-control input-sm" v-model="data.item.formula[3].scent"
+          v-bind:disabled="data.item.formula[2].drops === '0'">
             <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
@@ -95,17 +98,19 @@
       </section>
       <section class="col col-6">
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops" id="drops" class="drops" v-model="data.item.formula[3].drops">
+          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[3].drops"
+          v-bind:disabled="data.item.formula[2].drops === '0'">
         </label>
       </section>
     </div>
     <!-- end-row -->
 
     <!-- row-4 -->
-    <div class="row">
+    <div class="row form-group">
       <section class="col col-6">
         <label class="select">
-          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[4].scent">
+          <select name="scent[]" id="scent" class="form-control input-sm" v-model="data.item.formula[4].scent"
+          v-bind:disabled="data.item.formula[3].drops === '0'">
             <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
@@ -114,17 +119,19 @@
       </section>
       <section class="col col-6">
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops" id="drops" class="drops" v-model="data.item.formula[4].drops">
+          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[4].drops"
+          v-bind:disabled="data.item.formula[3].drops === '0'">
         </label>
       </section>
     </div>
     <!-- end-row -->
 
     <!-- row-5 -->
-    <div class="row">
+    <div class="row form-group">
       <section class="col col-6">
         <label class="select">
-          <select name="scent" id="scent" class="scent input-sm" v-model="data.item.formula[5].scent">
+          <select name="scent[]" id="scent" class="form-control input-sm" v-model="data.item.formula[5].scent"
+          v-bind:disabled="data.item.formula[4].drops === '0'">
             <option value="">選取一種香味分子</option>
             <option v-for="scent in data.select.scents" v-bind:value="scent.name">
               {{ scent.name }}
@@ -133,11 +140,21 @@
       </section>
       <section class="col col-6">
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops" id="drops" id class="drops" v-model="data.item.formula[5].drops">
+          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" id class="form-control" v-model="data.item.formula[5].drops"
+          v-bind:disabled="data.item.formula[4].drops === '0'">
         </label>
       </section>
     </div>
     <!-- end-row -->
+  </section>
+
+  <section class="recipe-extra">
+    <section>
+      <label class="label">其他訊息</label>
+      <label class="textarea textarea-expandable">
+        <textarea rows="3" name="message" class="message custom-scroll" placeholder="請輸入其他訊息"  v-model="data.item.message"></textarea>
+      </label>
+    </section>
   </section>
 
 </fieldset>

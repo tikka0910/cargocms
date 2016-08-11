@@ -14,9 +14,8 @@
 <!-- END Bread crumbs -->
 
 <!-- vue section -->
-<section id="labfnp-recipe-show">
+<section id="main-show">
   <input type="text" name="id" id="id" v-model="data.item.id" hidden="hidden" value="<%= req.params.id %>">
-
 
   <!-- row -->
   <div class="row" style="padding-top: 50px;">
@@ -43,7 +42,7 @@
                   <!-- product -->
                   <div class="product-wrap clearfix product-deatil">
                     <div class="row">
-                      <div class="col-md-6 col-sm-12 col-xs-12 ">
+                      <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
                         <div class="product-image">
                           <div id="myCarousel-2" class="carousel slide">
                             <ol class="carousel-indicators">
@@ -53,7 +52,7 @@
                             </ol>
                             <div class="carousel-inner pull-right">
                               <!-- Slide 1 -->
-                              <div class="item active">
+                              <div class="item active text-center">
                                 <!-- <img src="/assets/labfnp/img/perfume_512.png" alt=""> -->
                                 <canvas id="pieChart" height="300px" width="350px"></canvas>
                               </div>
@@ -71,17 +70,17 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12">
+                      <div class="col-lg-5 col-md-6 col-sm-5 col-xs-12">
 
                         <h2 class="name">
                           <small>配方名稱</small>
                             <p class="padding-5">{{ data.item.perfumeName }}</p>
                           <hr>
                           <div class="row">
-                            <div class="col col-xs-3">
+                            <div class="col col-xs-3 vcol-md-3 col-sm-12 col-lg-3">
               							  <small>創作人</small>{{ data.item.authorName }}
                             </div>
-                            <div class="col col-xs-3">
+                            <div class="col col-xs-3 vcol-md-3 col-sm-12 col-lg-3">
               							  <small>建立者</small>{{ data.item.User.displayName }}
                             </div>
                           </div>
@@ -97,15 +96,23 @@
             						</h2>
                         <h2 class="name">
                           <small>配方成份</small>
-                          <h4 class="padding-5">
-                            <div class="row" v-for="data in data.item.formula">
-                              <div v-if="data.drops > 0">
-                                <div class="col col-xs-3">
-                                  <string>・</string>
-                                  <label style="background:{{ data.color }}">{{ data.scent }}</label>
+                          <h4 class="padding-5" >
+                            <div class="row" v-for="item in data.item.formula" track-by="$index">
+                              <div v-if="item.drops > 0">
+                                <div class="col col-xs-3 col-md-4 col-sm-5 col-lg-2">
+                                  <stronge>・</stronge>
+                                    <label
+                                    style="
+                                    color:white;
+                                    padding: 2px;
+                                    background:{{ item.color }};
+                                    -webkit-border-radius: 5px;
+                                    -moz-border-radius: 5px;
+                                    border-radius: 5px;
+                                    border: none;">{{ item.scent }}</label>
                                 </div>
                                 <div class="col col-xs-1"> : </div>
-                                <div class="col col-xs-2">{{ data.drops }}</div>
+                                <div class="col col-xs-2">{{ item.drops }}</div>
                               </div>
                             </div>
                           </h4>
@@ -131,7 +138,7 @@
     <p>Integer egestas, orci id condimentum eleifend, nibh nisi pulvinar eros, vitae ornare massa neque ut orci. Nam aliquet lectus sed odio eleifend, at iaculis dolor egestas. Nunc elementum pellentesque augue sodales porta. Etiam aliquet rutrum turpis,
       feugiat sodales ipsum consectetur nec. </p>
   </div> -->
-                            <!-- <div class="tab-pane fade" id="formula">
+                        <!-- <div class="tab-pane fade" id="formula">
                               <br>
                               <dl class="">
                                 <dt>Gravina</dt>
@@ -148,7 +155,7 @@
                                 <dd>Vestibulum id ligula porta felis euismod semper</dd>
                               </dl>
                             </div> -->
-                            <!-- <div class="tab-pane fade" id="reviews">
+                        <!-- <div class="tab-pane fade" id="reviews">
                               <br>
                               <form method="post" class="well padding-bottom-10" onsubmit="return false;">
                                 <textarea rows="2" class="form-control" placeholder="Write a review"></textarea>
@@ -222,26 +229,26 @@
                                 </ul>
                               </div>
                             </div> -->
-                          </div>
-
-
-                        </div>
                       </div>
+
+
                     </div>
                   </div>
-                  <!-- end product -->
-                  <!-- </div> -->
-                  <!-- new -->
                 </div>
-                <!-- end row -->
               </div>
+              <!-- end product -->
+              <!-- </div> -->
+              <!-- new -->
             </div>
+            <!-- end row -->
           </div>
-          <!-- end row -->
         </div>
       </div>
+      <!-- end row -->
     </div>
-    <!-- end row -->
+  </div>
+  </div>
+  <!-- end row -->
 
 </section>
 <!-- end widget grid -->
@@ -287,8 +294,8 @@
   // pagefunction
   var pagefunction = function() {
     <%- include vue.ejs %>
-    userApp.$mount("#labfnp-recipe-show");
-    userApp.loadItemWithSelectOptions(userApp.onEnterPageShow);
+    userApp.$mount("#main-show");
+    userApp.loadItem(userApp.onEnterPageShow);
   };
 
   // var pagedestroy = function() {
@@ -301,7 +308,8 @@
 
   // Load form valisation dependency
   loadScript("/assets/admin/js/plugin/jquery-form/jquery-form.min.js", function() {
-  	loadScript("/assets/admin/js/plugin/moment/moment.min.js", function() {
-  		loadScript("/assets/admin/js/plugin/chartjs/chart.min.js", pagefunction)});
+    loadScript("/assets/admin/js/plugin/moment/moment.min.js", function() {
+      loadScript("/assets/admin/js/plugin/chartjs/chart.min.js", pagefunction)
+    });
   });
 </script>

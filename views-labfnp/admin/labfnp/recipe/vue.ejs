@@ -1,10 +1,11 @@
+<%- include ../metadata.js.ejs %>
+
 var COMMON = {
 	DOUBLE_CLICK_TIME_PERIOD: 250,
 	DEFAULT_INDEX: -1,
   PAGE_NAME: 'labfnp-recipe-',
   DROPS_MAX: 9,
   DROPS_MIN: 1,
-
 };
 
 var LINK = {
@@ -49,12 +50,12 @@ var formula = [
 var userAppModel = {
 	data: {
 		item: {
+      id: '',
       authorName: '',
 			perfumeName: '',
 			formulaLogs: '',
-      formula: formula,
+      formula: [],
       message: '',
-      UserId: '',
       User: {},
 		},
 		items: [],
@@ -68,11 +69,22 @@ var userAppModel = {
 		table: {
 			selectIndex: COMMON.DEFAULT_INDEX,
 		},
-	}
+	},
 };
 
 var userApp = new Vue({
 	data: userAppModel,
+  computed: {
+    requiredErrorMsg: function () {
+      return 'Required fruit !!'
+    },
+    minlengthErrorMsg: function () {
+      return 'Please chose at least 1 fruit !!'
+    },
+    maxlengthErrorMsg: function () {
+      return 'Please chose at most 2 fruits !!'
+    }
+  },
 	methods: {
 		cancel: function (event) {
 			userApp.onLeavePageEdit(function () {
@@ -80,34 +92,61 @@ var userApp = new Vue({
 			});
 		},
 		save: function (event) {
+      var ajaxSuccess = function (result) {
+        location.href = LINK.PAGE_INDEX;
+        messageApp.show({
+          desc: '新增資料成功！',
+          type: 'success'
+        });
+      };
+
+      var ajaxError = function (result) {
+        messageApp.show({
+          desc: '新增資料失敗！errorMessage: ' + result.responseJSON.message,
+          type: 'error'
+        });
+      };
+
+      var spliceEmptyData = (function () {
+        var dataJson = JSON.parse(JSON.stringify(userAppModel.data.item));
+        var newFormula = [];
+        for (var i=0;i<dataJson.formula.length;i++) {
+          var checkDrops = dataJson.formula[i].drops > 0;
+          var checkScent = dataJson.formula[i].scent !== '';
+          if (checkDrops && checkScent) newFormula.push(dataJson.formula[i]);
+        }
+        dataJson.formula = newFormula;
+        return dataJson;
+      })();
+
 			$.ajax({
 				url: LINK.API_CREATE,
 				type: 'POST',
 				dataType: 'json',
-				data: userAppModel.data.item,
+				data: spliceEmptyData,
 				xhrFields: {
 					withCredentials: true,
 				},
 				success: ajaxSuccess,
 				error: ajaxError,
 			});
-
-			function ajaxSuccess(result) {
-				location.href = LINK.PAGE_INDEX;
-				messageApp.show({
-					desc: '新增資料成功！',
-					type: 'success'
-				});
-			} // end ajaxSuccess
-
-			function ajaxError(result) {
-				messageApp.show({
-					desc: '新增資料失敗！errorMessage: ' + result.responseJSON.message,
-					type: 'error'
-				});
-			}
 		},
 		update: function (event) {
+			var ajaxSuccess = function(result) {
+				location.href = LINK.PAGE_INDEX;
+				messageApp.show({
+					desc: '更新資料成功！',
+					type: 'success'
+				});
+			};
+
+			var ajaxError = function(result) {
+				messageApp.show({
+					desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message,
+					type: 'error'
+				});
+			};
+
 			$.ajax({
 				url: LINK.API_UPDATE + userAppModel.data.item.id,
 				type: 'PUT',
@@ -119,77 +158,74 @@ var userApp = new Vue({
 				success: ajaxSuccess,
 				error: ajaxError,
 			});
-
-			function ajaxSuccess(result) {
-				location.href = LINK.PAGE_INDEX;
-				messageApp.show({
-					desc: '更新資料成功！',
-					type: 'success'
-				});
-			} // end ajaxSuccess
-
-			function ajaxError(result) {
-				messageApp.show({
-					desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message,
-					type: 'error'
-				});
-			}
 		},
-    loadItemWithSelectOptions: function (cb) {
-      userApp.loadSelectOptions(userApp.loadItem(mixData));
-      
-      function mixData() {
-          var formula = userAppModel.data.item.formula;
-          var scents = userAppModel.data.select.scents;
-          for (var x=0;x<formula.length;x++) {
-            for (var y=0;y<scents.length;y++) {
-              var equal = formula[x].scent === scents[y].name;
-              if (equal) formula[x].color = scents[y].color;
-            }
-          }
-
-        console.log("userAppModel.data.item.formula=>",JSON.parse(JSON.stringify(userAppModel.data.item.formula)));
-        if (typeof cb !== 'undefined') setTimeout(cb, 1);
-      } // end mixData
-    },
     loadSelectOptions: function (cb) {
-      $.get(LINK.API_LIST_SCENT, ajaxSuccess);
-
-      function ajaxSuccess(result) {
+      var ajaxSuccess = function (result) {
         userAppModel.data.select.scents = result.data.items;
-        if (typeof cb !== 'undefined') setTimeout(cb, 1);
-      } // end ajaxSuccess
+        for (var i=0;i<6;i++) {
+          var checkFormula = typeof userAppModel.data.item.formula[i] !== 'undefined';
+          if (!checkFormula) userAppModel.data.item.formula[i] = {};
+          
+          var checkScent = typeof userAppModel.data.item.formula[i].scent !== 'undefined';
+          var checkDrops = userAppModel.data.item.formula[i].drops !== 0;
+          if (!checkFormula || !checkScent) userAppModel.data.item.formula[i].scent = '';
+          if (!checkFormula || !checkDrops) userAppModel.data.item.formula[i].drops = 0;
+          console.log(checkFormula, checkScent, checkDrops);
+        }
+        if (typeof cb !== 'undefined') setTimeout(cb, 0);
+      };
+      $.ajax({
+        url: LINK.API_LIST_SCENT,
+        async: false,
+        success: ajaxSuccess,
+        // error: ajaxError,
+      });
+    },
+    bindScentColor: function() {
+      var scentColor = LABFNP.SCENT_COLOR();
+      var formula = userAppModel.data.item.formula;
+      for (var i=0;i<formula.length;i++) {
+        formula[i].color = scentColor[formula[i].scent];
+      }
     },
 		loadItem: function (cb) {
 			window.onbeforeunload = null;
-			$.get(LINK.API_ITEM + userAppModel.data.item.id, ajaxSuccess);
 
-			function ajaxSuccess(result) {
+			var ajaxSuccess = function(result) {
 				userAppModel.data.item = result.data;
 				var hasAvatar = typeof result.data.avatar === 'string';
 				if (!hasAvatar) {
 					userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
 				}
-        if (typeof cb !== 'undefined') setTimeout(cb, 1);
-			} // end ajaxSuccess
+        userApp.bindScentColor();
+        if (typeof cb !== 'undefined') setTimeout(cb, 0);
+			};
+
+      $.ajax({
+        url: LINK.API_ITEM + userAppModel.data.item.id,
+        async: false,
+        success: ajaxSuccess,
+        // error: ajaxError,
+      });
 		},
 		setupForm: function (type) {
-			var registerForm = $('#' + COMMON.PAGE_NAME + 'form');
+			var registerForm = $('#main-form');
 
 			registerForm.validate({
 				// Rules for form validation
+        // ignore: [],
 				rules: {
           authorName: {
-            required: true,
+            required: true
           },
-					perfumeName: {
-						required: true
-					},
-					scent: {
+          perfumeName: {
+            required: true
+          },
+					'scent[]': {
 						required: true,
             minlength: 1,
 					},
-          drops:{
+          'drops[]':{
 						required: true,
             minlength: 1,
             min: COMMON.DROPS_MIN,
@@ -199,18 +235,19 @@ var userApp = new Vue({
 
 				// Messages for form validation
 				messages: {
-					authorName: {
-						required: '請輸入作者名稱'
-					},
-					perfumeName: {
-						required: '請輸入香水名稱'
-					},
-					scent: {
+          authorName: {
+            required: '請輸入作者名稱'
+          },
+          perfumeName: {
+            required: '請輸入香水名稱'
+          },
+					'scent[]': {
 						required: '請至少選擇一種香味分子',
             minlength: '請至少選擇一種香味分子',
 					},
-          drops: {
+          'drops[]': {
 						required: '請至少給予 1 滴香味分子',
+            minlength: '請至少選擇一種香味分子',
             min: '請至少給予 1 滴香味分子',
             max: '請至多只給予 9 滴',
           }
@@ -221,12 +258,12 @@ var userApp = new Vue({
 					error.insertAfter(element.parent());
 
           // error message style
-          // $('label.error').css("color","red");
-          // $('label.error').css("font-weight","900");
-          // $('label.error').css("border","solid 1px #AAA");
-          // $('label.error').css("background","#fff");
-          // $('label.error').css("box-shadow","0px 2px 6px rgba(0, 0, 0, .7)");
-          // $('label.error').css("padding","2px 5px");
+          $('label.error').css("color","red");
+          $('label.error').css("font-weight","900");
+          $('label.error').css("border","solid 1px #AAA");
+          $('label.error').css("background","#fff");
+          $('label.error').css("box-shadow","0px 2px 6px rgba(0, 0, 0, .7)");
+          $('label.error').css("padding","2px 5px");
 				},
 
 				submitHandler: function (form) {
@@ -262,7 +299,6 @@ var userApp = new Vue({
       var labelArray = [];
       var dropsArray = [];
       var scentColorArray = [];
-      console.log("formula=>", JSON.parse(JSON.stringify(formula)));
       for (var i=0;i<formula.length;i++) {
         if (formula[i].drops > 0) {
           dropsArray.push(formula[i].drops);
@@ -270,7 +306,6 @@ var userApp = new Vue({
           scentColorArray.push(formula[i].color);
         }
       }
-      console.log("labelArray=>", labelArray);
 	    var perfumePieConfig = {
 	        type: 'pie',
 	        data: {
@@ -286,14 +321,13 @@ var userApp = new Vue({
 	        options: {
             title: {
                 display: true,
-                text: '配方成份圓餅圖'
+                text: ''
             },
             legend: {
                 display: false,
             },
             circumference: 1.5 * Math.PI,
-            responsive: true,
-            responsiveAnimationDuration: 2,
+            responsive: false,
             hover: {
               mode: 'label',
             }
@@ -322,13 +356,12 @@ var userApp = new Vue({
 		},
 		loadItems: function (cb) {
 			window.onbeforeunload = null;
-			$.get(LINK.API_LIST, ajaxSuccess);
-
-			function ajaxSuccess(result) {
+			var ajaxSuccess = function(result) {
 				userAppModel.data.items = result.data.items;
         console.log("result=>", result);
 				if (typeof cb !== 'undefined') setTimeout(cb, 0);
-			} // end ajaxSuccess
+			};
+      $.get(LINK.API_LIST, ajaxSuccess);
 		},
 		renderTable: function () {
 			/* BASIC ;*/
@@ -474,18 +507,7 @@ var userApp = new Vue({
 				},
 				function (ButtonPressed) {
 					if (ButtonPressed === '刪除') {
-						$.ajax({
-							url: LINK.API_UPDATE + userAppModel.data.item.id,
-							type: 'DELETE',
-							dataType: 'json',
-							xhrFields: {
-								withCredentials: true
-							},
-							success: ajaxSuccess,
-							error: ajaxError,
-						});
-
-						function ajaxSuccess(result) {
+						var ajaxSuccess = function(result) {
 							userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
 							messageApp.show({
 								desc: `刪除資料成功！`,
@@ -496,12 +518,23 @@ var userApp = new Vue({
 							}, 500);
 						} // end ajaxSuccess
 
-						function ajaxError(result) {
+						var ajaxError = function(result) {
 							messageApp.show({
 								desc: '刪除資料失敗！errorMessage: ' + result.responseJSON.message,
 								type: 'error'
 							});
 						}
+
+						$.ajax({
+							url: LINK.API_UPDATE + userAppModel.data.item.id,
+							type: 'DELETE',
+							dataType: 'json',
+							xhrFields: {
+								withCredentials: true
+							},
+							success: ajaxSuccess,
+							error: ajaxError,
+						});
 					}
 				});
 		}
