@@ -79,7 +79,6 @@ describe('about Post model operation.', function() {
     it('create Post should success.', async (done) => {
       try {
         let result = await Post.findByTagId(tag.id);
-        sails.log.debug(result[0].toJSON());
         result[0].id.should.be.eq(post.id)
         done();
       } catch (e) {
