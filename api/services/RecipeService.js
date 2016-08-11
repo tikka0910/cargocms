@@ -12,6 +12,7 @@ module.exports = {
     formulaLogs,
     authorName,
     perfumeName,
+    message,
     UserId
   }) => {
     try {
@@ -20,9 +21,10 @@ module.exports = {
         formulaLogs,
         authorName,
         perfumeName,
+        message,
         UserId,
       });
-      return await Recipe.create({ formula, formulaLogs, authorName, perfumeName, UserId });
+      return await Recipe.create({ formula, formulaLogs, authorName, perfumeName, message, UserId });
     } catch (e) {
       sails.log.error(e);
       throw e;
