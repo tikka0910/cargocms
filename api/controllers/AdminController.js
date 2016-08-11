@@ -21,6 +21,7 @@ module.exports = {
           { href: '/admin/post', title: '內容資料' },
           { href: '/admin/labfnp/recipe', title: '配方資料' },
           { href: '/admin/mock', title: '實驗室' },
+          { href: '/admin/labfnp/scent', title: '香水' },
         ]},
       ],
     });

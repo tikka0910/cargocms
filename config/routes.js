@@ -51,6 +51,8 @@ module.exports.routes = {
   'put /api/labfnp/recipe/:id': 'labfnp/RecipeController.update',
   'delete /api/labfnp/recipe/:id': 'labfnp/RecipeController.destroy',
 
+  'get /api/labfnp/scent': 'labfnp/ScentController.find',
+
   '/': {
     view: 'index'
   },
