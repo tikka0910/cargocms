@@ -86,7 +86,7 @@ module.exports = {
               defaults: newFeeling
             }))[0];
 
-            await scentNote.addScent(scent)
+            await scentNote.addScent(scent);
             await scent.addFeeling(feeling);
           }
 
