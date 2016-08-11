@@ -46,6 +46,7 @@
 									<th class="" data-class="expand"><i class="text-muted hidden-md hidden-sm hidden-xs"></i>ID</th>
 									<th class="" >名稱</th>
 									<th class="" >顏色</th>
+									<th class="" >感覺</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -53,6 +54,7 @@
 									<td><a href="/admin/#/admin/labfnp/scent/show/{{scent.id}}">{{ scent.id }}</a></td>
 									<td>{{ scent.name }}</td>
 									<td ><span style="background-color: {{scent.color}}; color: #fff;">{{ scent.color }}</span></td>
+									<td><span v-for="feeling in scent.feelings"> {{ feeling.title }}、</span></td>
 									<!-- <td align="center" style="cursor: pointer;">
                     <div class="row">
                       <a class="btn btn-default btn-xs" role="button" v-on:click="show(scent.id)">
