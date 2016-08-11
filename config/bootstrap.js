@@ -123,6 +123,19 @@ module.exports.bootstrap = async (cb) => {
 
       await post.addTag(tag.id);
 
+      const recipe = {
+        formula:[
+          {"drops":"1","scent":"BA69","color":"#E87728"},
+          {"drops":"2","scent":"BA70","color":"#B35721"}
+        ],
+        formulaLogs: '',
+        authorName: '王大明',
+        perfumeName: 'love',
+        message: 'this is love',
+        UserId: 1,
+      };
+      await RecipeService.create(recipe);
+
       // const execSync = require('child_process').execSync;
       // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scentNote.sql`);
       // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scent.sql`);

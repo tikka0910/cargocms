@@ -45,10 +45,10 @@
 								<tr>
 									<th class="" data-hide="phone">#</th>
 									<th class="" data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>ID</th>
-									<th class="" data-hide="phone,tablet">全名</th>
+									<th class="">全名</th>
 									<th class="" name="email">Email</th>
-									<th class="">最近登入時間</th>
-									<th class="no-sort"></th>
+									<th class="" data-hide="phone,tablet">最近登入時間</th>
+									<th class="no-sort" data-hide="phone,tablet"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -57,7 +57,10 @@
 									<td><a href="/admin/#/admin/user/show/{{user.id}}">{{ user.username }}</a></td>
 									<td>{{ user.displayName }}</td>
 									<td>{{ user.email }}</td>
-                  <td>{{ user.lastLogin }}</td>
+                  <td>
+                    <span v-if="user.lastLogin">{{ user.lastLogin }}</span>
+                    <span v-else>從未登入</span>
+                  </td>
 									<td align="center" style="cursor: pointer;">
                     <div class="row">
                       <a class="btn btn-default btn-xs" role="button" v-on:click="show(user.id)">
