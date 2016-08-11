@@ -19,6 +19,9 @@ module.exports = {
       avatar = loginUser.avatar
       displayName = loginUser.displayName
     }
+
+    let menuItems = MenuItem.findAllWithSubMenu();
+
     res.ok({
       view: true,
       menuItems: [

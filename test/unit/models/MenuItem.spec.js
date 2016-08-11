@@ -14,48 +14,29 @@ describe.only('about MenuItem model operation.', function() {
 
       await createdMenuItem.addSubMenuItems(createdSubMenuItems);
 
-      let findFolderMenuItem = await MenuItem.findOne({
-        where: {id: createdMenuItem.id},
-        include: {model: MenuItem, as: 'SubMenuItems'}
-      });
-
-      console.log(JSON.stringify(findFolderMenuItem.toJSON(), null, 2));
-
-      // {
-      //   "id": 1,
-      //   "icon": "wrench",
-      //   "href": "#",
-      //   "title": "資料維護",
-      //   "createdAt": "2016-08-11T16:00:06.919Z",
-      //   "updatedAt": "2016-08-11T16:00:06.919Z",
-      //   "ParentMenuItemId": null,
-      //   "SubMenuItems": [
-      //     {
-      //       "id": 2,
-      //       "icon": null,
-      //       "href": "/admin/user",
-      //       "title": "會員資料",
-      //       "createdAt": "2016-08-11T16:00:06.989Z",
-      //       "updatedAt": "2016-08-11T16:00:07.079Z",
-      //       "ParentMenuItemId": 1
-      //     },
-      //     {
-      //       "id": 3,
-      //       "icon": null,
-      //       "href": "/admin/post",
-      //       "title": "內容資料",
-      //       "createdAt": "2016-08-11T16:00:06.989Z",
-      //       "updatedAt": "2016-08-11T16:00:07.079Z",
-      //       "ParentMenuItemId": 1
-      //     }
-      //   ]
-      // }
-
-
+      let menuItems = await MenuItem.findAllWithSubMenu();
+      console.log(JSON.stringify(menuItems, null, 2));
       done();
     } catch (e) {
       done(e)
     }
+    // {
+    //   "id": 1,
+    //   "icon": "wrench",
+    //   "href": "#",
+    //   "title": "資料維護",
+    //   "ParentMenuItemId": null,
+    //   "SubMenuItems": [
+    //     {
+    //       "id": 2,
+    //       "icon": null,
+    //       "href": "/admin/user",
+    //       "title": "會員資料",
+    //       "ParentMenuItemId": 1
+    //     }
+    //   ]
+    // }
   });
+
 
 });

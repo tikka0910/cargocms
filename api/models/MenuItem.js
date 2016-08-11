@@ -19,7 +19,18 @@ module.exports = {
     });
   },
   options: {
-    classMethods: {},
+    classMethods: {
+      findAllWithSubMenu: async function () {
+        let menuItems = await MenuItem.findAll({
+          where: {
+            ParentMenuItemId: null
+          },
+          include: {model: MenuItem, as: 'SubMenuItems'}
+        });
+
+        return menuItems;
+      }
+    },
     instanceMethods: {},
     hooks: {}
   }
