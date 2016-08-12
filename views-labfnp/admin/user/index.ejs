@@ -48,31 +48,9 @@
 									<th class="">全名</th>
 									<th class="" name="email">Email</th>
 									<th class="" data-hide="phone,tablet">最近登入時間</th>
-									<th class="no-sort" data-hide="phone,tablet"></th>
+									<th class="no-sort action" data-hide="phone,tablet"></th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr v-for="user in data.items" v-on:click="selection($index)" v-on:dblclick="dblclick($index)">
-									<td>{{ user.id }}</td>
-									<td><a href="/admin/#/admin/user/show/{{user.id}}">{{ user.username }}</a></td>
-									<td>{{ user.displayName }}</td>
-									<td>{{ user.email }}</td>
-                  <td>
-                    <span v-if="user.lastLogin">{{ user.lastLogin }}</span>
-                    <span v-else>從未登入</span>
-                  </td>
-									<td align="center" style="cursor: pointer;">
-                    <div class="row">
-                      <a class="btn btn-default btn-xs" role="button" v-on:click="show(user.id)">
-                        <i class="fa-fw fa fa-eye text-muted" />
-                      </a>
-                      <a class="btn btn-default btn-xs" role="button" v-on:click="edit(user.id)">
-      									<i class="fa-fw fa fa-pencil-square-o text-muted"/>
-                      </a>
-                    </div>
-									</td>
-								</tr>
-							</tbody>
 						</table>
 
 					</div>
@@ -164,8 +142,9 @@
 		*/
 
 		<%- include vue.ejs %>
-		userApp.$mount("#user-index");
-		userApp.loadItems(userApp.renderTable);
+		userApp.renderTable();
+		// userApp.$mount("#user-index");
+		// userApp.loadItems(userApp.renderTable);
 
 	};
 

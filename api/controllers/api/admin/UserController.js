@@ -1,13 +1,9 @@
 module.exports = {
 
   find: async (req, res) => {
-    console.log("=== find ===");
     try {
       const users = await UserService.findAll();
-      res.ok({
-        data: {
-          items: users
-      }});
+      res.ok({data: users});
     } catch (e) {
       res.serverError({ message: e, data: {}});
     }

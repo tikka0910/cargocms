@@ -35,7 +35,7 @@ var userAppModel = {
   }
 }
 
-var userApp = new Vue({
+window.userApp = new Vue({
   data: userAppModel,
   methods: {
     cancel: function (event) {
@@ -93,7 +93,6 @@ var userApp = new Vue({
       $.get('/api/admin/user/' + userAppModel.data.item.id, ajaxSuccess);
 
       function ajaxSuccess(result) {
-        console.log("loadItem result.data=>", result.data);
         if (result.success) {
           userAppModel.data.item = result.data;
           userAppModel.data.option.passwordConfirm = result.data.Passports[0].password;
@@ -188,7 +187,6 @@ var userApp = new Vue({
     },
     onEnterPageEdit: function() {
       itemBeforeEdit = JSON.stringify(userAppModel.data.item);
-      console.log("itemBeforeEdit=>", JSON.parse(itemBeforeEdit));
       window.onbeforeunload = function(e) {
         if (userApp.isPageEditDataModified()) {
           var message = '您已經修改過資料，是否確定要放棄本次的修改？';
@@ -225,23 +223,31 @@ var userApp = new Vue({
     },
     renderTable: function() {
       /* BASIC ;*/
-     var responsiveHelper_user_table = undefined;
-     var responsiveHelper_datatable_fixed_column = undefined;
-     var responsiveHelper_datatable_col_reorder = undefined;
-     var responsiveHelper_datatable_tabletools = undefined;
+      var responsiveHelper_user_table = undefined;
+      var responsiveHelper_datatable_fixed_column = undefined;
+      var responsiveHelper_datatable_col_reorder = undefined;
+      var responsiveHelper_datatable_tabletools = undefined;
 
-     var breakpointDefinition = {
+      var breakpointDefinition = {
        tablet : 1024,
        phone : 480
-     };
-     /* TABLETOOLS */
-     var table = $('#user-table').dataTable({
-       // Tabletools options:
-       //   https://datatables.net/extensions/tabletools/button_options
-       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f>T<'hidden-xs'l>r>" +
-           "t"+
-           "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-       "oLanguage": {
+      };
+      /* TABLETOOLS */
+      var table = $('#user-table').dataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": "/api/admin/user",
+        "columns": [
+          { "data": "id" },
+          { "data": "username" },
+          { "data": "displayName" },
+          { "data": "email" },
+          { "data": "lastLogin" }
+        ],
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f>T<'hidden-xs'l>r>" +
+          "t"+
+          "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oLanguage": {
           "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
           "sInfo": "顯示 _START_ 到 _END_ 總共 _TOTAL_ 筆紀錄",
          	"sInfoPostFix":  "",
@@ -261,14 +267,29 @@ var userApp = new Vue({
          		"sortAscending":  ": 升冪排列",
          		"sortDescending": ": 降冪排列"
          	}
-       },
-      "columnDefs": [
-        {
-          "targets"  : 'no-sort',
-          "orderable": false,
         },
-      ],
-       "oTableTools": {
+        "columnDefs": [
+          {
+            "targets"  : 5,
+            "orderable": false,
+            "render": function ( data, type, row ) {
+              var colBody =
+              '<td align="center" style="cursor: pointer;">'+
+                  '<a class="btn btn-default btn-xs" role="button" onclick="window.userApp.show('+row.id+')">'+
+                    '<i class="fa-fw fa fa-eye text-muted" />'+
+                  '</a>'+
+                  '<a class="btn btn-default btn-xs" role="button" onclick="window.userApp.edit('+row.id+')">'+
+                    '<i class="fa-fw fa fa-pencil-square-o text-muted"/>'+
+                  '</a>'+
+                '</div>'+
+              '</td>';
+
+
+              return colBody;
+            }
+          },
+        ],
+        "oTableTools": {
          "aButtons": [
            {
              "sExtends": "text",
@@ -276,8 +297,7 @@ var userApp = new Vue({
              "fnClick": function ( nButton, oConfig, oFlash ) {
                var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
                if (isSelected) {
-                 var index = userAppModel.view.table.selectIndex;
-                 var userId = userAppModel.data.items[index].id;
+                 var userId = userAppModel.view.table.selectIndex;
                  location.href = '/admin/#/admin/user/show/' + userId;
                } else {
                  messageApp.show({desc: '請選擇會員', type: 'warning'});
@@ -297,8 +317,7 @@ var userApp = new Vue({
              "fnClick": function ( nButton, oConfig, oFlash ) {
                var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
                if (isSelected) {
-                 var index = userAppModel.view.table.selectIndex;
-                 var userId = userAppModel.data.items[index].id;
+                 var userId = userAppModel.view.table.selectIndex;
                  location.href = '/admin/#/admin/user/edit/' + userId;
                } else {
                  messageApp.show({desc: '請選擇會員', type: 'warning'});
@@ -306,33 +325,39 @@ var userApp = new Vue({
              }
            },
          ]
-       },
-       "autoWidth" : true,
-       "preDrawCallback" : function() {
-         // Initialize the responsive datatables helper once.
-         if (!responsiveHelper_datatable_tabletools) {
-           responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#user-table'), breakpointDefinition);
-         }
-       },
-       "rowCallback" : function(nRow) {
+        },
+        "autoWidth" : true,
+        "preDrawCallback" : function() {
+          if (!responsiveHelper_datatable_tabletools) {
+            responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#user-table'), breakpointDefinition);
+          }
+        },
+        "rowCallback" : function(nRow) {
          responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
-       },
-       "drawCallback" : function(oSettings) {
+        },
+        "drawCallback" : function(oSettings) {
          responsiveHelper_datatable_tabletools.respond();
-       }
-     });
+        }
+      });
 
-     // selection
-     table.on('click', 'tr', function () {
-       if ( $(this).hasClass('selected') ) {
-         $(this).removeClass('selected');
-       } else {
-         $('#user-table tbody tr').removeClass('selected');
-         $(this).addClass('selected');
-       }
-     });
+      // selection
+      table.on('click', 'tr', function () {
 
-     $('#user-table-widget').fadeIn();
+        if ( $(this).hasClass('selected') ) {
+          $(this).removeClass('selected');
+        } else {
+          var data = table.fnGetData(this);
+          $('#user-table tbody tr').removeClass('selected');
+          $(this).addClass('selected');
+          userApp.selection(data.id);
+        }
+      }).on('dblclick', 'tr', function() {
+        var data = table.fnGetData(this);
+        userApp.show(data.id);
+      });
+
+
+      $('#user-table-widget').fadeIn();
     },
     dblclick: function(index) {
       var userId = userAppModel.data.items[index].id;
