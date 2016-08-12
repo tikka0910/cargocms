@@ -36,7 +36,7 @@
         <label class="label hidden-xs">滴數</label>
         <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-warning">滴數</label>
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[0].drops">
+          <input type="number" value="0" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[0].drops">
         </label>
       </section>
     </div>
@@ -58,7 +58,7 @@
       <section class="col col-6">
         <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-warning">滴數</label>
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[1].drops"
+          <input type="number" value="0" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[1].drops"
           v-bind:disabled="data.item.formula[0].drops === '0'">
         </label>
       </section>
@@ -81,7 +81,7 @@
       <section class="col col-6">
         <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-warning">滴數</label>
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[2].drops"
+          <input type="number" value="0" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[2].drops"
           v-bind:disabled="data.item.formula[1].drops === '0'">
         </label>
       </section>
@@ -104,7 +104,7 @@
       <section class="col col-6">
         <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-warning">滴數</label>
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[3].drops"
+          <input type="number" value="0" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[3].drops"
           v-bind:disabled="data.item.formula[2].drops === '0'">
         </label>
       </section>
@@ -127,7 +127,7 @@
       <section class="col col-6">
         <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-warning">滴數</label>
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[4].drops"
+          <input type="number" value="0" min="0" name="drops[]" id="drops" class="form-control" v-model="data.item.formula[4].drops"
           v-bind:disabled="data.item.formula[3].drops === '0'">
         </label>
       </section>
@@ -150,7 +150,7 @@
       <section class="col col-6">
         <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-warning">滴數</label>
         <label class="input">
-          <input type="number" value="0" max="9" min="0" name="drops[]" id="drops" id class="form-control" v-model="data.item.formula[5].drops"
+          <input type="number" value="0" min="0" name="drops[]" id="drops" id class="form-control" v-model="data.item.formula[5].drops"
           v-bind:disabled="data.item.formula[4].drops === '0'">
         </label>
       </section>

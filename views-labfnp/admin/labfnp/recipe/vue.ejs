@@ -1,10 +1,9 @@
 <%- include ../metadata.js.ejs %>
 
 var COMMON = {
-	DOUBLE_CLICK_TIME_PERIOD: 250,
 	DEFAULT_INDEX: -1,
   PAGE_NAME: 'labfnp-recipe-',
-  DROPS_MAX: 9,
+  DROPS_MAX: 100,
   DROPS_MIN: 1,
 };
 
@@ -158,17 +157,25 @@ var userApp = new Vue({
 			};
     },
     insertEmptyFormulaItem: function () {
+      console.log(userAppModel.data.item.formula);
       for (var i=0;i<6;i++) {
         var thisFormula = userAppModel.data.item.formula[i];
-        var checkFormulaType = typeof thisFormula !== 'object';
-        var checkFormulaNotExist = typeof thisFormula === 'undefined';
-        if (checkFormulaNotExist || checkFormulaType){
+        var checkFormula = typeof thisFormula === 'undefined';
+
+        if (checkFormula) {
           userAppModel.data.item.formula[i] = {
             color: '',
             scent: '',
             drops: 0,
           };
+        } else {
+          var checkDrops = typeof thisFormula.drops === 'string';
+          var checkDropsValue = thisFormula.drops === '0';
+          if (!checkDrops || checkDropsValue) 
+            userAppModel.data.item.formula[i].scent = '';
+
         }
+
       }
     },
 		loadItem: function (cb) {
@@ -183,7 +190,7 @@ var userApp = new Vue({
 
       $.ajax({
         url: LINK.API_ITEM + userAppModel.data.item.id,
-        // async: false,
+        async: false,
         success: ajaxSuccess,
         // error: ajaxError,
       });
@@ -228,7 +235,7 @@ var userApp = new Vue({
 						required: '請至少給予 1 滴香味分子',
             minlength: '請至少選擇一種香味分子',
             min: '請至少給予 1 滴香味分子',
-            max: '請至多只給予 9 滴',
+            max: '請至多只給予 ' + COMMON.DROPS_MAX + ' 滴',
           }
 				},
 
