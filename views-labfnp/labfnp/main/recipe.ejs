@@ -1,49 +1,48 @@
 <% LayoutUtils.addStylesheets('/assets/unify/css/pages/profile.css'); %>
-<!--<div class="container">-->
-<!--<pre><%= JSON.stringify(recipe, null, 2) %></pre>-->
-<!--</div>-->
+  <!--<div class="container">-->
+  <!--<pre><%= JSON.stringify(recipe, null, 2) %></pre>-->
+  <!--</div>-->
 
-<style>
-  .cover-photo {
-    min-height: 150px;
-  }
-</style>
+  <style>
+    .cover-photo {
+      min-height: 150px;
+    }
+  </style>
 
 
-<div class="container content profile">
+  <div class="container content profile">
 
-  <!-- begin row -->
-  <div class="row">
+    <!-- begin row -->
+    <div class="row">
 
-    <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-6 col-md-offset-3">
 
-      <!-- begin .profile-body -->
-      <div class="profile-body">
+        <!-- begin .profile-body -->
+        <div class="profile-body">
 
-        <div class="easy-block-v1">
-          <div class="col-xs-12 text-center">
-            <!-- <img class="img-responsive cover-photo" src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt="" /> -->
+          <div class="easy-block-v1">
             <div class="easy-block-v1-badge rgba-red">配方詳細資料</div>
-            <div class="product-image">
+            <img class="img-responsive cover-photo" src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt="" />
+          </div>
+          <div class="projects">
+            <h2><small>配方成份</small></h2>
+            <h1><p><span class="padding-5"><%= recipe.perfumeName %></span></p></h1>
+            <ul class="list-unstyled list-inline blog-info-v2">
+              <li>
+                By:
+                <a class="color-green" href="#">
+                  <%= recipe.authorName %>
+                </a>
+              </li>
+              <li><i class="fa fa-clock-o"></i>
+                <%=: recipe.createdAt | formatDateOnly %>
+              </li>
+            </ul>
+            <hr>
+            <div class="col-xs-12 text-center">
               <canvas id="pieChart" height="200px" width="350px"></canvas>
             </div>
-          </div>
-        </div>
-        <div class="projects">
-          <h1><small>配方成份</small><p><span class="padding-5"><%= recipe.perfumeName %></span></p></h1>
-          <ul class="list-unstyled list-inline blog-info-v2">
-            <li>
-              By:
-              <a class="color-green" href="#">
-                <%= recipe.authorName %>
-              </a>
-            </li>
-            <li><i class="fa fa-clock-o"></i>
-              <%= recipe.createdAt %>
-            </li>
-          </ul>
-          <hr>
-          <h2>
+            <h2>
             <small>配方成份</small>
             <h4 class="padding-5" >
               <% for (var i=0;i<recipe.formula.length;i++) {%>
@@ -72,7 +71,7 @@
             </h4>
             <hr>
           </h2>
-          <h4>
+            <h4>
             <small>其他訊息</small>
             <% if (recipe.message) { %>
               <p class="padding-5"><%= recipe.message %></p>
@@ -80,8 +79,8 @@
   						<p class="padding-5">沒有資料</p>
             <% } %>
           </h4>
-        </div>
-        <!-- <div class="project-share">
+          </div>
+          <!-- <div class="project-share">
 					<ul class="list-inline comment-list-v2 pull-left">
 						<li><i class="fa fa-eye"></i> <a href="#">25</a></li>
 						<li><i class="fa fa-comments"></i> <a href="#">32</a></li>
@@ -96,15 +95,15 @@
 					</ul>
 				</div> -->
 
+        </div>
+        <!-- end .profile-body -->
+
       </div>
-      <!-- end .profile-body -->
+      <!-- end col -->
 
     </div>
-    <!-- end col -->
-
+    <!-- end row -->
   </div>
-  <!-- end row -->
-</div>
-<% LayoutUtils.addScripts ('/assets/admin/js/plugin/moment/moment.min.js'); %>
-<% LayoutUtils.addScripts ('/assets/admin/js/plugin/chartjs/chart.min.js'); %>
-<% LayoutUtils.addScripts('/assets/labfnp/page/recipe/show.js'); %>
+  <% LayoutUtils.addScripts ('/assets/admin/js/plugin/moment/moment.min.js'); %>
+    <% LayoutUtils.addScripts ('/assets/admin/js/plugin/chartjs/chart.min.js'); %>
+      <% LayoutUtils.addScripts('/assets/labfnp/page/recipe/show.js'); %>
