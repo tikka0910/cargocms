@@ -37,7 +37,8 @@ module.exports.routes = {
   },
 
   //----- api -----
-  '/api/admin/mock': "api/admin/MockController.find",
+  'get /api/admin/mock': "api/admin/MockController.find",
+
   'post /api/admin/upload': 'api/admin/ImageController.upload',
   'delete /api/admin/upload/:id': 'api/admin/ImageController.destroy',
 
@@ -63,6 +64,11 @@ module.exports.routes = {
   'put /api/admin/post/:id': 'api/admin/PostController.update',
   'delete /api/admin/post/:id': 'api/admin/PostController.destroy',
 
+  // 'get /api/admin/Default': 'api/admin/DefaultController.find',
+  // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
+  // 'post /api/admin/Default': 'api/admin/DefaultController.create',
+  // 'put /api/admin/Default/:id': 'api/admin/DefaultController.update',
+  // 'delete /api/admin/Default/:id': 'api/admin/DefaultController.destroy',
 
   //----- custom -----
   '/creator':     'labfnp/MainController.creator',

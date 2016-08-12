@@ -1,9 +1,7 @@
 import MockData from 'mockup-data';
 
 module.exports = {
-  index: async (req, res) => {
-    res.ok({view: true});
-  },
+
   find: async (req, res) => {
     console.log("=== mock find ===");
     try {
@@ -21,14 +19,5 @@ module.exports = {
       res.serverError(e);
 
     }
-  },
-  create: async (req, res) => {
-    res.ok({view: true});
-  },
-  edit: async (req, res) => {
-    res.ok({view: true});
-  },
-  show: async (req, res) => {
-    res.ok({view: true});
-  },
+  }
 }
