@@ -1,18 +1,3 @@
-// { draw: '1',
-//   columns:
-//    [ { data: 'id', name: '' },
-//      { data: 'username', name: '' },
-//      { data: 'displayName', name: '' },
-//      { data: 'email', name: '' },
-//      { data: 'lastLogin', name: '' },
-//      { data: '5', name: '' } ],
-//   order: [ { column: '2', dir: 'asc' } ],
-//   start: '0',
-//   length: '10',
-//   search: { value: 'userX', regex: 'false' },
-//   _: '1470989140227'
-// }
-
 module.exports = {
   getQueryObj: (input) => {
     try {
