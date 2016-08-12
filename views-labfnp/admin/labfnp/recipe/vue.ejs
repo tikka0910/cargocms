@@ -170,11 +170,8 @@ var userApp = new Vue({
         } else {
           var checkDrops = typeof thisFormula.drops === 'string';
           var checkDropsValue = thisFormula.drops === '0';
-          if (!checkDrops || checkDropsValue)
-            userAppModel.data.item.formula[i].scent = '';
-
+          if (!checkDrops || checkDropsValue) userAppModel.data.item.formula[i].scent = '';
         }
-
       }
     },
 		loadItem: function (cb) {
