@@ -1,5 +1,5 @@
 describe('about Format Service operation.', function() {
-  it.only('gen format', async (done) => {
+  it('gen format', async (done) => {
     try {
       const result = FormatService.getQueryObj({ draw: '1',
         columns:
