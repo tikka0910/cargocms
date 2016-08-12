@@ -47,22 +47,26 @@ module.exports = {
   options: {
     timestamps: false,
     classMethods: {
-      findAllWithRelation: async function(){
-        let findScents = await Scent.findAll({
-          //include: [Feeling, ScentNote]
-          include: [ScentNote]
-        });
 
-        return findScents;
+      /**
+       * 查詢所有香味分子
+       */
+      findAllWithRelation: async function() {
+        return await Scent.findAll({
+          include: [
+            ScentNote
+          ],
+          order: 'sequence ASC',
+        });
       },
 
-      formatForApp: async function({scents}){
+      formatForApp: async function({scents}) {
 
         let result = scents.map((scent) => {
-          let {id, name, feelings} = scent
+          let {id, name, sequence, feelings} = scent
           let color = ""
           let scentNote = ""
-          if(scent.ScentNote){
+          if (scent.ScentNote) {
             scentNote = scent.ScentNote.toJSON();
             color = scent.ScentNote.color;
           }
@@ -72,8 +76,9 @@ module.exports = {
           //   return {id, title}
           // });
 
-          return {id, name, color, feelings, scentNote}
+          return {id, sequence, name, color, feelings, scentNote}
         });
+
         return result
       },
 
