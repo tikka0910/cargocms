@@ -5,7 +5,9 @@ var COMMON = {
 };
 
 var itemBeforeEdit = {};
-var userAppModel = {
+var modelName = "user";
+var appModel = {
+  modelName: modelName,
   data: {
     item: {
       avatar: '',
@@ -35,20 +37,56 @@ var userAppModel = {
   }
 }
 
-window.userApp = new Vue({
-  data: userAppModel,
+/* TABLETOOLS */
+
+
+var columns = [
+  { "data": "id" },
+  { "data": "username" },
+  { "data": "displayName" },
+  { "data": "email" },
+  { "data": "lastLogin" }
+]
+
+var columnDefs = [
+  { "searchable": false, "targets": 2 },
+  {
+    "targets"  : 5,
+    "orderable": false,
+    "searchable": false,
+    "render": function ( data, type, row ) {
+      var colBody =
+      '<td align="center" style="cursor: pointer;">'+
+          '<a class="btn btn-default btn-xs" role="button" onclick="window.appMain.show('+row.id+')">'+
+            '<i class="fa-fw fa fa-eye text-muted" />'+
+          '</a>'+
+          '<a class="btn btn-default btn-xs" role="button" onclick="window.appMain.edit('+row.id+')">'+
+            '<i class="fa-fw fa fa-pencil-square-o text-muted"/>'+
+          '</a>'+
+        '</div>'+
+      '</td>';
+
+
+      return colBody;
+    }
+  },
+]
+
+
+window.appMain = new Vue({
+  data: appModel,
   methods: {
     cancel: function (event) {
-      userApp.onLeavePageEdit(function() {
-        location.href = '/admin/#/admin/user';
+      appMain.onLeavePageEdit(function() {
+        location.href = '/admin/#/admin/'+modelName;
       });
     },
     save: function (event) {
       $.ajax({
-        url: '/api/admin/user',
+        url: '/api/admin/'+modelName,
         type: 'POST',
         dataType: 'json',
-        data: userAppModel.data.item,
+        data: appModel.data.item,
         xhrFields: {
           withCredentials: true,
         },
@@ -57,8 +95,8 @@ window.userApp = new Vue({
       });
 
       function ajaxSuccess(result) {
-        location.href = '/admin/#/admin/user';
-        messageApp.show({desc: '新增會員成功！', type: 'success'});
+        location.href = '/admin/#/admin/'+modelName;
+        messageApp.show({desc: '新增成功！', type: 'success'});
       } // end ajaxSuccess
 
       function ajaxError(result) {
@@ -67,10 +105,10 @@ window.userApp = new Vue({
     },
     update: function (event) {
       $.ajax({
-        url: '/api/admin/user/' + userAppModel.data.item.id,
+        url: '/api/admin/' + modelName + '/' + appModel.data.item.id,
         type: 'PUT',
         dataType: 'json',
-        data: userAppModel.data.item,
+        data: appModel.data.item,
         xhrFields: {
           withCredentials: true,
         },
@@ -79,7 +117,7 @@ window.userApp = new Vue({
       });
 
       function ajaxSuccess(result) {
-        location.href = '/admin/#/admin/user';
+        location.href = '/admin/#/admin/' + modelName;
         messageApp.show({desc: '更新會員資料成功！', type: 'success'});
       } // end ajaxSuccess
 
@@ -90,19 +128,18 @@ window.userApp = new Vue({
     },
     loadItem: function (cb) {
       window.onbeforeunload = null;
-      $.get('/api/admin/user/' + userAppModel.data.item.id, ajaxSuccess);
+      $.get('/api/admin/'+modelName+'/' + appModel.data.item.id, ajaxSuccess);
 
       function ajaxSuccess(result) {
         if (result.success) {
-          userAppModel.data.item = result.data;
-          userAppModel.data.option.passwordConfirm = result.data.Passports[0].password;
+          appModel.data.item = result.data;
+          appModel.data.option.passwordConfirm = result.data.Passports[0].password;
           var hasAvatar = typeof result.data.avatar === 'string';
           if (!hasAvatar) {
-            userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
+            appModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
           }
         }
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
-        console.log("loadItem userAppModel.data.item=>", userAppModel.data.item);
       } // end ajaxSuccess
     },
     setupForm: function(type) {
@@ -111,7 +148,7 @@ window.userApp = new Vue({
         $('input[name="user"]').removeAttr('chekced');
         $('input[name="user"]').removeAttr('disabled');
       }
-      var registerForm = $("#user-form");
+      var registerForm = $("#main-form");
       registerForm.validate({
         // Rules for form validation
         rules : {
@@ -170,25 +207,25 @@ window.userApp = new Vue({
 
         submitHandler: function(form) {
           if (type == 'create') {
-            userApp.save();
+            appMain.save();
             return false;
           } else if(type == 'edit') {
-            userApp.update();
+            appMain.update();
             return false;
           }
         }
       });
     },
     isPageEditDataModified: function() {
-      var itemBeforeLeave = JSON.stringify(userAppModel.data.item);
+      var itemBeforeLeave = JSON.stringify(appModel.data.item);
       var isDataModified = itemBeforeEdit !== itemBeforeLeave;
       if (!isDataModified) window.onbeforeunload = null;
       return isDataModified;
     },
     onEnterPageEdit: function() {
-      itemBeforeEdit = JSON.stringify(userAppModel.data.item);
+      itemBeforeEdit = JSON.stringify(appModel.data.item);
       window.onbeforeunload = function(e) {
-        if (userApp.isPageEditDataModified()) {
+        if (appMain.isPageEditDataModified()) {
           var message = '您已經修改過資料，是否確定要放棄本次的修改？';
           e.returnValue = message;
           return message;
@@ -196,7 +233,7 @@ window.userApp = new Vue({
       };
     },
     onLeavePageEdit: function(cb) {
-      if (userApp.isPageEditDataModified()) {
+      if (appMain.isPageEditDataModified()) {
         var msgInfo = {
           title: '注意',
           content: '您已經修改過資料，是否確定要放棄本次的修改？',
@@ -214,171 +251,33 @@ window.userApp = new Vue({
     },
     loadItems: function (cb) {
       window.onbeforeunload = null;
-      $.get('/api/admin/user', ajaxSuccess);
+      $.get('/api/admin/'+modelName, ajaxSuccess);
 
       function ajaxSuccess(result) {
-        userAppModel.data.items = result.data.items;
+        appModel.data.items = result.data.items;
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
       } // end ajaxSuccess
     },
     renderTable: function() {
-      /* BASIC ;*/
-      var responsiveHelper_user_table = undefined;
-      var responsiveHelper_datatable_fixed_column = undefined;
-      var responsiveHelper_datatable_col_reorder = undefined;
-      var responsiveHelper_datatable_tabletools = undefined;
-
-      var breakpointDefinition = {
-       tablet : 1024,
-       phone : 480
-      };
-      /* TABLETOOLS */
-      var table = $('#user-table').dataTable({
-        "processing": true,
-        "serverSide": true,
-        "ajax": "/api/admin/user",
-        "columns": [
-          { "data": "id" },
-          { "data": "username" },
-          { "data": "displayName" },
-          { "data": "email" },
-          { "data": "lastLogin" }
-        ],
-        "columnDefs": [
-          { "searchable": false, "targets": 2 },
-          {
-            "targets"  : 5,
-            "orderable": false,
-            "searchable": false,
-            "render": function ( data, type, row ) {
-              var colBody =
-              '<td align="center" style="cursor: pointer;">'+
-                  '<a class="btn btn-default btn-xs" role="button" onclick="window.userApp.show('+row.id+')">'+
-                    '<i class="fa-fw fa fa-eye text-muted" />'+
-                  '</a>'+
-                  '<a class="btn btn-default btn-xs" role="button" onclick="window.userApp.edit('+row.id+')">'+
-                    '<i class="fa-fw fa fa-pencil-square-o text-muted"/>'+
-                  '</a>'+
-                '</div>'+
-              '</td>';
-
-
-              return colBody;
-            }
-          },
-        ],
-
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f>T<'hidden-xs'l>r>" +
-          "t"+
-          "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-        "oLanguage": {
-          "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
-          "sInfo": "顯示 _START_ 到 _END_ 總共 _TOTAL_ 筆紀錄",
-         	"sInfoPostFix":  "",
-         	"sInfoEmpty":    "顯示第 0 至 0 項結果，共 0 項",
-         	"sInfoFiltered": "(從 _MAX_ 項結果中過濾)",
-         	"sProcessing":   "處理中...",
-         	"sLoadingRecords": "載入中...",
-         	"sLengthMenu":   "顯示 _MENU_ 項結果　",
-         	"sZeroRecords":  "沒有符合的結果",
-         	"oPaginate": {
-         		"sFirst":    "第一頁",
-         		"sPrevious": "上一頁",
-         		"sNext":     "下一頁",
-         		"sLast":     "最後一頁"
-         	},
-         	"sAria": {
-         		"sortAscending":  ": 升冪排列",
-         		"sortDescending": ": 降冪排列"
-         	}
-        },
-        "oTableTools": {
-         "aButtons": [
-           {
-             "sExtends": "text",
-             "sButtonText": "檢視",
-             "fnClick": function ( nButton, oConfig, oFlash ) {
-               var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
-               if (isSelected) {
-                 var userId = userAppModel.view.table.selectIndex;
-                 location.href = '/admin/#/admin/user/show/' + userId;
-               } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
-               }
-             }
-           },
-           {
-             "sExtends": "text",
-             "sButtonText": "新增",
-             "fnClick": function ( nButton, oConfig, oFlash ) {
-               location.href = '/admin/#/admin/user/create';
-             }
-           },
-           {
-             "sExtends": "text",
-             "sButtonText": "編輯",
-             "fnClick": function ( nButton, oConfig, oFlash ) {
-               var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
-               if (isSelected) {
-                 var userId = userAppModel.view.table.selectIndex;
-                 location.href = '/admin/#/admin/user/edit/' + userId;
-               } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
-               }
-             }
-           },
-         ]
-        },
-        "autoWidth" : true,
-        "preDrawCallback" : function() {
-          if (!responsiveHelper_datatable_tabletools) {
-            responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#user-table'), breakpointDefinition);
-          }
-        },
-        "rowCallback" : function(nRow) {
-         responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
-        },
-        "drawCallback" : function(oSettings) {
-         responsiveHelper_datatable_tabletools.respond();
-        }
-      });
-
-      // selection
-      table.on('click', 'tr', function () {
-
-        if ( $(this).hasClass('selected') ) {
-          $(this).removeClass('selected');
-        } else {
-          var data = table.fnGetData(this);
-          $('#user-table tbody tr').removeClass('selected');
-          $(this).addClass('selected');
-          userApp.selection(data.id);
-        }
-      }).on('dblclick', 'tr', function() {
-        var data = table.fnGetData(this);
-        userApp.show(data.id);
-      });
-
-
-      $('#user-table-widget').fadeIn();
+      <%- include ../tableDefine.ejs %>
     },
     dblclick: function(index) {
-      var userId = userAppModel.data.items[index].id;
-      this.show(userId);
+      var id = appModel.data.items[index].id;
+      this.show(id);
     },
     selection: function (index) {
-      if (index !== userAppModel.view.table.selectIndex) {
-        userAppModel.view.table.selectIndex = index;
-        console.log("userAppModel.view.table.selectIndex", userAppModel.view.table.selectIndex);
+      if (index !== appModel.view.table.selectIndex) {
+        appModel.view.table.selectIndex = index;
+        console.log("appModel.view.table.selectIndex", appModel.view.table.selectIndex);
       } else {
-        userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
+        appModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
       }
     },
-    show: function (userId) {
-      location.href = '/admin/#/admin/user/show/' + userId;
+    show: function (id) {
+      location.href = '/admin/#/admin/' + modelName + '/show/' + id;
     },
-    edit: function (userId) {
-      location.href = '/admin/#/admin/user/edit/' + userId;
+    edit: function (id) {
+      location.href = '/admin/#/admin/' + modelName + '/edit/' + id;
     },
     delete: function() {
       messageApp.confirm({
@@ -389,7 +288,7 @@ window.userApp = new Vue({
       function(ButtonPressed) {
         if (ButtonPressed ==='刪除') {
           $.ajax({
-            url: '/api/admin/user/' + userAppModel.data.item.id,
+            url: '/api/admin/' + modelName + '/' + appModel.data.item.id,
             type: 'DELETE',
             dataType: 'json',
             xhrFields: {
@@ -400,10 +299,10 @@ window.userApp = new Vue({
           });
 
           function ajaxSuccess(result) {
-            userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
+            appModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
             messageApp.show({desc: `刪除資料成功！`, type: 'success'});
             setTimeout(function() {
-              location.href = '/admin/#/admin/user';
+              location.href = '/admin/#/admin/' + modelName;
             }, 500);
           } // end ajaxSuccess
 

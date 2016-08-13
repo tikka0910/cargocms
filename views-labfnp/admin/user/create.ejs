@@ -15,7 +15,7 @@
 </div>
 
 <!-- widget grid -->
-<section id="user-create" class="">
+<section id="main-create" class="">
 
 
 	<!-- START ROW -->
@@ -63,7 +63,7 @@
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 
-						<form id="user-form" class="smart-form">
+						<form id="main-form" class="smart-form">
 
 							<%- include form.ejs %>
 
@@ -139,9 +139,9 @@
 	var pagefunction = function() {
 
 		<%- include vue.ejs %>
-		userApp.$mount("#user-create");
-		userApp.setupForm("create");
-		userApp.onEnterPageEdit();
+		appMain.$mount("#main-create");
+		appMain.setupForm("create");
+		appMain.onEnterPageEdit();
 
 	};
 

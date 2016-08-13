@@ -3,13 +3,8 @@ module.exports = {
   find: async (req, res) => {
     try {
       let {query} = req
-
       const findQuery = FormatService.getQueryObj(query);
       let result = await User.findAndCountAll(findQuery)
-      sails.log.debug(JSON.stringify(result, null, 2));
-
-      // ,"recordsTotal":57,"recordsFiltered":57,"data"
-
       let data = result.rows
       let recordsTotal = data.length
       let recordsFiltered =  result.count

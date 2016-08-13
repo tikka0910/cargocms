@@ -15,7 +15,7 @@
 </div>
 
 <!-- widget grid -->
-<section id="user-edit" class="">
+<section id="main-edit" class="">
 
 
 	<!-- START ROW -->
@@ -63,7 +63,7 @@
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 
-						<form id="user-form" class="smart-form">
+						<form id="main-form" class="smart-form">
 							<input type="text" name="id" id="id" v-model="data.item.id" hidden="hidden" value="<%= req.params.id %>">
 
 							<%- include form.ejs %>
@@ -142,10 +142,10 @@
 	// pagefunction
 	var pagefunction = function() {
 		<%- include vue.ejs %>
-		userApp.$mount("#user-edit");
-		userApp.loadItem(userApp.onEnterPageEdit);
+		appMain.$mount("#main-edit");
+		appMain.loadItem(appMain.onEnterPageEdit);
 
-		userApp.setupForm("edit");
+		appMain.setupForm("edit");
 	};
 
 	// var pagedestroy = function() {

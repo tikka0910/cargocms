@@ -14,7 +14,7 @@
 <!-- END Bread crumbs -->
 
 <!-- vue section -->
-<section id="user-show">
+<section id="main-show">
   <input type="text" name="id" id="id" v-model="data.item.id" hidden="hidden" value="<%= req.params.id %>">
 
   <!-- row -->
@@ -28,10 +28,10 @@
                 <div class="col-sm-12">
                   <div id="myCarousel" class="carousel fade profile-carousel">
                     <div class="air air-bottom-right padding-10">
-                      <a href="/admin/#/admin/user" class="btn btn-default">
+                      <a href="/admin/#/admin/{{modelName}}" class="btn btn-default">
                         返回
                       </a>
-                      <a href="/admin/#/admin/user/edit/{{data.item.id}}" class="btn btn-default">
+                      <a href="/admin/#/admin/{{modelName}}/edit/{{data.item.id}}" class="btn btn-default">
                         編輯
                       </a>
                     </div>
@@ -183,8 +183,8 @@
   // pagefunction
   var pagefunction = function() {
     <%- include vue.ejs %>
-    userApp.$mount("#user-show");
-    userApp.loadItem();
+    appMain.$mount("#main-show");
+    appMain.loadItem();
   };
 
   // var pagedestroy = function() {
