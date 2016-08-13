@@ -73,6 +73,8 @@ var columnDefs = [
 ]
 
 <%- include ../default/vueMethod.ejs %>
+// 需要新增函式可以對 defaultVueMathod 進行定義，如：
+// defaultVueMathod.log = () => {console.log("123")}
 
 window.appMain = new Vue({
   data: appModel,
