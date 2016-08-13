@@ -2,8 +2,19 @@ module.exports = {
 
   find: async (req, res) => {
     try {
-      const users = await UserService.findAll();
-      res.ok({data: users});
+      let {query} = req
+
+      const findQuery = FormatService.getQueryObj(query);
+      let result = await User.findAndCountAll(findQuery)
+      sails.log.debug(JSON.stringify(result, null, 2));
+
+      // ,"recordsTotal":57,"recordsFiltered":57,"data"
+
+      let data = result.rows
+      let recordsTotal = data.length
+      let recordsFiltered =  result.count
+      let draw = parseInt(req.draw) + 1
+      res.ok({draw, recordsTotal, recordsFiltered, data});
     } catch (e) {
       res.serverError({ message: e, data: {}});
     }

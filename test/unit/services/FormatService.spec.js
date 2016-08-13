@@ -1,15 +1,16 @@
-describe('about Format Service operation.', function() {
+describe.only('about Format Service operation.', function() {
   it('gen format', async (done) => {
     try {
       const result = FormatService.getQueryObj({ draw: '1',
-        columns:
-         [ { data: 'id', name: '' },
+        columns:[
+           { data: 'id', name: '' },
            { data: 'username', name: '' },
-           { data: 'displayName', name: '' },
+           { data: 'displayName', name: '', "searchable": "false"},
            { data: 'email', name: '' },
-           { data: 'lastLogin', name: '' },
-           { data: '5', name: '' } ],
-        order: [ { column: '2', dir: 'asc' } ],
+           { data: 'lastLogin', name: '', "searchable": "false"},
+           { data: '5', name: '', "searchable": "false"}
+        ],
+        order: [ { column: '0', dir: 'asc' } ],
         start: '0',
         length: '10',
         search: { value: 'userX', regex: 'false' },
@@ -27,4 +28,31 @@ describe('about Format Service operation.', function() {
       done(e)
     }
   });
+  it('user format query for find',async (done) => {
+    try {
+      const query = FormatService.getQueryObj({ draw: '1',
+        columns:[
+           { data: 'id', name: '' },
+           { data: 'username', name: '' },
+           { data: 'displayName', name: '', "searchable": "false"},
+           { data: 'email', name: '' },
+           { data: 'lastLogin', name: '', "searchable": "false"},
+           { data: '5', name: '', "searchable": "false"}
+        ],
+        order: [ { column: '0', dir: 'asc' } ],
+        start: '0',
+        length: '10',
+        search: { value: 'user', regex: 'false' },
+        _: '1470989140227'
+      });
+
+      let users = await User.findAndCountAll(query)
+      sails.log.debug(JSON.stringify(users, null, 2));
+      done();
+
+    } catch (e) {
+      done(e)
+    }
+
+  })
 });

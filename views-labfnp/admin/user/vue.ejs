@@ -244,6 +244,30 @@ window.userApp = new Vue({
           { "data": "email" },
           { "data": "lastLogin" }
         ],
+        "columnDefs": [
+          { "searchable": false, "targets": 2 },
+          {
+            "targets"  : 5,
+            "orderable": false,
+            "searchable": false,
+            "render": function ( data, type, row ) {
+              var colBody =
+              '<td align="center" style="cursor: pointer;">'+
+                  '<a class="btn btn-default btn-xs" role="button" onclick="window.userApp.show('+row.id+')">'+
+                    '<i class="fa-fw fa fa-eye text-muted" />'+
+                  '</a>'+
+                  '<a class="btn btn-default btn-xs" role="button" onclick="window.userApp.edit('+row.id+')">'+
+                    '<i class="fa-fw fa fa-pencil-square-o text-muted"/>'+
+                  '</a>'+
+                '</div>'+
+              '</td>';
+
+
+              return colBody;
+            }
+          },
+        ],
+
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f>T<'hidden-xs'l>r>" +
           "t"+
           "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -268,27 +292,6 @@ window.userApp = new Vue({
          		"sortDescending": ": 降冪排列"
          	}
         },
-        "columnDefs": [
-          {
-            "targets"  : 5,
-            "orderable": false,
-            "render": function ( data, type, row ) {
-              var colBody =
-              '<td align="center" style="cursor: pointer;">'+
-                  '<a class="btn btn-default btn-xs" role="button" onclick="window.userApp.show('+row.id+')">'+
-                    '<i class="fa-fw fa fa-eye text-muted" />'+
-                  '</a>'+
-                  '<a class="btn btn-default btn-xs" role="button" onclick="window.userApp.edit('+row.id+')">'+
-                    '<i class="fa-fw fa fa-pencil-square-o text-muted"/>'+
-                  '</a>'+
-                '</div>'+
-              '</td>';
-
-
-              return colBody;
-            }
-          },
-        ],
         "oTableTools": {
          "aButtons": [
            {
