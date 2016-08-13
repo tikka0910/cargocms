@@ -9,7 +9,7 @@ var breakpointDefinition = {
  phone : 480
 };
 
-var tableDefine = {
+var defaultTableConfig = {
   "processing": true,
   "serverSide": true,
   "ajax": "/api/admin/user",
@@ -91,21 +91,21 @@ var tableDefine = {
   }
 }
 
-var  table = $('#main-table').dataTable(tableDefine);
+var  defaultTable = $('#main-table').dataTable(defaultTableConfig);
 
 // selection
-table.on('click', 'tr', function () {
+defaultTable.on('click', 'tr', function () {
 
   if ( $(this).hasClass('selected') ) {
     $(this).removeClass('selected');
   } else {
-    var data = table.fnGetData(this);
+    var data = defaultTable.fnGetData(this);
     $('#main-table tbody tr').removeClass('selected');
     $(this).addClass('selected');
     appMain.selection(data.id);
   }
 }).on('dblclick', 'tr', function() {
-  var data = table.fnGetData(this);
+  var data = defaultTable.fnGetData(this);
   appMain.show(data.id);
 });
 
