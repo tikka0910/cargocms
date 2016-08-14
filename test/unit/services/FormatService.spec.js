@@ -1,4 +1,4 @@
-describe.only('about Format Service operation.', function() {
+describe('about Format Service operation.', function() {
   it('gen format', async (done) => {
     try {
       const result = FormatService.getQueryObj({ draw: '1',
