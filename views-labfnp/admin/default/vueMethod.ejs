@@ -52,7 +52,7 @@ var defaultVueMathod = {
   loadItem: function (cb) {
 
     window.onbeforeunload = null;
-    if(!serverSide)$.get('/api/admin/'+modelName+'/' + appModel.data.item.id, ajaxSuccess);
+    $.get('/api/admin/'+modelName+'/' + appModel.data.item.id, ajaxSuccess);
 
     function ajaxSuccess(result) {
       if (result.success) {
@@ -101,6 +101,11 @@ var defaultVueMathod = {
     } else return cb();
   },
   loadItems: function (cb) {
+    if(serverSidePaging){
+      if (typeof cb !== 'undefined') setTimeout(cb, 0);
+      return;
+    }
+
     window.onbeforeunload = null;
     $.get('/api/admin/'+modelName, ajaxSuccess);
 

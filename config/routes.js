@@ -53,7 +53,6 @@ module.exports.routes = {
   'get /api/labfnp/scentnote': 'api/labfnp/ScentNoteController.find',
 
   'get /api/admin/user': 'api/admin/UserController.find',
-  'get /api/admin/user/findPage': 'api/admin/UserController.findPage',
   'get /api/admin/user/:id': 'api/admin/UserController.findOne',
   'post /api/admin/user': 'api/admin/UserController.create',
   'put /api/admin/user/:id': 'api/admin/UserController.update',
