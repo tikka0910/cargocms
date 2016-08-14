@@ -101,6 +101,13 @@ module.exports = {
         as: 'Roles'
       }
     });
+
+    User.hasMany(UserLikeRecipe, {
+      foreignKey: {
+        name: 'UserId'
+      }
+    });
+
   },
   options: {
     // tableName: 'Users',
