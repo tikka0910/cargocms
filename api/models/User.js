@@ -49,6 +49,17 @@ module.exports = {
     },
     lastLogin: {
       type: Sequelize.DATE,
+      get: function () {
+        try {
+          let lastLogin = this.getDataValue("lastLogin");
+          if(lastLogin == null) lastLogin = "未登入";
+          return lastLogin;
+
+        } catch (e) {
+          throw e;
+        }
+
+      }
     },
     facebookId: {
       type: Sequelize.STRING,

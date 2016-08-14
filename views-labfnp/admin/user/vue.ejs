@@ -56,17 +56,14 @@ var columnDefs = [
     "searchable": false,
     "render": function ( data, type, row ) {
       var colBody =
-      '<td align="center" style="cursor: pointer;">'+
-          '<a class="btn btn-default btn-xs" role="button" onclick="window.appMain.show('+row.id+')">'+
-            '<i class="fa-fw fa fa-eye text-muted" />'+
-          '</a>'+
-          '<a class="btn btn-default btn-xs" role="button" onclick="window.appMain.edit('+row.id+')">'+
-            '<i class="fa-fw fa fa-pencil-square-o text-muted"/>'+
-          '</a>'+
-        '</div>'+
-      '</td>';
-
-
+      '<div class="row-action-buttons">'+
+        '<a class="btn btn-default btn-xs" role="button" onclick="window.appMain.show('+row.id+')">'+
+          '<i class="fa-fw fa fa-eye text-muted" />'+
+        '</a>'+
+        '<a class="btn btn-default btn-xs" role="button" onclick="window.appMain.edit('+row.id+')">'+
+          '<i class="fa-fw fa fa-pencil-square-o text-muted"/>'+
+        '</a>'+
+      '</div>';
       return colBody;
     }
   },
