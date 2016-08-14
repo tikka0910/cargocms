@@ -1,7 +1,20 @@
 module.exports = {
 
+  findPage: async (req, res) => {
+    try {
+      let {query} = req
+      const findQuery = FormatService.getQueryObj(query);
+      let result = await User.findAndCountAll(findQuery)
+      let data = result.rows
+      let recordsTotal = data.length
+      let recordsFiltered =  result.count
+      let draw = parseInt(req.draw) + 1
+      res.ok({draw, recordsTotal, recordsFiltered, data});
+    } catch (e) {
+      res.serverError({ message: e, data: {}});
+    }
+  },
   find: async (req, res) => {
-    console.log("=== find ===");
     try {
       const users = await UserService.findAll();
       res.ok({
