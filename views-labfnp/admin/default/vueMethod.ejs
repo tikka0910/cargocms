@@ -50,8 +50,9 @@ var defaultVueMathod = {
     }
   },
   loadItem: function (cb) {
+
     window.onbeforeunload = null;
-    $.get('/api/admin/'+modelName+'/' + appModel.data.item.id, ajaxSuccess);
+    if(!serverSide)$.get('/api/admin/'+modelName+'/' + appModel.data.item.id, ajaxSuccess);
 
     function ajaxSuccess(result) {
       if (result.success) {
@@ -115,14 +116,6 @@ var defaultVueMathod = {
     var id = appModel.data.items[index].id;
     this.show(id);
   },
-  selection: function (index) {
-    if (index !== appModel.view.table.selectIndex) {
-      appModel.view.table.selectIndex = index;
-      console.log("appModel.view.table.selectIndex", appModel.view.table.selectIndex);
-    } else {
-      appModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
-    }
-  },
   show: function (id) {
     location.href = '/admin/#/admin/' + modelName + '/show/' + id;
   },
@@ -183,3 +176,8 @@ var defaultVueMathod = {
     });
   }
 }
+
+window.appMain = new Vue({
+  data: appModel,
+  methods: defaultVueMathod,
+});

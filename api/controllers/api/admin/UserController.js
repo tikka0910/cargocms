@@ -1,6 +1,6 @@
 module.exports = {
 
-  find: async (req, res) => {
+  findPage: async (req, res) => {
     try {
       let {query} = req
       const findQuery = FormatService.getQueryObj(query);
@@ -10,6 +10,17 @@ module.exports = {
       let recordsFiltered =  result.count
       let draw = parseInt(req.draw) + 1
       res.ok({draw, recordsTotal, recordsFiltered, data});
+    } catch (e) {
+      res.serverError({ message: e, data: {}});
+    }
+  },
+  find: async (req, res) => {
+    try {
+      const users = await UserService.findAll();
+      res.ok({
+        data: {
+          items: users
+      }});
     } catch (e) {
       res.serverError({ message: e, data: {}});
     }

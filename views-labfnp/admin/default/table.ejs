@@ -9,10 +9,14 @@ var breakpointDefinition = {
  phone : 480
 };
 
+
+var ajax = "/api/admin/"+ modelName+ "/findPage";
+if(!serverSide) ajax = null;
+
 var defaultTableConfig = {
   "processing": false,
-  "serverSide": true,
-  "ajax": "/api/admin/"+ modelName,
+  "serverSide": serverSide,
+  "ajax": ajax,
   "columns": columns,
   "columnDefs": columnDefs,
 
@@ -102,7 +106,6 @@ defaultTable.on('click', 'tr', function () {
     var data = defaultTable.fnGetData(this);
     $('#main-table tbody tr').removeClass('selected');
     $(this).addClass('selected');
-    appMain.selection(data.id);
   }
 }).on('dblclick', 'tr', function() {
   var data = defaultTable.fnGetData(this);

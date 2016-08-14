@@ -39,41 +39,6 @@ var appModel = {
 
 /* TABLETOOLS */
 
-
-var columns = [
-  { "data": "id" },
-  { "data": "username" },
-  { "data": "displayName" },
-  { "data": "email" },
-  { "data": "lastLogin" }
-]
-
-var columnDefs = [
-  { "searchable": false, "targets": 2 },
-  {
-    "targets"  : 5,
-    "orderable": false,
-    "searchable": false,
-    "render": function ( data, type, row ) {
-      var colBody =
-      '<div class="row-action-buttons">'+
-        '<a class="btn btn-default btn-xs" role="button" onclick="window.appMain.show('+row.id+')">'+
-          '<i class="fa-fw fa fa-eye text-muted" />'+
-        '</a>'+
-        '<a class="btn btn-default btn-xs" role="button" onclick="window.appMain.edit('+row.id+')">'+
-          '<i class="fa-fw fa fa-pencil-square-o text-muted"/>'+
-        '</a>'+
-      '</div>';
-      return colBody;
-    }
-  },
-]
-
 <%- include ../default/vueMethod.ejs %>
-// 需要新增函式可以對 defaultVueMathod 進行定義，如：
-// defaultVueMathod.log = () => {console.log("123")}
-
-window.appMain = new Vue({
-  data: appModel,
-  methods: defaultVueMathod,
-});
+// 需要新增函式可以對 appMain 進行定義，如：
+// appMain.log = function () {console.log("123")}
