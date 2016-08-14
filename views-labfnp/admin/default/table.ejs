@@ -10,12 +10,12 @@ var breakpointDefinition = {
 };
 
 
-var ajax = "/api/admin/"+ modelName+ "/findPage";
-if(!serverSide) ajax = null;
+var ajax = "/api/admin/"+ modelName+ "?serverSidePaging=" + serverSidePaging;
+if(!serverSidePaging) ajax = null;
 
 var defaultTableConfig = {
   "processing": false,
-  "serverSide": serverSide,
+  "serverSide": serverSidePaging,
   "ajax": ajax,
   "columns": columns,
   "columnDefs": columnDefs,
