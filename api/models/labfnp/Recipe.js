@@ -49,15 +49,7 @@ module.exports = {
   },
   associations: function() {
     Recipe.belongsTo(User);
-    Recipe.belongsToMany(User, {
-      through: 'LikeRecipes',
-      as: 'LikeRecipes',
-      foreignKey: {
-        name: 'RecipeId',
-        as: 'Users'
-      }
-    });
-
+    Recipe.belongsToMany(User, {through: 'LikeRecipe', as: 'LikeRecipe'});
   },
   options: {
     classMethods: {
@@ -88,13 +80,23 @@ module.exports = {
           if(user) id = user.id;
           console.log("== id ==", id);
           const recipes = await Recipe.findAll({
-            include: [{
-              where: { id: id },
+            include: {
+              where: {id: id},
               model: User,
-              as: 'LikeRecipes',
-              required: false
-            }]
+              as: 'LikeRecipe',
+              required: false,
+              attributes: ["id"]
+            }
           });
+
+          // const recipes = await User.findAll({
+          //   include: [{
+          //     where: { RecipeId: 1 },
+          //     model: Recipe,
+          //     as: 'LikeRecipe',
+          //     required: false
+          //   }]
+          // });
           return recipes;
         } catch (e) {
           throw e;

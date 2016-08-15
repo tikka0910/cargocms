@@ -29,9 +29,23 @@ describe('test Recipe model operation', function() {
   });
 
   describe.only("find With Like User", () => {
-    let recipeLoveTest, testUser;
+    let recipeLoveTest, testUser, likeUser;
     before(async (done) => {
       try {
+        testUser = await User.create({
+          username: 'testUser',
+          email: 'testUser@gmail.com',
+          password: ''
+        });
+
+        console.log("testUser id:", testUser.id);
+
+        likeUser = await User.create({
+          username: 'likeUser',
+          email: 'likeUser@gmail.com',
+          password: ''
+        });
+        console.log("likeUser id:", likeUser.id);
         let newRecipeLoveTest = {
           formula:[
             {"drops":"1","scent":"BA69","color":"#E87728"},
@@ -41,17 +55,13 @@ describe('test Recipe model operation', function() {
           authorName: '王大明',
           perfumeName: 'love test',
           message: 'this is love test',
-          UserId: 1,
+          UserId: testUser.id,
         };
 
         recipeLoveTest = await Recipe.create(newRecipeLoveTest);
 
-        testUser = await User.create({
-          username: 'testUser',
-          email: 'testUser@gmail.com',
-          password: ''
-        });
-        await testUser.addRecipes(recipeLoveTest, {as: 'LikeRecipe'})
+
+        await likeUser.addRecipes(recipeLoveTest, {as: 'LikeRecipes'})
         done()
 
       } catch (e) {
@@ -60,8 +70,7 @@ describe('test Recipe model operation', function() {
     })
     it('should be success.', async (done) => {
       try {
-        let user = testUser;
-        console.log("== testUser ==", testUser);
+        let user = likeUser;
         let result = await Recipe.findAndIncludeUserLike({user});
         console.log(JSON.stringify(result, null, 2));
         done();

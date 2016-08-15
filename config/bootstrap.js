@@ -107,7 +107,7 @@ module.exports.bootstrap = async (cb) => {
           UserId: adminUsers[0].id
         }
       });
-      adminUsers[0].addRecipes(testRecipe, {as: 'LikeRecipes'})
+      adminUsers[0].addRecipes(testRecipe, {as: 'LikeRecipe'})
       //adminUsers[0].addRole(adminRole[0]);
     });
 
