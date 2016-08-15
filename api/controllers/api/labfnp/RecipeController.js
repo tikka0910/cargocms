@@ -79,5 +79,12 @@ module.exports = {
     } catch (e) {
       res.serverError({ message: e.message, data: {}});
     }
+  },
+
+  like: async(req, res) => {
+
+  },
+  unlike: async (req, res) => {
   }
+
 }

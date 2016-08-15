@@ -1,19 +1,19 @@
 describe('about LikeRecipe Controller operation.', function() {
 
-  it('create LikeRecipe should success.', async (done) => {
+  it('Recipe like action should be success.', async (done) => {
     try {
       const res = await request(sails.hooks.http.app)
-      .post(`/api/admin/likeRecipe/:id`)
+      .get(`/api/admin/recipe/like/:id`)
       done();
     } catch (e) {
       done(e);
     }
   });
 
-  it('delete LikeRecipe should success.', async (done) => {
+  it('Recipe unlike should be success.', async (done) => {
     try {
       const res = await request(sails.hooks.http.app)
-      .del(`/api/admin/likeRecipe/:id`)
+      .get(`/api/admin/recipe/unlike/:id`)
       done();
     } catch (e) {
       done(e);
