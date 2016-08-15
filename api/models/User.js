@@ -97,9 +97,9 @@ module.exports = {
         as: 'Roles'
       }
     });
-
+    User.hasMany(UserLikeRecipe);
     User.hasMany(Recipe);
-    User.belongsToMany(Recipe, {through: 'LikeRecipe'});
+
 
   },
   options: {
