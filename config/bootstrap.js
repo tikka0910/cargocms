@@ -66,7 +66,24 @@ module.exports.bootstrap = async (cb) => {
         password: 'user',
         UserId: user.id
       });
+
+
+
     });
+
+    const recipeLoveAgain = {
+      formula:[
+        {"drops":"1","scent":"BA69","color":"#E87728"},
+        {"drops":"2","scent":"BA70","color":"#B35721"}
+      ],
+      formulaLogs: '',
+      authorName: '王大明',
+      perfumeName: 'love again',
+      message: 'this is love again',
+      UserId: 1,
+    };
+
+    let testRecipe = await Recipe.create(recipeLoveAgain);
 
     User.findOrCreate({
       where: {
@@ -90,6 +107,7 @@ module.exports.bootstrap = async (cb) => {
           UserId: adminUsers[0].id
         }
       });
+      adminUsers[0].addRecipes(testRecipe, {as: 'LikeRecipes'})
       //adminUsers[0].addRole(adminRole[0]);
     });
 
@@ -123,7 +141,7 @@ module.exports.bootstrap = async (cb) => {
 
       await post.addTag(tag.id);
 
-      const recipes = [{
+      const recipeLove = {
         formula:[
           {"drops":"1","scent":"BA69","color":"#E87728"},
           {"drops":"2","scent":"BA70","color":"#B35721"}
@@ -133,18 +151,11 @@ module.exports.bootstrap = async (cb) => {
         perfumeName: 'love',
         message: 'this is love',
         UserId: 1,
-      },{
-        formula:[
-          {"drops":"1","scent":"BA69","color":"#E87728"},
-          {"drops":"2","scent":"BA70","color":"#B35721"}
-        ],
-        formulaLogs: '',
-        authorName: '王大明',
-        perfumeName: 'love again',
-        message: 'this is love again',
-        UserId: 1,
-      }];
-      await Recipe.bulkCreate(recipes);
+      }
+      Recipe.create(recipeLove);
+
+
+
 
       // const execSync = require('child_process').execSync;
       // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scentNote.sql`);
