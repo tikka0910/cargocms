@@ -13,7 +13,7 @@ module.exports = {
   logout: function(req, res) {
     req.session.authenticated = false;
     req.logout();
-    return res.redirect('/');
+    return res.redirect(req.query.url || "/");
 
   },
   provider: function(req, res) {
