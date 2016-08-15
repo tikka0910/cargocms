@@ -1,4 +1,4 @@
-describe.only('test Recipe model operation', function() {
+describe('test Recipe model operation', function() {
 
   it('create should be success.', async (done) => {
     try {
