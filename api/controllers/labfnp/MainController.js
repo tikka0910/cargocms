@@ -50,7 +50,14 @@ module.exports = {
 
   portfolio: async function(req, res) {
 
-    let user = await User.findById(req.params.id);
+    let user = null;
+
+    if (req.params.id) {
+      user = await User.findById(req.params.id);
+    }
+    else {
+      user = AuthService.getSessionUser(req);
+    }
 
     try {
       return res.view({
