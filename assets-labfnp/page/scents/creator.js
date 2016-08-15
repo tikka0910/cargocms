@@ -161,28 +161,18 @@ var getFormulaData = function() {
 
       var scent = $(this).val();
       var drops = $('.scents-drops[data-index='+idx+']').val();
-      var style = $(this).attr('style');
-      var color = style.replace('color: ','');
+      var color = $('option:selected', this).data('color');
 
 	    result.push({
 	      "scent": scent,
 	      "drops": drops,
-        "color": rgb2hex(color),
+        "color": color
 	    });
     }
   });
 
   return result;
 };
-
-function rgb2hex(rgb){
- rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
- return (rgb && rgb.length === 4) ? "#" +
-  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
-}
-
 
 $(function() {
 	$('.scents-dropdown').change(function() {
