@@ -74,10 +74,9 @@ module.exports = {
         }
       },
 
-      findAndIncludeUserLike: async ({user}) => {
+      findAndIncludeUserLike: async ({ userId }) => {
         try {
-          let id = -1;
-          if(user) id = user.id;
+          let id = userId || -1;
           console.log("== id ==", id);
           const recipes = await Recipe.findAll({
             include: {

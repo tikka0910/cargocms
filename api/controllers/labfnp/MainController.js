@@ -22,20 +22,10 @@ module.exports = {
   explore: async function(req, res) {
     try {
       const { userId } = req.query;
-      let findByUser;
-      if (userId) {
-        findByUser = { where: { id: userId }};
-      }
+      // let user = AuthService.getSessionUser(req);
+      const recipes = await Recipe.findAndIncludeUserLike({ userId });
       return res.view({
-        recipes: await Recipe.findAll({
-          include: {
-            model: User,
-            ...findByUser,
-            as: 'LikeRecipe',
-            required: false,
-            attributes: ["id"]
-          },
-        })
+        recipes: recipes
       });
     }
     catch (e) {
@@ -47,14 +37,18 @@ module.exports = {
   recipe: async function(req, res) {
     const { id } = req.params;
 
+    let recipe = await Recipe.findById(id);
+
+    if (!recipe) {
+      return res.notFound();
+    }
+
     try {
-      return res.view({
-        recipe: await Recipe.findById(id)
-      });
+      return res.view({ recipe });
     }
     catch (e) {
       console.log(e);
-      res.serverError(e);
+      return res.serverError(e);
     }
   },
 

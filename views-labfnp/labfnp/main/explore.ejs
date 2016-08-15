@@ -104,9 +104,7 @@
 
 						<a href="/recipe/<%= recipe.id %>" id="recipeImageContainer" >
 							<img id="recipeImage" class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt="">
-							<div class="recipeLikeContainer">
-                <i id="recipeLikeIcon" class="fa fa-heart-o fa-sm"></i>
-              </div>
+
 							<!--<i id="recipeLikeIcon" class="fa fa-heart fa-2x"></i>-->
 						</a>
 						<div class="grid-boxes-caption">
@@ -114,7 +112,7 @@
 							<ul class="list-inline grid-boxes-news">
 								<li>
 									<i class="fa fa-user"></i>
-									<a href="/lab?userId=<%= recipe.User.id %>">
+									<a href="/lab?userId=<%= recipe.UserId %>">
 										<%= recipe.authorName %>
 									</a>
 								</li>
@@ -172,5 +170,19 @@ $(document).ready(function(){
       }
     });
   });
+
+  $(".recipeLikeContainer").on("click", function(event){
+    event.preventDefault()
+    var id = $(this).data('id');
+
+    $.get('/api/labfnp/recipe/like/'+id)
+    .done(function() {
+
+    })
+    .fail(function() {
+      alert( "請先進行登入" );
+    });
+  })
+
 });
 `); %>
