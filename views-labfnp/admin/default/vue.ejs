@@ -126,17 +126,10 @@ var defaultVueMathod = {
      phone : 480
     };
 
-
     var ajax = "/api/admin/"+ modelName+ "?serverSidePaging=" + serverSidePaging;
-    if(!serverSidePaging) ajax = null;
-
     var defaultTableConfig = {
       "processing": false,
       "serverSide": serverSidePaging,
-      "ajax": ajax,
-      "columns": columns,
-      "columnDefs": columnDefs,
-
       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f>T<'hidden-xs'l>r>" +
         "t"+
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -212,7 +205,13 @@ var defaultVueMathod = {
       }
     }
 
-    var  defaultTable = $('#main-table').dataTable(defaultTableConfig);
+    if (serverSidePaging) {
+      defaultTableConfig.columns = columns;
+      defaultTableConfig.columnDefs = columnDefs;
+      defaultTableConfig.ajax = ajax;
+    }
+
+    var defaultTable = $('#main-table').dataTable(defaultTableConfig);
 
     // selection
     defaultTable.on('click', 'tr', function () {
@@ -225,8 +224,6 @@ var defaultVueMathod = {
         $(this).addClass('selected');
       }
     }).on('dblclick', 'tr', function() {
-      var data = defaultTable.fnGetData(this);
-      appMain.show(data.id);
     });
 
 

@@ -8,7 +8,7 @@
 			<th class="">全名</th>
 			<th class="" name="email">Email</th>
 			<th class="" data-hide="phone,tablet">最近登入時間</th>
-			<th class="no-sort" data-hide="phone,tablet"></th>
+			<th class="no-sort  hidden-xs hidden-sm" data-hide="phone,tablet"></th>
 		</tr>
 	</thead>
 	<!-- client only -->
@@ -48,14 +48,21 @@
 
 		// server only
 		var columnDefs = [
-			{ "searchable": false, "targets": 2 },
+      {
+        "targets": 'no-sort',
+        "orderable": false,
+      },
+			{
+        "searchable": false,
+        "targets": 2
+      },
 			{
 				"targets"  : 5,
 				"orderable": false,
 				"searchable": false,
 				"render": function ( data, type, row ) {
 					var colBody =
-					'<div class="row-action-buttons">'+
+					'<div class="row-action-buttons hidden-xs hidden-sm">'+
 						'<a class="btn btn-default btn-xs" role="button" onclick="window.appMain.show('+row.id+')">'+
 							'<i class="fa-fw fa fa-eye text-muted" />'+
 						'</a>'+
