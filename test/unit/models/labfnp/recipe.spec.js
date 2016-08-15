@@ -29,7 +29,7 @@ describe('test Recipe model operation', function() {
   });
 
   describe("find With Like User", () => {
-    let recipeLoveTest, testUser, likeUser;
+    let recipeLoveTest, testUser, likeUser, testUser2;
     before(async (done) => {
       try {
         testUser = await User.create({
@@ -62,6 +62,12 @@ describe('test Recipe model operation', function() {
 
 
         await likeUser.addRecipes(recipeLoveTest, {as: 'LikeRecipes'})
+
+        testUser2 = await User.create({
+          username: 'testLikeUser',
+          email: 'testLikeUser@gmail.com',
+          password: ''
+        });
         done()
 
       } catch (e) {
@@ -74,6 +80,15 @@ describe('test Recipe model operation', function() {
         let result = await Recipe.findAndIncludeUserLike({user});
         console.log(JSON.stringify(result, null, 2));
         done();
+      } catch (e) {
+        done(e);
+      }
+    });
+
+    it.skip('should be success.', async (done) => {
+      try {
+        recipeLoveTest.addUser(testUser2.id, {as: 'LikeRecipes'});
+        done()
       } catch (e) {
         done(e);
       }
