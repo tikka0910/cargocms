@@ -1,4 +1,4 @@
-describe.only('About Slogan Controller operation', function(){
+describe('About Slogan Controller operation', function(){
 
   let test_slogan = null
   before( async (done) => {
@@ -42,8 +42,8 @@ describe.only('About Slogan Controller operation', function(){
         .get(`/api/slogan`);
 
         sails.log.info('find slogan controller spec =>', result.body);
-        result.body.should.be.Array;
-        result.body.data.length.should.be.above(0);
+        result.body.should.be.Object;
+        result.body.data.items.length.should.be.above(0);
         done();
       }
       catch(e){
