@@ -71,19 +71,7 @@ module.exports.bootstrap = async (cb) => {
 
     });
 
-    const recipeLoveAgain = {
-      formula:[
-        {"drops":"1","scent":"BA69","color":"#E87728"},
-        {"drops":"2","scent":"BA70","color":"#B35721"}
-      ],
-      formulaLogs: '',
-      authorName: '王大明',
-      perfumeName: 'love again',
-      message: 'this is love again',
-      UserId: 1,
-    };
 
-    let testRecipe = await Recipe.create(recipeLoveAgain);
 
     User.findOrCreate({
       where: {
@@ -107,7 +95,6 @@ module.exports.bootstrap = async (cb) => {
           UserId: adminUsers[0].id
         }
       });
-      adminUsers[0].addRecipes(testRecipe, {as: 'LikeRecipe'})
       //adminUsers[0].addRole(adminRole[0]);
     });
 
@@ -164,7 +151,19 @@ module.exports.bootstrap = async (cb) => {
       }
       Recipe.create(recipeLove);
 
+      const recipeLoveAgain = {
+        formula:[
+          {"drops":"1","scent":"BA69","color":"#E87728"},
+          {"drops":"2","scent":"BA70","color":"#B35721"}
+        ],
+        formulaLogs: '',
+        authorName: '王大明',
+        perfumeName: 'love again',
+        message: 'this is love again',
+        UserId: 1,
+      };
 
+      let testRecipe = await Recipe.create(recipeLoveAgain);
 
 
       // const execSync = require('child_process').execSync;

@@ -21,6 +21,7 @@ module.exports.policies = {
   '*': ['nocache', 'passport', 'sessionAuth'],
   'AuthController': {
     '*': ['passport'],
+    'status': [],
   },
   'UserController': {
     'index': ['nocache'],
