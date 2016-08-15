@@ -82,9 +82,34 @@ module.exports = {
   },
 
   like: async(req, res) => {
-
+    try {
+      const { id } = req.params;
+      const loginUser = AuthService.getSessionUser(req);
+      const recipe = await Recipe.findById(id);
+      await recipe.addUser(loginUser.id, {as: 'LikeRecipes'});
+      res.ok({
+        message: 'success like recipe',
+        data: true,
+      });
+    } catch (e) {
+      sails.log.error(e);
+      res.serverError({ message: e.message, data: {}});
+    }
   },
   unlike: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const loginUser = AuthService.getSessionUser(req);
+      const recipe = await Recipe.findById(id);
+      await recipe.removeUser(loginUser.id, {as: 'LikeRecipes'});
+      res.ok({
+        message: 'success dislike recipe',
+        data: true,
+      });
+    } catch (e) {
+      sails.log.error(e);
+      res.serverError({ message: e.message, data: {}});
+    }
   }
 
 }
