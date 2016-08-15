@@ -1,3 +1,8 @@
+<style>
+  .ul-role {
+    list-style: none;
+  }
+</style>
 <div class="col-sm-12">
   <div class="row">
     <div class="col-sm-3 profile-pic">
@@ -23,57 +28,59 @@
       </div> -->
     </div>
     <div class="col-sm-6">
-      <h1>{{ data.item.firstName }} <span class="semi-bold">{{ data.item.lastName }}</span>
+      <section>
+        <h1>{{ data.item.firstName }} <span class="semi-bold">{{ data.item.lastName }}</span>
       <br>
       <strong>{{ data.item.username }}</strong>
       </h1>
-      <hr class="visible-xs-*">
-      <ul class="list-unstyled">
-        <!-- <li>
+        <hr class="visible-xs-*">
+        <ul class="list-unstyled">
+          <!-- <li>
           <p class="text-muted">
             <i class="fa fa-phone"></i>&nbsp;&nbsp;(<span class="txt-color-darken">313</span>) <span class="txt-color-darken">464</span> - <span class="txt-color-darken">6473</span>
           </p>
         </li> -->
-        <li>
-          <p class="text-muted">
-            <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{ data.item.email }}">{{ data.item.email }}</a>
-          </p>
-        </li>
-        <li>
-          <p class="text-muted" v-show="data.item.userAgent">
-            <i class="fa fa-flag"></i>&nbsp;&nbsp;<span class="semi-bold">{{ data.item.userAgent }}</span>
-          </p>
-        </li>
-        <li>
-          <p class="text-muted">
-            <i class="fa fa-calendar"></i>&nbsp;&nbsp;
-            <span class="txt-color-darken">上次登入時間：
+          <li>
+            <p class="text-muted">
+              <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{ data.item.email }}">{{ data.item.email }}</a>
+            </p>
+          </li>
+          <li>
+            <p class="text-muted" v-show="data.item.userAgent">
+              <i class="fa fa-flag"></i>&nbsp;&nbsp;<span class="semi-bold">{{ data.item.userAgent }}</span>
+            </p>
+          </li>
+          <li>
+            <p class="text-muted">
+              <i class="fa fa-calendar"></i>&nbsp;&nbsp;
+              <span class="txt-color-darken">上次登入時間：
               <a href="javascript:void(0);" rel="tooltip" title="" data-placement="top" data-original-title="Create an Appointment"
               v-if="data.item.lastLogin">
                 {{ data.item.lastLogin }}</a>
               <label for="" v-else><strong>從未登入</strong></label>
             </span>
-          </p>
-        </li>
-        <li class="visible-xs-*">
-          <hr>
-          <p class="text-muted">
-            <i class="fa fa-group"></i>&nbsp;&nbsp;<span class="txt-color-darken">權限：</span>
-          </p>
-          <ul>
-            <li>
-              <label class="checkbox state-disabled">
-                <input type="checkbox" id="admin" value="admin" v-model="data.item.RolesArray" disabled>管理員<i></i>
-              </label>
-            </li>
-            <li>
-              <label class="checkbox state-disabled">
-                <input type="checkbox" id="user" value="user" v-model="data.item.RolesArray" disabled>使用者<i></i>
-              </label>
-            </li>
-          </ul>
-        </li>
-      </ul>
+            </p>
+          </li>
+          <li class="visible-xs-*">
+            <hr>
+            <p class="text-muted">
+              <i class="fa fa-group"></i>&nbsp;&nbsp;<span class="txt-color-darken">權限：</span>
+            </p>
+            <ul class="ul-role">
+              <li>
+                <label class="checkbox state-disabled">
+                  <input type="checkbox" id="admin" value="admin" class="disabled" v-model="data.item.RolesArray" disabled>
+                  <i></i>管理員</label>
+              </li>
+              <li>
+                <label class="checkbox state-disabled">
+                  <input type="checkbox" id="user" value="user" class="disabled" v-model="data.item.RolesArray" disabled>
+                  <i></i>使用者</label>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
       <br>
       <!-- <p class="font-md">
         <i>A little about me...</i>
@@ -93,11 +100,9 @@
 
 <!-- SCRIPTS ON PAGE EVENT -->
 <script type="text/javascript">
-
   var pagefunction = function() {
     <%- include vue.ejs %>
     appMain.$mount("#main-show");
     appMain.loadItem();
   };
-
 </script>
