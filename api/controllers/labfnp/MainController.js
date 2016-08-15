@@ -31,6 +31,9 @@ module.exports = {
           include: {
             model: User,
             ...findByUser,
+            as: 'LikeRecipe',
+            required: false,
+            attributes: ["id"]
           },
         })
       });
