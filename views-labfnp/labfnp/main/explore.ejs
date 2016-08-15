@@ -53,7 +53,7 @@
 						<div class="grid-boxes-caption">
 							<h3><a href="/recipe/<%= recipe.id %>"><%= recipe.perfumeName %></a></h3>
 							<ul class="list-inline grid-boxes-news">
-								<li><i class="fa fa-user"></i> <a href="#"><%= recipe.authorName %></a></li>
+								<li><i class="fa fa-user"></i> <a href="/lab?userId=<%= recipe.User.id %>"><%= recipe.authorName %></a></li>
 								<li>|</li>
 								<li><i class="fa fa-clock-o"></i><%=: recipe.createdAt | formatDateOnly %></li>
 								<!--<li>|</li>

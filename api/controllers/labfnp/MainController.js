@@ -21,8 +21,18 @@ module.exports = {
 
   explore: async function(req, res) {
     try {
+      const { userId } = req.query;
+      let findByUser;
+      if (userId) {
+        findByUser = { where: { id: userId }};
+      }
       return res.view({
-        recipes: await Recipe.findAll()
+        recipes: await Recipe.findAll({
+          include: {
+            model: User,
+            ...findByUser,
+          },
+        })
       });
     }
     catch (e) {
