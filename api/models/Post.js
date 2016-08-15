@@ -72,6 +72,7 @@ module.exports = {
         name: 'UserId'
       }
     });
+    Post.belongsTo(Location);
   },
   options: {
     classMethods: {
@@ -81,7 +82,7 @@ module.exports = {
             offset,
             limit,
             order: [['createdAt', order || 'DESC']],
-            include: [Tag, Image, User],
+            include: [Tag, Image, User, Location],
           });
         } catch (e) {
           sails.log.error(e);
@@ -92,7 +93,7 @@ module.exports = {
         try {
           return await Post.findOne({
             where: { id },
-            include: [ Tag, Image, User ]
+            include: [ Tag, Image, User, Location]
           });
         } catch (e) {
           sails.log.error(e);
