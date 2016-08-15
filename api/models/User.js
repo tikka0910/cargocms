@@ -52,7 +52,7 @@ module.exports = {
       get: function () {
         try {
           let lastLogin = this.getDataValue("lastLogin");
-          if(lastLogin == null) lastLogin = "未登入";
+          if(lastLogin == null) lastLogin = "從未登入";
           return lastLogin;
 
         } catch (e) {
