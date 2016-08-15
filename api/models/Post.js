@@ -14,11 +14,19 @@ module.exports = {
     abstract: {
       type: Sequelize.STRING,
     },
+    coverType: {
+      type: Sequelize.ENUM('img', 'video'),
+      defaultValue: 'img',
+    },
     coverUrl: {
-      type: Sequelize.VIRTUAL,
+      type: Sequelize.STRING,
       get: function() {
         try {
-          return this.Image ? this.Image.url : '';
+          if (this.coverType === 'img') {
+            return this.Image ? this.Image.url : '';
+          } else {
+            return this.getDataValue('coverUrl');
+          }
         } catch (e) {
           sails.log.error(e);
         }
