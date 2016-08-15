@@ -28,7 +28,6 @@
   font-size: 14px;
   opacity: .97;
   position: absolute;
-  top: 235px;
   right: 10px;
   bottom:10px;
 	padding: 2px;
@@ -111,7 +110,6 @@
 							<div class="recipeLikeContainer" data-id="<%= recipe.id %>" data-like="<%= (recipe.LikeRecipe.length > 0) %>">
                 <i id="recipeLikeIcon" class="fa <%= recipe.LikeRecipe.length > 0 ? 'fa-heart': 'fa-heart-o' %> fa-sm"></i>
               </div>
-							<!--<i id="recipeLikeIcon" class="fa fa-heart fa-2x"></i>-->
 						</a>
 						<div class="grid-boxes-caption">
 							<h3><a href="/recipe/<%= recipe.id %>"><%= recipe.perfumeName %></a></h3>
