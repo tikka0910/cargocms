@@ -26,8 +26,8 @@ module.exports.connections = {
     dialect: 'sqlite',
     options: {
       'dialect': 'sqlite',
-      // 'storage': './sqlite.db',
-      storage: ':memory:',
+      'storage': './sqlite.db',
+      // storage: ':memory:',
       pool: false,
     }
   },

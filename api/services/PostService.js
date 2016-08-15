@@ -14,9 +14,11 @@ module.exports = {
         title,
         content,
         cover: cover === '' ? null : cover,
+        coverType,
+        coverUrl,
         url,
         abstract,
-        UserId
+        UserId,
       });
       if (longitude && latitude) {
         // 不知道為什麼無法運作
@@ -67,6 +69,8 @@ module.exports = {
         title,
         content,
         cover: cover === '' ? null : cover,
+        coverType,
+        coverUrl,
         url,
         abstract,
         LocationId: location ? location.id : null,
