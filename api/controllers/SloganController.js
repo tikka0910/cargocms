@@ -20,7 +20,9 @@ module.exports = {
       sails.log.info('find all slogan =>', slogans);
       res.ok({
         message: 'find all slogan success',
-        data: slogans
+        data: {
+          items: slogans
+        }
       })
     }
     catch(e){
