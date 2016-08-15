@@ -34,14 +34,18 @@ module.exports = {
   recipe: async function(req, res) {
     const { id } = req.params;
 
+    let recipe = await Recipe.findById(id);
+
+    if (!recipe) {
+      return res.notFound();
+    }
+
     try {
-      return res.view({
-        recipe: await Recipe.findById(id)
-      });
+      return res.view({ recipe });
     }
     catch (e) {
       console.log(e);
-      res.serverError(e);
+      return res.serverError(e);
     }
   },
 
