@@ -1,9 +1,10 @@
 module.exports = {
 
   find: async (req, res) => {
-    console.log("=== find ===");
+
     try {
-      const recipes = await Recipe.findAll();
+      let user = AuthService.getSessionUser(req);
+      const recipes = await Recipe.findAndIncludeUserLike({user});
       res.ok({
         data: {
           items: recipes

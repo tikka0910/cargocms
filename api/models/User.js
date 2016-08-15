@@ -104,6 +104,7 @@ module.exports = {
 
     User.belongsToMany(Recipe, {
       through: 'LikeRecipes',
+      as: 'LikeRecipes',
       foreignKey: {
         name: 'UserId',
         as: 'Recipes'

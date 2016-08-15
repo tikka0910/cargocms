@@ -51,11 +51,13 @@ module.exports = {
     Recipe.belongsTo(User);
     Recipe.belongsToMany(User, {
       through: 'LikeRecipes',
+      as: 'LikeRecipes',
       foreignKey: {
         name: 'RecipeId',
         as: 'Users'
       }
     });
+
   },
   options: {
     classMethods: {
@@ -82,13 +84,16 @@ module.exports = {
 
       findAndIncludeUserLike: async ({user}) => {
         try {
-          let {id} = user;
+          let id = -1;
+          if(user) id = user.id;
+          console.log("== id ==", id);
           const recipes = await Recipe.findAll({
-            include: {
-              where: { UserId: id },
+            include: [{
+              where: { id: id },
               model: User,
-              required: true
-            }
+              as: 'LikeRecipes',
+              required: false
+            }]
           });
           return recipes;
         } catch (e) {
