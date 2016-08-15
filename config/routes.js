@@ -74,12 +74,13 @@ module.exports.routes = {
   // 'delete /api/admin/Default/:id': 'api/admin/DefaultController.destroy',
 
   //----- custom -----
-  '/creator':     'labfnp/MainController.creator',
-  '/lab':         'labfnp/MainController.explore',
-  '/recipe/:id':  'labfnp/MainController.recipe',
-  '/me/:id':      'labfnp/MainController.portfolio',
-  '/admin/config.js': "AdminController.config",
-  '/admin': 'AdminController.index',
+  '/creator':         'labfnp/MainController.creator',
+  '/lab':             'labfnp/MainController.explore',
+  '/recipe/:id':      'labfnp/MainController.recipe',
+  '/me':              'labfnp/MainController.portfolio',
+  '/me/:id':          'labfnp/MainController.portfolio',
+  '/admin':           'AdminController.index',
+  '/admin/config.js': 'AdminController.config',
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
@@ -97,9 +98,6 @@ module.exports.routes = {
   "/labfnp/:controller/:action/:id?": {},
   "/admin/:controller/:action/:id?": {},
   "/:controller/:action/:id?": {},
-
-
-
 
 
   /***************************************************************************

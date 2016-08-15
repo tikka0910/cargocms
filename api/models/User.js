@@ -52,7 +52,7 @@ module.exports = {
       get: function () {
         try {
           let lastLogin = this.getDataValue("lastLogin");
-          if(lastLogin == null) lastLogin = "未登入";
+          if(lastLogin == null) lastLogin = "從未登入";
           return lastLogin;
 
         } catch (e) {
@@ -66,11 +66,11 @@ module.exports = {
     },
     avatar: {
       type: Sequelize.STRING,
-      defaultValues: '/assets/admin/img/avatars/default.png'
+      defaultValue: '/assets/admin/img/avatars/default.png'
     },
     avatarThumb: {
       type: Sequelize.STRING,
-      defaultValues: '/assets/admin/img/avatars/default.png'
+      defaultValue: '/assets/admin/img/avatars/default.png'
     }
   },
   associations: function() {

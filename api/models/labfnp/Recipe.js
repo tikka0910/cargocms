@@ -49,7 +49,7 @@ module.exports = {
   },
   associations: function() {
     Recipe.belongsTo(User);
-    Recipe.belongsToMany(User, {through: 'LikeRecipe'});
+    Recipe.belongsToMany(User, {through: 'LikeRecipe', as: 'LikeRecipe'});
   },
   options: {
     classMethods: {

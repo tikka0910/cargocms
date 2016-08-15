@@ -21,8 +21,11 @@ module.exports = {
 
   explore: async function(req, res) {
     try {
+      let user = AuthService.getSessionUser(req);
+      const recipes = await Recipe.findAndIncludeUserLike({user});
+
       return res.view({
-        recipes: await Recipe.findAll()
+        recipes: recipes
       });
     }
     catch (e) {
@@ -47,7 +50,14 @@ module.exports = {
 
   portfolio: async function(req, res) {
 
-    let user = await User.findById(req.params.id);
+    let user = null;
+
+    if (req.params.id) {
+      user = await User.findById(req.params.id);
+    }
+    else {
+      user = AuthService.getSessionUser(req);
+    }
 
     try {
       return res.view({
