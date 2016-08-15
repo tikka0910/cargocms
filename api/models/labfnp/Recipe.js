@@ -81,6 +81,7 @@ module.exports = {
           console.log("== id ==", id);
           const recipes = await Recipe.findAll({
             include: {
+              where: {id: id},
               model: User,
               as: 'LikeRecipe',
               required: false,

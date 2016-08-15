@@ -45,7 +45,7 @@ describe('test Recipe model operation', function() {
           email: 'likeUser@gmail.com',
           password: ''
         });
-
+        console.log("likeUser id:", likeUser.id);
         let newRecipeLoveTest = {
           formula:[
             {"drops":"1","scent":"BA69","color":"#E87728"},
@@ -70,7 +70,7 @@ describe('test Recipe model operation', function() {
     })
     it('should be success.', async (done) => {
       try {
-        let user = testUser;
+        let user = likeUser;
         let result = await Recipe.findAndIncludeUserLike({user});
         console.log(JSON.stringify(result, null, 2));
         done();
