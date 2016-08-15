@@ -230,6 +230,7 @@ $(function() {
 
     var authorName = $('input[name=authorName]').val();
     var perfumeName = $('input[name=perfumeName]').val();
+    var message = $('textarea[name=message]').val();
 
     $.ajax({
       url: endpoint,
@@ -241,11 +242,12 @@ $(function() {
         authorName: authorName,
         perfumeName: perfumeName,
         formulaLogs: '',
-        formula: getFormulaData()
+        formula: getFormulaData(),
+        message: message
       }
     }).done(function(result) {
       console.log(result);
-      location.href='/lab';
+      location.href='/me';
     });
 
   });
