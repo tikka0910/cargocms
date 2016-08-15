@@ -66,11 +66,11 @@ module.exports = {
     },
     avatar: {
       type: Sequelize.STRING,
-      defaultValues: '/assets/admin/img/avatars/default.png'
+      defaultValue: '/assets/admin/img/avatars/default.png'
     },
     avatarThumb: {
       type: Sequelize.STRING,
-      defaultValues: '/assets/admin/img/avatars/default.png'
+      defaultValue: '/assets/admin/img/avatars/default.png'
     }
   },
   associations: function() {

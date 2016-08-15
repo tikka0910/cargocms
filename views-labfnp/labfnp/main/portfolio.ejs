@@ -8,16 +8,16 @@
 		<div class="col-md-3 md-margin-bottom-40">
 
 			<div class="margin-bottom-20">
-	      <img class="img-responsive img-bordered" src="<%= user.avatar %>" alt="" style="margin: auto" />
+	      <img class="img-responsive img-bordered" src="<%= user.avatar %>" alt="" style="margin: auto; width: 100%;" />
 			</div>
 
 			<ul class="list-group sidebar-nav-v1 margin-bottom-40" id="sidebar-nav-1">
 				<li class="list-group-item active">
-					<a href="page_profile.html"><i class="fa fa-bar-chart-o"></i> 作品集</a>
+					<a href="/me/<%= req.session.passport.user.id %>"><i class="fa fa-bar-chart-o"></i> 我的配方</a>
 				</li>
-				<li class="list-group-item">
+				<!-- <li class="list-group-item">
 					<a href="page_profile_users.html"><i class="fa fa-group"></i> 粉絲</a>
-				</li>
+				</li> -->
 			</ul>
 
 		</div>
@@ -47,10 +47,12 @@
 		    			<div class="timeline-badge primary"><i class="glyphicon glyphicon-record<%= i%2?' invert':'' %>"></i></div>
 		    			<div class="timeline-panel">
 		    				<div class="timeline-heading">
-		    					<img class="img-responsive" src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt=""/>
-		    				</div>
+      						<a href="/recipe/<%= recipe.id %>">
+    				        <img class="img-responsive" src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt=""/>
+                  </a>
+                </div>
 		    				<div class="timeline-body text-justify">
-		    					<h2><a href="#"><%= recipe.perfumeName %></a></h2>
+		    					<h2><a href="/recipe/<%= recipe.id %>"><%= recipe.perfumeName %></a></h2>
 		    					<% if (recipe.message) { %>
 		    						<p><%= recipe.message %></p>
 	    						<% } %>
@@ -58,9 +60,9 @@
 		    				<div class="timeline-footer">
 		    					<ul class="list-unstyled list-inline blog-info">
 		    						<li><i class="fa fa-clock-o"></i> <%=: recipe.updatedAt | formatDateOnly %></li>
-		    						<li><i class="fa fa-comments-o"></i> <a href="#">12 Comments</a></li>
+		    						<!-- <li><i class="fa fa-comments-o"></i> <a href="#">12 Comments</a></li> -->
 		    					</ul>
-		    					<a class="likes" href="#"><i class="fa fa-heart"></i>87</a>
+		    					<!-- <a class="likes" href="#"><i class="fa fa-heart"></i>87</a> -->
 		    				</div>
 		    			</div>
 		    		</li>
