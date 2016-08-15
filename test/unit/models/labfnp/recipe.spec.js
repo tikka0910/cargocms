@@ -28,7 +28,7 @@ describe('test Recipe model operation', function() {
     }
   });
 
-  describe.only("find With Like User", () => {
+  describe("find With Like User", () => {
     let recipeLoveTest, testUser, likeUser;
     before(async (done) => {
       try {
