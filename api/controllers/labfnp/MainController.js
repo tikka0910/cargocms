@@ -21,8 +21,11 @@ module.exports = {
 
   explore: async function(req, res) {
     try {
+      let user = AuthService.getSessionUser(req);
+      const recipes = await Recipe.findAndIncludeUserLike({user});
+
       return res.view({
-        recipes: await Recipe.findAll()
+        recipes: recipes
       });
     }
     catch (e) {
