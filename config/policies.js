@@ -48,6 +48,13 @@ module.exports.policies = {
       // 'passport', 'sessionAuth', 'isAdmin'
     ],
   },
+  'SloganController': {
+    'index': ['nocache'],
+    'findOne': ['nocache'],
+    'create': ['nocache'],
+    'update': ['nocache'],
+    'delete': ['nocache']
+  },
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions (`true` allows public     *
