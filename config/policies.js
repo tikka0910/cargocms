@@ -34,7 +34,7 @@ module.exports.policies = {
     'findOne': ['nocache'],
     'create': ['nocache'],
     'update': ['nocache'],
-    'delete': ['nocache']
+    'delete': ['nocache'],
   },
   'BlogController': {
     'index': true

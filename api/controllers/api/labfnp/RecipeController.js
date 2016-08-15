@@ -85,6 +85,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const loginUser = AuthService.getSessionUser(req);
+      if (!loginUser) throw Error('permission denied');
       const user = await User.findById(loginUser.id);
       const recipe = await Recipe.findById(id);
       await user.addRecipe(recipe, {as: 'LikeRecipes'});
@@ -101,6 +102,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const loginUser = AuthService.getSessionUser(req);
+      if (!loginUser) throw Error('permission denied');
       const user = await User.findById(loginUser.id);
       const recipe = await Recipe.findById(id);
       await user.removeRecipe(recipe, {as: 'LikeRecipes'});
