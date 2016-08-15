@@ -89,11 +89,7 @@ module.exports = {
         name: 'UserId'
       }
     });
-    User.hasMany(Recipe, {
-      foreignKey: {
-        name: 'UserId'
-      }
-    });
+
     User.belongsToMany(Role, {
       through: 'UserRole',
       foreignKey: {
@@ -102,14 +98,8 @@ module.exports = {
       }
     });
 
-    User.belongsToMany(Recipe, {
-      through: 'LikeRecipes',
-      as: 'LikeRecipes',
-      foreignKey: {
-        name: 'UserId',
-        as: 'Recipes'
-      }
-    });
+    User.hasMany(Recipe);
+    User.belongsToMany(Recipe, {through: 'LikeRecipe'});
 
   },
   options: {
