@@ -49,6 +49,7 @@ module.exports = {
   },
   associations: function() {
     Recipe.belongsTo(User);
+    Recipe.belongsToMany(User, {through: 'LikeRecipe', as: 'LikeRecipe'});
   },
   options: {
     classMethods: {
@@ -63,6 +64,7 @@ module.exports = {
         });
         return recipes;
       },
+
       deleteById: async (id) => {
         try {
           return await Recipe.destroy({ where: { id } });
@@ -71,6 +73,37 @@ module.exports = {
           throw e;
         }
       },
+
+      findAndIncludeUserLike: async ({user}) => {
+        try {
+          let id = -1;
+          if(user) id = user.id;
+          console.log("== id ==", id);
+          const recipes = await Recipe.findAll({
+            include: {
+              where: {id: id},
+              model: User,
+              as: 'LikeRecipe',
+              required: false,
+              attributes: ["id"]
+            }
+          });
+
+          // const recipes = await User.findAll({
+          //   include: [{
+          //     where: { RecipeId: 1 },
+          //     model: Recipe,
+          //     as: 'LikeRecipe',
+          //     required: false
+          //   }]
+          // });
+          return recipes;
+        } catch (e) {
+          throw e;
+        }
+      },
+
+
     },
     instanceMethods: {},
     hooks: {}
