@@ -4,7 +4,7 @@ module.exports = {
 
     try {
       let user = AuthService.getSessionUser(req);
-      const recipes = await Recipe.findAndIncludeUserLike({userId: user.id});
+      const recipes = await Recipe.findAndIncludeUserLike({currentUser: user});
       res.ok({
         data: {
           items: recipes

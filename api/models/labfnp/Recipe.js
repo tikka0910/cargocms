@@ -73,38 +73,45 @@ module.exports = {
           throw e;
         }
       },
-
-      findAndIncludeUserLike: async ({ currentUser, userId }) => {
+      getFindAndIncludeUserLikeParam: ({findByRecipeId, findByUserId, currentUser }) => {
         try {
-          let id = userId || -1;
-          let currentUserId = -1;
-          if(currentUser) currentUserId = currentUser.id;
-          console.log("== id ==", id);
-          const recipes = await Recipe.findAll({
-            where: {
-              UserId: userId
-            },
+          let whereParam = { where: {} };
+          if (findByUserId) {
+            whereParam.where.UserId = findByUserId;
+          } else if (findByRecipeId) {
+            whereParam.where.id = findByRecipeId;
+          }
+          const currentUserId = currentUser ? currentUser.id : -1;
+          return {
+            ...whereParam,
             include: {
               where: {UserId: currentUserId},
               model: UserLikeRecipe,
               required: false
             }
-          });
-
-          // const recipes = await User.findAll({
-          //   include: [{
-          //     where: { RecipeId: 1 },
-          //     model: Recipe,
-          //     as: 'LikeRecipe',
-          //     required: false
-          //   }]
-          // });
+          };
+        } catch (e) {
+          throw e;
+        }
+      },
+      findAndIncludeUserLike: async function({findByRecipeId, findByUserId, currentUser }){
+        try {
+          const findParam = this.getFindAndIncludeUserLikeParam({findByRecipeId, findByUserId, currentUser });
+          const recipes = await Recipe.findAll(findParam);
           return recipes;
         } catch (e) {
           throw e;
         }
       },
-
+      findOneAndIncludeUserLike: async function({findByRecipeId, findByUserId, currentUser }){
+        try {
+          const findParam = this.getFindAndIncludeUserLikeParam({findByRecipeId, findByUserId, currentUser });
+          const recipes = await Recipe.findOne(findParam);
+          return recipes;
+        } catch (e) {
+          throw e;
+        }
+      },
 
     },
     instanceMethods: {},

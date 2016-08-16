@@ -22,8 +22,11 @@ module.exports = {
   explore: async function(req, res) {
     try {
       const { userId } = req.query;
-      let currentUser = AuthService.getSessionUser(req);
-      const recipes = await Recipe.findAndIncludeUserLike({ currentUser, userId });
+      const currentUser = AuthService.getSessionUser(req);
+      const recipes = await Recipe.findAndIncludeUserLike({
+        findByUserId: userId,
+        currentUser,
+      });
       return res.view({
         recipes: recipes
       });
@@ -36,25 +39,17 @@ module.exports = {
 
   recipe: async function(req, res) {
     const { id } = req.params;
-
-    let user = AuthService.getSessionUser(req);
-    let recipe = await Recipe.findOne({
-      where: { id },
-      include: {
-        where: { UserId: user.id },
-        model: UserLikeRecipe,
-        required: false
-      }
-    });
-
-    if (!recipe) {
-      return res.notFound();
-    }
-
     try {
+      const currentUser = AuthService.getSessionUser(req);
+      const recipe = await Recipe.findOneAndIncludeUserLike({
+        findByRecipeId: id,
+        currentUser
+      });
+      if (!recipe) {
+        return res.notFound();
+      }
       return res.view({ recipe });
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
       return res.serverError(e);
     }
