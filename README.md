@@ -34,7 +34,6 @@ References
 * [react-admin](https://github.com/marmelab/react-admin)
 * [AdminLTE - Free Premium Admin control Panel Theme](https://github.com/almasaeed2010/AdminLTE)
 * [StrapUI](http://www.strapui.com/)
-*
 
 Issues
 ------

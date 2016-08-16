@@ -1,14 +1,18 @@
-.logo h1 {
-  font-family: Bell MT;
-  font-size: 40px;
-  height: 50px;
-  padding-top: 15px;
-  color: #777;
-  text-shadow: 2px 2px 2px #ddd;
-}
+/*.logo h1 {*/
+/*  font-family: Bell MT;*/
+/*  font-size: 40px;*/
+/*  height: 50px;*/
+/*  padding-top: 15px;*/
+/*  color: #777;*/
+/*  text-shadow: 2px 2px 2px #ddd;*/
+/*}*/
 
 .brand-font {
   font-family: Bell MT;
+}
+
+.header .logo img {
+  margin: 5px 0;
 }
 
 .header .topbar ul.loginbar > li > a, .header .topbar ul.loginbar > li > a:hover {
