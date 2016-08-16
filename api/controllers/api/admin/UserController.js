@@ -14,7 +14,7 @@ module.exports = {
       }
       res.ok(result);
     } catch (e) {
-      res.serverError({ message: e, data: {}});
+      res.serverError(e);
     }
   },
 
