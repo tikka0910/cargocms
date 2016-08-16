@@ -53,6 +53,16 @@ module.exports = {
         }
       }
     },
+    updatedAtFormat: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          return moment(this.updatedAt).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
   },
   associations: () => {
     Post.belongsToMany(Tag,  {
