@@ -21,9 +21,9 @@ module.exports = {
 
   explore: async function(req, res) {
     try {
-      let user = AuthService.getSessionUser(req);
-      const recipes = await Recipe.findAndIncludeUserLike({user});
-
+      const { userId } = req.query;
+      let currentUser = AuthService.getSessionUser(req);
+      const recipes = await Recipe.findAndIncludeUserLike({ currentUser, userId });
       return res.view({
         recipes: recipes
       });
