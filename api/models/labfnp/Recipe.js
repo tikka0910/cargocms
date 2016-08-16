@@ -48,8 +48,8 @@ module.exports = {
     }
   },
   associations: function() {
+    Recipe.hasMany(UserLikeRecipe);
     Recipe.belongsTo(User);
-    Recipe.belongsToMany(User, {through: 'LikeRecipe', as: 'LikeRecipe'});
   },
   options: {
     classMethods: {
@@ -80,11 +80,9 @@ module.exports = {
           console.log("== id ==", id);
           const recipes = await Recipe.findAll({
             include: {
-              where: {id: id},
-              model: User,
-              as: 'LikeRecipe',
-              required: false,
-              attributes: ["id"]
+              where: {UserId: id},
+              model: UserLikeRecipe,
+              required: false
             }
           });
 

@@ -5,6 +5,9 @@
 <style type="text/css">
 #recipeImageContainer{
   /*position: relative;*/
+  position:relative;
+  display:inline-block;
+  text-align:center;
 }
 /*#recipeImage{
 	position: absolute;
@@ -25,8 +28,8 @@
   font-size: 14px;
   opacity: .97;
   position: absolute;
-  top: 235px;
-  left: 325px;
+  right: 10px;
+  bottom:10px;
 	padding: 2px;
   height: 30px;
   width: 30px;
@@ -104,8 +107,9 @@
 
 						<a href="/recipe/<%= recipe.id %>" id="recipeImageContainer" >
 							<img id="recipeImage" class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt="">
-
-							<!--<i id="recipeLikeIcon" class="fa fa-heart fa-2x"></i>-->
+							<div class="recipeLikeContainer" data-id="<%= recipe.id %>" data-like="<%= (recipe.UserLikeRecipes.length > 0) %>">
+                <i id="recipeLikeIcon" class="fa <%= recipe.UserLikeRecipes.length > 0 ? 'fa-heart': 'fa-heart-o' %> fa-sm"></i>
+              </div>
 						</a>
 						<div class="grid-boxes-caption">
 							<h3><a href="/recipe/<%= recipe.id %>"><%= recipe.perfumeName %></a></h3>
@@ -119,7 +123,7 @@
 								<li>|</li>
 								<li>
 									<i class="fa fa-clock-o"></i>
-									<%=: recipe.createdAt | formatDateOnly %>
+									<%=: recipe.createdAt | formatDate %>
 								</li>
 								<!--<li>|</li>
 								<li><a href="#"><i class="fa fa-comments-o"></i> 06</a></li>-->
@@ -174,14 +178,25 @@ $(document).ready(function(){
   $(".recipeLikeContainer").on("click", function(event){
     event.preventDefault()
     var id = $(this).data('id');
-
-    $.get('/api/labfnp/recipe/like/'+id)
-    .done(function() {
-
-    })
-    .fail(function() {
-      alert( "請先進行登入" );
-    });
+    var that = $(this);
+    var isLike = that.data('like');
+    var successCatch = function(result) {
+      var like = that.data('like');
+      that.data('like', !like);
+      that.find("i").toggleClass("fa-heart");
+      that.find("i").toggleClass("fa-heart-o");
+    }
+    var failCatch = function(error) {
+      if (error.responseJSON.message === 'permission denied') {
+        alert( "請先進行登入" );
+        location.href = '/login';
+      }
+    }
+    if (isLike) {
+      $.get('/api/labfnp/recipe/unlike/'+id).done(successCatch).fail(failCatch);
+    } else {
+      $.get('/api/labfnp/recipe/like/'+id).done(successCatch).fail(failCatch);
+    }
   })
 
 });

@@ -85,8 +85,10 @@ module.exports = {
     try {
       const { id } = req.params;
       const loginUser = AuthService.getSessionUser(req);
+      if (!loginUser) throw Error('permission denied');
       const recipe = await Recipe.findById(id);
-      await recipe.addUser(loginUser.id, {as: 'LikeRecipes'});
+      await UserLikeRecipe.createIfNotExist({RecipeId: id, UserId: loginUser.id})
+
       res.ok({
         message: 'success like recipe',
         data: true,
@@ -100,8 +102,12 @@ module.exports = {
     try {
       const { id } = req.params;
       const loginUser = AuthService.getSessionUser(req);
+      if (!loginUser) throw Error('permission denied');
+
       const recipe = await Recipe.findById(id);
-      await recipe.removeUser(loginUser.id, {as: 'LikeRecipes'});
+      await UserLikeRecipe.destroy({
+        where: {RecipeId: id, UserId: loginUser.id}
+      })
       res.ok({
         message: 'success dislike recipe',
         data: true,
