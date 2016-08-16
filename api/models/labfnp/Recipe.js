@@ -74,13 +74,18 @@ module.exports = {
         }
       },
 
-      findAndIncludeUserLike: async ({ userId }) => {
+      findAndIncludeUserLike: async ({ currentUser, userId }) => {
         try {
           let id = userId || -1;
+          let currentUserId = -1;
+          if(currentUser) currentUserId = currentUser.id;
           console.log("== id ==", id);
           const recipes = await Recipe.findAll({
+            where: {
+              UserId: userId
+            },
             include: {
-              where: {UserId: id},
+              where: {UserId: currentUserId},
               model: UserLikeRecipe,
               required: false
             }
