@@ -37,7 +37,15 @@ module.exports = {
   recipe: async function(req, res) {
     const { id } = req.params;
 
-    let recipe = await Recipe.findById(id);
+    let user = AuthService.getSessionUser(req);
+    let recipe = await Recipe.findOne({
+      where: { id },
+      include: {
+        where: { UserId: user.id },
+        model: UserLikeRecipe,
+        required: false
+      }
+    });
 
     if (!recipe) {
       return res.notFound();

@@ -44,8 +44,8 @@
           <div class="projects">
 
             <div style="float:right">
-              <button class="btn-u btn-u-red">
-                <i class="fa fa-heart-o" aria-hidden="true"></i>
+              <button id="likeButton" class="btn-u btn-u-red"  data-id="<%= recipe.id %>" data-like="<%= (recipe.UserLikeRecipes.length > 0) %>">
+                <i class="fa <%= recipe.UserLikeRecipes.length > 0 ? 'fa-heart': 'fa-heart-o' %>" aria-hidden="true"></i>
                 收藏
               </button>
             </div>
