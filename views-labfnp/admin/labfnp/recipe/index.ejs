@@ -46,6 +46,8 @@
                   <th class="" data-hide="">#</th>
                   <th class="" data-hide="">香水名稱</th>
                   <th class="" data-hide="">創作人</th>
+                  <th class="" data-hide="">公開狀態</th>
+                  <th class="" data-hide="">製作狀態</th>
                   <th class="" data-hide="phone,tablet" style="">其他訊息</th>
                   <th class="no-sort" data-hide="phone,tablet"></th>
                 </tr>
@@ -55,6 +57,8 @@
                   <td>{{ recipe.id }}</td>
                   <td><a href="/admin/#/admin/labfnp/recipe/show/{{recipe.id}}">{{ recipe.perfumeName }}</a></td>
                   <td>{{ recipe.authorName }}</td>
+                  <td>{{ recipe.visibilityDesc }}</td>
+                  <td>{{ recipe.productionStatusDesc }}</td>
                   <td>{{ recipe.message }}</td>
                   <td align="center" style="cursor: pointer;">
                     <div class="row">

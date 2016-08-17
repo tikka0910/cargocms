@@ -79,7 +79,7 @@ describe('test Recipe model operation', function() {
     it('find by likeUser should be success.', async (done) => {
       try {
         let user = likeUser;
-        let result = await Recipe.findAndIncludeUserLike({user});
+        let result = await Recipe.findAndIncludeUserLike({currentUser: user});
         console.log("=== result.length ===", result.length);
         done();
       } catch (e) {
@@ -89,7 +89,7 @@ describe('test Recipe model operation', function() {
     it('find by testUser should be success.', async (done) => {
       try {
         let user = testUser;
-        let result = await Recipe.findAndIncludeUserLike({user});
+        let result = await Recipe.findAndIncludeUserLike({currentUser: user});
         console.log("=== result.length ===", result.length);
         console.log(JSON.stringify(result, null, 2));
         done();

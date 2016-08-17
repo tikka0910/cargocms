@@ -32,6 +32,8 @@ module.exports = {
     perfumeName,
     message,
     description,
+    visibility,
+    productionStatus,
     UserId,
   }) => {
     try {
@@ -52,6 +54,8 @@ module.exports = {
     perfumeName,
     message,
     description,
+    visibility,
+    productionStatus,
   }) => {
     try {
       recipe.formula = RecipeService.bubbleSort(recipe.formula);
@@ -67,6 +71,8 @@ module.exports = {
         updatedRecipe.authorName = recipe.authorName;
         updatedRecipe.perfumeName = recipe.perfumeName;
         updatedRecipe.message = recipe.message;
+        updatedRecipe.visibility = recipe.visibility;
+        updatedRecipe.productionStatus = recipe.productionStatus
 
         updatedRecipe = await updatedRecipe.save();
       }
