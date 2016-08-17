@@ -15,6 +15,35 @@
     </section>
   </section>
 
+  <div class="row">
+    <section class="col col-6">
+      <label class="label">公開狀態</label>
+      <label class="select">
+        <select v-model="data.item.visibility">
+          <option value="PUBLIC" selected>公開</option>
+          <option value="PROTECTED">半公開</option>
+          <option value="PRIVATE">私密</option>
+        </select> <i></i> </label>
+    </section>
+
+    <section class="col col-6">
+      <label class="label">製作狀態</label>
+      <label class="select">
+        <select v-model="data.item.productionStatus">
+          <option value="NEW" selected>NEW</option>
+          <!-- <option value="RECEIVED">RECEIVED</option>
+          <option value="REQUESTED">REQUESTED</option> -->
+          <option value="SUBMITTED">下訂單</option>
+          <option value="PAID">已付款</option>
+          <option value="PROCESSING">製作中</option>
+          <option value="CANCELLED">取消</option>
+          <option value="SHIPPED">已寄出</option>
+          <option value="DELIVERED">已交付</option>
+          <option value="COMPLETED">完成</option>
+        </select> <i></i> </label>
+    </section>
+  </div>
+
   <section class="recipe-combo">
 
     <!-- row-0 -->
@@ -40,7 +69,7 @@
       <section class="col col-xs-1">
         <label class="label hidden-xs">清除</label>
         <label class="input">
-          <button type="button" id="btnClean-0" class="btn btn-default btn-sm" 
+          <button type="button" id="btnClean-0" class="btn btn-default btn-sm"
           v-bind:disabled="data.item.formula[<%= i-1 %>].drops === '0'"
           v-on:click="onBtnCleanClick">x</button>
         </label>

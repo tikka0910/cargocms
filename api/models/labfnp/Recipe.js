@@ -45,7 +45,70 @@ module.exports = {
     },
     coverPhoto: {
       type: Sequelize.STRING,
-    }
+    },
+    visibility: {
+      type: Sequelize.ENUM('PUBLIC', 'PRIVATE', 'PROTECTED'),
+      defaultValue: 'PUBLIC',
+    },
+    visibilityDesc: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        let desc = '';
+        switch (this.visibility) {
+          case 'PUBLIC':
+            desc = '公開';
+            break;
+          case 'PRIVATE':
+            desc = '非公開';
+            break;
+          case 'PROTECTED':
+            desc = '半公開';
+            break;
+          default:
+            desc = '公開';
+        }
+        return desc;
+      }
+    },
+    productionStatus: {
+      type: Sequelize.ENUM("NEW", "RECEIVED", "REQUESTED", "SUBMITTED", "PAID", "PROCESSING", "CANCELLED", "SHIPPED", "DELIVERED", "COMPLETED"),
+      defaultValue: 'NEW',
+    },
+    productionStatusDesc: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        let desc = '';
+        switch (this.productionStatus) {
+          case 'NEW':
+            desc = 'NEW';
+            break;
+          case 'SUBMITTED':
+            desc = '下訂單';
+            break;
+          case 'PAID':
+            desc = '已付款';
+            break;
+          case 'PROCESSING':
+            desc = '製作中';
+            break;
+          case 'CANCELLED':
+            desc = '取消';
+            break;
+          case 'SHIPPED':
+            desc = '已寄出';
+            break;
+          case 'DELIVERED':
+            desc = '已交付';
+            break;
+          case 'COMPLETED':
+            desc = '完成';
+            break;
+          default:
+            desc = 'NEW';
+        }
+        return desc;
+      }
+    },
   },
   associations: function() {
     Recipe.hasMany(UserLikeRecipe);
