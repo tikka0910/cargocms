@@ -1,5 +1,17 @@
+<style media="screen">
+@media screen and (max-width: 768px){
+  #main-table_filter input {
+    width: 160px;
+  }
+}
+@media screen and (min-width: 768px){
+  #main-table_filter input {
+    width: 550px;
+  }
+}
+</style>
 <!-- widget grid -->
-<section id="post-index" class="">
+<section id="main-index" class="">
 
 	<!-- row -->
 	<div class="row">
@@ -8,7 +20,7 @@
 		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 			<!-- Widget ID (each widget will need unique ID)-->
-			<div class="jarviswidget jarviswidget-color-darken" id="post-table-widget" data-widget-editbutton="false" style="display: none;">
+			<div class="jarviswidget jarviswidget-color-darken" id="main-table-widget" data-widget-editbutton="false" style="display: none;">
 				<!-- widget options:
 				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -40,7 +52,7 @@
 					<!-- widget content -->
 					<div class="widget-body no-padding">
             <!-- end messageBox div -->
-						<table id="post-table" class="table table-striped table-bordered table-hover" width="100%">
+						<table id="main-table" class="table table-striped table-bordered table-hover" width="100%">
 							<thead>
 								<tr>
 									<th class="" data-hide="phone">#</th>
@@ -165,7 +177,7 @@
 		*/
 
 		<%- include vue.ejs %>
-		postApp.$mount("#post-index");
+		postApp.$mount("#main-index");
 		postApp.loadItems(postApp.renderTable);
 
 	};
@@ -185,9 +197,9 @@
 	var pagedestroy = function() {
 		postApp = null;
 		postAppModel = null;
-		$("#post-table").remove();
+		$("#main-table").remove();
 		if (debugState) {
-			console.log("✔ post-table unbind");
+			console.log("✔ main-table unbind");
 		}
 	}
 

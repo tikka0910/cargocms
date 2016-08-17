@@ -135,7 +135,7 @@ var postApp = new Vue({
       if(type == 'create') {
         this.newSummernote();
       }
-      var registerForm = $("#post-form");
+      var registerForm = $("#main-form");
       registerForm.validate({
 
         // Rules for form validation
@@ -264,12 +264,12 @@ var postApp = new Vue({
        phone : 480
      };
      /* TABLETOOLS */
-     var table = $('#post-table').dataTable({
+     var table = $('#main-table').dataTable({
        // Tabletools options:
        //   https://datatables.net/extensions/tabletools/button_options
-       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f>T<'hidden-xs'l>r>" +
+       "sDom": "<'dt-toolbar'<'row'<'col-xs-7 col-md-9'f><'col-xs-5 col-md-3'T>>r>" +
            "t"+
-           "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+           "<'dt-toolbar-footer'<'row'<'col-md-6 col-xs-12 hidden-xs'i><'col-md-6 col-xs-12'p><'col-md-12 hidden-xs'l>>>",
        "oLanguage": {
           "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
           "sInfo": "顯示 _START_ 到 _END_ 總共 _TOTAL_ 筆紀錄",
@@ -282,8 +282,8 @@ var postApp = new Vue({
          	"sZeroRecords":  "沒有符合的結果",
          	"oPaginate": {
          		"sFirst":    "第一頁",
-         		"sPrevious": "<i class='fa fa-chevron-left' aria-hidden='true'></i>",
-         		"sNext":     "下一頁",
+            "sPrevious": "<i class='fa fa-chevron-left' aria-hidden='true'></i>",
+            "sNext":     "<i class='fa fa-chevron-right' aria-hidden='true'></i>",
          		"sLast":     "最後一頁"
          	},
          	"sAria": {
@@ -340,7 +340,7 @@ var postApp = new Vue({
        "preDrawCallback" : function() {
          // Initialize the responsive datatables helper once.
          if (!responsiveHelper_datatable_tabletools) {
-           responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#post-table'), breakpointDefinition);
+           responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#main-table'), breakpointDefinition);
          }
        },
        "rowCallback" : function(nRow) {
@@ -356,12 +356,12 @@ var postApp = new Vue({
        if ( $(this).hasClass('selected') ) {
          $(this).removeClass('selected');
        } else {
-         $('#post-table tbody tr').removeClass('selected');
+         $('#main-table tbody tr').removeClass('selected');
          $(this).addClass('selected');
        }
      });
 
-     $('#post-table-widget').fadeIn();
+     $('#main-table-widget').fadeIn();
     },
     dblclick: function(index) {
       var postId = postAppModel.data.items[index].id;

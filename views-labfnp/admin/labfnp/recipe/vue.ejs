@@ -385,9 +385,9 @@ var userApp = new Vue({
 			var table = $('#main-table').dataTable({
 				// Tabletools options:
 				//   https://datatables.net/extensions/tabletools/button_options
-				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f>T<'hidden-xs'l>r>" +
+				"sDom": "<'dt-toolbar'<'row'<'col-xs-7 col-md-9'f><'col-xs-5 col-md-3'T>>r>" +
 					"t" +
-					"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+					"<'dt-toolbar-footer'<'row'<'col-md-6 col-xs-12 hidden-xs'i><'col-md-6 col-xs-12'p><'col-md-12 hidden-xs'l>>>",
 				"oLanguage": {
 					"sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
 					"sInfo": "顯示 _START_ 到 _END_ 總共 _TOTAL_ 筆紀錄",
