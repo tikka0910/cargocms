@@ -40,6 +40,9 @@ module.exports = {
     message: {
       type: Sequelize.STRING,
     },
+    description: {
+      type: Sequelize.STRING,
+    },
     totalDrops: {
       type: Sequelize.INTEGER,
     },

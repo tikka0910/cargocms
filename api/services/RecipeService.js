@@ -73,6 +73,7 @@ module.exports = {
         updatedRecipe.message = recipe.message;
         updatedRecipe.visibility = recipe.visibility;
         updatedRecipe.productionStatus = recipe.productionStatus
+        updatedRecipe.description = recipe.description;
 
         updatedRecipe = await updatedRecipe.save();
       }

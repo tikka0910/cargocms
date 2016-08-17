@@ -29,6 +29,7 @@ var userAppModel = {
 			formulaLogs: '',
       formula: [],
       totalDrops: 0,
+      description: '',
       message: '',
       User: {},
 			visibility: '',
@@ -219,7 +220,6 @@ var userApp = new Vue({
             max: max,
 					},
           totalDrops: {
-            min: min,
             max: max,
           },
 				},
@@ -243,7 +243,6 @@ var userApp = new Vue({
             max: '單一成分請至多只給予 ' + max + ' 滴',
           },
           totalDrops: {
-            min: '全部成分加總至少為 ' + min + ' 滴！',
             max: '全部成分加總最多為 ' + max + ' 滴！',
           },
 				},

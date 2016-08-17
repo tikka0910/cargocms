@@ -7,15 +7,18 @@
     top: -2px;
     left: 41px;
   }
+
   .totalDrops {
     height: 0px;
     width: 0px;
     visibility: hidden;
   }
+
   .totalDropsWrapper {
     margin-left: 50%;
     z-index: 1;
   }
+
   label.error {
     position: absolute;
     color: rgb(255, 0, 0);
@@ -42,6 +45,18 @@
       <label class="label">作者名稱</label>
       <label class="input">
         <input type="text" name="authorName" class="authorName input-lg" placeholder="請輸入作者名稱" v-model="data.item.authorName" value="<%= req.session.passport?req.session.passport.user.displayName:'' %>" required>
+      </label>
+    </section>
+    <section>
+      <label class="label">配方描述</label>
+      <label class="textarea textarea-expandable">
+        <textarea rows="3" class="custom-scroll" name="description" id="description" v-model="data.item.description"></textarea>
+      </label>
+    </section>
+    <section>
+      <label class="label">備註</label>
+      <label class="textarea textarea-expandable">
+        <textarea rows="3" class="custom-scroll" name="message" id="message" v-model="data.item.message"></textarea>
       </label>
     </section>
   </section>
@@ -84,7 +99,7 @@
   <section class="recipe-combo">
     <!-- row-0 -->
     <div class="row">
-      <hr class="hidden-lg hidden-md hidden-sm visible-xs-* padding-10"/>
+      <hr class="hidden-lg hidden-md hidden-sm visible-xs-* padding-10" />
       <section class="col col-xs-6">
         <label class="label hidden-xs">配方成份</label>
         <label class="select">
@@ -118,7 +133,7 @@
 
     <!-- row-1-to-5 -->
     <% for(var i=1; i < 6; i++) { %>
-      <hr class="hidden-lg hidden-md hidden-sm visible-xs-* padding-10"/>
+      <hr class="hidden-lg hidden-md hidden-sm visible-xs-* padding-10" />
       <div class="row form-group">
         <section class="col col-6">
           <label class="select">
@@ -143,6 +158,6 @@
         </section>
       </div>
       <% } %>
-        <!-- end-row -->
+      <!-- end-row -->
 
 </fieldset>
