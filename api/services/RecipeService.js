@@ -7,22 +7,23 @@ module.exports = {
     }
   },
 
-  bubbleSort: (a) => {
+  bubbleSort: (array) => {
+    var updatedArray = [];
     var swapped;
     do {
         swapped = false;
-        for (var i=0; i < a.length-1; i++) {
-          var thisNum = parseInt(a[i].scent.match(/(\d+)/g)[0]);
-          var nextNum = parseInt(a[i+1].scent.match(/(\d+)/g)[0]);
+        for (var i=0; i < updatedArray.length-1; i++) {
+          var thisNum = parseInt(updatedArray[i].scent.match(/(\d+)/g)[0]);
+          var nextNum = parseInt(updatedArray[i+1].scent.match(/(\d+)/g)[0]);
             if (thisNum > nextNum) {
                 var temp = a[i];
-                a[i] = a[i+1];
-                a[i+1] = temp;
+                updatedArray[i] = updatedArray[i+1];
+                updatedArray[i+1] = temp;
                 swapped = true;
             }
         }
     } while (swapped);
-    return a;
+    return updatedArray;
   },
 
   create: async (recipe = {
