@@ -8,7 +8,7 @@ module.exports = {
   },
 
   bubbleSort: (array) => {
-    var updatedArray = [];
+    var updatedArray = array;
     var swapped;
     do {
         swapped = false;
@@ -16,7 +16,7 @@ module.exports = {
           var thisNum = parseInt(updatedArray[i].scent.match(/(\d+)/g)[0]);
           var nextNum = parseInt(updatedArray[i+1].scent.match(/(\d+)/g)[0]);
             if (thisNum > nextNum) {
-                var temp = a[i];
+                var temp = updatedArray[i];
                 updatedArray[i] = updatedArray[i+1];
                 updatedArray[i+1] = temp;
                 swapped = true;
