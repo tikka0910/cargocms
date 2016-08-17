@@ -13,13 +13,14 @@ describe('main page test', () => {
 			browser.click('#submit-button');
 
 			expect(browser.getTitle()).to.equal('LFP: 香料香水實驗室，客製專屬香水');
-			expect(browser.element('#logout-link').state === 'success').to.equal(true);
+			browser.element('#logout-link').state.should.be.equal('success');
 		});
 
 		it('logout @watch', () => {
 			browser.click('#logout-link');
 
-			expect(browser.elements('#login').state === 'success').to.equal(true);
+			// expect(browser.elements('#login').state === 'success');
+			browser.element('#logout-link').state.should.be.equal('failure');
 		});
 	});
 });
