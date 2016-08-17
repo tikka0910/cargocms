@@ -7,6 +7,19 @@
     .cover-photo {
       min-height: 150px;
     }
+    .drops, .scent {
+      font-size: 16px;
+      font-weight: bold;
+      color: black;
+    }
+    .scent {
+      padding: 2px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      border: none;
+      color: white;
+    }
   </style>
 
 
@@ -17,66 +30,41 @@
 
       <div class="col-md-6 col-md-offset-3">
 
+        <div class="margin-bottom-10">
+          <button class="btn-u btn-u-default" onclick="window.history.back()">返回</button>
+        </div>
+
         <!-- begin .profile-body -->
         <div class="profile-body">
 
           <div class="easy-block-v1">
-            <div class="easy-block-v1-badge rgba-red">配方詳細資料</div>
-            <img class="img-responsive cover-photo" src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt="" />
+            <div class="easy-block-v1-badge rgba-red">精選</div>
+            <img class="img-responsive cover-photo" src="http://loremflickr.com/640/480/perfume/all?<%= Math.random() * Date.now() %>" alt="" />
           </div>
           <div class="projects">
-            <h2><small>配方成份</small></h2>
+
+            <div style="float:right">
+              <button class="btn-u btn-u-red">
+                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                收藏
+              </button>
+            </div>
+
             <h1><p><span class="padding-5"><%= recipe.perfumeName %></span></p></h1>
             <ul class="list-unstyled list-inline blog-info-v2">
               <li>
-                By:
+                <i class="fa fa-user"></i>
                 <a class="color-green" href="#">
                   <%= recipe.authorName %>
                 </a>
               </li>
               <li><i class="fa fa-clock-o"></i>
-                <%=: recipe.createdAt | formatDateOnly %>
+                <%=: recipe.createdAt | formatDate %>
               </li>
             </ul>
-            <hr>
-            <div class="col-xs-12 text-center">
-              <canvas id="pieChart" height="200px" width="350px"></canvas>
-            </div>
-            <h2>
-            <small>配方成份</small>
-            <h4 class="padding-5" >
-              <% for (var i=0;i<recipe.formula.length;i++) {%>
-              <div class="row">
-                  <div class="col col-xs-3">
-                    <stronge>・</stronge>
-                      <label
-                      id="scent-<%= i %>"
-                      class="scent"
-                      style="
-                      color:white;
-                      padding: 2px;
-                      background:<%= recipe.formula[i].color %>;
-                      -webkit-border-radius: 5px;
-                      -moz-border-radius: 5px;
-                      border-radius: 5px;
-                      border: none;"><%= recipe.formula[i].scent %></label>
-                  </div>
-                  <div class="col col-xs-1"> : </div>
-                  <div class="col col-xs-2">
-                    <label id="drops-<%= i %>" class="drops"><%= recipe.formula[i].drops %></label>
-                  </div>
-                  <label id="color-<%= i %>" class="color hidden"><%= recipe.formula[i].color %></label>
-              </div>
-              <% } %>
-            </h4>
-            <hr>
-          </h2>
-            <h4>
-            <small>其他訊息</small>
+            <hr />
             <% if (recipe.message) { %>
               <p class="padding-5"><%= recipe.message %></p>
-            <% } else { %>
-  						<p class="padding-5">沒有資料</p>
             <% } %>
           </h4>
           </div>

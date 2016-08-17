@@ -47,10 +47,13 @@ module.exports.routes = {
   'get /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.findOne',
   'put /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.update',
   'delete /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.destroy',
+  'get /api/labfnp/recipe/like/:id': 'api/labfnp/RecipeController.like',
+  'get /api/labfnp/recipe/unlike/:id': 'api/labfnp/RecipeController.unlike',
 
   'get /api/labfnp/scent/simpleList': 'api/labfnp/ScentController.find',
   'get /api/labfnp/scent': 'api/labfnp/ScentController.find',
   'get /api/labfnp/scentnote': 'api/labfnp/ScentNoteController.find',
+
 
   'get /api/admin/user': 'api/admin/UserController.find',
   'get /api/admin/user/:id': 'api/admin/UserController.findOne',
@@ -77,12 +80,13 @@ module.exports.routes = {
   // 'delete /api/admin/Default/:id': 'api/admin/DefaultController.destroy',
 
   //----- custom -----
-  '/creator':     'labfnp/MainController.creator',
-  '/lab':         'labfnp/MainController.explore',
-  '/recipe/:id':  'labfnp/MainController.recipe',
-  '/me/:id':      'labfnp/MainController.portfolio',
-  '/admin/config.js': "AdminController.config",
-  '/admin': 'AdminController.index',
+  '/creator':         'labfnp/MainController.creator',
+  '/lab':             'labfnp/MainController.explore',
+  '/recipe/:id':      'labfnp/MainController.recipe',
+  '/me':              'labfnp/MainController.portfolio',
+  '/me/:id':          'labfnp/MainController.portfolio',
+  '/admin':           'AdminController.index',
+  '/admin/config.js': 'AdminController.config',
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
@@ -100,9 +104,6 @@ module.exports.routes = {
   "/labfnp/:controller/:action/:id?": {},
   "/admin/:controller/:action/:id?": {},
   "/:controller/:action/:id?": {},
-
-
-
 
 
   /***************************************************************************

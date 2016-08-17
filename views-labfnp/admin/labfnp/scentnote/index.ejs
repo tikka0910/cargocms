@@ -1,7 +1,7 @@
 <style>
 .color {
 	color:white;
-	padding: 2px;
+	padding: 2px 10px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -37,7 +37,7 @@
 
         <header>
           <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-          <h2>會員管理</h2>
+          <h2>香調管理</h2>
         </header>
 
 				<!-- widget div-->
@@ -56,6 +56,7 @@
 							<thead>
 								<tr>
 									<th class="" data-class="expand"><i class="text-muted hidden-md hidden-sm hidden-xs"></i>ID</th>
+									<th class="" >分類</th>
 									<th class="" >名稱</th>
 									<th class="" >名稱2</th>
 									<th class="" >顏色</th>
@@ -65,6 +66,7 @@
 							<tbody>
 								<tr v-for="scentNote in data.items" v-on:click="selection($index)" >
 									<td><a href="/admin/#/admin/labfnp/scentnote/show/{{scentNote.id}}">{{ scentNote.id }}</a></td>
+									<td>{{ scentNote.notes }}</td>
 									<td>{{ scentNote.title }}</td>
 									<td>{{ scentNote.title2 }}</td>
 									<td ><span class="color" style="background: {{ scentNote.color }};">{{ scentNote.color }}</span></td>

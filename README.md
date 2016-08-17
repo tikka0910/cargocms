@@ -34,7 +34,6 @@ References
 * [react-admin](https://github.com/marmelab/react-admin)
 * [AdminLTE - Free Premium Admin control Panel Theme](https://github.com/almasaeed2010/AdminLTE)
 * [StrapUI](http://www.strapui.com/)
-*
 
 Issues
 ------
@@ -52,6 +51,16 @@ ex:
 cors.origin: 'http://cargo.trunksys.com, https://cargo.trunksys.com',
 
 ## Project Layout
+
+### View Usages
+
+```
+// date only
+<%=: row.createdAt | formatDate %>
+
+// date time
+<%=| row.createdAt | formatDateTime %>
+```
 
 ### Controller
 

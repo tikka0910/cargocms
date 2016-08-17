@@ -14,7 +14,8 @@ module.exports.bootstrap = async (cb) => {
   // 這個已經用 config/urls.js 定義預設值
   //if(!sails.config.urls) sails.config.urls = {afterSignIn: "/"};
 
-  console.log("=== Setup express-helpers ===");
+
+
   _.extend(sails.hooks.http.app.locals, sails.config.http.locals);
 
   let porductionInitDb = async () => {
@@ -45,6 +46,12 @@ module.exports.bootstrap = async (cb) => {
 
     await porductionInitDb();
 
+    if (!sails.config.hasOwnProperty('offAuth'))
+      sails.config.offAuth = false;
+
+    if(environment == 'production')
+      sails.config.offAuth = false;
+
     let adminRole = await Role.findOrCreate({
       where: {authority: 'admin'},
       defaults: {authority: 'admin'}
@@ -66,7 +73,12 @@ module.exports.bootstrap = async (cb) => {
         password: 'user',
         UserId: user.id
       });
+
+
+
     });
+
+
 
     User.findOrCreate({
       where: {
@@ -90,7 +102,7 @@ module.exports.bootstrap = async (cb) => {
           UserId: adminUsers[0].id
         }
       });
-      //adminUsers[0].addRole(adminRole[0]);
+      adminUsers[0].addRole(adminRole[0]);
     });
 
     const {environment} = sails.config;
@@ -133,7 +145,7 @@ module.exports.bootstrap = async (cb) => {
 
       await post.addTag(tag.id);
 
-      const recipe = {
+      const recipeLove = {
         formula:[
           {"drops":"1","scent":"BA69","color":"#E87728"},
           {"drops":"2","scent":"BA70","color":"#B35721"}
@@ -143,8 +155,23 @@ module.exports.bootstrap = async (cb) => {
         perfumeName: 'love',
         message: 'this is love',
         UserId: 1,
+      }
+      Recipe.create(recipeLove);
+
+      const recipeLoveAgain = {
+        formula:[
+          {"drops":"1","scent":"BA69","color":"#E87728"},
+          {"drops":"2","scent":"BA70","color":"#B35721"}
+        ],
+        formulaLogs: '',
+        authorName: '王大明',
+        perfumeName: 'love again',
+        message: 'this is love again',
+        UserId: 1,
       };
-      await RecipeService.create(recipe);
+
+      let testRecipe = await Recipe.create(recipeLoveAgain);
+
 
       // const execSync = require('child_process').execSync;
       // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scentNote.sql`);

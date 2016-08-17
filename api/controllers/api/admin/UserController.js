@@ -4,25 +4,17 @@ module.exports = {
     try {
       let {query} = req
       let {serverSidePaging} = query
-
+      let modelName = req.options.controller.split("/").reverse()[0]
+      let result;
       if(serverSidePaging){
-
-        const findQuery = FormatService.getQueryObj(query);
-        let result = await User.findAndCountAll(findQuery)
-        let data = result.rows
-        let recordsTotal = data.length
-        let recordsFiltered =  result.count
-        let draw = parseInt(req.draw) + 1
-        res.ok({draw, recordsTotal, recordsFiltered, data});
+        result = await PagingService.process({query, modelName});
       }else {
-        const users = await UserService.findAll();
-        res.ok({
-          data: {
-            items: users
-        }});
+        const items = await sails.models[modelName].findAll();
+        result = {data: {items}}
       }
+      res.ok(result);
     } catch (e) {
-      res.serverError({ message: e, data: {}});
+      res.serverError(e);
     }
   },
 
