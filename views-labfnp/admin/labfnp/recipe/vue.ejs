@@ -65,7 +65,7 @@ var userApp = new Vue({
         var checkScent = checkScentType && checkScentEmpty;
         if (checkDrops && checkScent) newFormula.push(dataJson.formula[i]);
       }
-      for (var i=0;i<newFormula.length;i++) {
+      for (var i=0; i<newFormula.length; i++) {
         newFormula[i].color = scentColor[newFormula[i].scent];
       }
       dataJson.formula = newFormula;
@@ -253,7 +253,7 @@ var userApp = new Vue({
 
 				submitHandler: function (form) {
 					if (type == 'create') {
-						userApp.save();
+            userApp.save();
 						return false;
 					} else if (type == 'edit') {
 						userApp.update();

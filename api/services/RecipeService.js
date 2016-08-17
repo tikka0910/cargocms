@@ -7,24 +7,37 @@ module.exports = {
     }
   },
 
-  create: async ({
+  bubbleSort: (a) => {
+    var swapped;
+    do {
+        swapped = false;
+        for (var i=0; i < a.length-1; i++) {
+          var thisNum = parseInt(a[i].scent.match(/(\d+)/g)[0]);
+          var nextNum = parseInt(a[i+1].scent.match(/(\d+)/g)[0]);
+            if (thisNum > nextNum) {
+                var temp = a[i];
+                a[i] = a[i+1];
+                a[i+1] = temp;
+                swapped = true;
+            }
+        }
+    } while (swapped);
+    return a;
+  },
+
+  create: async (recipe = {
     formula,
     formulaLogs,
     authorName,
     perfumeName,
     message,
-    UserId
+    description,
+    UserId,
   }) => {
     try {
-      sails.log.info({
-        formula,
-        formulaLogs,
-        authorName,
-        perfumeName,
-        message,
-        UserId,
-      });
-      return await Recipe.create({ formula, formulaLogs, authorName, perfumeName, message, UserId });
+      recipe.formula = RecipeService.bubbleSort(recipe.formula);
+      sails.log.info(recipe);
+      return await Recipe.create(recipe);
     } catch (e) {
       sails.log.error(e);
       throw e;
@@ -37,9 +50,11 @@ module.exports = {
     formulaLogs,
     authorName,
     perfumeName,
-    message
+    message,
+    description,
   }) => {
     try {
+      recipe.formula = RecipeService.bubbleSort(recipe.formula);
       sails.log.info('update recipe service=>', recipe);
       let updatedRecipe = await Recipe.findOne({
         where: {
