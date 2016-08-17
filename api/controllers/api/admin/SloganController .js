@@ -47,7 +47,7 @@ module.exports = {
       sails.log.info('create user controller=>', data);
       const slogan = await Slogan.create(data);
       res.ok({
-        message: 'Create user success.',
+        message: 'Create slogan success.',
         data: slogan,
       });
     } catch (e) {
