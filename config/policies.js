@@ -53,7 +53,6 @@ module.exports.policies = {
     'create': ['nocache'],
     'update': ['nocache'],
     'delete': ['nocache'],
-    'find': ['nocache'],
   },
   /***************************************************************************
   *                                                                          *
