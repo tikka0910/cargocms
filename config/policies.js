@@ -37,13 +37,6 @@ module.exports.policies = {
     'update': ['nocache'],
     'delete': ['nocache'],
   },
-  'SloganController': {
-    'find': ['nocache'],
-    'findOne': ['nocache'],
-    'create': ['nocache'],
-    'update': ['nocache'],
-    'delete': ['nocache'],
-  },
   'BlogController': {
     'index': true
   },
