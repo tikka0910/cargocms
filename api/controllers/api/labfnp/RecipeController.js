@@ -33,7 +33,6 @@ module.exports = {
     const data = req.body;
     try {
       const loginedUser = AuthService.getSessionUser(req);
-      console.log("loginedUser=>", loginedUser);
       if (loginedUser) {
         data.UserId = loginedUser.id;
       }

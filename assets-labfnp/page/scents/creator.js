@@ -231,6 +231,7 @@ $(function() {
     var authorName = $('input[name=authorName]').val();
     var perfumeName = $('input[name=perfumeName]').val();
     var message = $('textarea[name=message]').val();
+    var visibility = $('select[name=visibility]').val();
 
     $.ajax({
       url: endpoint,
@@ -243,7 +244,8 @@ $(function() {
         perfumeName: perfumeName,
         formulaLogs: '',
         formula: getFormulaData(),
-        message: message
+        message: message,
+        visibility: visibility
       }
     }).done(function(result) {
       console.log(result);
