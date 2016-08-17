@@ -1,4 +1,4 @@
-describe.only('About Slogan Controller operation', function(){
+describe('About Slogan Controller operation', function(){
 
   let test_slogan = null
   before( async (done) => {
