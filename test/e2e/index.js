@@ -2,7 +2,10 @@ require("../bootstrap.test.js")
 describe('main page test', () => {
 	describe('get index title', () => {
 		it('should be get broser title of LFP @watch', () => {
-			browser.url('http://localhost:1338/');
+      var ip = require("ip");
+      console.dir ( ip.address() );
+
+			browser.windowHandleSize({width:1280,height:900}).url('/');
 
 			expect(browser.getTitle()).to.equal('LFP: 香料香水實驗室，客製專屬香水');
 		});
@@ -19,7 +22,6 @@ describe('main page test', () => {
 		it('logout @watch', () => {
 			browser.click('#logout-link');
 
-			// expect(browser.elements('#login').state === 'success');
 			browser.element('#logout-link').state.should.be.equal('failure');
 		});
 	});
