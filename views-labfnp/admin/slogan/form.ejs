@@ -5,8 +5,8 @@
     <label class="checkbox">
       <input type="checkbox" id="admin" name="admin" value="admin" v-model="data.item.RolesArray">
       <i></i>管理員</label>
-    <label class="user checkbox state-disabled">
-      <input type="checkbox" id="user" name="user" value="user" v-model="data.item.RolesArray" checked disabled>
+    <label class="slogan checkbox state-disabled">
+      <input type="checkbox" id="slogan" name="slogan" value="slogan" v-model="data.item.RolesArray" checked disabled>
       <i></i>使用者</label>
   </section>
 
@@ -15,8 +15,8 @@
   <br>
 
   <section>
-    <label class="input"><i class="icon-append fa fa-user"></i>
-      <input type="text" name="username" placeholder="使用者名稱" v-model="data.item.username">
+    <label class="input"><i class="icon-append fa fa-slogan"></i>
+      <input type="text" name="sloganname" placeholder="使用者名稱" v-model="data.item.sloganname">
       <b class="tooltip tooltip-bottom-right">請輸入使用者名稱</b></label>
   </section>
 
@@ -81,7 +81,7 @@
 </fieldset>
 <script>
 var formRules = {
-  username : {
+  sloganname : {
     required : true
   },
   email : {
@@ -107,7 +107,7 @@ var formRules = {
 
   // Messages for form validation
 var formMessages = {
-  username : {
+  sloganname : {
     required : '請輸入使用者帳號'
   },
   email : {

@@ -4,7 +4,7 @@
 	<thead>
 		<tr>
 			<th class="" data-hide="phone">#</th>
-			<th class="" data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>ID</th>
+			<th class="" data-class="expand"><i class="fa fa-fw fa-slogan text-muted hidden-md hidden-sm hidden-xs"></i>ID</th>
 			<th class="">全名</th>
 			<th class="" name="email">Email</th>
 			<th class="" data-hide="phone,tablet">最近登入時間</th>
@@ -15,10 +15,8 @@
 	<tbody>
 		<tr v-for="item in data.items" v-on:dblclick="dblclick(item.id)">
 			<td>{{ item.id }}</td>
-			<td><a href="/admin/#/admin/{{modelName}}/show/{{item.id}}">{{ item.username }}</a></td>
-			<td>{{ item.displayName }}</td>
-			<td>{{ item.email }}</td>
-			<td>{{ item.lastLogin }} </td>
+			<td><a href="/admin/#/admin/{{modelName}}/show/{{item.id}}">{{ item.content }}</a></td>
+			<td>{{ item.source }}</td>
 			<td align="center" style="cursor: pointer;">
 				<div class="row">
 					<a class="btn btn-default btn-xs" role="button" v-on:click="show(item.id)">
@@ -40,10 +38,8 @@
 		// server only
 		var columns = [
 			{ "data": "id" },
-			{ "data": "username" },
-			{ "data": "displayName" },
-			{ "data": "email" },
-			{ "data": "lastLogin" }
+			{ "data": "source" },
+			{ "data": "content" },			
 		]
 
 		// server only

@@ -1,88 +1,84 @@
 module.exports = {
+  create: async (req, res) => {
+    const data = req.body;
+    try{
+      sails.log.info('create slogan controller =>', data);
+      const slogan = await Slogan.create(data);
+      res.ok({
+        message: 'Created Slogan success.',
+        data: slogan,
+      });
+    }
+    catch(e){
+      res.serverError({ message: e.message, data: {}});
+    }
+  },
 
   find: async (req, res) => {
-    try {
-      let {query} = req
-      let {serverSidePaging} = query
-
-      if(serverSidePaging){
-
-        const findQuery = FormatService.getQueryObj(query);
-        let result = await User.findAndCountAll(findQuery)
-        let data = result.rows
-        let recordsTotal = data.length
-        let recordsFiltered =  result.count
-        let draw = parseInt(req.draw) + 1
-        res.ok({draw, recordsTotal, recordsFiltered, data});
-      }else {
-        const users = await UserService.findAll();
-        res.ok({
-          data: {
-            items: users
-        }});
-      }
-    } catch (e) {
-      res.serverError({ message: e, data: {}});
+    try{
+      const slogans = await Slogan.findAll();
+      sails.log.info('find all slogan =>', slogans);
+      res.ok({
+        message: 'find all slogan success',
+        data: {
+         items: slogans
+        }
+      })
+    }
+    catch(e){
+      res.serverError({ message: e.message, data: {}});
     }
   },
 
   findOne: async (req, res) => {
-    console.log("=== findOne ===");
-    const { id } = req.params;
-    try {
-      const user = await User.findOneWithPassport({id})
-      sails.log.info('get user =>', user);
+    try{
+      const id = req.params.id;
+      const slogan = await Slogan.findById(id);
+      sails.log.info('find one slogan =>', slogan);
       res.ok({
-        message: 'Get user success.',
-        data: user,
+        message: 'Get one slogan success.',
+        data: slogan
       });
-    } catch (e) {
-      res.serverError({ message: e, data: {}});
     }
-  },
-
-  create: async (req, res) => {
-    const data = req.body;
-    try {
-      sails.log.info('create user controller=>', data);
-      const slogan = await Slogan.create(data);
-      res.ok({
-        message: 'Create slogan success.',
-        data: slogan,
-      });
-    } catch (e) {
+    catch(e){
       res.serverError({ message: e.message, data: {}});
     }
   },
 
   update: async (req, res) => {
-    const { id } = req.params;
-    const data = req.body;
-    try {
-      sails.log.info('update user controller id=>', id);
-      sails.log.info('update user controller data=>', data);
-      const slogan = await Slogan.update({
+    try{
+      const id = req.params.id;
+      const newData = req.body;
 
-      });
+      sails.log.info('update slogan controller id =>', id);
+      sails.log.info('update slogan controller data =>', newData);
+      const slogan = await Slogan.findById(id);
+      slogan.content = newData.content;
+      slogan.source  = newData.source;
+      await slogan.save();
+
       res.ok({
-        message: 'Update user success.',
-        data: user,
+        message: 'Update slogan success.',
+        data: slogan
       });
-    } catch (e) {
+    }
+    catch(e){
       res.serverError({ message: e.message, data: {}});
     }
   },
 
   destroy: async (req, res) => {
-    const { id } = req.params;
-    try {
-      sails.log.info('delete user controller=>', id);
-      const user = await User.deleteById(id);
+    const id = req.params.id;
+    try{
+      sails.log.info('delete slogan controller =>',id);
+      const slogan = await Slogan.destroy({where:{ id: id}});
+
       res.ok({
-        message: 'Delete user success.',
-        data: user,
+        message: 'Delete slogan success.',
+        data: slogan
       });
-    } catch (e) {
+    }
+    catch(e){
       res.serverError({ message: e.message, data: {}});
     }
   }

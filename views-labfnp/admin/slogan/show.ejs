@@ -25,7 +25,7 @@
     <div class="col-sm-6">
       <h1>{{ data.item.firstName }} <span class="semi-bold">{{ data.item.lastName }}</span>
       <br>
-      <strong>{{ data.item.username }}</strong>
+      <strong>{{ data.item.sloganname }}</strong>
       </h1>
       <hr class="visible-xs-*">
       <ul class="list-unstyled">
@@ -40,8 +40,8 @@
           </p>
         </li>
         <li>
-          <p class="text-muted" v-show="data.item.userAgent">
-            <i class="fa fa-flag"></i>&nbsp;&nbsp;<span class="semi-bold">{{ data.item.userAgent }}</span>
+          <p class="text-muted" v-show="data.item.sloganAgent">
+            <i class="fa fa-flag"></i>&nbsp;&nbsp;<span class="semi-bold">{{ data.item.sloganAgent }}</span>
           </p>
         </li>
         <li>
@@ -68,7 +68,7 @@
             </li>
             <li>
               <label class="checkbox state-disabled">
-                <input type="checkbox" id="user" value="user" v-model="data.item.RolesArray" disabled>使用者<i></i>
+                <input type="checkbox" id="slogan" value="slogan" v-model="data.item.RolesArray" disabled>使用者<i></i>
               </label>
             </li>
           </ul>
