@@ -144,6 +144,18 @@ module.exports = {
           } else if (findByRecipeId) {
             whereParam.where.id = findByRecipeId;
           }
+          let notAdmin = true;
+          let ownUserId = {};
+          if (currentUser) {
+            notAdmin = currentUser.RolesArray.indexOf('admin') === -1;
+            ownUserId.UserId = currentUser.id;
+          }
+          if (notAdmin) {
+            whereParam.where.$or = [
+              { visibility: { $not: 'PRIVATE' } },
+              ownUserId
+            ];
+          }
           const currentUserId = currentUser ? currentUser.id : -1;
           return {
             ...whereParam,
