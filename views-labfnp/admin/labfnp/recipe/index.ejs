@@ -1,5 +1,5 @@
 <!-- widget grid -->
-<section id="labfnp-recipe-index" class="">
+<section id="main-index" class="">
 
   <!-- row -->
   <div class="row">
@@ -8,7 +8,7 @@
     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
       <!-- Widget ID (each widget will need unique ID)-->
-      <div class="jarviswidget jarviswidget-color-darken" id="labfnp-recipe-table-widget" data-widget-editbutton="false" style="display: none;">
+      <div class="jarviswidget jarviswidget-color-darken" id="main-table-widget" data-widget-editbutton="false" style="display: none;">
         <!-- widget options:
 				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -40,7 +40,7 @@
           <!-- widget content -->
           <div class="widget-body no-padding">
             <!-- end messageBox div -->
-            <table id="labfnp-recipe-table" class="table table-striped table-bordered table-hover" width="100%">
+            <table id="main-table" class="table table-striped table-bordered table-hover" width="100%">
               <thead>
                 <tr>
                   <th class="" data-hide="">#</th>
@@ -158,7 +158,7 @@
     */
 
     <%- include vue.ejs %>
-    userApp.$mount("#labfnp-recipe-index");
+    userApp.$mount("#main-index");
     userApp.loadItems(userApp.renderTable);
   };
 
