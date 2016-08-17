@@ -7,6 +7,11 @@
 #total-drops {
 	font-size: 48px;
 }
+#orver-drops {
+  visibility: hidden;
+  font-weight: bold;
+  font-size: 16px;
+}
 </style>
 
 <!--=== Content Part ===-->
@@ -112,6 +117,11 @@
 		</div>
 		<div class="col-md-4">
 		  <p>目前滴數總和 <span id="total-drops">0</span> drops</p>
+
+      <section class="text-center">
+        <span id="orver-drops">請勿超過 50 滴！</span></p>
+      </section>
+
 
       <!-- create container element for visualization -->
       <div id="d3-container" class="animated"></div>
