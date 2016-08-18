@@ -12,6 +12,9 @@
     border: none;
     color: white;
   }
+  .name {
+    padding-bottom: 10px !important;
+  }
 </style>
 <!-- Bread crumbs -->
 <div class="row">
@@ -103,8 +106,11 @@
                         </div>
                       </div>
                       <hr>
+                      <h4 class="name" v-if="data.item.description"><small>配方描述</small>{{ data.item.description }}</h4>
+                      <h4 class="name" v-else><small>配方描述</small>沒有資料</h4>
+                      <hr>
                       <h4 class="name" v-if="data.item.message"><small>其他訊息</small>{{ data.item.message }}</h4>
-                      <h4 class="name" v-else><small>其他訊息</small>沒有資料</h4>
+                      <h4 class="name" v-else><small>備註</small>沒有資料</h4>
                       <hr>
 
 
@@ -275,8 +281,8 @@
   // pagefunction
   var pagefunction = function() {
     <%- include vue.ejs %>
-    userApp.$mount("#main-show");
-    userApp.loadItem(userApp.onEnterPageShow);
+    mainApp.$mount("#main-show");
+    mainApp.loadItem(mainApp.onEnterPageShow);
   };
 
   // var pagedestroy = function() {

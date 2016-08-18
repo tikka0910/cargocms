@@ -9,7 +9,7 @@ var diameter = parseInt(d3.select('#d3-container').style('width')),
 var bubble = d3.layout.pack()
     .sort(null)
     .size([diameter, diameter])
-    .radius(function(d) { return 8 + 4*Math.random(); })
+    .radius(function(d) { return 8 + 1.25*Math.random(); })
     .padding(1);
 
 //var scale = d3.scale.linear().domain([ 5, 5 ]).range([ 10, 10 ]);
@@ -149,6 +149,14 @@ var getScentsVisualData = function() {
 
   $('#total-drops').text(totalDrops);
 
+  if (totalDrops > 50) {
+    $('#total-drops').css('color', 'red');
+    $('#orver-drops').css('visibility', 'visible')
+  } else {
+    $('#total-drops').css('color', '#555');
+    $('#orver-drops').css('visibility', 'hidden')
+  }
+
   return { children: shuffle(scentsData) };
 };
 
@@ -222,6 +230,12 @@ $(function() {
 
     event.preventDefault();
 
+    var totalDrops = parseInt($('#total-drops').text(), 10);
+    if (totalDrops > 50) {
+      alert('單一配方請勿超過 50 滴！')
+      return false;
+    }
+
     var endpoint = $(this).attr('action');
     var method = $(this).attr('method');
 
@@ -232,6 +246,7 @@ $(function() {
     var perfumeName = $('input[name=perfumeName]').val();
     var message = $('textarea[name=message]').val();
     var visibility = $('select[name=visibility]').val();
+    var description = $('textarea[name=description]').val();
 
     $.ajax({
       url: endpoint,
@@ -245,7 +260,8 @@ $(function() {
         formulaLogs: '',
         formula: getFormulaData(),
         message: message,
-        visibility: visibility
+        visibility: visibility,
+        description: description,
       }
     }).done(function(result) {
       console.log(result);

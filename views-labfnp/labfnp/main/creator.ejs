@@ -7,6 +7,11 @@
 #total-drops {
 	font-size: 48px;
 }
+#orver-drops {
+  visibility: hidden;
+  font-weight: bold;
+  font-size: 16px;
+}
 </style>
 
 <!--=== Content Part ===-->
@@ -43,6 +48,10 @@
                 <option value="PRIVATE">私密</option>
 							</select>
 							<i></i>
+					<section>
+						<label class="label">香水描述</label>
+						<label class="textarea textarea-resizable">
+							<textarea name="description" rows="3"></textarea>
 						</label>
 					</section>
 
@@ -90,7 +99,7 @@
 				<fieldset>
 
 					<section>
-						<label class="label">其他訊息</label>
+						<label class="label">備註</label>
 						<label class="textarea textarea-resizable">
 							<textarea name="message" rows="3"></textarea>
 						</label>
@@ -108,6 +117,11 @@
 		</div>
 		<div class="col-md-4">
 		  <p>目前滴數總和 <span id="total-drops">0</span> drops</p>
+
+      <section class="text-center">
+        <span id="orver-drops">請勿超過 50 滴！</span></p>
+      </section>
+
 
       <!-- create container element for visualization -->
       <div id="d3-container" class="animated"></div>
