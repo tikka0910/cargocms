@@ -65,20 +65,12 @@
             <hr />
             <label for="description">描述</label>
             <ul class="list-unstyled list-inline description">
-              <% if (recipe.description) { %>
-                <li><p class="padding-5"><%= recipe.description %></p></li>
-              <% } else { %>
-                <li><p class="padding-5">沒有描述</p></li>
-              <% } %>
+              <li><p class="padding-5"><%= recipe.description %></p></li>
             </ul>
             <hr />
             <label for="message">備註</label>
             <ul class="list-unstyled list-inline message">
-              <% if (recipe.message) { %>
-                <li><p class="padding-5"><%= recipe.message %></p></li>
-              <% } else { %>
-                <li><p class="padding-5">沒有備註</p></li>
-              <% } %>
+              <li><p class="padding-5"><%= recipe.message %></p></li>
             </ul>
           </h4>
           </div>

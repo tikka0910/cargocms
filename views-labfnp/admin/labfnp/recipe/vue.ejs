@@ -1,6 +1,6 @@
 <%- include ../metadata.js.ejs %>
 
-var userAppModel = {
+var appModel = {
 	data: {
     link: {
       PAGE_INDEX: '/admin/#/admin/labfnp/recipe',
@@ -47,17 +47,17 @@ var userAppModel = {
 	},
 };
 
-var userApp = new Vue({
-	data: userAppModel,
+var mainApp = new Vue({
+	data: appModel,
 	methods: {
 		cancel: function (event) {
-			userApp.onLeavePage(function () {
-				location.href = userAppModel.data.link.PAGE_INDEX;
+			mainApp.onLeavePage(function () {
+				location.href = appModel.data.link.PAGE_INDEX;
 			});
 		},
     verifySendData: function () {
-      var scentColor = userAppModel.data.scentColor;
-      var dataJson = JSON.parse(JSON.stringify(userAppModel.data.item));
+      var scentColor = appModel.data.scentColor;
+      var dataJson = JSON.parse(JSON.stringify(appModel.data.item));
       var newFormula = [];
       for (var i=0;i<dataJson.formula.length;i++) {
         var checkDropsType = typeof dataJson.formula[i].drops === 'string';
@@ -76,7 +76,7 @@ var userApp = new Vue({
     },
 		save: function (event) {
       var ajaxSuccess = function (result) {
-        location.href = userAppModel.data.link.PAGE_INDEX;
+        location.href = appModel.data.link.PAGE_INDEX;
         messageApp.show({
           desc: '新增資料成功！',
           type: 'success'
@@ -91,10 +91,10 @@ var userApp = new Vue({
       };
 
 			$.ajax({
-				url: userAppModel.data.link.API_CREATE,
+				url: appModel.data.link.API_CREATE,
 				type: 'POST',
 				dataType: 'json',
-				data: userApp.verifySendData(),
+				data: mainApp.verifySendData(),
 				xhrFields: {
 					withCredentials: true,
 				},
@@ -104,7 +104,7 @@ var userApp = new Vue({
 		},
 		update: function (event) {
 			var ajaxSuccess = function(result) {
-				location.href = userAppModel.data.link.PAGE_INDEX;
+				location.href = appModel.data.link.PAGE_INDEX;
 				messageApp.show({
 					desc: '更新資料成功！',
 					type: 'success'
@@ -119,10 +119,10 @@ var userApp = new Vue({
 			};
 
 			$.ajax({
-				url: userAppModel.data.link.API_UPDATE + userAppModel.data.item.id,
+				url: appModel.data.link.API_UPDATE + appModel.data.item.id,
 				type: 'PUT',
 				dataType: 'json',
-				data: userApp.verifySendData(),
+				data: mainApp.verifySendData(),
 				xhrFields: {
 					withCredentials: true,
 				},
@@ -132,17 +132,17 @@ var userApp = new Vue({
 		},
     loadSelectOptions: function (cb) {
       var ajaxSuccess = function (result) {
-        userAppModel.data.scentData = result.data.items;
-        userAppModel.data.scentColor = new Object();
-        var scentData = userAppModel.data.scentData;
+        appModel.data.scentData = result.data.items;
+        appModel.data.scentColor = new Object();
+        var scentData = appModel.data.scentData;
         for (var i=0;i<scentData.length;i++) {
-          userAppModel.data.scentColor[scentData[i].name] = scentData[i].color;
+          appModel.data.scentColor[scentData[i].name] = scentData[i].color;
         }
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
       };
 
       $.ajax({
-        url: userAppModel.data.link.API_LIST_SCENT,
+        url: appModel.data.link.API_LIST_SCENT,
         // async: false,
         success: ajaxSuccess,
         // error: ajaxError,
@@ -151,7 +151,7 @@ var userApp = new Vue({
     saveItemStatusBeforeEdit: function () {
       this.data.status.itemBeforeEdit = JSON.stringify(this.data.item);
 			window.onbeforeunload = function (e) {
-				if (userApp.isPageEditDataModified()) {
+				if (mainApp.isPageEditDataModified()) {
 					var message = '您已經修改過資料，是否確定要放棄本次的修改？';
 					e.returnValue = message;
 					return message;
@@ -161,7 +161,7 @@ var userApp = new Vue({
     insertEmptyFormulaItem: function () {
       var thisFormula = [];
       for (var i=0; i<6; i++) {
-        var indexFormula = userAppModel.data.item.formula[i];
+        var indexFormula = appModel.data.item.formula[i];
         var checkFormula = typeof indexFormula === 'undefined';
 
         if (checkFormula) {
@@ -176,20 +176,20 @@ var userApp = new Vue({
         }
         thisFormula.push(indexFormula);
       }
-      userAppModel.data.item.formula = thisFormula;
+      appModel.data.item.formula = thisFormula;
     },
 		loadItem: function (cb) {
 			var ajaxSuccess = function(result) {
-				userAppModel.data.item = result.data;
+				appModel.data.item = result.data;
 				var hasAvatar = typeof result.data.avatar === 'string';
 				if (!hasAvatar) {
-					userAppModel.data.item.avatar = userAppModel.data.common.DEFAULT_AVATAR;
+					appModel.data.item.avatar = appModel.data.common.DEFAULT_AVATAR;
 				}
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
 			};
 
       $.ajax({
-        url: userAppModel.data.link.API_ITEM + userAppModel.data.item.id,
+        url: appModel.data.link.API_ITEM + appModel.data.item.id,
         async: false,
         success: ajaxSuccess,
         // error: ajaxError,
@@ -198,8 +198,8 @@ var userApp = new Vue({
 		setupForm: function (type) {
       this.onDropsChange();
 			var registerForm = $('#main-form');
-      var min = userAppModel.data.common.DROPS_MIN;
-      var max = userAppModel.data.common.DROPS_MAX;
+      var min = appModel.data.common.DROPS_MIN;
+      var max = appModel.data.common.DROPS_MAX;
 			registerForm.validate({
 				// Rules for form validation
 				rules: {
@@ -254,10 +254,10 @@ var userApp = new Vue({
 
 				submitHandler: function (form) {
 					if (type == 'create') {
-            userApp.save();
+            mainApp.save();
 						return false;
 					} else if (type == 'edit') {
-						userApp.update();
+						mainApp.update();
 						return false;
 					}
 				}
@@ -265,27 +265,27 @@ var userApp = new Vue({
 		},
     onDropsChange: function (e) {
       var totalDrops = 0;
-      for (var i=0;i<userAppModel.data.item.formula.length;i++) {
-        var drops = parseInt(userAppModel.data.item.formula[i].drops);
+      for (var i=0;i<appModel.data.item.formula.length;i++) {
+        var drops = parseInt(appModel.data.item.formula[i].drops);
         totalDrops += drops;
       }
-      userAppModel.data.item.totalDrops = totalDrops;
+      appModel.data.item.totalDrops = totalDrops;
     },
     onSelectChange: function (e) {
       var targetId = e.target.id.split("-")[1];
-      userAppModel.data.item.formula[targetId].drops = '1';
+      appModel.data.item.formula[targetId].drops = '1';
     },
     onBtnCleanClick: function (e) {
       var targetId = e.target.id.split("-")[1];
-      userAppModel.data.item.formula[targetId].drops = '0';
-      userAppModel.data.item.formula[targetId].scent = '';
+      appModel.data.item.formula[targetId].drops = '0';
+      appModel.data.item.formula[targetId].scent = '';
       $("select#scent-" + targetId).select(0).val('');
     },
 		isPageEditDataModified: function () {
       var isDataModified = false;
-      var itemBeforeEdit = userAppModel.data.status.itemBeforeEdit;
+      var itemBeforeEdit = appModel.data.status.itemBeforeEdit;
       if (itemBeforeEdit) {
-  			var itemBeforeLeave = JSON.stringify(userAppModel.data.item);
+  			var itemBeforeLeave = JSON.stringify(appModel.data.item);
   			isDataModified = itemBeforeEdit !== itemBeforeLeave;
       } else window.onbeforeunload = null;
      return isDataModified;
@@ -304,7 +304,7 @@ var userApp = new Vue({
       this.saveItemStatusBeforeEdit();
 		},
     onEnterPageShow: function () {
-      var formula = userAppModel.data.item.formula;
+      var formula = appModel.data.item.formula;
       var labelArray = [];
       var dropsArray = [];
       var scentColorArray = [];
@@ -345,7 +345,7 @@ var userApp = new Vue({
       var perfumePie = new Chart(document.getElementById("pieChart"), perfumePieConfig);
     },
 		onLeavePage: function (cb) {
-			if (userApp.isPageEditDataModified()) {
+			if (mainApp.isPageEditDataModified()) {
 				var msgInfo = {
 					title: '注意',
 					content: '您已經修改過資料，是否確定要放棄本次的修改？',
@@ -365,10 +365,10 @@ var userApp = new Vue({
 		},
 		loadItems: function (cb) {
 			var ajaxSuccess = function(result) {
-				userAppModel.data.items = result.data.items;
+				appModel.data.items = result.data.items;
 				if (typeof cb !== 'undefined') setTimeout(cb, 0);
 			};
-      $.get(userAppModel.data.link.API_LIST, ajaxSuccess);
+      $.get(appModel.data.link.API_LIST, ajaxSuccess);
 		},
 		renderTable: function () {
 			/* BASIC ;*/
@@ -421,11 +421,11 @@ var userApp = new Vue({
 							"sExtends": "text",
 							"sButtonText": "檢視",
 							"fnClick": function (nButton, oConfig, oFlash) {
-								var isSelected = userAppModel.view.table.selectIndex !== userAppModel.data.common.DEFAULT_INDEX;
+								var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
 								if (isSelected) {
-									var index = userAppModel.view.table.selectIndex;
-									var id = userAppModel.data.items[index].id;
-									location.href = userAppModel.data.link.PAGE_SHOW + id;
+									var index = appModel.view.table.selectIndex;
+									var id = appModel.data.items[index].id;
+									location.href = appModel.data.link.PAGE_SHOW + id;
 								} else {
 									messageApp.show({
 										desc: '請選擇一筆資料',
@@ -438,18 +438,18 @@ var userApp = new Vue({
 							"sExtends": "text",
 							"sButtonText": "新增",
 							"fnClick": function (nButton, oConfig, oFlash) {
-                location.href = userAppModel.data.link.PAGE_CREATE;
+                location.href = appModel.data.link.PAGE_CREATE;
 							}
            },
 						{
 							"sExtends": "text",
 							"sButtonText": "編輯",
 							"fnClick": function (nButton, oConfig, oFlash) {
-								var isSelected = userAppModel.view.table.selectIndex !== userAppModel.data.common.DEFAULT_INDEX;
+								var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
 								if (isSelected) {
-									var index = userAppModel.view.table.selectIndex;
-									var id = userAppModel.data.items[index].id;
-									location.href = userAppModel.data.link.PAGE_EDIT + id;
+									var index = appModel.view.table.selectIndex;
+									var id = appModel.data.items[index].id;
+									location.href = appModel.data.link.PAGE_EDIT + id;
 								} else {
 									messageApp.show({
 										desc: '請選擇一筆資料',
@@ -489,22 +489,22 @@ var userApp = new Vue({
 			$('#main-table-widget').fadeIn();
 		},
 		dblclick: function (index) {
-			var id = userAppModel.data.items[index].id;
+			var id = appModel.data.items[index].id;
 			this.show(id);
 		},
 		selection: function (index) {
-			if (index !== userAppModel.view.table.selectIndex) {
-				userAppModel.view.table.selectIndex = index;
-				console.log("userAppModel.view.table.selectIndex", userAppModel.view.table.selectIndex);
+			if (index !== appModel.view.table.selectIndex) {
+				appModel.view.table.selectIndex = index;
+				console.log("appModel.view.table.selectIndex", appModel.view.table.selectIndex);
 			} else {
-				userAppModel.view.table.selectIndex = userAppModel.data.common.DEFAULT_INDEX;
+				appModel.view.table.selectIndex = appModel.data.common.DEFAULT_INDEX;
 			}
 		},
 		show: function (id) {
-			location.href = userAppModel.data.link.PAGE_SHOW + id;
+			location.href = appModel.data.link.PAGE_SHOW + id;
 		},
 		edit: function (id) {
-			location.href = userAppModel.data.link.PAGE_EDIT + id;
+			location.href = appModel.data.link.PAGE_EDIT + id;
 		},
 		delete: function () {
 			messageApp.confirm({
@@ -515,13 +515,13 @@ var userApp = new Vue({
 				function (ButtonPressed) {
 					if (ButtonPressed === '刪除') {
 						var ajaxSuccess = function(result) {
-							userAppModel.view.table.selectIndex = userAppModel.data.common.DEFAULT_INDEX;
+							appModel.view.table.selectIndex = appModel.data.common.DEFAULT_INDEX;
 							messageApp.show({
 								desc: `刪除資料成功！`,
 								type: 'success'
 							});
 							setTimeout(function () {
-								location.href = userAppModel.data.link.PAGE_INDEX;
+								location.href = appModel.data.link.PAGE_INDEX;
 							}, 500);
 						} // end ajaxSuccess
 
@@ -533,7 +533,7 @@ var userApp = new Vue({
 						}
 
 						$.ajax({
-							url: userAppModel.data.link.API_UPDATE + userAppModel.data.item.id,
+							url: appModel.data.link.API_UPDATE + appModel.data.item.id,
 							type: 'DELETE',
 							dataType: 'json',
 							xhrFields: {

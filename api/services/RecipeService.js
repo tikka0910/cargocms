@@ -7,25 +7,6 @@ module.exports = {
     }
   },
 
-  bubbleSort: (array) => {
-    var updatedArray = array;
-    var swapped;
-    do {
-        swapped = false;
-        for (var i=0; i < updatedArray.length-1; i++) {
-          var thisNum = parseInt(updatedArray[i].scent.match(/(\d+)/g)[0]);
-          var nextNum = parseInt(updatedArray[i+1].scent.match(/(\d+)/g)[0]);
-            if (thisNum > nextNum) {
-                var temp = updatedArray[i];
-                updatedArray[i] = updatedArray[i+1];
-                updatedArray[i+1] = temp;
-                swapped = true;
-            }
-        }
-    } while (swapped);
-    return updatedArray;
-  },
-
   create: async (recipe = {
     formula,
     formulaLogs,
@@ -38,7 +19,7 @@ module.exports = {
     UserId,
   }) => {
     try {
-      recipe.formula = RecipeService.bubbleSort(recipe.formula);
+      recipe.formula = recipe.formula.sort(function(a,b) {return a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];})
       sails.log.info(recipe);
       return await Recipe.create(recipe);
     } catch (e) {
@@ -59,7 +40,7 @@ module.exports = {
     productionStatus,
   }) => {
     try {
-      recipe.formula = RecipeService.bubbleSort(recipe.formula);
+      recipe.formula.sort(function(a,b) {return a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];})
       sails.log.info('update recipe service=>', recipe);
       let updatedRecipe = await Recipe.findOne({
         where: {
