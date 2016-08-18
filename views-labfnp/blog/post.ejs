@@ -1,3 +1,9 @@
+<style>
+.bottom20 {
+  margin-bottom: 20px;
+}
+</style>
+
 <div class="news-v3 bg-color-white margin-bottom-60">
   <% if (data.coverUrl) { %>
     <% if (data.coverType == 'img') { %>
@@ -39,8 +45,15 @@
         </a>
       </li>
     </ul> -->
-    <% data.TagsArray.forEach(function(tag){ %>
-      <span class="label label-default"><%= tag %></span>
-    <% }); %>
+    <div class="bottom20">
+      <% data.TagsArray.forEach(function(tag){ %>
+        <span class="label label-default"><%= tag %></span>
+      <% }); %>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <%- include ../lib/rrssbb/index.ejs %>
+      </div>
+    </div>
   </div>
 </div>
