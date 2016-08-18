@@ -37,7 +37,8 @@ module.exports = {
       type: Sequelize.VIRTUAL,
       get: function() {
         try {
-          const roles = this.Roles ? this.Roles.map((role) => role.authority) : [];
+          const thisRoles = this.getDataValue('Roles');
+          const roles = thisRoles ? thisRoles.map((role) => role.authority) : [];
           return roles;
         } catch (e) {
           sails.log.error(e);
