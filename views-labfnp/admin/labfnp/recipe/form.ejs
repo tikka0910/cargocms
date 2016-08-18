@@ -1,3 +1,40 @@
+<style media="screen">
+  @media screen and (max-width: 768px){
+    #totalDrops-error {
+      right: 29%;
+    }
+  }
+
+  .warring {
+    color: red !important;
+    font-weight: bold !important;
+  }
+
+  .totalDrops {
+    height: 0px;
+    width: 0px;
+    visibility: hidden;
+  }
+
+  .totalDropsWrapper {
+    margin-left: 50%;
+    z-index: 1;
+  }
+
+  label.error {
+    position: absolute;
+    color: rgb(255, 0, 0);
+    font-weight: 900;
+    border: 1px solid rgb(170, 170, 170);
+    box-shadow: rgba(0, 0, 0, 0.701961) 0px 2px 6px;
+    padding: 2px 5px;
+    background: rgb(255, 255, 255);
+    z-index: 1;
+    margin-top: -3px;
+    margin-left: 40px;
+  }
+</style>
+
 <fieldset>
 
   <section class="recipe-info">
@@ -13,8 +50,19 @@
         <input type="text" name="authorName" class="authorName input-lg" placeholder="請輸入作者名稱" v-model="data.item.authorName" value="<%= req.session.passport?req.session.passport.user.displayName:'' %>" required>
       </label>
     </section>
+    <section>
+      <label class="label">配方描述</label>
+      <label class="textarea textarea-expandable">
+        <textarea rows="3" class="custom-scroll" name="description" id="description" placeholder="請輸入配方描述" v-model="data.item.description"></textarea>
+      </label>
+    </section>
+    <section>
+      <label class="label">備註</label>
+      <label class="textarea textarea-expandable">
+        <textarea rows="3" class="custom-scroll" name="message" id="message" placeholder="請輸入備註" v-model="data.item.message"></textarea>
+      </label>
+    </section>
   </section>
-
   <div class="row">
     <section class="col col-6">
       <label class="label">公開狀態</label>
@@ -44,14 +92,20 @@
     </section>
   </div>
 
-  <section class="recipe-combo">
+  <section class="row">
+    <div class="col col-mo-3 totalDropsWrapper">
+      <input type="number" value="data.item.totalDrops" name="totalDrops" id="totalDrops" class="totalDrops form-control" v-model="data.item.totalDrops">
+    </div>
+  </section>
 
+  <section class="recipe-combo">
     <!-- row-0 -->
-    <div class="row form-group">
+    <div class="row">
+      <hr class="hidden-lg hidden-md hidden-sm visible-xs-* padding-10" />
       <section class="col col-xs-6">
-        <label class="label hidden-xs">配方成份</label>
+        <label class="label hidden-xs">香味分子</label>
         <label class="select">
-          <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-info ">香味分子</label>
+          <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-info ">香味分子 - 1</label>
           <select name="scent[]" id="scent-0" class="form-control input-sm" v-model="data.item.formula[0].scent" v-on:change="onSelectChange">
             <option value="">選取一種香味分子</option>
             <option v-for="scent in data.scentData" v-bind:value="scent.name">
@@ -59,14 +113,22 @@
             </option>
           </select> <i></i> </label>
       </section>
+
       <section class="col col-xs-5">
-        <label class="label hidden-xs">滴數</label>
+        <div class="row">
+          <div class="col-sm-3">
+            <label class="label hidden-xs" style="padding-left: 15px;">分子滴數</label>
+          </div>
+          <div class="col-sm-9">
+            <label class="label warring hidden-xs" v-show="data.item.totalDrops > data.common.DROPS_MAX"> - 全部最多 {{ data.common.DROPS_MAX }} 滴！</label>
+          </div>
+        </div>
         <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-warning">滴數</label>
         <label class="input">
-          <input type="number" value="0" min="0" name="drops[]" id="drops-0" class="form-control" v-model="data.item.formula[0].drops">
+          <input type="number" value="0" min="0" name="drops[]" id="drops-0" class="form-control" v-model="data.item.formula[0].drops" v-on:change="onDropsChange">
         </label>
       </section>
-      <section class="col col-xs-1">
+      <section class="col col-xs-1 hidden-xs">
         <label class="label hidden-xs">清除</label>
         <label class="input">
           <button type="button" id="btnClean-0" class="btn btn-default btn-sm"
@@ -79,10 +141,11 @@
 
     <!-- row-1-to-5 -->
     <% for(var i=1; i < 6; i++) { %>
+      <hr class="hidden-lg hidden-md hidden-sm visible-xs-* padding-10" />
       <div class="row form-group">
         <section class="col col-6">
           <label class="select">
-            <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-info ">香味分子</label>
+            <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-info ">香味分子 - <%= i+1 %></label>
             <select name="scent[]" id="scent-<%= i %>" class="form-control input-sm" v-model="data.item.formula[<%= i %>].scent" v-bind:disabled="data.item.formula[<%= i-1 %>].drops === '0'" v-on:change="onSelectChange">
               <option value="">選取一種香味分子</option>
               <option v-for="scent in data.scentData" v-bind:value="scent.name">
@@ -93,17 +156,16 @@
         <section class="col col-5">
           <label class="hidden-md hidden-sm hidden-lg visible-xs-* text-warning">滴數</label>
           <label class="input">
-            <input type="number" value="0" min="0" name="drops[]" id="drops-<%= i %>" class="form-control" v-model="data.item.formula[<%= i %>].drops"
-            v-bind:disabled="data.item.formula[<%= i-1 %>].drops === '0'">
+            <input type="number" value="0" min="0" name="drops[]" id="drops-<%= i %>" class="form-control" v-model="data.item.formula[<%= i %>].drops" v-bind:disabled="data.item.formula[<%= i-1 %>].drops === '0'" v-on:change="onDropsChange">
           </label>
         </section>
-        <section class="col col-xs-1">
+        <section class="col col-xs-1 hidden-xs">
           <label class="input">
             <button type="button" id="btnClean-<%= i %>" class="btn btn-default btn-sm" v-bind:disabled="data.item.formula[<%= i-1 %>].drops === '0'" v-on:click="onBtnCleanClick">x</button>
           </label>
         </section>
       </div>
       <% } %>
-        <!-- end-row -->
+      <!-- end-row -->
 
 </fieldset>
