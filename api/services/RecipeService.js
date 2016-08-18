@@ -19,7 +19,8 @@ module.exports = {
     UserId,
   }) => {
     try {
-      recipe.formula = recipe.formula.sort(function(a,b) {return a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];})
+      const bubble = (a,b) => {return a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];};
+      recipe.formula = recipe.formula.sort(bubble);
       sails.log.info(recipe);
       return await Recipe.create(recipe);
     } catch (e) {
@@ -40,7 +41,8 @@ module.exports = {
     productionStatus,
   }) => {
     try {
-      recipe.formula.sort(function(a,b) {return a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];})
+      const bubble = (a,b) => {return a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];};
+      recipe.formula = recipe.formula.sort(bubble);
       sails.log.info('update recipe service=>', recipe);
       let updatedRecipe = await Recipe.findOne({
         where: {
