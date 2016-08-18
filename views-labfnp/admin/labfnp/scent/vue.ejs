@@ -235,9 +235,9 @@ var scentApp = new Vue({
      var table = $('#main-table').dataTable({
        // Tabletools options:
        //   https://datatables.net/extensions/tabletools/button_options
-       "sDom": "<'dt-toolbar'<'row'<'col-xs-7 col-md-9 col-sm-9'f><'col-xs-5 col-md-3 col-sm-3'T>>r>" +
+       "sDom": "<'dt-toolbar'<'row'r<'col-xs-7 col-md-7 col-sm-7'f><'col-xs-5 col-md-4 col-sm-4'T><'col-md-1 col-sm-1 hidden-xs'l>>>" +
            "t"+
-           "<'dt-toolbar-footer'<'row'<'col-md-6 col-xs-12 hidden-xs'i><'col-md-6 col-xs-12'p><'col-md-12 hidden-xs'l>>>",
+           "<'dt-toolbar-footer'<'row'<'col-md-6 col-xs-12 hidden-xs'i><'col-md-6 col-xs-12'p>>>",
        "oLanguage": {
           "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
           "sInfo": "顯示 _START_ 到 _END_ 總共 _TOTAL_ 筆紀錄",
@@ -246,7 +246,7 @@ var scentApp = new Vue({
          	"sInfoFiltered": "(從 _MAX_ 項結果中過濾)",
          	"sProcessing":   "處理中...",
          	"sLoadingRecords": "載入中...",
-         	"sLengthMenu":   "顯示 _MENU_ 項結果　",
+         	"sLengthMenu": "_MENU_",
          	"sZeroRecords":  "沒有符合的結果",
          	"oPaginate": {
          		"sFirst":    "第一頁",
