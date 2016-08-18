@@ -159,10 +159,10 @@ module.exports = {
           const currentUserId = currentUser ? currentUser.id : -1;
           return {
             ...whereParam,
-            include: [{
+            include: {
               model: UserLikeRecipe,
               required: false
-            }]
+            }
           };
         } catch (e) {
           throw e;
