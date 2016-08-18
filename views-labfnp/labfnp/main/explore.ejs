@@ -125,8 +125,8 @@
 									<i class="fa fa-clock-o"></i>
 									<%=: recipe.createdAt | formatDate %>
 								</li>
-								<!--<li>|</li>
-								<li><a href="#"><i class="fa fa-comments-o"></i> 06</a></li>-->
+								<li>|</li>
+								<li><a href="#"><i class="fa fa-thumbs-o-up"></i> <%= recipe.UserLikeRecipes.length %></a></li>
 							</ul>
 							<% if (recipe.message) { %><p><%= recipe.message %></p><% } %>
 						</div>

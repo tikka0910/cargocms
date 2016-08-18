@@ -32,8 +32,8 @@ describe('test Recipe model operation', function() {
     before(async (done) => {
       try {
         testUser = await User.create({
-          username: 'testUser',
-          email: 'testUser@gmail.com',
+          username: 'testUserLike',
+          email: 'testUserLike@gmail.com',
           password: ''
         });
 
@@ -76,11 +76,11 @@ describe('test Recipe model operation', function() {
         done(e)
       }
     })
-    it('find by likeUser should be success.', async (done) => {
+    it.only('find by likeUser should be success.', async (done) => {
       try {
         let user = likeUser;
         let result = await Recipe.findAndIncludeUserLike({currentUser: user});
-        console.log("=== result.length ===", result.length);
+        console.log("=== result.length ===", result.length, result[0].toJSON());
         done();
       } catch (e) {
         done(e);

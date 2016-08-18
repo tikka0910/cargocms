@@ -159,11 +159,11 @@ module.exports = {
           const currentUserId = currentUser ? currentUser.id : -1;
           return {
             ...whereParam,
-            include: {
-              where: {UserId: currentUserId},
+            include: [{
+              // where: {UserId: currentUserId},
               model: UserLikeRecipe,
               required: false
-            }
+            }]
           };
         } catch (e) {
           throw e;
@@ -172,7 +172,8 @@ module.exports = {
       findAndIncludeUserLike: async function({findByRecipeId, findByUserId, currentUser }){
         try {
           const findParam = this.getFindAndIncludeUserLikeParam({findByRecipeId, findByUserId, currentUser });
-          const recipes = await Recipe.findAll(findParam);
+          let recipes = await Recipe.findAll(findParam);
+          recipes.map((recipe) => recipe.checkCurrentUserLike({currentUser}));
           return recipes;
         } catch (e) {
           throw e;
@@ -189,7 +190,18 @@ module.exports = {
       },
 
     },
-    instanceMethods: {},
+    instanceMethods: {
+      checkCurrentUserLike: function({ currentUser }) {
+        const userLikeRecipes = this.setDataValue('UserLikeRecipes');
+        this.setDataValue('currentUserLike', false);
+        for(let i = 0; i < userLikeRecipes.length; i++) {
+          if (userLikeRecipes[i].UserId === currentUser.id) {
+            this.setDataValue('currentUserLike', true);
+            break;
+          }
+        }
+      }
+    },
     hooks: {}
   }
 };
