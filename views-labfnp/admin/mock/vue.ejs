@@ -73,35 +73,18 @@ var userApp = new Vue({
              "sExtends": "text",
              "sButtonText": "檢視",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
-               if (isSelected) {
-                 var index = userAppModel.view.table.selectIndex;
-                 var userId = userAppModel.data.items[index].id;
-                 location.href = '/admin/#/admin/user/show/' + userId;
-               } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
-               }
              }
            },
            {
              "sExtends": "text",
              "sButtonText": "新增",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               location.href = '/admin/#/admin/user/create';
              }
            },
            {
              "sExtends": "text",
              "sButtonText": "編輯",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
-               if (isSelected) {
-                 var index = userAppModel.view.table.selectIndex;
-                 var userId = userAppModel.data.items[index].id;
-                 location.href = '/admin/#/admin/user/edit/' + userId;
-               } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
-               }
              }
            },
          ]
@@ -134,16 +117,9 @@ var userApp = new Vue({
      $('#mock-table-widget').fadeIn();
     },
     dblclick: function(index) {
-      var userId = userAppModel.data.items[index].id;
-      this.show(userId);
     },
     selection: function (index) {
-      if (index !== userAppModel.view.table.selectIndex) {
-        userAppModel.view.table.selectIndex = index;
-        console.log("userAppModel.view.table.selectIndex", userAppModel.view.table.selectIndex);
-      } else {
-        userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
-      }
+
     },
   },
 });

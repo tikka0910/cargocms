@@ -57,7 +57,8 @@
 								<tr>
 									<th class="" data-hide="phone">#</th>
 									<th class="" data-class="expand"><i class="fa fa-fw fa-post text-muted hidden-md hidden-sm hidden-xs"></i>標題</th>
-									<th class="" data-hide="phone" data-class="expand">簡述</th>
+									<!-- <th class="" data-hide="phone" data-class="expand">簡述</th> -->
+									<th class="" >更新日期</th>
 									<th class="" >標籤</th>
 									<!-- <th class="" data-hide="phone,tablet">內容</th> -->
 									<!-- <th class="" data-hide="phone,tablet">封面</th> -->
@@ -69,7 +70,8 @@
 								<tr v-for="post in data.items" v-on:click="selection($index)" v-on:dblclick="dblclick($index)">
 									<td>{{ post.id }}</td>
 									<td><a href="/admin/#/admin/post/show/{{post.id}}">{{ post.title }}</a></td>
-									<td class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{ post.abstract }}</td>
+									<!-- <td class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{ post.abstract }}</td> -->
+									<td>{{ post.updatedAt }}</td>
 									<td><a v-for="tag in post.TagsArray" style="margin-right: 10px; margin-top: 10px;"> {{ tag }}</a></td>
 									<!-- <td>{{ post.content }}</td> -->
 									<!-- <td>{{ post.cover }}</td> -->
