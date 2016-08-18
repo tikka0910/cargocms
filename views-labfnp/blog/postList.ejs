@@ -1,9 +1,3 @@
-<style>
-.bottom20 {
-  margin-bottom: 20px;
-}
-</style>
-
 <% data.items.forEach(function(post){ %>
   <div class="news-v3 bg-color-white margin-bottom-60">
     <% if (post.coverUrl) { %>
@@ -56,7 +50,7 @@
           </a>
         </li>
       </ul> -->
-      <div class="bottom20">
+      <div class="margin-bottom-20">
         <% post.TagsArray.forEach(function(tag){ %>
           <span class="label label-default"><%= tag %></span>
         <% }); %>
