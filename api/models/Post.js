@@ -43,6 +43,16 @@ module.exports = {
         }
       }
     },
+    updatedAt: {
+      type: Sequelize.DATE,
+      get: function() {
+        try {
+          return moment(this.updatedAt).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
     createdAtFormat: {
       type: Sequelize.VIRTUAL,
       get: function() {
