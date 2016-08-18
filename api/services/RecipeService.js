@@ -19,7 +19,7 @@ module.exports = {
     UserId,
   }) => {
     try {
-      const bubble = (a,b) => {return a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];};
+      const bubble = (a,b) => a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];
       recipe.formula = recipe.formula.sort(bubble);
       sails.log.info(recipe);
       return await Recipe.create(recipe);
@@ -41,7 +41,7 @@ module.exports = {
     productionStatus,
   }) => {
     try {
-      const bubble = (a,b) => {return a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];};
+      const bubble = (a,b) => a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];
       recipe.formula = recipe.formula.sort(bubble);
       sails.log.info('update recipe service=>', recipe);
       let updatedRecipe = await Recipe.findOne({
