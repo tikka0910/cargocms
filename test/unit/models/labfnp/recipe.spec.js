@@ -70,17 +70,31 @@ describe('test Recipe model operation', function() {
           email: 'testLikeUser@gmail.com',
           password: ''
         });
+
+        let newRecipeLoveTest2 = {
+          formula:[
+            {"drops":"1","scent":"BA69","color":"#E87728"},
+            {"drops":"2","scent":"BA70","color":"#B35721"}
+          ],
+          formulaLogs: '',
+          authorName: '王大明',
+          perfumeName: 'love test',
+          message: 'this is love test',
+          UserId: testUser.id,
+        };
+        await Recipe.create(newRecipeLoveTest2);
+
         done()
 
       } catch (e) {
         done(e)
       }
     })
-    it.only('find by likeUser should be success.', async (done) => {
+    it('find by likeUser should be success.', async (done) => {
       try {
         let user = likeUser;
         let result = await Recipe.findAndIncludeUserLike({currentUser: user});
-        console.log("=== result.length ===", result.length, result[0].toJSON());
+        console.log("=== result.length ===", result.length, result[0].toJSON(), result[1].toJSON());
         done();
       } catch (e) {
         done(e);

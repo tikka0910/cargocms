@@ -160,7 +160,6 @@ module.exports = {
           return {
             ...whereParam,
             include: [{
-              // where: {UserId: currentUserId},
               model: UserLikeRecipe,
               required: false
             }]
@@ -182,8 +181,9 @@ module.exports = {
       findOneAndIncludeUserLike: async function({findByRecipeId, findByUserId, currentUser }){
         try {
           const findParam = this.getFindAndIncludeUserLikeParam({findByRecipeId, findByUserId, currentUser });
-          const recipes = await Recipe.findOne(findParam);
-          return recipes;
+          const recipe = await Recipe.findOne(findParam);
+          await recipe.checkCurrentUserLike({currentUser})
+          return recipe;
         } catch (e) {
           throw e;
         }
@@ -191,14 +191,21 @@ module.exports = {
 
     },
     instanceMethods: {
-      checkCurrentUserLike: function({ currentUser }) {
-        const userLikeRecipes = this.setDataValue('UserLikeRecipes');
-        this.setDataValue('currentUserLike', false);
-        for(let i = 0; i < userLikeRecipes.length; i++) {
-          if (userLikeRecipes[i].UserId === currentUser.id) {
-            this.setDataValue('currentUserLike', true);
-            break;
+      checkCurrentUserLike: async function({ currentUser }) {
+        try {
+          const userLikeRecipes = this.getDataValue('UserLikeRecipes') || [];
+          this.currentUserLike = false;
+          if (currentUser) {
+            for(let i = 0; i < userLikeRecipes.length; i++) {
+              const currentUserLikeThisRecipe = userLikeRecipes[i].UserId === currentUser.id;
+              if (currentUserLikeThisRecipe) {
+                this.currentUserLike = true;
+                break;
+              }
+            }
           }
+        } catch (e) {
+          sails.log.error(e);
         }
       }
     },
