@@ -71,7 +71,7 @@ describe('test Recipe model operation', function() {
           password: ''
         });
 
-        let newRecipeLoveTest2 = {
+        const newRecipeLoveTest2 = {
           formula:[
             {"drops":"1","scent":"BA69","color":"#E87728"},
             {"drops":"2","scent":"BA70","color":"#B35721"}
