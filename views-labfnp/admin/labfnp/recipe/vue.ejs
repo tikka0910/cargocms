@@ -47,11 +47,11 @@ var appModel = {
 	},
 };
 
-var userApp = new Vue({
+var mainApp = new Vue({
 	data: appModel,
 	methods: {
 		cancel: function (event) {
-			userApp.onLeavePage(function () {
+			mainApp.onLeavePage(function () {
 				location.href = appModel.data.link.PAGE_INDEX;
 			});
 		},
@@ -94,7 +94,7 @@ var userApp = new Vue({
 				url: appModel.data.link.API_CREATE,
 				type: 'POST',
 				dataType: 'json',
-				data: userApp.verifySendData(),
+				data: mainApp.verifySendData(),
 				xhrFields: {
 					withCredentials: true,
 				},
@@ -122,7 +122,7 @@ var userApp = new Vue({
 				url: appModel.data.link.API_UPDATE + appModel.data.item.id,
 				type: 'PUT',
 				dataType: 'json',
-				data: userApp.verifySendData(),
+				data: mainApp.verifySendData(),
 				xhrFields: {
 					withCredentials: true,
 				},
@@ -151,7 +151,7 @@ var userApp = new Vue({
     saveItemStatusBeforeEdit: function () {
       this.data.status.itemBeforeEdit = JSON.stringify(this.data.item);
 			window.onbeforeunload = function (e) {
-				if (userApp.isPageEditDataModified()) {
+				if (mainApp.isPageEditDataModified()) {
 					var message = '您已經修改過資料，是否確定要放棄本次的修改？';
 					e.returnValue = message;
 					return message;
@@ -254,10 +254,10 @@ var userApp = new Vue({
 
 				submitHandler: function (form) {
 					if (type == 'create') {
-            userApp.save();
+            mainApp.save();
 						return false;
 					} else if (type == 'edit') {
-						userApp.update();
+						mainApp.update();
 						return false;
 					}
 				}
@@ -345,7 +345,7 @@ var userApp = new Vue({
       var perfumePie = new Chart(document.getElementById("pieChart"), perfumePieConfig);
     },
 		onLeavePage: function (cb) {
-			if (userApp.isPageEditDataModified()) {
+			if (mainApp.isPageEditDataModified()) {
 				var msgInfo = {
 					title: '注意',
 					content: '您已經修改過資料，是否確定要放棄本次的修改？',

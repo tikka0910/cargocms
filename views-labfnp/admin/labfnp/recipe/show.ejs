@@ -281,8 +281,8 @@
   // pagefunction
   var pagefunction = function() {
     <%- include vue.ejs %>
-    userApp.$mount("#main-show");
-    userApp.loadItem(userApp.onEnterPageShow);
+    mainApp.$mount("#main-show");
+    mainApp.loadItem(mainApp.onEnterPageShow);
   };
 
   // var pagedestroy = function() {

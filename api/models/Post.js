@@ -23,7 +23,8 @@ module.exports = {
       get: function() {
         try {
           if (this.coverType === 'img') {
-            return this.Image ? this.Image.url : '';
+            const thisImage = this.getDataValue('Image');
+            return thisImage ? thisImage.url : '';
           } else {
             return this.getDataValue('coverUrl');
           }
@@ -36,18 +37,29 @@ module.exports = {
       type: Sequelize.VIRTUAL,
       get: function() {
         try {
-          const tags = this.Tags ? this.Tags.map((tag) => tag.title) : [];
+          const thisTags = this.getDataValue('Tags');
+          const tags = thisTags ? thisTags.map((tag) => tag.title) : [];
           return tags;
         } catch (e) {
           sails.log.error(e);
         }
       }
     },
-    createdAtFormat: {
-      type: Sequelize.VIRTUAL,
+    updatedAt: {
+      type: Sequelize.DATE,
       get: function() {
         try {
-          return moment(this.createdAt).format("YYYY/MM/DD");
+          return moment(this.getDataValue('updatedAt')).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+    createdAt: {
+      type: Sequelize.DATE,
+      get: function() {
+        try {
+          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD");
         } catch (e) {
           sails.log.error(e);
         }

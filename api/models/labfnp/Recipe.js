@@ -39,9 +39,19 @@ module.exports = {
     },
     message: {
       type: Sequelize.STRING,
+      get: function() {
+        const val = this.getDataValue('message');
+        if (typeof val !== 'string' || val === null) return '沒有備註';
+        else return val;
+      }
     },
     description: {
       type: Sequelize.STRING,
+      get: function() {
+        const val = this.getDataValue('description');
+        if (typeof val !== 'string' || val === null) return '沒有描述';
+        else return val;
+      }
     },
     totalDrops: {
       type: Sequelize.INTEGER,

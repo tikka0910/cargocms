@@ -16,17 +16,19 @@ module.exports = {
     fileName: {
       type: Sequelize.VIRTUAL,
       get: function() {
-        return this.filePath.split('/uploads/')[1];
+        const thisFilePath = this.getDataValue('filePath');
+        return thisFilePath.split('/uploads/')[1];
       }
     },
     url: {
       type: Sequelize.VIRTUAL,
       get: function() {
         try {
+          const thisFilePath = this.getDataValue('filePath');
           if (this.storage === 'local') {
-            return this.filePath.split('/public')[1];
+            return thisFilePath.split('/public')[1];
           } else if (this.storage ==='url') {
-            return this.filePath;
+            return thisFilePath;
           } else {
             throw Error('Not implemented');
           }

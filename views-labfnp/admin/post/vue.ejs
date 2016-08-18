@@ -20,7 +20,8 @@ var postAppModel = {
     },
     items: [],
     option: {
-      passwordConfirm: ''
+      originCoverType: '',
+      originCoverUrl: '',
     }
   },
   view: {
@@ -112,6 +113,8 @@ var postApp = new Vue({
         console.log("loadItem result.data=>", result.data);
         if (result.success) {
           postAppModel.data.item = result.data;
+          postAppModel.data.option.originCoverType = result.data.coverType;
+          postAppModel.data.option.originCoverUrl = result.data.coverUrl;
         }
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
         console.log("loadItem postAppModel.data.item=>", postAppModel.data.item);
@@ -431,7 +434,14 @@ var postApp = new Vue({
       });
     },
     selectOnChange: function() {
-      postAppModel.data.item.coverUrl = '';
+      var originCoverType = postAppModel.data.option.originCoverType;
+      console.log(postAppModel.data.option);
+      console.log(originCoverType == postAppModel.data.item.coverType)
+      if (originCoverType == postAppModel.data.item.coverType) {
+        postAppModel.data.item.coverUrl = postAppModel.data.option.originCoverUrl;
+      } else {
+        postAppModel.data.item.coverUrl = '';
+      }
     }
   },
 });

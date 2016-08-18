@@ -183,8 +183,8 @@
     */
 
     <%- include vue.ejs %>
-    userApp.$mount("#main-index");
-    userApp.loadItems(userApp.renderTable);
+    mainApp.$mount("#main-index");
+    mainApp.loadItems(mainApp.renderTable);
   };
 
   // load related plugins
@@ -199,8 +199,8 @@
   });
 
   var pagedestroy = function() {
-    userApp = null;
-    userAppModel = null;
+    mainApp = null;
+    mainAppModel = null;
     COMMON = null;
     LINK = null;
     $("#" + COMMON.PAGE_NAME + "table").remove();
