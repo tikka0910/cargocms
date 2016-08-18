@@ -1,4 +1,5 @@
-var defaultVueMathod = {
+
+  var defaultVueMathod = {
   cancel: function (event) {
     appMain.onLeavePageEdit(function() {
       location.href = '/admin/#/admin/'+modelName;
@@ -116,10 +117,7 @@ var defaultVueMathod = {
   },
   renderTable: function() {
     /* BASIC ;*/
-    var responsiveHelper_user_table = undefined;
-    var responsiveHelper_datatable_fixed_column = undefined;
-    var responsiveHelper_datatable_col_reorder = undefined;
-    var responsiveHelper_datatable_tabletools = undefined;
+    var responsiveHelper_datatable = undefined;
 
     var breakpointDefinition = {
      tablet : 1024,
@@ -219,15 +217,15 @@ var defaultVueMathod = {
       },
       "autoWidth" : true,
       "preDrawCallback" : function() {
-        if (!responsiveHelper_datatable_tabletools) {
-          responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#main-table'), breakpointDefinition);
+        if (!responsiveHelper_datatable) {
+          responsiveHelper_datatable = new ResponsiveDatatablesHelper($('#main-table'), breakpointDefinition);
         }
       },
       "rowCallback" : function(nRow) {
-       responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
+       responsiveHelper_datatable.createExpandIcon(nRow);
       },
       "drawCallback" : function(oSettings) {
-       responsiveHelper_datatable_tabletools.respond();
+       responsiveHelper_datatable.respond();
       }
     }
 
