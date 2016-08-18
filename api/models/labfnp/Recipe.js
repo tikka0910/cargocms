@@ -42,7 +42,7 @@ module.exports = {
       get: function() {
         const val = this.getDataValue('message');
         if (typeof val !== 'string' || val === null) return '沒有備註';
-        else return val;
+        return val;
       }
     },
     description: {
@@ -50,7 +50,7 @@ module.exports = {
       get: function() {
         const val = this.getDataValue('description');
         if (typeof val !== 'string' || val === null) return '沒有描述';
-        else return val;
+        return val;
       }
     },
     totalDrops: {
