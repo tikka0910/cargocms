@@ -54,7 +54,7 @@ module.exports = function forbidden (data, options) {
   // If no second argument provided, try to serve the default view,
   // but fall back to sending JSON(P) if any errors occur.
   else {
-    if (req.path.split('/').indexOf('admin') !== -1) {
+    if (req.path.split('/').indexOf('admin') === 1) {
       sails.log.info('Forbidden redirect /admin/login')
       return res.redirect('/admin/login');
     } else {
