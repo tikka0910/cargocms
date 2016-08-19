@@ -107,7 +107,7 @@ var scentNoteApp = new Vue({
       } // end ajaxSuccess
     },
     setupForm: function(type) {
-      var registerForm = $("#scentNote-form");
+      var registerForm = $("#main-form");
       registerForm.validate({
 
         // Rules for form validation
@@ -232,12 +232,12 @@ var scentNoteApp = new Vue({
        phone : 480
      };
      /* TABLETOOLS */
-     var table = $('#scentNote-table').dataTable({
+     var table = $('#main-table').dataTable({
        // Tabletools options:
        //   https://datatables.net/extensions/tabletools/button_options
-       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'Tl>r>"+
+       "sDom": "<'dt-toolbar'<'row'r<'col-xs-7 col-md-7 col-sm-7'f><'col-xs-5 col-md-4 col-sm-4'T><'col-md-1 col-sm-1 hidden-xs'l>>>" +
            "t"+
-           "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+           "<'dt-toolbar-footer'<'row'<'col-md-6 col-xs-12 hidden-xs'i><'col-md-6 col-xs-12'p>>>",
        "oLanguage": {
           "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
           "sInfo": "顯示 _START_ 到 _END_ 總共 _TOTAL_ 筆紀錄",
@@ -246,12 +246,12 @@ var scentNoteApp = new Vue({
          	"sInfoFiltered": "(從 _MAX_ 項結果中過濾)",
          	"sProcessing":   "處理中...",
          	"sLoadingRecords": "載入中...",
-         	"sLengthMenu":   "顯示 _MENU_ 項結果　",
+         	"sLengthMenu": "_MENU_",
          	"sZeroRecords":  "沒有符合的結果",
          	"oPaginate": {
          		"sFirst":    "第一頁",
-         		"sPrevious": "上一頁",
-         		"sNext":     "下一頁",
+            "sPrevious": "<i class='fa fa-chevron-left' aria-hidden='true'></i>",
+            "sNext":     "<i class='fa fa-chevron-right' aria-hidden='true'></i>",
          		"sLast":     "最後一頁"
          	},
          	"sAria": {
@@ -308,7 +308,7 @@ var scentNoteApp = new Vue({
        "preDrawCallback" : function() {
          // Initialize the responsive datatables helper once.
          if (!responsiveHelper_datatable_tabletools) {
-           responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#scentNote-table'), breakpointDefinition);
+           responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#main-table'), breakpointDefinition);
          }
        },
        "rowCallback" : function(nRow) {
@@ -324,12 +324,12 @@ var scentNoteApp = new Vue({
        if ( $(this).hasClass('selected') ) {
          $(this).removeClass('selected');
        } else {
-         $('#scentNote-table tbody tr').removeClass('selected');
+         $('#main-table tbody tr').removeClass('selected');
          $(this).addClass('selected');
        }
      });
 
-     $('#scentNote-table-widget').fadeIn();
+     $('#main-table-widget').fadeIn();
     },
     dblclick: function(index) {
       var scentNoteId = scentNoteAppModel.data.items[index].id;

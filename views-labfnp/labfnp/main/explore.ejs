@@ -105,10 +105,13 @@
 </button> -->
 
 
-						<a href="/recipe/<%= recipe.id %>" id="recipeImageContainer" >
+						<a href="/recipe/<%= recipe.id %>" id="recipeImageContainer" class="easy-block-v1">
+              <% if (recipe.visibility == 'PROTECTED') { %>
+                <div class="easy-block-v1-badge rgba-red"><%= recipe.visibilityDesc %></div>
+              <% } %>
 							<img id="recipeImage" class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt="">
-							<div class="recipeLikeContainer" data-id="<%= recipe.id %>" data-like="<%= (recipe.UserLikeRecipes.length > 0) %>">
-                <i id="recipeLikeIcon" class="fa <%= recipe.UserLikeRecipes.length > 0 ? 'fa-heart': 'fa-heart-o' %> fa-sm"></i>
+							<div class="recipeLikeContainer" data-id="<%= recipe.id %>" data-like="<%= recipe.currentUserLike %>">
+                <i id="recipeLikeIcon" class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %> fa-sm"></i>
               </div>
 						</a>
 						<div class="grid-boxes-caption">
@@ -116,7 +119,7 @@
 							<ul class="list-inline grid-boxes-news">
 								<li>
 									<i class="fa fa-user"></i>
-									<a href="#">
+									<a href="/lab?userId=<%= recipe.UserId %>">
 										<%= recipe.authorName %>
 									</a>
 								</li>
@@ -125,10 +128,10 @@
 									<i class="fa fa-clock-o"></i>
 									<%=: recipe.createdAt | formatDate %>
 								</li>
-								<!--<li>|</li>
-								<li><a href="#"><i class="fa fa-comments-o"></i> 06</a></li>-->
+								<li>|</li>
+								<li><i class="fa fa-thumbs-o-up"></i> <%= recipe.UserLikeRecipes.length %></li>
 							</ul>
-							<% if (recipe.message) { %><p><%= recipe.message %></p><% } %>
+							<% if (recipe.description) { %><p><%= recipe.description %></p><% } %>
 						</div>
 					</div>
 

@@ -37,9 +37,9 @@ var userApp = new Vue({
      var table = $('#mock-table').dataTable({
        // Tabletools options:
        //   https://datatables.net/extensions/tabletools/button_options
-       "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'Tl>r>"+
+       "sDom": "<'dt-toolbar'<'row'r<'col-xs-7 col-md-7 col-sm-7'f><'col-xs-5 col-md-4 col-sm-4'T><'col-md-1 col-sm-1 hidden-xs'l>>>" +
            "t"+
-           "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+           "<'dt-toolbar-footer'<'row'<'col-md-6 col-xs-12 hidden-xs'i><'col-md-6 col-xs-12'p>>>",
        "oLanguage": {
           "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
           "sInfo": "顯示 _START_ 到 _END_ 總共 _TOTAL_ 筆紀錄",
@@ -48,12 +48,12 @@ var userApp = new Vue({
          	"sInfoFiltered": "(從 _MAX_ 項結果中過濾)",
          	"sProcessing":   "處理中...",
          	"sLoadingRecords": "載入中...",
-         	"sLengthMenu":   "顯示 _MENU_ 項結果　",
+         	"sLengthMenu": "_MENU_",
          	"sZeroRecords":  "沒有符合的結果",
          	"oPaginate": {
          		"sFirst":    "第一頁",
-         		"sPrevious": "上一頁",
-         		"sNext":     "下一頁",
+            "sPrevious": "<i class='fa fa-chevron-left' aria-hidden='true'></i>",
+            "sNext":     "<i class='fa fa-chevron-right' aria-hidden='true'></i>",
          		"sLast":     "最後一頁"
          	},
          	"sAria": {
@@ -73,35 +73,18 @@ var userApp = new Vue({
              "sExtends": "text",
              "sButtonText": "檢視",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
-               if (isSelected) {
-                 var index = userAppModel.view.table.selectIndex;
-                 var userId = userAppModel.data.items[index].id;
-                 location.href = '/admin/#/admin/user/show/' + userId;
-               } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
-               }
              }
            },
            {
              "sExtends": "text",
              "sButtonText": "新增",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               location.href = '/admin/#/admin/user/create';
              }
            },
            {
              "sExtends": "text",
              "sButtonText": "編輯",
              "fnClick": function ( nButton, oConfig, oFlash ) {
-               var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
-               if (isSelected) {
-                 var index = userAppModel.view.table.selectIndex;
-                 var userId = userAppModel.data.items[index].id;
-                 location.href = '/admin/#/admin/user/edit/' + userId;
-               } else {
-                 messageApp.show({desc: '請選擇會員', type: 'warning'});
-               }
              }
            },
          ]
@@ -134,16 +117,9 @@ var userApp = new Vue({
      $('#mock-table-widget').fadeIn();
     },
     dblclick: function(index) {
-      var userId = userAppModel.data.items[index].id;
-      this.show(userId);
     },
     selection: function (index) {
-      if (index !== userAppModel.view.table.selectIndex) {
-        userAppModel.view.table.selectIndex = index;
-        console.log("userAppModel.view.table.selectIndex", userAppModel.view.table.selectIndex);
-      } else {
-        userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
-      }
+
     },
   },
 });

@@ -1,26 +1,24 @@
 <%- include ../metadata.js.ejs %>
 
-var COMMON = {
-	DEFAULT_INDEX: -1,
-  PAGE_NAME: 'labfnp-recipe-',
-  DROPS_MAX: 100,
-  DROPS_MIN: 1,
-};
-
-var LINK = {
-  PAGE_INDEX: '/admin/#/admin/labfnp/recipe',
-  PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
-  PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit/',
-  PAGE_SHOW: '/admin/#/admin/labfnp/recipe/show/',
-  API_LIST_SCENT: '/api/labfnp/scent',
-  API_LIST: '/api/labfnp/recipe',
-  API_ITEM: '/api/labfnp/recipe/',
-  API_CREATE: '/api/labfnp/recipe',
-  API_UPDATE: '/api/labfnp/recipe/',
-};
-
-var userAppModel = {
+var appModel = {
 	data: {
+    link: {
+      PAGE_INDEX: '/admin/#/admin/labfnp/recipe',
+      PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
+      PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit/',
+      PAGE_SHOW: '/admin/#/admin/labfnp/recipe/show/',
+      API_LIST_SCENT: '/api/labfnp/scent',
+      API_LIST: '/api/labfnp/recipe',
+      API_ITEM: '/api/labfnp/recipe/',
+      API_CREATE: '/api/labfnp/recipe',
+      API_UPDATE: '/api/labfnp/recipe/',
+    },
+    common: {
+      DEFAULT_AVATAR: '/assets/admin/img/avatars/default.png',
+      DROPS_MAX: 50,
+      DROPS_MIN: 1,
+      DEFAULT_INDEX: -1,
+    },
     status: {
       itemBeforeEdit: {},
     },
@@ -30,8 +28,12 @@ var userAppModel = {
 			perfumeName: '',
 			formulaLogs: '',
       formula: [],
+      totalDrops: 0,
+      description: '',
       message: '',
       User: {},
+			visibility: '',
+			productionStatus: '',
 		},
 		items: [],
     scentData: {},
@@ -40,22 +42,22 @@ var userAppModel = {
 	},
 	view: {
 		table: {
-			selectIndex: COMMON.DEFAULT_INDEX,
+			selectIndex: -1,
 		},
 	},
 };
 
-var userApp = new Vue({
-	data: userAppModel,
+var mainApp = new Vue({
+	data: appModel,
 	methods: {
 		cancel: function (event) {
-			userApp.onLeavePage(function () {
-				location.href = LINK.PAGE_INDEX;
+			mainApp.onLeavePage(function () {
+				location.href = appModel.data.link.PAGE_INDEX;
 			});
 		},
     verifySendData: function () {
-      var scentColor = userAppModel.data.scentColor;
-      var dataJson = JSON.parse(JSON.stringify(userAppModel.data.item));
+      var scentColor = appModel.data.scentColor;
+      var dataJson = JSON.parse(JSON.stringify(appModel.data.item));
       var newFormula = [];
       for (var i=0;i<dataJson.formula.length;i++) {
         var checkDropsType = typeof dataJson.formula[i].drops === 'string';
@@ -66,7 +68,7 @@ var userApp = new Vue({
         var checkScent = checkScentType && checkScentEmpty;
         if (checkDrops && checkScent) newFormula.push(dataJson.formula[i]);
       }
-      for (var i=0;i<newFormula.length;i++) {
+      for (var i=0; i<newFormula.length; i++) {
         newFormula[i].color = scentColor[newFormula[i].scent];
       }
       dataJson.formula = newFormula;
@@ -74,7 +76,7 @@ var userApp = new Vue({
     },
 		save: function (event) {
       var ajaxSuccess = function (result) {
-        location.href = LINK.PAGE_INDEX;
+        location.href = appModel.data.link.PAGE_INDEX;
         messageApp.show({
           desc: '新增資料成功！',
           type: 'success'
@@ -89,10 +91,10 @@ var userApp = new Vue({
       };
 
 			$.ajax({
-				url: LINK.API_CREATE,
+				url: appModel.data.link.API_CREATE,
 				type: 'POST',
 				dataType: 'json',
-				data: userApp.verifySendData(),
+				data: mainApp.verifySendData(),
 				xhrFields: {
 					withCredentials: true,
 				},
@@ -102,7 +104,7 @@ var userApp = new Vue({
 		},
 		update: function (event) {
 			var ajaxSuccess = function(result) {
-				location.href = LINK.PAGE_INDEX;
+				location.href = appModel.data.link.PAGE_INDEX;
 				messageApp.show({
 					desc: '更新資料成功！',
 					type: 'success'
@@ -117,10 +119,10 @@ var userApp = new Vue({
 			};
 
 			$.ajax({
-				url: LINK.API_UPDATE + userAppModel.data.item.id,
+				url: appModel.data.link.API_UPDATE + appModel.data.item.id,
 				type: 'PUT',
 				dataType: 'json',
-				data: userApp.verifySendData(),
+				data: mainApp.verifySendData(),
 				xhrFields: {
 					withCredentials: true,
 				},
@@ -130,17 +132,17 @@ var userApp = new Vue({
 		},
     loadSelectOptions: function (cb) {
       var ajaxSuccess = function (result) {
-        userAppModel.data.scentData = result.data.items;
-        userAppModel.data.scentColor = new Object();
-        var scentData = userAppModel.data.scentData;
+        appModel.data.scentData = result.data.items;
+        appModel.data.scentColor = new Object();
+        var scentData = appModel.data.scentData;
         for (var i=0;i<scentData.length;i++) {
-          userAppModel.data.scentColor[scentData[i].name] = scentData[i].color;
+          appModel.data.scentColor[scentData[i].name] = scentData[i].color;
         }
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
       };
 
       $.ajax({
-        url: LINK.API_LIST_SCENT,
+        url: appModel.data.link.API_LIST_SCENT,
         // async: false,
         success: ajaxSuccess,
         // error: ajaxError,
@@ -149,7 +151,7 @@ var userApp = new Vue({
     saveItemStatusBeforeEdit: function () {
       this.data.status.itemBeforeEdit = JSON.stringify(this.data.item);
 			window.onbeforeunload = function (e) {
-				if (userApp.isPageEditDataModified()) {
+				if (mainApp.isPageEditDataModified()) {
 					var message = '您已經修改過資料，是否確定要放棄本次的修改？';
 					e.returnValue = message;
 					return message;
@@ -157,42 +159,47 @@ var userApp = new Vue({
 			};
     },
     insertEmptyFormulaItem: function () {
-      for (var i=0;i<6;i++) {
-        var thisFormula = userAppModel.data.item.formula[i];
-        var checkFormula = typeof thisFormula === 'undefined';
+      var thisFormula = [];
+      for (var i=0; i<6; i++) {
+        var indexFormula = appModel.data.item.formula[i];
+        var checkFormula = typeof indexFormula === 'undefined';
 
         if (checkFormula) {
-          userAppModel.data.item.formula[i] = {
-            color: '',
-            scent: '',
-            drops: '0',
+          indexFormula = {
+            'scent': '',
+            'drops': '0',
           };
         } else {
-          var checkDrops = typeof thisFormula.drops === 'string';
-          var checkDropsValue = thisFormula.drops === '0';
-          if (!checkDrops || checkDropsValue) userAppModel.data.item.formula[i].scent = '';
+          var checkDrops = typeof indexFormula.drops === 'string';
+          var checkDropsValue = indexFormula.drops === '0';
+          if (!checkDrops || checkDropsValue) indexFormula.scent = '';
         }
+        thisFormula.push(indexFormula);
       }
+      appModel.data.item.formula = thisFormula;
     },
 		loadItem: function (cb) {
 			var ajaxSuccess = function(result) {
-				userAppModel.data.item = result.data;
+				appModel.data.item = result.data;
 				var hasAvatar = typeof result.data.avatar === 'string';
 				if (!hasAvatar) {
-					userAppModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
+					appModel.data.item.avatar = appModel.data.common.DEFAULT_AVATAR;
 				}
         if (typeof cb !== 'undefined') setTimeout(cb, 0);
 			};
 
       $.ajax({
-        url: LINK.API_ITEM + userAppModel.data.item.id,
+        url: appModel.data.link.API_ITEM + appModel.data.item.id,
         async: false,
         success: ajaxSuccess,
         // error: ajaxError,
       });
 		},
 		setupForm: function (type) {
+      this.onDropsChange();
 			var registerForm = $('#main-form');
+      var min = appModel.data.common.DROPS_MIN;
+      var max = appModel.data.common.DROPS_MAX;
 			registerForm.validate({
 				// Rules for form validation
 				rules: {
@@ -206,12 +213,15 @@ var userApp = new Vue({
 						required: true,
             minlength: 1,
 					},
-          'drops[]':{
+          'drops[]': {
 						required: true,
             minlength: 1,
-            min: COMMON.DROPS_MIN,
-            max: COMMON.DROPS_MAX,
+            min: min,
+            max: max,
 					},
+          totalDrops: {
+            max: max,
+          },
 				},
 
 				// Messages for form validation
@@ -230,49 +240,52 @@ var userApp = new Vue({
 						required: '請至少給予 1 滴香味分子',
             minlength: '請至少選擇一種香味分子',
             min: '請至少給予 1 滴香味分子',
-            max: '請至多只給予 ' + COMMON.DROPS_MAX + ' 滴',
-          }
+            max: '單一成分請至多只給予 ' + max + ' 滴',
+          },
+          totalDrops: {
+            max: '全部成分加總最多為 ' + max + ' 滴！',
+          },
 				},
 
 				// Do not change code below
 				errorPlacement: function (error, element) {
 					error.insertAfter(element.parent());
-
-          // error message style
-          $('label.error').css("color","red");
-          $('label.error').css("font-weight","900");
-          $('label.error').css("border","solid 1px #AAA");
-          $('label.error').css("background","#fff");
-          $('label.error').css("box-shadow","0px 2px 6px rgba(0, 0, 0, .7)");
-          $('label.error').css("padding","2px 5px");
 				},
 
 				submitHandler: function (form) {
 					if (type == 'create') {
-						userApp.save();
+            mainApp.save();
 						return false;
 					} else if (type == 'edit') {
-						userApp.update();
+						mainApp.update();
 						return false;
 					}
 				}
 			});
 		},
+    onDropsChange: function (e) {
+      var totalDrops = 0;
+      for (var i=0;i<appModel.data.item.formula.length;i++) {
+        var drops = parseInt(appModel.data.item.formula[i].drops);
+        totalDrops += drops;
+      }
+      appModel.data.item.totalDrops = totalDrops;
+    },
     onSelectChange: function (e) {
       var targetId = e.target.id.split("-")[1];
-      userAppModel.data.item.formula[targetId].drops = '1';
+      appModel.data.item.formula[targetId].drops = '1';
     },
     onBtnCleanClick: function (e) {
       var targetId = e.target.id.split("-")[1];
-      userAppModel.data.item.formula[targetId].drops = '0';
-      userAppModel.data.item.formula[targetId].scent = '';
+      appModel.data.item.formula[targetId].drops = '0';
+      appModel.data.item.formula[targetId].scent = '';
       $("select#scent-" + targetId).select(0).val('');
     },
 		isPageEditDataModified: function () {
       var isDataModified = false;
-      var itemBeforeEdit = userAppModel.data.status.itemBeforeEdit;
+      var itemBeforeEdit = appModel.data.status.itemBeforeEdit;
       if (itemBeforeEdit) {
-  			var itemBeforeLeave = JSON.stringify(userAppModel.data.item);
+  			var itemBeforeLeave = JSON.stringify(appModel.data.item);
   			isDataModified = itemBeforeEdit !== itemBeforeLeave;
       } else window.onbeforeunload = null;
      return isDataModified;
@@ -291,7 +304,7 @@ var userApp = new Vue({
       this.saveItemStatusBeforeEdit();
 		},
     onEnterPageShow: function () {
-      var formula = userAppModel.data.item.formula;
+      var formula = appModel.data.item.formula;
       var labelArray = [];
       var dropsArray = [];
       var scentColorArray = [];
@@ -332,7 +345,7 @@ var userApp = new Vue({
       var perfumePie = new Chart(document.getElementById("pieChart"), perfumePieConfig);
     },
 		onLeavePage: function (cb) {
-			if (userApp.isPageEditDataModified()) {
+			if (mainApp.isPageEditDataModified()) {
 				var msgInfo = {
 					title: '注意',
 					content: '您已經修改過資料，是否確定要放棄本次的修改？',
@@ -352,10 +365,10 @@ var userApp = new Vue({
 		},
 		loadItems: function (cb) {
 			var ajaxSuccess = function(result) {
-				userAppModel.data.items = result.data.items;
+				appModel.data.items = result.data.items;
 				if (typeof cb !== 'undefined') setTimeout(cb, 0);
 			};
-      $.get(LINK.API_LIST, ajaxSuccess);
+      $.get(appModel.data.link.API_LIST, ajaxSuccess);
 		},
 		renderTable: function () {
 			/* BASIC ;*/
@@ -369,12 +382,12 @@ var userApp = new Vue({
 				phone: 480
 			};
 			/* TABLETOOLS */
-			var table = $('#' + COMMON.PAGE_NAME + 'table').dataTable({
+			var table = $('#main-table').dataTable({
 				// Tabletools options:
 				//   https://datatables.net/extensions/tabletools/button_options
-				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f>T<'hidden-xs'l>r>" +
+				"sDom": "<'dt-toolbar'<'row'r<'col-xs-7 col-md-7 col-sm-7'f><'col-xs-5 col-md-4 col-sm-4'T><'col-md-1 col-sm-1 hidden-xs'l>>>" +
 					"t" +
-					"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+					"<'dt-toolbar-footer'<'row'<'col-md-6 col-xs-12 hidden-xs'i><'col-md-6 col-xs-12'p>>>",
 				"oLanguage": {
 					"sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
 					"sInfo": "顯示 _START_ 到 _END_ 總共 _TOTAL_ 筆紀錄",
@@ -383,12 +396,12 @@ var userApp = new Vue({
 					"sInfoFiltered": "(從 _MAX_ 項結果中過濾)",
 					"sProcessing": "處理中...",
 					"sLoadingRecords": "載入中...",
-					"sLengthMenu": "顯示 _MENU_ 項結果　",
+          "sLengthMenu": "_MENU_",
 					"sZeroRecords": "沒有符合的結果",
 					"oPaginate": {
 						"sFirst": "第一頁",
-						"sPrevious": "上一頁",
-						"sNext": "下一頁",
+						"sPrevious": "<i class='fa fa-chevron-left' aria-hidden='true'></i>",
+						"sNext": "<i class='fa fa-chevron-right' aria-hidden='true'></i>",
 						"sLast": "最後一頁"
 					},
 					"sAria": {
@@ -402,17 +415,37 @@ var userApp = new Vue({
 						"orderable": false,
         },
       ],
-				"oTableTools": {
-					"aButtons": [
+        "oTableTools": {
+          "sSwfPath": "/assets/admin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf",
+          "aButtons": [
+            // "copy",
+            // "xls",
+            // {
+            //   "sExtends": "pdf",
+            //   "sTitle": "SmartAdmin_PDF",
+            //   "sPdfMessage": "SmartAdmin PDF Export",
+            //   "sPdfSize": "letter"
+            // },
+            // {
+            //   "sExtends": "print",
+            //   "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+            // },
+            {
+              "sExtends": "csv",
+              "sButtonText": "匯出",
+              "sToolTip": "把全部資料匯出成CSV",
+              "sCharSet": "UTF8",
+              "bBomInc": true,
+            },
 						{
 							"sExtends": "text",
 							"sButtonText": "檢視",
 							"fnClick": function (nButton, oConfig, oFlash) {
-								var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
+								var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
 								if (isSelected) {
-									var index = userAppModel.view.table.selectIndex;
-									var id = userAppModel.data.items[index].id;
-									location.href = LINK.PAGE_SHOW + id;
+									var index = appModel.view.table.selectIndex;
+									var id = appModel.data.items[index].id;
+									location.href = appModel.data.link.PAGE_SHOW + id;
 								} else {
 									messageApp.show({
 										desc: '請選擇一筆資料',
@@ -425,18 +458,18 @@ var userApp = new Vue({
 							"sExtends": "text",
 							"sButtonText": "新增",
 							"fnClick": function (nButton, oConfig, oFlash) {
-                location.href = LINK.PAGE_CREATE;
+                location.href = appModel.data.link.PAGE_CREATE;
 							}
            },
 						{
 							"sExtends": "text",
 							"sButtonText": "編輯",
 							"fnClick": function (nButton, oConfig, oFlash) {
-								var isSelected = userAppModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
+								var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
 								if (isSelected) {
-									var index = userAppModel.view.table.selectIndex;
-									var id = userAppModel.data.items[index].id;
-									location.href = LINK.PAGE_EDIT + id;
+									var index = appModel.view.table.selectIndex;
+									var id = appModel.data.items[index].id;
+									location.href = appModel.data.link.PAGE_EDIT + id;
 								} else {
 									messageApp.show({
 										desc: '請選擇一筆資料',
@@ -451,7 +484,7 @@ var userApp = new Vue({
 				"preDrawCallback": function () {
 					// Initialize the responsive datatables helper once.
 					if (!responsiveHelper_datatable_tabletools) {
-						responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#' + COMMON.PAGE_NAME + 'table'), breakpointDefinition);
+						responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#main-table'), breakpointDefinition);
 					}
 				},
 				"rowCallback": function (nRow) {
@@ -467,31 +500,31 @@ var userApp = new Vue({
 				if ($(this).hasClass('selected')) {
 					$(this).removeClass('selected');
 				} else {
-					$('#' + COMMON.PAGE_NAME + 'table tbody tr').removeClass('selected');
+					$('#main-table tbody tr').removeClass('selected');
 					$(this).addClass('selected');
 				}
 			});
 
       // animate table
-			$('#' + COMMON.PAGE_NAME + 'table-widget').fadeIn();
+			$('#main-table-widget').fadeIn();
 		},
 		dblclick: function (index) {
-			var id = userAppModel.data.items[index].id;
+			var id = appModel.data.items[index].id;
 			this.show(id);
 		},
 		selection: function (index) {
-			if (index !== userAppModel.view.table.selectIndex) {
-				userAppModel.view.table.selectIndex = index;
-				console.log("userAppModel.view.table.selectIndex", userAppModel.view.table.selectIndex);
+			if (index !== appModel.view.table.selectIndex) {
+				appModel.view.table.selectIndex = index;
+				console.log("appModel.view.table.selectIndex", appModel.view.table.selectIndex);
 			} else {
-				userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
+				appModel.view.table.selectIndex = appModel.data.common.DEFAULT_INDEX;
 			}
 		},
 		show: function (id) {
-			location.href = LINK.PAGE_SHOW + id;
+			location.href = appModel.data.link.PAGE_SHOW + id;
 		},
 		edit: function (id) {
-			location.href = LINK.PAGE_EDIT + id;
+			location.href = appModel.data.link.PAGE_EDIT + id;
 		},
 		delete: function () {
 			messageApp.confirm({
@@ -502,13 +535,13 @@ var userApp = new Vue({
 				function (ButtonPressed) {
 					if (ButtonPressed === '刪除') {
 						var ajaxSuccess = function(result) {
-							userAppModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
+							appModel.view.table.selectIndex = appModel.data.common.DEFAULT_INDEX;
 							messageApp.show({
 								desc: `刪除資料成功！`,
 								type: 'success'
 							});
 							setTimeout(function () {
-								location.href = LINK.PAGE_INDEX;
+								location.href = appModel.data.link.PAGE_INDEX;
 							}, 500);
 						} // end ajaxSuccess
 
@@ -520,7 +553,7 @@ var userApp = new Vue({
 						}
 
 						$.ajax({
-							url: LINK.API_UPDATE + userAppModel.data.item.id,
+							url: appModel.data.link.API_UPDATE + appModel.data.item.id,
 							type: 'DELETE',
 							dataType: 'json',
 							xhrFields: {

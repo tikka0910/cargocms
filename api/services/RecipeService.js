@@ -7,24 +7,22 @@ module.exports = {
     }
   },
 
-  create: async ({
+  create: async (recipe = {
     formula,
     formulaLogs,
     authorName,
     perfumeName,
     message,
-    UserId
+    description,
+    visibility,
+    productionStatus,
+    UserId,
   }) => {
     try {
-      sails.log.info({
-        formula,
-        formulaLogs,
-        authorName,
-        perfumeName,
-        message,
-        UserId,
-      });
-      return await Recipe.create({ formula, formulaLogs, authorName, perfumeName, message, UserId });
+      const bubble = (a,b) => a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];
+      recipe.formula = recipe.formula.sort(bubble);
+      sails.log.info(recipe);
+      return await Recipe.create(recipe);
     } catch (e) {
       sails.log.error(e);
       throw e;
@@ -37,9 +35,14 @@ module.exports = {
     formulaLogs,
     authorName,
     perfumeName,
-    message
+    message,
+    description,
+    visibility,
+    productionStatus,
   }) => {
     try {
+      const bubble = (a,b) => a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];
+      recipe.formula = recipe.formula.sort(bubble);
       sails.log.info('update recipe service=>', recipe);
       let updatedRecipe = await Recipe.findOne({
         where: {
@@ -52,6 +55,9 @@ module.exports = {
         updatedRecipe.authorName = recipe.authorName;
         updatedRecipe.perfumeName = recipe.perfumeName;
         updatedRecipe.message = recipe.message;
+        updatedRecipe.visibility = recipe.visibility;
+        updatedRecipe.productionStatus = recipe.productionStatus
+        updatedRecipe.description = recipe.description;
 
         updatedRecipe = await updatedRecipe.save();
       }

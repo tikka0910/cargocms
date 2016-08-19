@@ -153,7 +153,8 @@ module.exports.bootstrap = async (cb) => {
         formulaLogs: '',
         authorName: '王大明',
         perfumeName: 'love',
-        message: 'this is love',
+        description: 'this is love',
+        message: '備註',
         UserId: 1,
       }
       Recipe.create(recipeLove);
@@ -166,7 +167,8 @@ module.exports.bootstrap = async (cb) => {
         formulaLogs: '',
         authorName: '王大明',
         perfumeName: 'love again',
-        message: 'this is love again',
+        description: 'this is love again',
+        message: '備註',
         UserId: 1,
       };
 

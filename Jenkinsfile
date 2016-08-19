@@ -20,6 +20,8 @@ node {
     sh "npm run test-ci"
     step([$class: 'JUnitResultArchiver', testResults: 'test-results.xml'])
     step([$class: 'CloverPublisher', cloverReportDir: 'coverage', cloverReportFileName: 'clover.xml'])
+    sh "make e2e-test-with-docker"
+
 
     // stage 'run project'
     // sh "npm run pm2-start"
