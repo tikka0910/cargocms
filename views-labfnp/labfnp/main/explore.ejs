@@ -191,14 +191,11 @@ $(document).ready(function(){
     }
     var failCatch = function(error) {
       if (error.responseJSON.message === 'permission denied') {
-        var buttonAction = function (isConfirm) {location.href = '/login';};
         swal({
-        	title: '哎呀！出錯了',
-        	text: '按讚前請先登入喔！:p',
+          title: '請先登入',
+          text: '如果要使用收藏功能，請先進行登入。',
         	type: 'warning',
-        	confirmButtonColor: '#4863ae',
-          confirmButtonText: '登入',
-        }, buttonAction);
+        });
       }
     }
     if (isLike) {
