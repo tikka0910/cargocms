@@ -3,6 +3,18 @@ node {
   try {
     // slackSend message: "started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
 
+    def preview = false;
+
+    try{
+      timeout(time:10, unit:'SECONDS') {
+          stage 'preview'
+          input message: "wanner preview?", ok: "start preview"
+      }
+      preview = true;
+    }catch(e){
+
+    }
+
     stage 'checkout project'
     // git url: 'https://github.com/trunk-studio/cargocms.git', branch: 'develop'
     checkout scm
@@ -22,6 +34,9 @@ node {
     step([$class: 'CloverPublisher', cloverReportDir: 'coverage', cloverReportFileName: 'clover.xml'])
     sh "make e2e-test-with-docker"
 
+
+
+    if(preview) sh "npm run preview"
 
     // stage 'run project'
     // sh "npm run pm2-start"
@@ -44,9 +59,9 @@ node {
     // stage 'restart production'
     // sh "make restart-production"
 
-    // slackSend color: 'good', message: "success ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+    slackSend color: 'good', message: "success ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
   }catch(e){
-    // slackSend color: 'danger', message: "fail ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+    slackSend color: 'danger', message: "fail ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
     throw e;
   }
 
