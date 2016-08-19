@@ -62,6 +62,7 @@
     "test-e2e-watch": "chimp --mocha --path=test/e2e --watch",
     "build": "npm i && node_modules/grunt-cli/bin/grunt build",
     "start": "node app.js",
+    "preview": "make preview",
     "pm2-start": "pm2 start -f app.js --name 'cargocms'",
     "pm2-stop": "pm2 stop cargocms",
     "start-prod": "NODE_ENV=production node app.js",
