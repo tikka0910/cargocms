@@ -191,8 +191,11 @@ $(document).ready(function(){
     }
     var failCatch = function(error) {
       if (error.responseJSON.message === 'permission denied') {
-        alert( "請先進行登入" );
-        location.href = '/login';
+        swal({
+          title: '請先登入',
+          text: '如果要使用收藏功能，請先進行登入。',
+        	type: 'warning',
+        });
       }
     }
     if (isLike) {
