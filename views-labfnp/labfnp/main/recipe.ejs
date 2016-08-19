@@ -1,81 +1,103 @@
 <% LayoutUtils.addStylesheets('/assets/unify/css/pages/profile.css'); %>
-  <!--<div class="container">-->
-  <!--<pre><%= JSON.stringify(recipe, null, 2) %></pre>-->
-  <!--</div>-->
+<!--<div class="container">-->
+<!--<pre><%= JSON.stringify(recipe, null, 2) %></pre>-->
+<!--</div>-->
 
-  <style>
-    .cover-photo {
-      min-height: 150px;
-    }
-    .drops, .scent {
-      font-size: 16px;
-      font-weight: bold;
-      color: black;
-    }
-    .scent {
-      padding: 2px;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      border: none;
-      color: white;
-    }
-  </style>
+<style>
+  .cover-photo {
+    min-height: 150px;
+  }
+  .drops,
+  .scent {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+  }
+  .scent {
+    padding: 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+  }
 
+</style>
 
-  <div class="container content profile">
+<div class="container content profile">
+  <input type="hidden" name="id" class="hidden" value="<%= recipe.id %>" disabled>
 
-    <!-- begin row -->
-    <div class="row">
+  <!-- begin row -->
+  <div class="row">
 
-      <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-6 col-md-offset-3">
 
-        <div class="margin-bottom-10">
-          <button class="btn-u btn-u-default" onclick="window.history.back()">返回</button>
+      <div class="margin-bottom-10">
+        <button class="btn-u btn-u-default" onclick="window.history.back()">返回</button>
+      </div>
+
+      <!-- begin .profile-body -->
+      <div class="profile-body">
+
+        <div class="easy-block-v1">
+          <div class="easy-block-v1-badge rgba-red">精選</div>
+          <img class="img-responsive cover-photo" src="http://loremflickr.com/640/480/perfume/all?<%= Math.random() * Date.now() %>" alt=""/>
         </div>
+        <div class="projects">
 
-        <!-- begin .profile-body -->
-        <div class="profile-body">
-
-          <div class="easy-block-v1">
-            <div class="easy-block-v1-badge rgba-red">精選</div>
-            <img class="img-responsive cover-photo" src="http://loremflickr.com/640/480/perfume/all?<%= Math.random() * Date.now() %>" alt="" />
+          <div style="float:right">
+            <button id="likeButton" class="btn-u btn-u-red" data-id="<%= recipe.id %>" data-like="<%= recipe.currentUserLike %>">
+              <i class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %>" aria-hidden="true"></i>
+              收藏
+            </button>
           </div>
-          <div class="projects">
 
-            <div style="float:right">
-              <button id="likeButton" class="btn-u btn-u-red"  data-id="<%= recipe.id %>" data-like="<%= recipe.currentUserLike %>">
-                <i class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %>" aria-hidden="true"></i>
-                收藏
-              </button>
+          <h1>
+            <p>
+              <span class="padding-5"><%= recipe.perfumeName %></span>
+            </p>
+          </h1>
+
+          <ul class="list-unstyled list-inline blog-info-v2">
+            <li>
+              <i class="fa fa-user"></i>
+              <a class="color-green" href="#">
+                <%= recipe.authorName %>
+              </a>
+            </li>
+            <li>
+              <i class="fa fa-clock-o"></i>
+              <%=: recipe.createdAt | formatDate %>
+            </li>
+            <li>
+              <i class="fa fa-thumbs-o-up"></i>
+              <%= recipe.UserLikeRecipes.length %></li>
+          </ul>
+          <hr/>
+
+          <div class="row">
+            <div class="col col-md-12">
+              <div id="pieChart" class="text-center"></div>
             </div>
-
-            <h1><p><span class="padding-5"><%= recipe.perfumeName %></span></p></h1>
-            <ul class="list-unstyled list-inline blog-info-v2">
-              <li>
-                <i class="fa fa-user"></i>
-                <a class="color-green" href="#">
-                  <%= recipe.authorName %>
-                </a>
-              </li>
-              <li><i class="fa fa-clock-o"></i>
-                <%=: recipe.createdAt | formatDate %>
-              </li>
-              <li><i class="fa fa-thumbs-o-up"></i> <%= recipe.UserLikeRecipes.length %></li>
-            </ul>
-            <hr />
-            <label for="description">描述</label>
-            <ul class="list-unstyled list-inline description">
-              <li><p class="padding-5"><%= recipe.description %></p></li>
-            </ul>
-            <hr />
-            <label for="message">備註</label>
-            <ul class="list-unstyled list-inline message">
-              <li><p class="padding-5"><%= recipe.message %></p></li>
-            </ul>
-          </h4>
           </div>
-          <!-- <div class="project-share">
+
+          <!-- <label for="description">描述</label> -->
+          <ul class="list-unstyled list-inline description">
+            <li>
+              <p class="padding-5"><%= recipe.description %></p>
+            </li>
+          </ul>
+          <hr/>
+
+          <!-- <label for="message">備註</label> -->
+          <ul class="list-unstyled list-inline message">
+            <li>
+              <p class="padding-5"><%= recipe.message %></p>
+            </li>
+          </ul>
+        </h4>
+      </div>
+      <!-- <div class="project-share">
 					<ul class="list-inline comment-list-v2 pull-left">
 						<li><i class="fa fa-eye"></i> <a href="#">25</a></li>
 						<li><i class="fa fa-comments"></i> <a href="#">32</a></li>
@@ -90,15 +112,15 @@
 					</ul>
 				</div> -->
 
-        </div>
-        <!-- end .profile-body -->
-
-      </div>
-      <!-- end col -->
-
     </div>
-    <!-- end row -->
+    <!-- end .profile-body -->
+
   </div>
-  <% LayoutUtils.addScripts ('/assets/admin/js/plugin/moment/moment.min.js'); %>
-    <% LayoutUtils.addScripts ('/assets/admin/js/plugin/chartjs/chart.min.js'); %>
-      <% LayoutUtils.addScripts('/assets/labfnp/page/recipe/show.js'); %>
+  <!-- end col -->
+
+</div>
+<!-- end row -->
+</div>
+<% LayoutUtils.addScripts ('/assets/admin/js/plugin/d3/d3.min.js'); %>
+<% LayoutUtils.addScripts ('/assets/admin/js/plugin/d3/d3pie.min.js'); %>
+<% LayoutUtils.addScripts('/assets/labfnp/page/recipe/show.js'); %>

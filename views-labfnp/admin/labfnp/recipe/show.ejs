@@ -58,13 +58,13 @@
 
                   <!-- product -->
                   <div class="product-wrap clearfix product-deatil">
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
                       <div class="product-image">
-                        <canvas id="pieChart" height="300px" width="350px"></canvas>
+                        <div id="pieChart" class="text-center"></div>
                       </div>
                     </div>
 
-                    <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-7 col-md-6 col-sm-6 col-xs-12">
                       <h2 class="name"><small>配方名稱</small>{{ data.item.perfumeName }}</h2>
                       <hr>
                       <div class="row">
@@ -93,19 +93,6 @@
             							<i class="fa fa-star fa-2x text-muted"></i>
             							<span class="fa fa-2x"><h5>(109) Votes</h5></span>
                           <hr> -->
-                      <h2 class="name"><small>配方成份</small></h2>
-                      <div class="row" v-for="item in data.item.formula" track-by="$index">
-                        <div v-if="item.drops > 0">
-                          <div class="col col-xs-5 col-sm-4 col-md-4 col-lg-2">
-                            <stronge>・</stronge>
-                            <label class="scent" style="background:{{ item.color }};">
-                              <h4>{{ item.scent }}</h4></label>
-                          </div>
-                          <div class="drops col col-xs-1"> : </div>
-                          <div class="drops col col-xs-2">{{ item.drops }}</div>
-                        </div>
-                      </div>
-                      <hr>
                       <h4 class="name" v-if="data.item.description"><small>配方描述</small>{{ data.item.description }}</h4>
                       <h4 class="name" v-else><small>配方描述</small>沒有資料</h4>
                       <hr>
@@ -294,9 +281,10 @@
   // end pagefunction
 
   // Load form valisation dependency
+
   loadScript("/assets/admin/js/plugin/jquery-form/jquery-form.min.js", function() {
-    loadScript("/assets/admin/js/plugin/moment/moment.min.js", function() {
-      loadScript("/assets/admin/js/plugin/chartjs/chart.min.js", pagefunction)
+    loadScript("/assets/admin/js/plugin/d3/d3.min.js", function() {
+      loadScript("/assets/admin/js/plugin/d3/d3pie.min.js", pagefunction)
     });
   });
 </script>
