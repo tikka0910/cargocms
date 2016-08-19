@@ -110,7 +110,7 @@ $("#likeButton").on("click", function (event) {
         text: '按讚前請先登入喔！:p',
       	type: 'warning',
         confirmButtonColor: '#4863ae',
-        confirmButtonText: '帶我到登入畫面',
+        confirmButtonText: '登入',
       }, buttonAction);
 		}
 	}
