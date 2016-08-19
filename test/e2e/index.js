@@ -1,10 +1,22 @@
 require("../bootstrap.test.js")
-import {login} from "../bootstrap.e2e.js"
-login("admin");
+import {login} from "../util/e2eHelper.js"
 
 describe('test logout', () => {
-	it('logout @watch', () => {
-		browser.click('#logout-link');
-		browser.element('#logout-link').state.should.be.equal('failure');
+	before((done)=>{
+		try {
+			login("admin");
+			done();
+		} catch (e) {
+			done(e);
+		}
+	})
+	it('logout @watch', (done) => {
+		try {
+			browser.click('#logout-link');
+			browser.element('#logout-link').state.should.be.equal('failure');
+			done()
+		} catch (e) {
+			done(e);
+		}
 	});
 });

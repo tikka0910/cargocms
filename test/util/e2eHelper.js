@@ -2,7 +2,7 @@
 
 module.exports = {
   login: (user) => {
-    before((done)=>{
+    try {
       console.log("=== before start ===");
       browser.windowHandleSize({width:1280,height:900}).url('/');
       expect(browser.getTitle()).to.equal('LFP: 香料香水實驗室，客製專屬香水');
@@ -12,7 +12,9 @@ module.exports = {
       browser.click('#submit-button');
       browser.element('#logout-link').state.should.be.equal('success');
       console.log("=== before end ===");
-      done();
-    })
+
+    } catch (e) {
+      throw e;
+    }
   }
 }
