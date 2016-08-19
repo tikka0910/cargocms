@@ -1,45 +1,3 @@
-// var length = $("label.scent").length;
-// var pieChartData = {
-//   labelArray: [],
-//   dropsArray: [],
-//   scentColorArray: []
-// };
-//
-// for (var i = 0; i < length; i++) {
-// 	pieChartData.labelArray.push($("label#scent-" + i).html());
-// 	pieChartData.dropsArray.push($("label#drops-" + i).html());
-// 	pieChartData.scentColorArray.push($("label#color-" + i).html());
-// }
-//
-// var perfumePieConfig = {
-// 	type: 'pie',
-// 	data: {
-// 		datasets: [{
-// 			data: pieChartData.dropsArray,
-// 			backgroundColor: pieChartData.scentColorArray,
-//         }],
-// 		labels: pieChartData.labelArray,
-// 	},
-// 	animation: {
-// 		animateScale: true,
-// 	},
-// 	options: {
-// 		title: {
-// 			display: true,
-// 			text: ''
-// 		},
-// 		legend: {
-// 			display: false,
-// 		},
-// 		circumference: 1.5 * Math.PI,
-// 		responsive: true,
-// 		hover: {
-// 			mode: 'label',
-// 		}
-// 	}
-// };
-// var perfumePie = new Chart(document.getElementById("pieChart"), perfumePieConfig);
-
 var apiRecipe = '/api/labfnp/recipe/';
 var recipeId = $('input[name="id"]').val();
 var pieHeader = {
@@ -124,7 +82,13 @@ var ajaxSuccess = function (result) {
 		"data": pieDate,
 	});
 }; // end ajaxSuccess
-$.get(apiRecipe + recipeId, ajaxSuccess);
+var ajaxError = function (requestObject, error, errorThrown) {
+  sweetAlert("錯誤", "目前無法取得此配方成份！", "error");
+  console.log('[requestObject]=>', requestObject);
+  console.log('[error]=>', errorThrown);
+  console.log('[errorThrown]=>', error);
+} // end ajaxError
+$.get(apiRecipe + recipeId).done(ajaxSuccess).fail(ajaxError);
 
 $("#likeButton").on("click", function (event) {
 	event.preventDefault()
@@ -140,8 +104,14 @@ $("#likeButton").on("click", function (event) {
 	}
 	var failCatch = function (error) {
 		if (error.responseJSON.message === 'permission denied') {
-			alert("請先進行登入");
-			location.href = '/login';
+      var buttonAction = function (isConfirm) {location.href = '/login';};
+      swal({
+        title: "哎呀！出錯了",
+        text: "按讚前請先登入喔！:p",
+      	type: "warning",
+        confirmButtonColor: "#4863ae",
+        confirmButtonText: "帶我去",
+      }, buttonAction);
 		}
 	}
 	if (isLike) {

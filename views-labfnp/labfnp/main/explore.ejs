@@ -191,8 +191,14 @@ $(document).ready(function(){
     }
     var failCatch = function(error) {
       if (error.responseJSON.message === 'permission denied') {
-        alert( "請先進行登入" );
-        location.href = '/login';
+        var buttonAction = function (isConfirm) {location.href = '/login';};
+        swal({
+        	title: "哎呀！出錯了",
+        	text: "按讚前請先登入喔！:p",
+        	type: "warning",
+        	confirmButtonColor: "#4863ae",
+        	confirmButtonText: "帶我去",
+        }, buttonAction);
       }
     }
     if (isLike) {
