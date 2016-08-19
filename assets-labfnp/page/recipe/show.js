@@ -63,9 +63,9 @@ var pieFooter = {
   "location": "bottom-left"
 };
 var pieSize = {
-  "canvasWidth": 500,
-  "canvasHeight": 380,
-  "pieOuterRadius": "70%"
+  "canvasWidth": 230,
+  "canvasHeight": 230,
+  "pieOuterRadius": "75%"
 };
 var pieDate = {
   "sortOrder": "value-desc",
