@@ -22,12 +22,7 @@
         </div>
       </div> -->
     </div>
-    <div class="col-sm-6">
-      <h1>{{ data.item.firstName }} <span class="semi-bold">{{ data.item.lastName }}</span>
-      <br>
-      <strong>{{ data.item.sloganname }}</strong>
-      </h1>
-      <hr class="visible-xs-*">
+    <div class="col-sm-6">      
       <ul class="list-unstyled">
         <!-- <li>
           <p class="text-muted">
@@ -36,7 +31,7 @@
         </li> -->
         <li>
           <p class="text-muted">
-            <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{ data.item.email }}">{{ data.item.email }}</a>
+            <i class="fa fa-flag"></i>&nbsp;&nbsp;<span class="semi-bold">content : {{ data.item.content }}</span>
           </p>
         </li>
         <li>
@@ -47,11 +42,11 @@
         <li>
           <p class="text-muted">
             <i class="fa fa-calendar"></i>&nbsp;&nbsp;
-            <span class="txt-color-darken">上次登入時間：
+            <span class="txt-color-darken">source：
               <a href="javascript:void(0);" rel="tooltip" title="" data-placement="top" data-original-title="Create an Appointment"
-              v-if="data.item.lastLogin">
-                {{ data.item.lastLogin }}</a>
-              <label for="" v-else><strong>從未登入</strong></label>
+              v-if="data.item.source">
+                {{ data.item.source }}</a>
+              <label for="" v-else><strong>no source</strong></label>
             </span>
           </p>
         </li>

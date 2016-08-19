@@ -16,10 +16,20 @@ module.exports = {
 
   find: async (req, res) => {
     try{
-      const items = await Slogan.findAll();
-      let result = {data: {items}}
-      sails.log.info('find all slogan =>', result);
-      sails.log.info('slogan =>', result.data.items[0].content);
+      let {query} = req
+      let {serverSidePaging} = query
+      let modelName = req.options.controller.split("/").reverse()[0]
+      let result;
+      if(serverSidePaging){
+        result = await PagingService.process({query, modelName});
+      }else {
+        const items = await sails.models[modelName].findAll();
+        result = {data: {items}}
+      }
+      // const items = await Slogan.findAll();
+      // const result = {data: {items}}
+      // sails.log.info('find all slogan =>', result);
+      // sails.log.info('slogan =>', result.data.items[0].content);
       res.ok(result);
     }
     catch(e){
