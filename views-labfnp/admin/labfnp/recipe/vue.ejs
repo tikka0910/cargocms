@@ -2,42 +2,42 @@
 
 var appModel = {
 	data: {
-    link: {
-      PAGE_INDEX: '/admin/#/admin/labfnp/recipe',
-      PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
-      PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit/',
-      PAGE_SHOW: '/admin/#/admin/labfnp/recipe/show/',
-      API_LIST_SCENT: '/api/labfnp/scent',
-      API_LIST: '/api/labfnp/recipe',
-      API_ITEM: '/api/labfnp/recipe/',
-      API_CREATE: '/api/labfnp/recipe',
-      API_UPDATE: '/api/labfnp/recipe/',
-    },
-    common: {
-      DEFAULT_AVATAR: '/assets/admin/img/avatars/default.png',
-      DROPS_MAX: 50,
-      DROPS_MIN: 1,
-      DEFAULT_INDEX: -1,
-    },
-    status: {
-      itemBeforeEdit: {},
-    },
+		link: {
+			PAGE_INDEX: '/admin/#/admin/labfnp/recipe',
+			PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
+			PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit/',
+			PAGE_SHOW: '/admin/#/admin/labfnp/recipe/show/',
+			API_LIST_SCENT: '/api/labfnp/scent',
+			API_LIST: '/api/labfnp/recipe',
+			API_ITEM: '/api/labfnp/recipe/',
+			API_CREATE: '/api/labfnp/recipe',
+			API_UPDATE: '/api/labfnp/recipe/',
+		},
+		common: {
+			DEFAULT_AVATAR: '/assets/admin/img/avatars/default.png',
+			DROPS_MAX: 50,
+			DROPS_MIN: 1,
+			DEFAULT_INDEX: -1,
+		},
+		status: {
+			itemBeforeEdit: {},
+		},
 		item: {
-      id: '',
-      authorName: '',
+			id: '',
+			authorName: '',
 			perfumeName: '',
 			formulaLogs: '',
-      formula: [],
-      totalDrops: 0,
-      description: '',
-      message: '',
-      User: {},
+			formula: [],
+			totalDrops: 0,
+			description: '',
+			message: '',
+			User: {},
 			visibility: '',
 			productionStatus: '',
 		},
 		items: [],
-    scentData: {},
-    scentColor: {},
+		scentData: {},
+		scentColor: {},
 		option: {}
 	},
 	view: {
@@ -55,40 +55,40 @@ var mainApp = new Vue({
 				location.href = appModel.data.link.PAGE_INDEX;
 			});
 		},
-    verifySendData: function () {
-      var scentColor = appModel.data.scentColor;
-      var dataJson = JSON.parse(JSON.stringify(appModel.data.item));
-      var newFormula = [];
-      for (var i=0;i<dataJson.formula.length;i++) {
-        var checkDropsType = typeof dataJson.formula[i].drops === 'string';
-        var checkDropsZero = dataJson.formula[i].drops !== 0;
-        var checkDrops = checkDropsType && checkDropsZero;
-        var checkScentType = typeof dataJson.formula[i].scent === 'string';
-        var checkScentEmpty = dataJson.formula[i].scent !== '';
-        var checkScent = checkScentType && checkScentEmpty;
-        if (checkDrops && checkScent) newFormula.push(dataJson.formula[i]);
-      }
-      for (var i=0; i<newFormula.length; i++) {
-        newFormula[i].color = scentColor[newFormula[i].scent];
-      }
-      dataJson.formula = newFormula;
-      return dataJson;
-    },
+		verifySendData: function () {
+			var scentColor = appModel.data.scentColor;
+			var dataJson = JSON.parse(JSON.stringify(appModel.data.item));
+			var newFormula = [];
+			for (var i = 0; i < dataJson.formula.length; i++) {
+				var checkDropsType = typeof dataJson.formula[i].drops === 'string';
+				var checkDropsZero = dataJson.formula[i].drops !== 0;
+				var checkDrops = checkDropsType && checkDropsZero;
+				var checkScentType = typeof dataJson.formula[i].scent === 'string';
+				var checkScentEmpty = dataJson.formula[i].scent !== '';
+				var checkScent = checkScentType && checkScentEmpty;
+				if (checkDrops && checkScent) newFormula.push(dataJson.formula[i]);
+			}
+			for (var i = 0; i < newFormula.length; i++) {
+				newFormula[i].color = scentColor[newFormula[i].scent];
+			}
+			dataJson.formula = newFormula;
+			return dataJson;
+		},
 		save: function (event) {
-      var ajaxSuccess = function (result) {
-        location.href = appModel.data.link.PAGE_INDEX;
-        messageApp.show({
-          desc: '新增資料成功！',
-          type: 'success'
-        });
-      };
+			var ajaxSuccess = function (result) {
+				location.href = appModel.data.link.PAGE_INDEX;
+				messageApp.show({
+					desc: '新增資料成功！',
+					type: 'success'
+				});
+			};
 
-      var ajaxError = function (result) {
-        messageApp.show({
-          desc: '新增資料失敗！errorMessage: ' + result.responseJSON.message,
-          type: 'error'
-        });
-      };
+			var ajaxError = function (result) {
+				messageApp.show({
+					desc: '新增資料失敗！errorMessage: ' + result.responseJSON.message,
+					type: 'error'
+				});
+			};
 
 			$.ajax({
 				url: appModel.data.link.API_CREATE,
@@ -103,7 +103,7 @@ var mainApp = new Vue({
 			});
 		},
 		update: function (event) {
-			var ajaxSuccess = function(result) {
+			var ajaxSuccess = function (result) {
 				location.href = appModel.data.link.PAGE_INDEX;
 				messageApp.show({
 					desc: '更新資料成功！',
@@ -111,7 +111,7 @@ var mainApp = new Vue({
 				});
 			};
 
-			var ajaxError = function(result) {
+			var ajaxError = function (result) {
 				messageApp.show({
 					desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message,
 					type: 'error'
@@ -130,26 +130,26 @@ var mainApp = new Vue({
 				error: ajaxError,
 			});
 		},
-    loadSelectOptions: function (cb) {
-      var ajaxSuccess = function (result) {
-        appModel.data.scentData = result.data.items;
-        appModel.data.scentColor = new Object();
-        var scentData = appModel.data.scentData;
-        for (var i=0;i<scentData.length;i++) {
-          appModel.data.scentColor[scentData[i].name] = scentData[i].color;
-        }
-        if (typeof cb !== 'undefined') setTimeout(cb, 0);
-      };
+		loadSelectOptions: function (cb) {
+			var ajaxSuccess = function (result) {
+				appModel.data.scentData = result.data.items;
+				appModel.data.scentColor = new Object();
+				var scentData = appModel.data.scentData;
+				for (var i = 0; i < scentData.length; i++) {
+					appModel.data.scentColor[scentData[i].name] = scentData[i].color;
+				}
+				if (typeof cb !== 'undefined') setTimeout(cb, 0);
+			};
 
-      $.ajax({
-        url: appModel.data.link.API_LIST_SCENT,
-        // async: false,
-        success: ajaxSuccess,
-        // error: ajaxError,
-      });
-    },
-    saveItemStatusBeforeEdit: function () {
-      this.data.status.itemBeforeEdit = JSON.stringify(this.data.item);
+			$.ajax({
+				url: appModel.data.link.API_LIST_SCENT,
+				// async: false,
+				success: ajaxSuccess,
+				// error: ajaxError,
+			});
+		},
+		saveItemStatusBeforeEdit: function () {
+			this.data.status.itemBeforeEdit = JSON.stringify(this.data.item);
 			window.onbeforeunload = function (e) {
 				if (mainApp.isPageEditDataModified()) {
 					var message = '您已經修改過資料，是否確定要放棄本次的修改？';
@@ -157,94 +157,94 @@ var mainApp = new Vue({
 					return message;
 				}
 			};
-    },
-    insertEmptyFormulaItem: function () {
-      var thisFormula = [];
-      for (var i=0; i<6; i++) {
-        var indexFormula = appModel.data.item.formula[i];
-        var checkFormula = typeof indexFormula === 'undefined';
+		},
+		insertEmptyFormulaItem: function () {
+			var thisFormula = [];
+			for (var i = 0; i < 6; i++) {
+				var indexFormula = appModel.data.item.formula[i];
+				var checkFormula = typeof indexFormula === 'undefined';
 
-        if (checkFormula) {
-          indexFormula = {
-            'scent': '',
-            'drops': '0',
-          };
-        } else {
-          var checkDrops = typeof indexFormula.drops === 'string';
-          var checkDropsValue = indexFormula.drops === '0';
-          if (!checkDrops || checkDropsValue) indexFormula.scent = '';
-        }
-        thisFormula.push(indexFormula);
-      }
-      appModel.data.item.formula = thisFormula;
-    },
+				if (checkFormula) {
+					indexFormula = {
+						'scent': '',
+						'drops': '0',
+					};
+				} else {
+					var checkDrops = typeof indexFormula.drops === 'string';
+					var checkDropsValue = indexFormula.drops === '0';
+					if (!checkDrops || checkDropsValue) indexFormula.scent = '';
+				}
+				thisFormula.push(indexFormula);
+			}
+			appModel.data.item.formula = thisFormula;
+		},
 		loadItem: function (cb) {
-			var ajaxSuccess = function(result) {
+			var ajaxSuccess = function (result) {
 				appModel.data.item = result.data;
 				var hasAvatar = typeof result.data.avatar === 'string';
 				if (!hasAvatar) {
 					appModel.data.item.avatar = appModel.data.common.DEFAULT_AVATAR;
 				}
-        if (typeof cb !== 'undefined') setTimeout(cb, 0);
+				if (typeof cb !== 'undefined') setTimeout(cb, 0);
 			};
 
-      $.ajax({
-        url: appModel.data.link.API_ITEM + appModel.data.item.id,
-        async: false,
-        success: ajaxSuccess,
-        // error: ajaxError,
-      });
+			$.ajax({
+				url: appModel.data.link.API_ITEM + appModel.data.item.id,
+				async: false,
+				success: ajaxSuccess,
+				// error: ajaxError,
+			});
 		},
 		setupForm: function (type) {
-      this.onDropsChange();
+			this.onDropsChange();
 			var registerForm = $('#main-form');
-      var min = appModel.data.common.DROPS_MIN;
-      var max = appModel.data.common.DROPS_MAX;
+			var min = appModel.data.common.DROPS_MIN;
+			var max = appModel.data.common.DROPS_MAX;
 			registerForm.validate({
 				// Rules for form validation
 				rules: {
-          authorName: {
-            required: true
-          },
-          perfumeName: {
-            required: true
-          },
+					authorName: {
+						required: true
+					},
+					perfumeName: {
+						required: true
+					},
 					'scent[]': {
 						required: true,
-            minlength: 1,
+						minlength: 1,
 					},
-          'drops[]': {
+					'drops[]': {
 						required: true,
-            minlength: 1,
-            min: min,
-            max: max,
+						minlength: 1,
+						min: min,
+						max: max,
 					},
-          totalDrops: {
-            max: max,
-          },
+					totalDrops: {
+						max: max,
+					},
 				},
 
 				// Messages for form validation
 				messages: {
-          authorName: {
-            required: '請輸入作者名稱'
-          },
-          perfumeName: {
-            required: '請輸入香水名稱'
-          },
+					authorName: {
+						required: '請輸入作者名稱'
+					},
+					perfumeName: {
+						required: '請輸入香水名稱'
+					},
 					'scent[]': {
 						required: '請至少選擇一種香味分子',
-            minlength: '請至少選擇一種香味分子',
+						minlength: '請至少選擇一種香味分子',
 					},
-          'drops[]': {
+					'drops[]': {
 						required: '請至少給予 1 滴香味分子',
-            minlength: '請至少選擇一種香味分子',
-            min: '請至少給予 1 滴香味分子',
-            max: '單一成分請至多只給予 ' + max + ' 滴',
-          },
-          totalDrops: {
-            max: '全部成分加總最多為 ' + max + ' 滴！',
-          },
+						minlength: '請至少選擇一種香味分子',
+						min: '請至少給予 1 滴香味分子',
+						max: '單一成分請至多只給予 ' + max + ' 滴',
+					},
+					totalDrops: {
+						max: '全部成分加總最多為 ' + max + ' 滴！',
+					},
 				},
 
 				// Do not change code below
@@ -254,7 +254,7 @@ var mainApp = new Vue({
 
 				submitHandler: function (form) {
 					if (type == 'create') {
-            mainApp.save();
+						mainApp.save();
 						return false;
 					} else if (type == 'edit') {
 						mainApp.update();
@@ -263,159 +263,159 @@ var mainApp = new Vue({
 				}
 			});
 		},
-    onDropsChange: function (e) {
-      var totalDrops = 0;
-      for (var i=0;i<appModel.data.item.formula.length;i++) {
-        var drops = parseInt(appModel.data.item.formula[i].drops);
-        totalDrops += drops;
-      }
-      appModel.data.item.totalDrops = totalDrops;
-    },
-    onSelectChange: function (e) {
-      var targetId = e.target.id.split("-")[1];
-      appModel.data.item.formula[targetId].drops = '1';
-    },
-    onBtnCleanClick: function (e) {
-      var targetId = e.target.id.split("-")[1];
-      appModel.data.item.formula[targetId].drops = '0';
-      appModel.data.item.formula[targetId].scent = '';
-      $("select#scent-" + targetId).select(0).val('');
-    },
+		onDropsChange: function (e) {
+			var totalDrops = 0;
+			for (var i = 0; i < appModel.data.item.formula.length; i++) {
+				var drops = parseInt(appModel.data.item.formula[i].drops);
+				totalDrops += drops;
+			}
+			appModel.data.item.totalDrops = totalDrops;
+		},
+		onSelectChange: function (e) {
+			var targetId = e.target.id.split("-")[1];
+			appModel.data.item.formula[targetId].drops = '1';
+		},
+		onBtnCleanClick: function (e) {
+			var targetId = e.target.id.split("-")[1];
+			appModel.data.item.formula[targetId].drops = '0';
+			appModel.data.item.formula[targetId].scent = '';
+			$("select#scent-" + targetId).select(0).val('');
+		},
 		isPageEditDataModified: function () {
-      var isDataModified = false;
-      var itemBeforeEdit = appModel.data.status.itemBeforeEdit;
-      if (itemBeforeEdit) {
-  			var itemBeforeLeave = JSON.stringify(appModel.data.item);
-  			isDataModified = itemBeforeEdit !== itemBeforeLeave;
-      } else window.onbeforeunload = null;
-     return isDataModified;
+			var isDataModified = false;
+			var itemBeforeEdit = appModel.data.status.itemBeforeEdit;
+			if (itemBeforeEdit) {
+				var itemBeforeLeave = JSON.stringify(appModel.data.item);
+				isDataModified = itemBeforeEdit !== itemBeforeLeave;
+			} else window.onbeforeunload = null;
+			return isDataModified;
 		},
-    onEnterPageCreare: function () {
-      this.insertEmptyFormulaItem();
-      this.loadSelectOptions();
-  		this.setupForm("create");
-      this.data.status.itemBeforeEdit = null;
-    },
+		onEnterPageCreare: function () {
+			this.insertEmptyFormulaItem();
+			this.loadSelectOptions();
+			this.setupForm("create");
+			this.data.status.itemBeforeEdit = null;
+		},
 		onEnterPageEdit: function () {
-      this.loadItem();
-      this.insertEmptyFormulaItem();
-      this.loadSelectOptions();
-  		this.setupForm("edit");
-      this.saveItemStatusBeforeEdit();
+			this.loadItem();
+			this.insertEmptyFormulaItem();
+			this.loadSelectOptions();
+			this.setupForm("edit");
+			this.saveItemStatusBeforeEdit();
 		},
-    onEnterPageShow: function () {
-      var pieHeader = {
-        "title": {
-          "text": "",
-          "fontSize": 24,
-          "font": "open sans"
-        },
-        "subtitle": {
-          "text": "",
-          "color": "#999999",
-          "fontSize": 12,
-          "font": "open sans"
-        },
-        "titleSubtitlePadding": 9
-      };
-      var pieFooter = {
-        "color": "#999999",
-        "fontSize": 10,
-        "font": "open sans",
-        "location": "bottom-left"
-      };
-      var pieSize = {
-        "canvasWidth": 300,
-        "canvasHeight": 400,
-        "pieOuterRadius": "70%"
-      };
-      var pieDate = {
-        "sortOrder": "value-desc",
-        "content": [],
-        "labels": {
-          "outer": {
-            "pieDistance": 32
-          },
-          "inner": {
-            "hideWhenLessThanPercentage": 3
-          },
-          "mainLabel": {
-            "fontSize": 11
-          },
-          "percentage": {
-            "color": "#ffffff",
-            "decimalPlaces": 0
-          },
-          "value": {
-            "color": "#adadad",
-            "fontSize": 11
-          },
-          "lines": {
-            "enabled": true
-          },
-          "truncation": {
-            "enabled": true
-          },
-        },
-        "effects": {
-          "pullOutSegmentOnClick": {
-            "effect": "elastic",
-            "speed": 400,
-            "size": 8
-          }
-        },
-        "misc": {
-          "gradient": {
-            "enabled": true,
-            "percentage": 100
-          }
-        },
-      };
-      var formula = appModel.data.item.formula;
-      for (var i=0; i<formula.length; i++) {
-        if (formula[i].drops > 0) {
-          pieDate.content.push({
-            label: formula[i].scent,
-            value: parseInt(formula[i].drops),
-            color: formula[i].color,
-          });
-        }
-      }
-    	var pie = new d3pie("pieChart", {
-    		"header": pieHeader,
-    		"footer": pieFooter,
-    		"size": pieSize,
-    		"data": pieDate,
-    	});
-	    // var perfumePieConfig = {
-	    //     type: 'pie',
-	    //     data: {
-      //       datasets: [{
-      //         data: dropsArray,
-      //         backgroundColor: scentColorArray,
-      //       }],
-      //       labels: labelArray,
-	    //     },
-      //     animation:{
-      //         animateScale:true,
-      //     },
-	    //     options: {
-      //       title: {
-      //           display: true,
-      //           text: ''
-      //       },
-      //       legend: {
-      //           display: false,
-      //       },
-      //       circumference: 1.5 * Math.PI,
-      //       responsive: true,
-      //       hover: {
-      //         mode: 'label',
-      //       }
-	    //     }
-	    // };
-      // var perfumePie = new Chart(document.getElementById("pieChart"), perfumePieConfig);
-    },
+		onEnterPageShow: function () {
+			var pieHeader = {
+				"title": {
+					"text": "",
+					"fontSize": 24,
+					"font": "open sans"
+				},
+				"subtitle": {
+					"text": "",
+					"color": "#999999",
+					"fontSize": 12,
+					"font": "open sans"
+				},
+				"titleSubtitlePadding": 9
+			};
+			var pieFooter = {
+				"color": "#999999",
+				"fontSize": 10,
+				"font": "open sans",
+				"location": "bottom-left"
+			};
+			var pieSize = {
+				"canvasWidth": 300,
+				"canvasHeight": 400,
+				"pieOuterRadius": "70%"
+			};
+			var pieDate = {
+				"sortOrder": "value-desc",
+				"content": [],
+				"labels": {
+					"outer": {
+						"pieDistance": 32
+					},
+					"inner": {
+						"hideWhenLessThanPercentage": 3
+					},
+					"mainLabel": {
+						"fontSize": 11
+					},
+					"percentage": {
+						"color": "#ffffff",
+						"decimalPlaces": 0
+					},
+					"value": {
+						"color": "#adadad",
+						"fontSize": 11
+					},
+					"lines": {
+						"enabled": true
+					},
+					"truncation": {
+						"enabled": true
+					},
+				},
+				"effects": {
+					"pullOutSegmentOnClick": {
+						"effect": "elastic",
+						"speed": 400,
+						"size": 8
+					}
+				},
+				"misc": {
+					"gradient": {
+						"enabled": true,
+						"percentage": 100
+					}
+				},
+			};
+			var formula = appModel.data.item.formula;
+			for (var i = 0; i < formula.length; i++) {
+				if (formula[i].drops > 0) {
+					pieDate.content.push({
+						label: formula[i].scent,
+						value: parseInt(formula[i].drops),
+						color: formula[i].color,
+					});
+				}
+			}
+			var pie = new d3pie("pieChart", {
+				"header": pieHeader,
+				"footer": pieFooter,
+				"size": pieSize,
+				"data": pieDate,
+			});
+			// var perfumePieConfig = {
+			//     type: 'pie',
+			//     data: {
+			//       datasets: [{
+			//         data: dropsArray,
+			//         backgroundColor: scentColorArray,
+			//       }],
+			//       labels: labelArray,
+			//     },
+			//     animation:{
+			//         animateScale:true,
+			//     },
+			//     options: {
+			//       title: {
+			//           display: true,
+			//           text: ''
+			//       },
+			//       legend: {
+			//           display: false,
+			//       },
+			//       circumference: 1.5 * Math.PI,
+			//       responsive: true,
+			//       hover: {
+			//         mode: 'label',
+			//       }
+			//     }
+			// };
+			// var perfumePie = new Chart(document.getElementById("pieChart"), perfumePieConfig);
+		},
 		onLeavePage: function (cb) {
 			if (mainApp.isPageEditDataModified()) {
 				var msgInfo = {
@@ -432,15 +432,15 @@ var mainApp = new Vue({
 				};
 				messageApp.confirm(msgInfo, action);
 			} else {
-        return cb();
-      };
+				return cb();
+			};
 		},
 		loadItems: function (cb) {
-			var ajaxSuccess = function(result) {
+			var ajaxSuccess = function (result) {
 				appModel.data.items = result.data.items;
 				if (typeof cb !== 'undefined') setTimeout(cb, 0);
 			};
-      $.get(appModel.data.link.API_LIST, ajaxSuccess);
+			$.get(appModel.data.link.API_LIST, ajaxSuccess);
 		},
 		renderTable: function () {
 			/* BASIC ;*/
@@ -468,7 +468,7 @@ var mainApp = new Vue({
 					"sInfoFiltered": "(從 _MAX_ 項結果中過濾)",
 					"sProcessing": "處理中...",
 					"sLoadingRecords": "載入中...",
-          "sLengthMenu": "_MENU_",
+					"sLengthMenu": "_MENU_",
 					"sZeroRecords": "沒有符合的結果",
 					"oPaginate": {
 						"sFirst": "第一頁",
@@ -487,9 +487,9 @@ var mainApp = new Vue({
 						"orderable": false,
         },
       ],
-        "oTableTools": {
-          "sSwfPath": "/assets/admin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf",
-          "aButtons": [
+				"oTableTools": {
+					"sSwfPath": "/assets/admin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf",
+					"aButtons": [
             // "copy",
             // "xls",
             // {
@@ -502,12 +502,12 @@ var mainApp = new Vue({
             //   "sExtends": "print",
             //   "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
             // },
-            {
-              "sExtends": "csv",
-              "sButtonText": "匯出",
-              "sToolTip": "把全部資料匯出成CSV",
-              "sCharSet": "UTF8",
-              "bBomInc": true,
+						{
+							"sExtends": "csv",
+							"sButtonText": "匯出",
+							"sToolTip": "把全部資料匯出成CSV",
+							"sCharSet": "UTF8",
+							"bBomInc": true,
             },
 						{
 							"sExtends": "text",
@@ -530,7 +530,7 @@ var mainApp = new Vue({
 							"sExtends": "text",
 							"sButtonText": "新增",
 							"fnClick": function (nButton, oConfig, oFlash) {
-                location.href = appModel.data.link.PAGE_CREATE;
+								location.href = appModel.data.link.PAGE_CREATE;
 							}
            },
 						{
@@ -565,7 +565,14 @@ var mainApp = new Vue({
 				"drawCallback": function (oSettings) {
 					responsiveHelper_datatable_tabletools.respond();
 				}
-			});
+			}).yadcf([
+				{        
+					column_number: 7,
+					filter_type: "range_date",
+	        filter_container_id: "external_filter_container",
+					date_format: 'yy/mm/dd',
+  			},
+      ]);
 
 			// selection
 			table.on('click', 'tr', function () {
@@ -577,7 +584,7 @@ var mainApp = new Vue({
 				}
 			});
 
-      // animate table
+			// animate table
 			$('#main-table-widget').fadeIn();
 		},
 		dblclick: function (index) {
@@ -606,18 +613,18 @@ var mainApp = new Vue({
 				},
 				function (ButtonPressed) {
 					if (ButtonPressed === '刪除') {
-						var ajaxSuccess = function(result) {
-							appModel.view.table.selectIndex = appModel.data.common.DEFAULT_INDEX;
-							messageApp.show({
-								desc: `刪除資料成功！`,
-								type: 'success'
-							});
-							setTimeout(function () {
-								location.href = appModel.data.link.PAGE_INDEX;
-							}, 500);
-						} // end ajaxSuccess
+						var ajaxSuccess = function (result) {
+								appModel.view.table.selectIndex = appModel.data.common.DEFAULT_INDEX;
+								messageApp.show({
+									desc: `刪除資料成功！`,
+									type: 'success'
+								});
+								setTimeout(function () {
+									location.href = appModel.data.link.PAGE_INDEX;
+								}, 500);
+							} // end ajaxSuccess
 
-						var ajaxError = function(result) {
+						var ajaxError = function (result) {
 							messageApp.show({
 								desc: '刪除資料失敗！errorMessage: ' + result.responseJSON.message,
 								type: 'error'

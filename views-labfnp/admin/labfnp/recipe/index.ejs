@@ -1,14 +1,31 @@
 <style media="screen">
-@media screen and (max-width: 768px){
-  #main-table_filter input {
-    width: 160px;
+  @media screen and (max-width: 768px) {
+    #main-table_filter input {
+      width: 160px;
+    }
   }
-}
-@media screen and (min-width: 768px){
-  #main-table_filter input {
-    width: 500px;
+
+  @media screen and (min-width: 768px) {
+    #main-table_filter input {
+      width: 200px;
+    }
   }
-}
+
+  .yadcf-filter-wrapper {
+    
+  }
+
+  .yadcf-filter-range-date.yadcf-filter-range.hasDatepicker {
+    margin-right: 10px;
+  }
+
+  .yadcf-filter-reset-button {
+    /*margin-left: 10px;*/
+  }
+
+  .yadcf-filter-wrapper {
+    display: flex;
+  }
 </style>
 <!-- widget grid -->
 <section id="main-index" class="">
@@ -45,9 +62,15 @@
           <!-- widget edit box -->
           <div class="jarviswidget-editbox">
             <!-- This area used as dropdown edit box -->
-
           </div>
           <!-- end widget edit box -->
+
+          <div class="widget-body-toolbar">
+            <div class="btn-group">
+              <div id="external_filter_container"></div>
+            </div>
+          </div>
+          <!-- end widget body toolbar -->
 
           <!-- widget content -->
           <div class="widget-body no-padding">
@@ -55,17 +78,18 @@
             <table id="main-table" class="table table-striped table-bordered table-hover" width="100%">
               <thead>
                 <tr>
-                  <th class="" data-class="expand"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs"/> ID</th>
-                  <th class="" data-hide=""><i class="fa fa-fw fa-sticky-note text-muted hidden-xs"/> 香水名稱</th>
-                  <th class="" data-hide=""><i class="fa fa-fw fa-user text-muted hidden-xs"/> 創作人</th>
+                  <th class="" data-class="expand"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs" /> ID</th>
+                  <th class="" data-hide=""><i class="fa fa-fw fa-sticky-note text-muted hidden-xs" /> 香水名稱</th>
+                  <th class="" data-hide=""><i class="fa fa-fw fa-user text-muted hidden-xs" /> 創作人</th>
                   <th class="" data-hide="">公開狀態</th>
                   <th class="" data-hide="">製作狀態</th>
-                  <th class="" data-hide="phone,tablet" style=""><i class="fa fa-fw fa-comment text-muted hidden-xs"/> 備註</th>
+                  <th class="" data-hide="phone,tablet" style=""><i class="fa fa-fw fa-comment text-muted hidden-xs" /> 備註</th>
 
                   <template v-for="n in 5">
-                    <th class="" data-hide="always" style="">香味分子{{n}}</th>
-                    <th class="" data-hide="always" style="">滴數</th>
+                    <th class="no-sort" data-hide="always" style="">香味分子{{n}}</th>
+                    <th class="no-sort" data-hide="always" style="">滴數</th>
                   </template>
+                  <th class="no-sort" data-hide="phone,tablet" style="">建立日期</th>
                   <th class="no-sort" data-hide="phone,tablet"></th>
                 </tr>
               </thead>
@@ -81,6 +105,8 @@
                     <td>{{ recipe.formula[n].scent }}</td>
                     <td>{{ recipe.formula[n].drops }}</td>
                   </template>
+                  <td>{{ recipe.createdDate }}</td>
+
                   <td align="center" style="cursor: pointer;">
                     <div class="row">
                       <a class="btn btn-default btn-xs" role="button" v-on:click="show(recipe.id)">
@@ -188,11 +214,13 @@
   };
 
   // load related plugins
-  loadScript("/assets/admin/js/plugin/datatables/jquery.dataTables.min.js", function(){
-    loadScript("/assets/admin/js/plugin/datatables/dataTables.colVis.min.js", function(){
-      loadScript("/assets/admin/js/plugin/datatables/dataTables.tableTools.min.js", function(){
-        loadScript("/assets/admin/js/plugin/datatables/dataTables.bootstrap.min.js", function(){
-          loadScript("/assets/admin/js/plugin/datatable-responsive/datatables.responsive.min.js", pagefunction)
+  loadScript("/assets/admin/js/plugin/datatables/jquery.dataTables.min.js", function() {
+    loadScript("/assets/admin/js/plugin/datatables/dataTables.colVis.min.js", function() {
+      loadScript("/assets/admin/js/plugin/datatables/dataTables.tableTools.min.js", function() {
+        loadScript("/assets/admin/js/plugin/datatables/dataTables.bootstrap.min.js", function() {
+          loadScript("/assets/admin/js/plugin/datatable-responsive/datatables.responsive.min.js", function() {
+            loadScript("/assets/admin/js/plugin/yadcf/jquery.dataTables.yadcf.js", pagefunction)
+          });
         });
       });
     });
