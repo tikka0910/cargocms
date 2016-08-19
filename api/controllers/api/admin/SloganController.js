@@ -16,14 +16,11 @@ module.exports = {
 
   find: async (req, res) => {
     try{
-      const slogans = await Slogan.findAll();
-      sails.log.info('find all slogan =>', slogans);
-      res.ok({
-        message: 'find all slogan success',
-        data: {
-         items: slogans
-        }
-      })
+      const items = await Slogan.findAll();
+      let result = {data: {items}}
+      sails.log.info('find all slogan =>', result);
+      sails.log.info('slogan =>', result.data.items[0].content);
+      res.ok(result);
     }
     catch(e){
       res.serverError({ message: e.message, data: {}});
