@@ -106,11 +106,11 @@ $("#likeButton").on("click", function (event) {
 		if (error.responseJSON.message === 'permission denied') {
       var buttonAction = function (isConfirm) {location.href = '/login';};
       swal({
-        title: "哎呀！出錯了",
-        text: "按讚前請先登入喔！:p",
-      	type: "warning",
-        confirmButtonColor: "#4863ae",
-        confirmButtonText: "帶我去",
+        title: '哎呀！出錯了',
+        text: '按讚前請先登入喔！:p',
+      	type: 'warning',
+        confirmButtonColor: '#4863ae',
+        confirmButtonText: '帶我到登入畫面',
       }, buttonAction);
 		}
 	}
