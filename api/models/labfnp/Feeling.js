@@ -1,6 +1,6 @@
 module.exports = {
   attributes: {
-    feeling: {
+    title: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true
