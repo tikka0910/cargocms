@@ -1,3 +1,4 @@
+import moment from 'moment';
 module.exports = {
   attributes: {
     title: {
@@ -21,17 +22,26 @@ module.exports = {
       type: Sequelize.STRING,
       defaultValues: 0
     },
-
     updatedAt: {
       type: Sequelize.DATE,
-      get: ModelService.updatedAtSetter
+      get: function() {
+        try {
+          return moment(this.getDataValue('updatedAt')).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
     },
-
     createdAt: {
       type: Sequelize.DATE,
-      get: ModelService.createdAtSetter
-    }
-
+      get: function() {
+        try {
+          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
   },
   associations: function() {
     //Feeling.belongsTo(Scent);
