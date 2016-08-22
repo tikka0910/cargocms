@@ -1,3 +1,4 @@
+import moment from 'moment';
 module.exports = {
   attributes: {
     //TODO authorAvatar
@@ -122,6 +123,26 @@ module.exports = {
         return desc;
       }
     },
+    updatedAt: {
+      type: Sequelize.DATE,
+      get: function() {
+        try {
+          return moment(this.getDataValue('updatedAt')).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+    createdAt: {
+      type: Sequelize.DATE,
+      get: function() {
+        try {
+          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    }
   },
   associations: function() {
     Recipe.hasMany(UserLikeRecipe);
@@ -173,7 +194,6 @@ module.exports = {
           return {
             ...whereParam,
             include: {
-              where: {UserId: currentUserId},
               model: UserLikeRecipe,
               required: false
             }
@@ -185,7 +205,8 @@ module.exports = {
       findAndIncludeUserLike: async function({findByRecipeId, findByUserId, currentUser }){
         try {
           const findParam = this.getFindAndIncludeUserLikeParam({findByRecipeId, findByUserId, currentUser });
-          const recipes = await Recipe.findAll(findParam);
+          let recipes = await Recipe.findAll(findParam);
+          recipes.map((recipe) => recipe.checkCurrentUserLike({currentUser}));
           return recipes;
         } catch (e) {
           throw e;
@@ -194,15 +215,34 @@ module.exports = {
       findOneAndIncludeUserLike: async function({findByRecipeId, findByUserId, currentUser }){
         try {
           const findParam = this.getFindAndIncludeUserLikeParam({findByRecipeId, findByUserId, currentUser });
-          const recipes = await Recipe.findOne(findParam);
-          return recipes;
+          const recipe = await Recipe.findOne(findParam);
+          await recipe.checkCurrentUserLike({currentUser})
+          return recipe;
         } catch (e) {
           throw e;
         }
       },
 
     },
-    instanceMethods: {},
+    instanceMethods: {
+      checkCurrentUserLike: async function({ currentUser }) {
+        try {
+          const userLikeRecipes = this.getDataValue('UserLikeRecipes') || [];
+          this.currentUserLike = false;
+          if (currentUser) {
+            for(let i = 0; i < userLikeRecipes.length; i++) {
+              const currentUserLikeThisRecipe = userLikeRecipes[i].UserId === currentUser.id;
+              if (currentUserLikeThisRecipe) {
+                this.currentUserLike = true;
+                break;
+              }
+            }
+          }
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
     hooks: {}
   }
 };

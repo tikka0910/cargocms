@@ -50,9 +50,16 @@
           </a>
         </li>
       </ul> -->
-      <% post.TagsArray.forEach(function(tag){ %>
-        <span class="label label-default"><%= tag %></span>
-      <% }); %>
+      <div class="margin-bottom-20">
+        <% post.TagsArray.forEach(function(tag){ %>
+          <span class="label label-default"><%= tag %></span>
+        <% }); %>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+          <%- include ../lib/rrssbb/blog.ejs %>
+        </div>
+      </div>
     </div>
   </div>
 <% }); %>

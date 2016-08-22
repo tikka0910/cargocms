@@ -32,8 +32,8 @@ describe('test Recipe model operation', function() {
     before(async (done) => {
       try {
         testUser = await User.create({
-          username: 'testUser',
-          email: 'testUser@gmail.com',
+          username: 'testUserLike',
+          email: 'testUserLike@gmail.com',
           password: ''
         });
 
@@ -70,6 +70,20 @@ describe('test Recipe model operation', function() {
           email: 'testLikeUser@gmail.com',
           password: ''
         });
+
+        const newRecipeLoveTest2 = {
+          formula:[
+            {"drops":"1","scent":"BA69","color":"#E87728"},
+            {"drops":"2","scent":"BA70","color":"#B35721"}
+          ],
+          formulaLogs: '',
+          authorName: '王大明',
+          perfumeName: 'love test',
+          message: 'this is love test',
+          UserId: testUser.id,
+        };
+        await Recipe.create(newRecipeLoveTest2);
+
         done()
 
       } catch (e) {
@@ -80,7 +94,7 @@ describe('test Recipe model operation', function() {
       try {
         let user = likeUser;
         let result = await Recipe.findAndIncludeUserLike({currentUser: user});
-        console.log("=== result.length ===", result.length);
+        console.log("=== result.length ===", result.length, result[0].toJSON(), result[1].toJSON());
         done();
       } catch (e) {
         done(e);
