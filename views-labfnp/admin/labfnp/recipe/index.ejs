@@ -12,7 +12,7 @@
   }
 
   .yadcf-filter-wrapper {
-    
+
   }
 
   .yadcf-filter-range-date.yadcf-filter-range.hasDatepicker {
@@ -81,23 +81,24 @@
                   <th class="" data-class="expand"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs" /> ID</th>
                   <th class="" data-hide=""><i class="fa fa-fw fa-sticky-note text-muted hidden-xs" /> 香水名稱</th>
                   <th class="" data-hide=""><i class="fa fa-fw fa-user text-muted hidden-xs" /> 創作人</th>
+                  <th class="" data-hide="phone,tablet" style="">建立日期</th>
                   <th class="" data-hide="">公開狀態</th>
                   <th class="" data-hide="">製作狀態</th>
                   <th class="" data-hide="phone,tablet" style=""><i class="fa fa-fw fa-comment text-muted hidden-xs" /> 備註</th>
-
                   <template v-for="n in 5">
                     <th class="no-sort" data-hide="always" style="">香味分子{{n}}</th>
                     <th class="no-sort" data-hide="always" style="">滴數</th>
                   </template>
-                  <th class="no-sort" data-hide="phone,tablet" style="">建立日期</th>
                   <th class="no-sort" data-hide="phone,tablet"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="recipe in data.items" v-on:click="selection($index)" v-on:dblclick="dblclick($index)">
+
                   <td>{{ recipe.id }}</td>
                   <td><a href="/admin/#/admin/labfnp/recipe/show/{{recipe.id}}">{{ recipe.perfumeName }}</a></td>
                   <td>{{ recipe.authorName }}</td>
+                  <td>{{ recipe.createdAt }}</td>
                   <td>{{ recipe.visibilityDesc }}</td>
                   <td>{{ recipe.productionStatusDesc }}</td>
                   <td>{{ recipe.message }}</td>
@@ -105,7 +106,6 @@
                     <td>{{ recipe.formula[n].scent }}</td>
                     <td>{{ recipe.formula[n].drops }}</td>
                   </template>
-                  <td>{{ recipe.createdDate }}</td>
 
                   <td align="center" style="cursor: pointer;">
                     <div class="row">
