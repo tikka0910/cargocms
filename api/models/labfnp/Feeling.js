@@ -22,6 +22,7 @@ module.exports = {
       type: Sequelize.STRING,
       defaultValues: 0
     },
+
     updatedAt: {
       type: Sequelize.DATE,
       get: function() {
@@ -32,6 +33,7 @@ module.exports = {
         }
       }
     },
+
     createdAt: {
       type: Sequelize.DATE,
       get: function() {
@@ -48,7 +50,20 @@ module.exports = {
   },
   options: {
     // timestamps: false,
-    classMethods: {},
+    classMethods: {
+      update: async (data) => {
+        try {
+          let findItem = await Feeling.findOne({ where: { id: data.id }});
+          findItem.title = data.title;
+          findItem.scentName = data.scentName;
+          findItem.totalRepeat = data.totalRepeat;
+          findItem.score = data.score;
+          return await findItem.save();
+        } catch (e) {
+          sails.log.error(e);
+        } 
+      }
+    },
     instanceMethods: {},
     hooks: {}
   }

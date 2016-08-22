@@ -1,0 +1,65 @@
+module.exports = {
+
+  find: async (req, res) => {
+    try {
+      const { query } = req;
+      const { serverSidePaging } = query;
+      const modelName = req.options.controller.split("/").reverse()[0];
+      let result;
+      if (serverSidePaging) {
+        result = await PagingService.process({query, modelName});
+      } else {
+        const items = await sails.models[modelName].findAll();
+        result = { data: { items } };
+      }
+      res.ok(result);
+    } catch (e) {
+      res.serverError({ message: e.message, data: {} });
+    }
+  },
+
+  findOne: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const item = await Feeling.findOne({id})
+      res.ok({data: {item}});
+    } catch (e) {
+      res.serverError(e);
+    }
+  },
+
+  create: async (req, res) => {
+    try {
+      const data = req.body;
+      const item = await Feeling.create(data);
+      let message = 'Create success.';
+      res.ok({ message, data: { item } } );
+    } catch (e) {
+      res.serverError({ message: e.message, data: {} });
+    }
+  },
+
+  update: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+      const message = 'Update success.'
+      const params = {id, ...data}
+      const item = await Feeling.update(params);
+      res.ok({ message, data: { item } });
+    } catch (e) {
+      res.serverError({ message: e.message, data: {} });
+    }
+  },
+
+  destroy: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const item = await Feeling.deleteById(id);
+      let message = 'Delete success';
+      res.ok({message, data: {item}});
+    } catch (e) {
+      res.serverError({ message: e.message, data: {} });
+    }
+  }
+}

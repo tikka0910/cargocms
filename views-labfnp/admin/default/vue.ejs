@@ -6,8 +6,20 @@
     });
   },
   save: function (event) {
+    var ajaxSuccess = function (result) {
+      location.href = '/admin/#/admin/' + modelName;
+      messageApp.show({desc: '新增成功！', type: 'success'});
+    }; // end ajaxSuccess
+
+    var ajaxError = function(result) {
+      messageApp.show({
+        desc: '新增資料失敗！errorMessage: ' + result.responseJSON.message,
+        type: 'error',
+      });
+    };
+
     $.ajax({
-      url: '/api/admin/'+modelName,
+      url: '/api/' + prefix + modelName,
       type: 'POST',
       dataType: 'json',
       data: appModel.data.item,
@@ -17,19 +29,22 @@
       success: ajaxSuccess,
       error: ajaxError,
     });
-
-    function ajaxSuccess(result) {
-      location.href = '/admin/#/admin/'+modelName;
-      messageApp.show({desc: '新增成功！', type: 'success'});
-    } // end ajaxSuccess
-
-    function ajaxError(result) {
-      messageApp.show({desc: '新增資料失敗！errorMessage: ' + result.responseJSON.message, type: 'error'});
-    }
   },
   update: function (event) {
+    var ajaxSuccess = function (result) {
+      location.href = '/admin/#/admin/' + modelName;
+      messageApp.show({desc: '更新資料成功！', type: 'success'});
+    }; // end ajaxSuccess
+
+    var ajaxError = function (result) {
+      messageApp.show({
+        desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message,
+        type: 'error'
+      });
+    };
+
     $.ajax({
-      url: '/api/admin/' + modelName + '/' + appModel.data.item.id,
+      url: '/api/' + prefix + modelName + '/' + appModel.data.item.id,
       type: 'PUT',
       dataType: 'json',
       data: appModel.data.item,
@@ -39,33 +54,25 @@
       success: ajaxSuccess,
       error: ajaxError,
     });
-
-    function ajaxSuccess(result) {
-      location.href = '/admin/#/admin/' + modelName;
-      messageApp.show({desc: '更新會員資料成功！', type: 'success'});
-    } // end ajaxSuccess
-
-    function ajaxError(result) {
-      console.log(result);
-      messageApp.show({desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message, type: 'error'});
-    }
   },
   loadItem: function (cb) {
-
     window.onbeforeunload = null;
-    $.get('/api/admin/'+modelName+'/' + appModel.data.item.id, ajaxSuccess);
-
-    function ajaxSuccess(result) {
-      if (result.success) {
+    var ajaxSuccess = function (result) {
+      console.log('result=>', result);
+      if (modelName === 'user') {
         appModel.data.item = result.data;
         appModel.data.option.passwordConfirm = result.data.Passports[0].password;
         var hasAvatar = typeof result.data.avatar === 'string';
         if (!hasAvatar) {
           appModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
         }
+      } else {
+        appModel.data.item = result.data.item;
       }
       if (typeof cb !== 'undefined') setTimeout(cb, 0);
-    } // end ajaxSuccess
+    }; // end ajaxSuccess
+
+    $.get('/api/' + prefix + modelName+'/' + appModel.data.item.id, ajaxSuccess);
   },
 
   isPageEditDataModified: function() {
@@ -75,14 +82,25 @@
     return isDataModified;
   },
   onEnterPageEdit: function() {
-    itemBeforeEdit = JSON.stringify(appModel.data.item);
-    window.onbeforeunload = function(e) {
-      if (appMain.isPageEditDataModified()) {
-        var message = '您已經修改過資料，是否確定要放棄本次的修改？';
-        e.returnValue = message;
-        return message;
-      }
-    };
+    var saveEditStatus = (function(){
+      itemBeforeEdit = JSON.stringify(appModel.data.item);
+      window.onbeforeunload = function(e) {
+        if (appMain.isPageEditDataModified()) {
+          var message = '您已經修改過資料，是否確定要放棄本次的修改？';
+          e.returnValue = message;
+          return message;
+        }
+      };
+    })();
+
+    var unlockElements = (function() {
+      $('.input').removeClass('state-disabled');
+      $('input').removeAttr('disabled');
+      var existCheckboxs = $('.checkbox') ? (function() {
+        $('.checkbox').removeClass('state-disabled');
+        $('checkbox').removeAttr('disabled');
+      })() : false;
+    })();
   },
   onLeavePageEdit: function(cb) {
     if (appMain.isPageEditDataModified()) {
@@ -102,18 +120,19 @@
     } else return cb();
   },
   loadItems: function (cb) {
-    if(serverSidePaging){
+    window.onbeforeunload = null;
+    if (serverSidePaging){
       if (typeof cb !== 'undefined') setTimeout(cb, 0);
       return;
     }
 
-    window.onbeforeunload = null;
-    $.get('/api/admin/'+modelName, ajaxSuccess);
-
-    function ajaxSuccess(result) {
+    var ajaxSuccess = function(result) {
+      console.log('result=>', result);
       appModel.data.items = result.data.items;
       if (typeof cb !== 'undefined') setTimeout(cb, 0);
     } // end ajaxSuccess
+
+    $.get('/api/' + prefix + modelName, ajaxSuccess);
   },
   renderTable: function() {
     /* BASIC ;*/
@@ -124,7 +143,7 @@
      phone : 480
     };
 
-    var ajax = "/api/admin/"+ modelName+ "?serverSidePaging=" + serverSidePaging;
+    var ajax = '/api/' + prefix + modelName+ "?serverSidePaging=" + serverSidePaging;
     var defaultTableConfig = {
       "processing": false,
       "serverSide": serverSidePaging,
@@ -184,7 +203,7 @@
           			location.href = '/admin/#/admin/' + modelName + '/show/' + id;
           		} else {
           			messageApp.show({
-          				desc: '請選擇一筆',
+          				desc: '請先選擇一筆資料',
           				type: 'warning'
           			});
           		}
@@ -207,7 +226,7 @@
           			location.href = '/admin/#/admin/' + modelName + '/edit/' + id;
           		} else {
           			messageApp.show({
-          				desc: '請選擇一筆資料',
+          				desc: '請先選擇一筆資料',
           				type: 'warning'
           			});
           		}
@@ -268,7 +287,6 @@
       appModel.view.table.selectIndex = COMMON.DEFAULT_INDEX;
     }
   },
-
   dblclick: function(index) {
     var id = appModel.data.items[index].id;
     this.show(id);
@@ -288,7 +306,7 @@
     function(ButtonPressed) {
       if (ButtonPressed ==='刪除') {
         $.ajax({
-          url: '/api/admin/' + modelName + '/' + appModel.data.item.id,
+          url: '/api/' + prefix + modelName + '/' + appModel.data.item.id,
           type: 'DELETE',
           dataType: 'json',
           xhrFields: {
@@ -313,7 +331,6 @@
     });
   },
   setupForm: function(type) {
-
     var registerForm = $("#main-form");
     registerForm.validate({
       rules : formRules,
