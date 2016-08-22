@@ -1,4 +1,3 @@
-import moment from 'moment';
 module.exports = {
   attributes: {
     //TODO authorAvatar
@@ -29,15 +28,19 @@ module.exports = {
         }
       }
     },
+
     formulaLogs: {
       type: Sequelize.TEXT
     },
+
     authorName: {
       type: Sequelize.STRING,
     },
+
     perfumeName: {
       type: Sequelize.STRING,
     },
+
     message: {
       type: Sequelize.STRING,
       get: function() {
@@ -46,6 +49,7 @@ module.exports = {
         return val;
       }
     },
+
     description: {
       type: Sequelize.STRING,
       get: function() {
@@ -54,16 +58,20 @@ module.exports = {
         return val;
       }
     },
+
     totalDrops: {
       type: Sequelize.INTEGER,
     },
+
     coverPhoto: {
       type: Sequelize.STRING,
     },
+
     visibility: {
       type: Sequelize.ENUM('PUBLIC', 'PRIVATE', 'PROTECTED'),
       defaultValue: 'PUBLIC',
     },
+
     visibilityDesc: {
       type: Sequelize.VIRTUAL,
       get: function() {
@@ -84,10 +92,12 @@ module.exports = {
         return desc;
       }
     },
+
     productionStatus: {
       type: Sequelize.ENUM("NEW", "RECEIVED", "REQUESTED", "SUBMITTED", "PAID", "PROCESSING", "CANCELLED", "SHIPPED", "DELIVERED", "COMPLETED"),
       defaultValue: 'NEW',
     },
+
     productionStatusDesc: {
       type: Sequelize.VIRTUAL,
       get: function() {
@@ -123,26 +133,17 @@ module.exports = {
         return desc;
       }
     },
+
     updatedAt: {
       type: Sequelize.DATE,
-      get: function() {
-        try {
-          return moment(this.getDataValue('updatedAt')).format("YYYY/MM/DD HH:mm:SS");
-        } catch (e) {
-          sails.log.error(e);
-        }
-      }
+      get: ModelService.updatedAtSetter
     },
+
     createdAt: {
       type: Sequelize.DATE,
-      get: function() {
-        try {
-          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD");
-        } catch (e) {
-          sails.log.error(e);
-        }
-      }
+      get: ModelService.createdAtSetter
     }
+
   },
   associations: function() {
     Recipe.hasMany(UserLikeRecipe);

@@ -24,25 +24,14 @@ module.exports = {
 
     updatedAt: {
       type: Sequelize.DATE,
-      get: function() {
-        try {
-          return moment(this.getDataValue('updatedAt')).format("YYYY/MM/DD HH:mm:SS");
-        } catch (e) {
-          sails.log.error(e);
-        }
-      }
+      get: ModelService.updatedAtSetter
     },
 
     createdAt: {
       type: Sequelize.DATE,
-      get: function() {
-        try {
-          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD");
-        } catch (e) {
-          sails.log.error(e);
-        }
-      }
+      get: ModelService.createdAtSetter
     }
+
   },
   associations: function() {
     //Feeling.belongsTo(Scent);
