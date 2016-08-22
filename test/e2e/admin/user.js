@@ -18,7 +18,7 @@ describe('Backend User management test 後台使用者管理測試', () => {
 
     after( (done) => {
       try{
-        //wait msg box disappear
+        //admin logout
         browser.url('http://localhost:1338/logout?url=/admin/login');
         done();
       }
