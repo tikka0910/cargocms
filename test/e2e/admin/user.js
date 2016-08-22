@@ -1,6 +1,6 @@
 require("../../bootstrap.test.js");
 
-describe.only('Backend User management test 後台使用者管理測試', () => {
+describe('Backend User management test 後台使用者管理測試', () => {
 
   describe('User operation',() => {
     before( (done) => {
@@ -98,5 +98,30 @@ describe.only('Backend User management test 後台使用者管理測試', () => 
       }
     });
 
+    it('Delete user', async (done) => {
+      try{
+        const targetUser = 'Alice';
+
+        browser.waitForExist('[type=search]');
+        browser.setValue('[type=search]', targetUser);
+        browser.click('#main-table > tbody > tr.odd');
+        browser.click('#ToolTables_main-table_2');
+
+        browser.waitForExist('[name=username]');
+        browser.click('button.btn.btn-danger.pull-left');
+        browser.waitForExist('#bot1-Msg1');
+        browser.click('#bot1-Msg1');
+
+        //wait database update.
+        browser.pause(1000);
+
+        const user = await User.find({where: { username: targetUser}});
+        (user === null).should.be.true;
+        done();
+      }
+      catch(e){
+        done(e);
+      }
+    });
   });
 });
