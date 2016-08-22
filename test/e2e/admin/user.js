@@ -7,9 +7,9 @@ describe.only('main login page test', () => {
     });
     it('login as admin @watch', (done) => {
       try {
-        browser.setValue('[name="identifier"]', 'admin');
-        browser.setValue('[name="password"]', 'admin');
-        browser.click('[class="btn-u btn-u-blue btn-block rounded"]');
+        browser.setValue('[name="identifier"]', 'admin')
+        .setValue('[name="password"]', 'admin')
+        .click('[class="btn-u btn-u-blue btn-block rounded"]');
         expect(browser.getTitle()).to.equal('控制台');
         done();
       } catch (e) {
@@ -17,36 +17,34 @@ describe.only('main login page test', () => {
       }
     });
 
-    it('test user create @watch', (done) => {
+    it('test user create @watch',async (done) => {
       try {
         const userData = {
-          name: 'usertest1',
+          username: 'usertest1',
           email: 'usertest1@gmail.com',
           firstName: '王',
           lastName: '雇員',
           password: '0000'
         };
+        // 新增
         browser.url('http://localhost:1338/admin/#/admin/user');
-        browser.waitForExist('#ToolTables_main-table_1',1000);
+        browser.waitForExist('#ToolTables_main-table_1',1000)
         browser.click('#ToolTables_main-table_1');
         browser.waitForExist('[class="btn btn-primary"]',1000);
-        browser.setValue('[name="username"]', userData.name);
-        // await browser.waitForValue('[name="username"]',500);
-        browser.setValue('[name="email"]', userData.email);
-        // await browser.waitForValue('[name="email"]',500);
-        browser.setValue('[name="firstName"]', userData.firstName);
-        // await browser.waitForValue('[name="firstName"]',500);
-        browser.setValue('[name="lastName"]', userData.lastName);
-        // await browser.waitForValue('[name="lastName"]',500);
-        browser.setValue('[name="password"]', userData.password);
-        // await browser.waitForValue('[name="password"]',500);
-        browser.setValue('[name="passwordConfirm"]', userData.password);
-        // await browser.waitForValue('[name="passwordConfirm"]',500);
-        browser.click('[class="btn btn-primary"]');
-        browser.waitForExist('[class="btn btn-primary"]',1000,true);
-
-        browser.setValue('[type=search]', userData.name);
-        browser.getText('#main-table > tbody > tr > td.expand > a').should.be.equal( userData.name );
+        //填入資料
+        browser.setValue('[name="username"]', userData.username)
+        .setValue('[name="email"]', userData.email)
+        .setValue('[name="firstName"]', userData.firstName)
+        .setValue('[name="lastName"]', userData.lastName)
+        .setValue('[name="password"]', userData.password)
+        .setValue('[name="passwordConfirm"]', userData.password);
+        //送出
+        browser.click('[class="btn btn-primary"]')
+        .waitForExist('[class="btn btn-primary"]',1000,true);
+        //檢查
+        const res = await User.find({where: {username: userData.username}});
+        res.username.should.be.eq(userData.username);
+        res.email.should.be.eq(userData.email);
 
         // expect(browser.elements('#ToolTables_main-table_1')!=null).to.equal(true);
         done();
@@ -55,7 +53,7 @@ describe.only('main login page test', () => {
       }
     });
 
-    it('logout @watch', (done) => {
+    it.skip('logout @watch', (done) => {
       try {
         //await browser.pause(1000);//must
         browser.url('http://localhost:1338/logout?url=/admin/login');
