@@ -54,14 +54,16 @@ module.exports = {
       update: async (data) => {
         try {
           let findItem = await Feeling.findOne({ where: { id: data.id }});
-          findItem.title = data.title;
-          findItem.scentName = data.scentName;
-          findItem.totalRepeat = data.totalRepeat;
-          findItem.score = data.score;
-          return await findItem.save();
+          return findItem ? (async () => {
+            findItem.title = data.title;
+            findItem.scentName = data.scentName;
+            findItem.totalRepeat = data.totalRepeat;
+            findItem.score = data.score;
+            return await findItem.save();
+          })() : false;
         } catch (e) {
           sails.log.error(e);
-        } 
+        }
       }
     },
     instanceMethods: {},
