@@ -14,7 +14,7 @@ module.exports = {
       }
       res.ok(result);
     } catch (e) {
-      res.serverError({ message: e.message, data: {} });
+      res.serverError(e);
     }
   },
 
@@ -53,8 +53,7 @@ module.exports = {
       const { id } = req.params;
       const data = req.body;
       const message = 'Update success.';
-      const params = { id, ...data };
-      const item = await Feeling.update(params ,{
+      const item = await Model.update(data ,{
         where: { id, },
       });
       res.ok({ message, data: { item } });
