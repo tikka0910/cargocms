@@ -1,11 +1,20 @@
 
 const ScentNoteData = require('./data/ScentNote');
 const ScentData = require('./data/Scent');
+const ScentDetail = require('./data/ScentDetail.json');
 const FeelingData = require('./data/Feeling');
 
 module.exports.init = async () => {
   try {
 
+    ScentDetail.rows.forEach(function(scentDetail){
+      Scent.create({
+        sequence: parseInt(scentDetail.name.replace(/[^0-9]+/, '')),
+        name: scentDetail.name,
+        title: scentDetail.title,
+        description: scentDetail.description,
+      })
+    });
 
     ScentNoteData.rows.forEach(function(row) {
       ScentNote.create(row).then(function(scentNote) {
@@ -13,16 +22,17 @@ module.exports.init = async () => {
         ScentData.rows.forEach(function(row) {
           if (row.scentNote == scentNote.title) {
             row.scents.forEach(function(scentName) {
-
-              Scent.create({
-                sequence: parseInt(scentName.replace(/[^0-9]+/, '')),
-                name: scentName,
-                feelings: FeelingData[scentName] || []
-              })
-              .then(function(scent) {
-                scentNote.addScent(scent);
+              Scent.findOne({
+                where: {
+                  name: scentName,
+                }
+              }).then(function(scent) {
+                if (scent) {
+                  scent.feelings = FeelingData[scentName] || [];
+                  scent.ScentNoteId = scentNote.id;
+                  scent.save();
+                }
               });
-
             })
           }
         });
