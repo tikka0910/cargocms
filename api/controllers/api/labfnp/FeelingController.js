@@ -14,7 +14,7 @@ module.exports = {
       }
       res.ok(result);
     } catch (e) {
-      res.serverError({ message: e.message, data: {} });
+      res.serverError(e);
     }
   },
 
@@ -35,7 +35,7 @@ module.exports = {
       let message = 'Create success.';
       res.ok({ message, data: { item } } );
     } catch (e) {
-      res.serverError({ message: e.message, data: {} });
+      res.serverError(e);
     }
   },
 
@@ -44,13 +44,12 @@ module.exports = {
       const { id } = req.params;
       const data = req.body;
       const message = 'Update success.';
-      const params = {id, ...data};
-      const item = await Feeling.update(params ,{
+      const item = await Feeling.update(data ,{
         where: { id, },
       });
       res.ok({ message, data: { item } });
     } catch (e) {
-      res.serverError({ message: e.message, data: {} });
+      res.serverError(e);
     }
   },
 
@@ -61,7 +60,7 @@ module.exports = {
       let message = 'Delete success';
       res.ok({message, data: {item}});
     } catch (e) {
-      res.serverError({ message: e.message, data: {} });
+      res.serverError(e);
     }
   }
 }
