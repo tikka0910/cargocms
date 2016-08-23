@@ -1,7 +1,7 @@
 require("../../bootstrap.test.js")
 import {login, logout} from "../../util/e2eHelper.js"
 
-describe.skip('test user', () => {
+describe('test user', () => {
   before((done)=>{
     try {
       login("admin");
