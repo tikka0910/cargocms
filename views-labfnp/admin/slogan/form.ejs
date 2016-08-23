@@ -2,11 +2,11 @@
 
   <section>
     <label class="label">權限</label>
-    <label class="checkbox">
+    <label class="checkbox state-disabled">
       <input type="checkbox" id="admin" name="admin" value="admin" v-model="data.item.RolesArray">
       <i></i>管理員</label>
-    <label class="slogan checkbox state-disabled">
-      <input type="checkbox" id="slogan" name="slogan" value="slogan" v-model="data.item.RolesArray" checked disabled>
+    <label class="user checkbox state-disabled">
+      <input type="checkbox" id="user" name="user" value="user" v-model="data.item.RolesArray" checked disabled>
       <i></i>使用者</label>
   </section>
 
@@ -15,14 +15,14 @@
   <br>
 
   <section>
-    <label class="input"><i class="icon-append fa fa-slogan"></i>
-      <input type="text" name="content" placeholder="content" v-model="data.item.content">
-      <b class="tooltip tooltip-bottom-right">請輸入content</b></label>
+    <label class="input state-disabled"><i class="icon-append fa fa-slogan"></i>
+      <input type="text" name="content" placeholder="content" v-model="data.item.content" disabled>
+      <b class="tooltip tooltip-bottom-right">請輸入 content</b></label>
   </section>
 
   <section>
-    <label class="input"><i class="icon-append fa fa-envelope-o"></i>
-      <input type="text" name="source" placeholder="source" v-model="data.item.source">
+    <label class="input state-disabled"><i class="icon-append fa fa-envelope-o"></i>
+      <input type="text" name="source" placeholder="source" v-model="data.item.source" disabled>
       <b class="tooltip tooltip-bottom-right">請輸入 source</b></label>
   </section>
 
@@ -59,7 +59,7 @@ var formRules = {
     required : true
   },
   source : {
-    required : true,
+    required : true
   },
 }
 
@@ -69,7 +69,7 @@ var formMessages = {
     required : '請輸入content'
   },
   source : {
-    required : '請輸入 source',
+    required : '請輸入 source'
   },
 }
 </script>

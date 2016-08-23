@@ -5,16 +5,18 @@ var COMMON = {
 };
 
 var itemBeforeEdit = {};
+var prefix = 'admin/';
 var modelName = "slogan";
 var appModel = {
   modelName: modelName,
+  prefix: prefix,
   data: {
     item: {
       avatar: '',
       content: '',
       source: '',
       Roles: [],
-      RolesArray: [],
+      RolesArray: [],      
     },
     items: [],
     option: {
