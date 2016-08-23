@@ -2,12 +2,13 @@ module.exports = {
 
   find: async (req, res) => {
     try {
-      const itmes = await Model.findAll();
-      res.ok({data: {itmes}});
+      const items = await Model.findAll();
+      res.ok({data: {items}});
     } catch (e) {
       res.serverError(e);
     }
   },
+  
   findOne: async (req, res) => {
     try {
       const { id } = req.params;
