@@ -10,7 +10,7 @@ module.exports = {
       });
     }
     catch(e){
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -33,7 +33,7 @@ module.exports = {
       res.ok(result);
     }
     catch(e){
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -48,7 +48,7 @@ module.exports = {
       });
     }
     catch(e){
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -70,7 +70,7 @@ module.exports = {
       });
     }
     catch(e){
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -86,7 +86,7 @@ module.exports = {
       });
     }
     catch(e){
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   }
 }
