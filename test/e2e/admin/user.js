@@ -1,6 +1,6 @@
 require("../../bootstrap.test.js");
 
-describe.only('Backend User management test 後台使用者管理測試', () => {
+describe('Backend User management test 後台使用者管理測試', () => {
 
   describe('User operation',() => {
     before( (done) => {
