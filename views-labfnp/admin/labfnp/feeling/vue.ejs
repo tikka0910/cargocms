@@ -5,32 +5,20 @@ var COMMON = {
 };
 
 var itemBeforeEdit = {};
-var prefix = 'admin/';
-var modelName = "user";
+var prefix = '';
+var modelName = "labfnp/feeling";
 var appModel = {
   modelName: modelName,
   prefix: prefix,
   data: {
     item: {
-      avatar: '',
-      displayName: '',
-      username: '',
-      email: '',
-      firstName: '',
-      lastName: '',
-      password: '',
-      Roles: [],
-      RolesArray: [],
-      Passports: [
-        {
-          password: ""
-        }
-      ]
+      title: '',
+      scentName: '',
+      totalRepeat: '',
+      score: ''
     },
     items: [],
-    option: {
-      passwordConfirm: ''
-    }
+    option: {}
   },
   view: {
     table: {
@@ -41,6 +29,6 @@ var appModel = {
 
 /* TABLETOOLS */
 
-<%- include ../default/vue.ejs %>
+<%- include ../../default/vue.ejs %>
 // 需要新增函式可以對 appMain 進行定義，如：
 // appMain.log = function () {console.log("123")}
