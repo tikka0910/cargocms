@@ -43,9 +43,11 @@ module.exports = {
     try {
       const { id } = req.params;
       const data = req.body;
-      const message = 'Update success.'
-      const params = {id, ...data}
-      const item = await Feeling.update(params);
+      const message = 'Update success.';
+      const params = {id, ...data};
+      const item = await Feeling.update(params ,{
+        where: { id, },
+      });
       res.ok({ message, data: { item } });
     } catch (e) {
       res.serverError({ message: e.message, data: {} });

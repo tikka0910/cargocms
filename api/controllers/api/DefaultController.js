@@ -2,18 +2,36 @@ module.exports = {
 
   find: async (req, res) => {
     try {
-      const items = await Model.findAll();
-      res.ok({data: {items}});
+      const { query } = req;
+      const { serverSidePaging } = query;
+      const modelName = req.options.controller.split("/").reverse()[0];
+      let result;
+      if (serverSidePaging) {
+        result = await PagingService.process({query, modelName});
+      } else {
+        const items = await sails.models[modelName].findAll();
+        result = { data: { items } };
+      }
+      res.ok(result);
     } catch (e) {
-      res.serverError(e);
+      res.serverError({ message: e.message, data: {} });
     }
   },
-  
+
+  // find: async (req, res) => {
+  //   try {
+  //     const items = await Model.findAll();
+  //     res.ok({ data: { items } });
+  //   } catch (e) {
+  //     res.serverError(e);
+  //   }
+  // },
+
   findOne: async (req, res) => {
     try {
       const { id } = req.params;
-      const item = await Model.findOne({id})
-      res.ok({data: {item}});
+      const item = await Model.findOne({ id });
+      res.ok({ data: { item } });
     } catch (e) {
       res.serverError(e);
     }
@@ -23,8 +41,8 @@ module.exports = {
     try {
       const data = req.body;
       const item = await Model.create(data);
-      let message = 'Create success.';
-      res.ok({message, data: {item}});
+      const message = 'Create success.';
+      res.ok({ message, data: { item } });
     } catch (e) {
       res.serverError(e);
     }
@@ -34,10 +52,12 @@ module.exports = {
     try {
       const { id } = req.params;
       const data = req.body;
-      let message = 'Update success.'
-      let params = {id, ...data}
-      const item = await Model.update(params);
-      res.ok({message, data: {item}});
+      const message = 'Update success.';
+      const params = { id, ...data };
+      const item = await Feeling.update(params ,{
+        where: { id, },
+      });
+      res.ok({ message, data: { item } });
     } catch (e) {
       res.serverError(e);
     }
@@ -47,8 +67,8 @@ module.exports = {
     try {
       const { id } = req.params;
       const item = await Model.deleteById(id);
-      let message = 'Delete success';
-      res.ok({message, data: {item}});
+      const message = 'Delete success.';
+      res.ok({ message, data: { item } });
     } catch (e) {
       res.serverError(e);
     }
