@@ -29,8 +29,8 @@ describe('test user', () => {
         password: '0000'
       };
       // 新增
-      browser.url('http://localhost:1338/admin/#/admin/user');
-      browser.waitForExist('#ToolTables_main-table_1',1000)
+      browser.url('/admin/#/admin/user');
+      browser.waitForExist('#ToolTables_main-table_1',2000)
       browser.click('#ToolTables_main-table_1');
       browser.waitForExist('[class="btn btn-primary"]',1000);
       //填入資料
