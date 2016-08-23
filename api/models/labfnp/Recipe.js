@@ -1,3 +1,4 @@
+import moment from 'moment';
 module.exports = {
   attributes: {
     //TODO authorAvatar
@@ -122,6 +123,26 @@ module.exports = {
         return desc;
       }
     },
+    updatedAt: {
+      type: Sequelize.DATE,
+      get: function() {
+        try {
+          return moment(this.getDataValue('updatedAt')).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+    createdAt: {
+      type: Sequelize.DATE,
+      get: function() {
+        try {
+          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    }
   },
   associations: function() {
     Recipe.hasMany(UserLikeRecipe);
