@@ -1,14 +1,14 @@
 require("../../bootstrap.test.js");
 
-describe('Backend User management test 後台使用者管理測試', () => {
+describe.only('Backend User management test 後台使用者管理測試', () => {
 
   describe('User operation',() => {
     before( (done) => {
       try{
         browser.url('http://localhost:1338/admin/login');
-        browser.setValue('[type=text]', 'admin');
-        browser.setValue('[type=password]', 'admin');
-        browser.click('[type=submit]');
+        browser.setValue('[type=text]', 'admin')
+        .setValue('[type=password]', 'admin')
+        .click('[type=submit]');
         done();
       }
       catch(e){
@@ -37,23 +37,24 @@ describe('Backend User management test 後台使用者管理測試', () => {
           password: 'dadada'
         };
 
-        browser.click('[title=資料維護]');
-        browser.click('[title=會員資料]');
+        browser.click('[title=資料維護]')
+        .click('[title=會員資料]');
 
         browser.waitForExist('#ToolTables_main-table_1');
         browser.click('#ToolTables_main-table_1');
 
         browser.waitForExist('[name=username]')
-        browser.setValue('[name=username]',userData.name);
-        browser.setValue('[name=email]', userData.email);
-        browser.setValue('[name=firstName]', userData.firstName);
-        browser.setValue('[name=lastName]', userData.lastName);
-        browser.setValue('[name=password]', userData.password);
-        browser.setValue('[name=passwordConfirm]', userData.password);
-        browser.click('[type=submit]');
+        browser.setValue('[name=username]',userData.name)
+        .setValue('[name=email]', userData.email)
+        .setValue('[name=firstName]', userData.firstName)
+        .setValue('[name=lastName]', userData.lastName)
+        .setValue('[name=password]', userData.password)
+        .setValue('[name=passwordConfirm]', userData.password)
+        .click('[type=submit]');
 
         // wait for data write in to database
-        browser.pause(1000);
+        //wait for table show up
+        browser.waitForExist('#main-table',5000);
 
         const user = await User.find({where: {username: userData.name}});
         user.username.should.be.equal(userData.name);
@@ -75,18 +76,19 @@ describe('Backend User management test 後台使用者管理測試', () => {
           lastName: 'Joe'
         };
         browser.waitForExist('[type=search]');
-        browser.setValue('[type=search]', targetUser);
-        browser.click('#main-table > tbody > tr.odd');
-        browser.click('#ToolTables_main-table_2');
+        browser.setValue('[type=search]', targetUser)
+        .click('#main-table > tbody > tr.odd')
+        .click('#ToolTables_main-table_2');
 
         browser.waitForExist('[name=username]');
-        browser.setValue('[name=email]', userUpdate.email);
-        browser.setValue('[name=firstName]', userUpdate.firstName);
-        browser.setValue('[name=lastName]', userUpdate.lastName);
-        browser.click('[type=submit]');
+        browser.setValue('[name=email]', userUpdate.email)
+        .setValue('[name=firstName]', userUpdate.firstName)
+        .setValue('[name=lastName]', userUpdate.lastName)
+        .click('[type=submit]');
 
         // wait data write in to database
-        browser.pause(1000);
+        //wait for table show up
+        browser.waitForExist('#main-table',5000);
 
         const user = await User.find({where:{username: targetUser}});
         user.email.should.be.equal(userUpdate.email);
@@ -103,9 +105,9 @@ describe('Backend User management test 後台使用者管理測試', () => {
         const targetUser = 'Alice';
 
         browser.waitForExist('[type=search]');
-        browser.setValue('[type=search]', targetUser);
-        browser.click('#main-table > tbody > tr.odd');
-        browser.click('#ToolTables_main-table_2');
+        browser.setValue('[type=search]', targetUser)
+        .click('#main-table > tbody > tr.odd')
+        .click('#ToolTables_main-table_2');
 
         browser.waitForExist('[name=username]');
         browser.click('button.btn.btn-danger.pull-left');
@@ -113,7 +115,8 @@ describe('Backend User management test 後台使用者管理測試', () => {
         browser.click('#bot1-Msg1');
 
         //wait database update.
-        browser.pause(1000);
+        //wait for table show up
+        browser.waitForExist('#main-table',5000);
 
         const user = await User.find({where: { username: targetUser}});
         (user === null).should.be.true;
