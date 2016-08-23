@@ -18,20 +18,11 @@ module.exports = {
     }
   },
 
-  // find: async (req, res) => {
-  //   try {
-  //     const items = await Model.findAll();
-  //     res.ok({ data: { items } });
-  //   } catch (e) {
-  //     res.serverError(e);
-  //   }
-  // },
-
   findOne: async (req, res) => {
     try {
       const { id } = req.params;
-      const item = await Model.findOne({ id });
-      res.ok({ data: { item } });
+      const item = await Feeling.findOne({id})
+      res.ok({data: {item}});
     } catch (e) {
       res.serverError(e);
     }
@@ -40,9 +31,9 @@ module.exports = {
   create: async (req, res) => {
     try {
       const data = req.body;
-      const item = await Model.create(data);
-      const message = 'Create success.';
-      res.ok({ message, data: { item } });
+      const item = await Feeling.create(data);
+      let message = 'Create success.';
+      res.ok({ message, data: { item } } );
     } catch (e) {
       res.serverError(e);
     }
@@ -53,7 +44,7 @@ module.exports = {
       const { id } = req.params;
       const data = req.body;
       const message = 'Update success.';
-      const item = await Model.update(data ,{
+      const item = await Feeling.update(data ,{
         where: { id, },
       });
       res.ok({ message, data: { item } });
@@ -65,9 +56,9 @@ module.exports = {
   destroy: async (req, res) => {
     try {
       const { id } = req.params;
-      const item = await Model.deleteById(id);
-      const message = 'Delete success.';
-      res.ok({ message, data: { item } });
+      const item = await Feeling.deleteById(id);
+      let message = 'Delete success';
+      res.ok({message, data: {item}});
     } catch (e) {
       res.serverError(e);
     }

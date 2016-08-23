@@ -29,7 +29,7 @@ module.exports = {
         data: user,
       });
     } catch (e) {
-      res.serverError({ message: e, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -43,7 +43,7 @@ module.exports = {
         data: user,
       });
     } catch (e) {
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -62,7 +62,7 @@ module.exports = {
         data: user,
       });
     } catch (e) {
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -76,7 +76,7 @@ module.exports = {
         data: user,
       });
     } catch (e) {
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   }
 }

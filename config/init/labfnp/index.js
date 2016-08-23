@@ -45,6 +45,7 @@ module.exports.init = async () => {
       { href: '/admin/labfnp/recipe', title: '配方資料', sequence: 40},
       { href: '/admin/labfnp/scent', title: '香味分子', sequence: 50},
       { href: '/admin/labfnp/scentnote', title: '香調', sequence: 60},
+      { href: '/admin/labfnp/feeling', title: '感覺', sequence: 70},
     ]
 
 
@@ -60,11 +61,13 @@ module.exports.init = async () => {
     createdSubMenuItems = await Promise.all(promises);
     createdMenuItems[2].addSubMenuItems(createdSubMenuItems);
 
-
-
-
-
-
+    const feeling = {
+      title: '花香',
+      scentName: 'BT99',
+      totalRepeat: 4,
+      score: 10,
+    };
+    await Feeling.create(feeling);
 
 
 

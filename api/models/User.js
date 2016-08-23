@@ -1,3 +1,4 @@
+import moment from 'moment';
 module.exports = {
   attributes: {
     username: {
@@ -72,7 +73,27 @@ module.exports = {
     avatarThumb: {
       type: Sequelize.STRING,
       defaultValue: '/assets/admin/img/avatars/default.png'
-    }
+    },
+    updatedAt: {
+      type: Sequelize.DATE,
+      get: function() {
+        try {
+          return moment(this.getDataValue('updatedAt')).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+    createdAt: {
+      type: Sequelize.DATE,
+      get: function() {
+        try {
+          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
   },
   associations: function() {
     User.hasMany(Image, {
