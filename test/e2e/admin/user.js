@@ -5,7 +5,8 @@ describe('Backend User management test 後台使用者管理測試', () => {
   describe('User operation',() => {
     before( (done) => {
       try{
-        browser.url('http://localhost:1338/admin/login');
+        browser.url('http://localhost:1338/admin/login')
+        .waitForExist('[type=text]');
         browser.setValue('[type=text]', 'admin')
         .setValue('[type=password]', 'admin')
         .click('[type=submit]');
