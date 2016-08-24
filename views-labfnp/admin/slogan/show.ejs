@@ -22,6 +22,7 @@
 <!-- vue section -->
 <section id="main-show">
   <input type="text" name="id" id="id" v-model="data.item.id" hidden="hidden" value="<%= req.params.id %>">
+  {{req.params.id}}
 
   <!-- row -->
   <div class="row" style="padding-top: 50px;">
@@ -84,23 +85,12 @@
                           </li> -->
                             <li>
                               <p class="text-muted">
-                                <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{ data.item.email }}">{{ data.item.email }}</a>
-                              </p>
-                            </li>
-                            <li>
-                              <p class="text-muted" v-show="data.item.sloganAgent">
-                                <i class="fa fa-flag"></i>&nbsp;&nbsp;<span class="semi-bold">{{ data.item.sloganAgent }}</span>
+                                <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{ data.item.content }}">{{ data.item.content }}</a>
                               </p>
                             </li>
                             <li>
                               <p class="text-muted">
-                                <i class="fa fa-calendar"></i>&nbsp;&nbsp;
-                                <span class="txt-color-darken">上次登入時間：
-                                <a href="javascript:void(0);" rel="tooltip" title="" data-placement="top" data-original-title="Create an Appointment"
-                                v-if="data.item.lastLogin">
-                                  {{ data.item.lastLogin }}</a>
-                                <label for="" v-else><strong>從未登入</strong></label>
-                              </span>
+                                <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{ data.item.source }}">{{ data.item.source }}</a>
                               </p>
                             </li>
                             <li class="visible-xs-*">
