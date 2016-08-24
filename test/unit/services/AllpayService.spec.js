@@ -1,5 +1,5 @@
 
-describe.only('about Allpay service', () => {
+describe('about Allpay service', () => {
   let allpay;
   let recipe;
   before(async(done) => {
