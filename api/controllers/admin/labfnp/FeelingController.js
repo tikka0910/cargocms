@@ -22,7 +22,7 @@ module.exports = {
   show: async (req, res) => {
     res.ok({
       view: true,
-      layout: 'admin/user/show'
+      layout: 'admin/default/show'
     });
   },
 }

@@ -9,7 +9,7 @@ module.exports = {
       });
     } catch (e) {
       sails.log.error(e);
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -30,7 +30,7 @@ module.exports = {
       });
     } catch (e) {
       sails.log.error(e);
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -43,7 +43,7 @@ module.exports = {
       });
     } catch (e) {
       sails.log.error(e);
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -56,7 +56,7 @@ module.exports = {
       });
     } catch (e) {
       sails.log.error(e);
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -69,7 +69,7 @@ module.exports = {
       });
     } catch (e) {
       sails.log.error(e);
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   }
 }
