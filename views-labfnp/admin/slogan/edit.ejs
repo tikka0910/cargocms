@@ -9,12 +9,6 @@
 		<%- include vue.ejs %>
 		appMain.$mount("#main-edit");
 		appMain.loadItem(appMain.onEnterPageEdit);
-
-
-		$('label.slogan').removeClass('state-disabled');
-		$('input[name="slogan"]').removeAttr('chekced');
-		$('input[name="slogan"]').removeAttr('disabled');
-
 		appMain.setupForm("edit");
 	};
 

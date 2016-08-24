@@ -1,57 +1,16 @@
 <fieldset>
 
   <section>
-    <label class="label">權限</label>
-    <label class="checkbox state-disabled">
-      <input type="checkbox" id="admin" name="admin" value="admin" v-model="data.item.RolesArray">
-      <i></i>管理員</label>
-    <label class="user checkbox state-disabled">
-      <input type="checkbox" id="user" name="user" value="user" v-model="data.item.RolesArray" checked disabled>
-      <i></i>使用者</label>
-  </section>
-
-  <br>
-  <hr>
-  <br>
-
-  <section>
-    <label class="input state-disabled"><i class="icon-append fa fa-slogan"></i>
-      <input type="text" name="content" placeholder="content" v-model="data.item.content" disabled>
-      <b class="tooltip tooltip-bottom-right">請輸入 content</b></label>
+    <label class="input state-disabled">
+      <input type="text" name="content" placeholder="內容" v-model="data.item.content" disabled>
+      <b class="tooltip tooltip-bottom-right">請輸入內容</b></label>
   </section>
 
   <section>
-    <label class="input state-disabled"><i class="icon-append fa fa-envelope-o"></i>
-      <input type="text" name="source" placeholder="source" v-model="data.item.source" disabled>
-      <b class="tooltip tooltip-bottom-right">請輸入 source</b></label>
+    <label class="input state-disabled">
+      <input type="text" name="source" placeholder="來源" v-model="data.item.source" disabled>
+      <b class="tooltip tooltip-bottom-right">請輸入來源</b></label>
   </section>
-
-  <!--
-  <div class="row">
-    <section class="col col-6">
-      <label class="select">
-        <select name="gender">
-          <option value="0" selected="" disabled="">Gender</option>
-          <option value="1">Male</option>
-          <option value="2">Female</option>
-          <option value="3">Prefer not to answer</option>
-        </select> <i></i> </label>
-    </section>
-    <section class="col col-6">
-      <label class="input"> <i class="icon-append fa fa-calendar"></i>
-        <input type="text" name="request" placeholder="Request activation on" class="datepicker" data-dateformat='dd/mm/yy'>
-      </label>
-    </section>
-  </div>
-
-  <section>
-    <label class="checkbox">
-      <input type="checkbox" name="subscription" id="subscription">
-      <i></i>I want to receive news and special offers</label>
-    <label class="checkbox">
-      <input type="checkbox" name="terms" id="terms">
-      <i></i>I agree with the Terms and Conditions</label>
-  </section> -->
 </fieldset>
 <script>
 var formRules = {
@@ -63,13 +22,13 @@ var formRules = {
   },
 }
 
-  // Messages for form validation
+// Messages for form validation
 var formMessages = {
   content : {
-    required : '請輸入content'
+    required : '請給予內容'
   },
   source : {
-    required : '請輸入 source'
+    required : '請給予來源'
   },
 }
 </script>

@@ -2,7 +2,7 @@ module.exports = {
   index: async (req, res) => {
     res.ok({
       view: true,
-      serverSidePaging: true,
+      serverSidePaging: false,
       layout: 'admin/default/index'
     });
   },
@@ -22,7 +22,7 @@ module.exports = {
   show: async (req, res) => {
     res.ok({
       view: true,
-      layout: 'admin/slogan/show'
+      layout: 'admin/default/show'
     });
   },
 }
