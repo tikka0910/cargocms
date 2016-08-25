@@ -73,6 +73,8 @@ module.exports.routes = {
   'put /api/admin/post/:id': 'api/admin/PostController.update',
   'delete /api/admin/post/:id': 'api/admin/PostController.destroy',
 
+  'post /api/allpay/paid': 'api/AllpayController.paid',
+
   // 'get /api/admin/Default': 'api/admin/DefaultController.find',
   // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
   // 'post /api/admin/Default': 'api/admin/DefaultController.create',
