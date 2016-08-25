@@ -56,6 +56,7 @@ module.exports.init = async () => {
       { href: '/admin/labfnp/scent', title: '香味分子', sequence: 50},
       { href: '/admin/labfnp/scentnote', title: '香調', sequence: 60},
       { href: '/admin/labfnp/feeling', title: '感覺', sequence: 70},
+      { href: '/admin/slogan', title: '口號', sequence: 80},
     ]
 
 

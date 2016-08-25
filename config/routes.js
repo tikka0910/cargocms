@@ -1,3 +1,4 @@
+
 /**
  * Route Mappings
  * (sails.config.routes)
@@ -76,6 +77,11 @@ module.exports.routes = {
   'post /api/allpay/paid': 'api/AllpayController.paid',
   'post /api/allpay/paymentinfo': 'api/AllpayController.paymentinfo',
 
+  'get /api/admin/slogan': 'api/admin/SloganController.find',
+  'get /api/admin/slogan/:id': 'api/admin/SloganController.findOne',
+  'post /api/admin/slogan': 'api/admin/SloganController.create',
+  'put /api/admin/slogan/:id': 'api/admin/SloganController.update',
+  'delete /api/admin/slogan/:id': 'api/admin/SloganController.destroy',
   // 'get /api/admin/Default': 'api/admin/DefaultController.find',
   // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
   // 'post /api/admin/Default': 'api/admin/DefaultController.create',

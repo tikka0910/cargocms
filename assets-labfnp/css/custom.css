@@ -12,7 +12,9 @@
 }
 
 .header .logo img {
-  margin: 5px 0;
+  margin: 20px 15px;
+  height: 30px;
+  opacity: .8;
 }
 
 .header .topbar ul.loginbar > li > a, .header .topbar ul.loginbar > li > a:hover {
