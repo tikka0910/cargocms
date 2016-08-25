@@ -114,7 +114,7 @@ module.exports.bootstrap = async (cb) => {
         debug: true,
         ReturnURL:'/api/allpay/paid',
         ClientBackURL:'/shop/done',
-        PaymentInfoURL:'/allpay/paymentinfo',
+        PaymentInfoURL:'/api/allpay/paymentinfo',
         paymentMethod:[
           {
             code: 'ATM',

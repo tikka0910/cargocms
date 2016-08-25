@@ -74,6 +74,7 @@ module.exports.routes = {
   'delete /api/admin/post/:id': 'api/admin/PostController.destroy',
 
   'post /api/allpay/paid': 'api/AllpayController.paid',
+  'post /api/allpay/paymentinfo': 'api/AllpayController.paymentinfo',
 
   // 'get /api/admin/Default': 'api/admin/DefaultController.find',
   // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
