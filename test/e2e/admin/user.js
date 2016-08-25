@@ -68,8 +68,9 @@ describe('test user', () => {
       }
 
       //search user item
-      browser.waitForExist('#main-table_filter input[type=search]', 1000)
-      browser.setValue('#main-table_filter input[type=search]', updateTargetUser);
+      browser.url('/admin/#/admin/user');
+      browser.waitForExist('#main-table_filter input[type="search"]', 1000)
+      browser.setValue('#main-table_filter input[type="search"]', updateTargetUser);
 
       browser
         .click('#main-table tbody')
