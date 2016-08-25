@@ -115,6 +115,6 @@ module.exports = {
       sails.log.error(e);
       res.serverError(e);
     }
-  }
+  },
 
 }

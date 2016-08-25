@@ -85,6 +85,7 @@ module.exports.routes = {
   '/creator':         'labfnp/MainController.creator',
   '/lab':             'labfnp/MainController.explore',
   '/recipe/:id':      'labfnp/MainController.recipe',
+  '/recipe/buy/:id':         'labfnp/MainController.buy',
   '/me':              'labfnp/MainController.portfolio',
   '/me/:id':          'labfnp/MainController.portfolio',
   '/admin':           'AdminController.index',

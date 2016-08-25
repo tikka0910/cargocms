@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 module.exports = {
 
   creator: async function(req, res) {
@@ -80,4 +81,26 @@ module.exports = {
       res.serverError(e);
     }
   },
+
+  buy: async function(req, res) {
+    try {
+      const { id } = req.params;
+      const allPayData = await AllpayService.getAllpayConfig({
+        relatedKeyValue: {
+          RecipeId: id,
+        },
+        MerchantTradeNo: crypto.randomBytes(32).toString('hex').substr(0, 8),
+        tradeDesc: 'test gen config',
+        totalAmount: 999,
+        paymentMethod: 'ATM',
+        itemArray: ['Item01', 'Item02'],
+      });
+      return res.view({
+        AioCheckOut: AllpayService.getPostUrl(),
+        ...allPayData
+      });
+    } catch (e) {
+      res.serverError(e);
+    }
+  }
 }
