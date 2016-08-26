@@ -87,13 +87,16 @@ module.exports.routes = {
   // 'delete /api/admin/Default/:id': 'api/admin/DefaultController.destroy',
 
   //----- custom -----
-  '/creator':         'labfnp/MainController.creator',
-  '/lab':             'labfnp/MainController.explore',
-  '/recipe/:id':      'labfnp/MainController.recipe',
-  '/me':              'labfnp/MainController.portfolio',
-  '/me/:id':          'labfnp/MainController.portfolio',
+
   '/admin':           'AdminController.index',
   '/admin/config.js': 'AdminController.config',
+
+  '/recipe/:id':      'labfnp/RecipeController.show',
+  '/recipe/edit/:id': 'labfnp/RecipeController.edit',
+  '/creator':         'labfnp/RecipeController.create',
+  '/lab':             'labfnp/MainController.explore',
+  '/me':              'labfnp/MainController.portfolio',
+  '/me/:id':          'labfnp/MainController.portfolio',
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
