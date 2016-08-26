@@ -115,6 +115,9 @@ module.exports.routes = {
   "/admin/:controller/:action/:id?": {},
   "/:controller/:action/:id?": {},
 
+  //----- WallController -----
+  'get /wall/:id': 'WallController.show',
+
 
   /***************************************************************************
   *                                                                          *
