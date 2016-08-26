@@ -20,15 +20,19 @@
         <% } %>
         <li>
           <i class="fa fa-clock-o"></i>
-          <%=: post.createdAt | formatDate %>
+          <%=: post.createdAt %>
         </li>
       </ul>
-      <h2><a href="/blog/show/<%= post.id %>"><%= post.title %></a></h2>
 
-      <!-- <p class="lead">到底香水、香料與香味分子的關係是怎麼樣的的？</p> -->
+      <div class="blog-title">
+        <h2>
+          <a href="/blog/show/<%= post.id %>"><%= post.title %></a>
+        </h2>
+      </div>
 
-      <p><%= post.abstract %></p>
-      <!-- <p>我們可以這樣形容，當你手中捧到一束花時，可以聞到花束中的各種花材（ex:玫瑰、康乃馨..等)所組成的『這束花的味道』，接著抽出其中的一朵康乃馨，聞到的則是這『一朵康乃馨的味道』，而事實上，若深入去探究此康乃馨的氣味組成，則可小到香味分子的程度：花香由多種香味分子所組成。而這樣的組成就像香水、香料以及香味分子的不同級距來看，香水聞起來是一種味道而細究卻是多種香味分子的組成。</p> -->
+      <div class="blog-content">
+        <p><%= post.abstract %></p>
+      </div>
 
       <!-- <ul class="post-shares">
         <li>

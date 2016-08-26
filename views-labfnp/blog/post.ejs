@@ -15,9 +15,14 @@
       <% } %>
       <li><%= data.createdAt %></li>
     </ul>
-    <h2><%= data.title %></h2>
 
-    <%- data.content %>
+    <div class="blog-title">
+      <h2><%= data.title %></h2>
+    </div>
+
+    <div class="blog-content">
+      <%- data.content %>
+    </div>
 
     <!-- <ul class="post-shares">
       <li>
