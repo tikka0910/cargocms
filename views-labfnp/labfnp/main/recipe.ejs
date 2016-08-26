@@ -32,8 +32,9 @@
 
     <div class="col-md-6 col-md-offset-3">
 
-      <div class="margin-bottom-10">
-        <button class="btn-u btn-u-default" onclick="window.history.back()">返回</button>
+      <div class="panel-heading overflow-h">
+        <a href="page_profile_comments.html" onclick="window.history.back()" class="btn-u btn-brd btn-brd-hover btn-u-dark btn-u-xs">返回</a>
+        <a href="page_profile_comments.html" class="btn-u btn-brd btn-brd-hover btn-u-dark btn-u-xs pull-right">View All</a>
       </div>
 
       <!-- begin .profile-body -->
@@ -46,18 +47,16 @@
         </div>
         <div class="projects">
 
-          <div style="float:right">
+          <div class= "pull-right">
             <button id="likeButton" class="btn-u btn-u-red" data-id="<%= recipe.id %>" data-like="<%= recipe.currentUserLike %>">
               <i class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %>" aria-hidden="true"></i>
               收藏
             </button>
           </div>
 
-          <h1>
-            <p>
+          <h2>
               <span class="padding-5"><%= recipe.perfumeName %></span>
-            </p>
-          </h1>
+          </h2>
 
           <ul class="list-unstyled list-inline blog-info-v2">
             <li>
