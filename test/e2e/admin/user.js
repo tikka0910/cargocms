@@ -144,7 +144,7 @@ describe('test user', () => {
         browser.waitForExist('#bot1-Msg1', 1000);
         browser.click('#bot1-Msg1');
         //等待後端完成刪除 跳轉回user列表
-        browser.waitForExist('#main-table_filter input[type="search"]', 2000);
+        browser.waitForExist('#main-table_filter input[type="search"]', 3000);
 
         let res = await User.find({
           where: {
