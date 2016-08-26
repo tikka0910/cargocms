@@ -44,15 +44,20 @@
         </a>
       </li>
     </ul> -->
+
     <div class="margin-bottom-20">
       <% data.TagsArray.forEach(function(tag){ %>
         <span class="label label-default"><%= tag %></span>
       <% }); %>
     </div>
-    <div class="row">
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-        <%- include ../lib/rrssbb/blog.ejs %>
-      </div>
+
+    <div style="max-width: 400px">
+      <%- include ../lib/rrssbb/blog.ejs %>
     </div>
+
   </div>
 </div>
+
+<h2>回應這篇文章</h2>
+
+<div class="fb-comments" data-href="<%= sails.getBaseUrl() + req.path %>" data-numposts="5"></div>
