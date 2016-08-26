@@ -289,7 +289,7 @@ $(function() {
         authorName: authorName,
         perfumeName: perfumeName,
         formulaLogs: '',
-        formula: getFormulaData(),
+        formula: formula,
         message: message,
         visibility: visibility,
         description: description,
