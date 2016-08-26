@@ -41,7 +41,8 @@
 
         <div class="easy-block-v1">
           <div class="easy-block-v1-badge rgba-red">精選</div>
-          <img class="img-responsive cover-photo" src="http://loremflickr.com/640/480/perfume/all?<%= Math.random() * Date.now() %>" alt=""/>
+          <!--<img class="img-responsive cover-photo" src="http://loremflickr.com/640/480/perfume/all?<%= Math.random() * Date.now() %>" alt=""/>-->
+          <img class="img-responsive cover-photo" src="/assets/labfnp/img/recipe-default-cover.png" alt=""/>
         </div>
         <div class="projects">
 
@@ -96,6 +97,11 @@
             </li>
           </ul>
         </h4>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+          <%- include ../../lib/rrssbb/recipe.ejs %>
+        </div>
       </div>
       <!-- <div class="project-share">
 					<ul class="list-inline comment-list-v2 pull-left">

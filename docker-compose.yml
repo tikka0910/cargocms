@@ -3,9 +3,9 @@ debug:
   image: agileworks/sails_sample_env
   command: "/bin/sh -l"
 
-  working_dir: /sailsSample
+  working_dir: /app
   volumes:
-    - ./:/sailsSample
+    - ./:/app
   ports:
     - "1337:1337"
 
@@ -13,38 +13,38 @@ build:
   container_name: sailsSample_build
   image: agileworks/sails_sample_env
   command: "npm run build"
-  working_dir: /sailsSample
+  working_dir: /app
   volumes:
-    - ./:/sailsSample
+    - ./:/app
 
 buildDev:
   container_name: sailsSample_buildDev
   image: agileworks/sails_sample_env
   command: "/bin/sh -l -c 'npm i && npm run build'"
 
-  working_dir: /sailsSample
+  working_dir: /app
   volumes:
-    - ./:/sailsSample
+    - ./:/app
 
 buildProd:
   container_name: sailsSample_buildProd
   image: agileworks/sails_sample_env
   command: "/bin/sh -l -c 'npm i && npm run prod'"
 
-  working_dir: /sailsSample
+  working_dir: /app
   volumes:
-    - ./:/sailsSample
+    - ./:/app
 
 test:
   container_name: sailsSample_test
   image: agileworks/sails_sample_env
   command: "/bin/sh -l -c 'npm run test-junit'"
 
-  working_dir: /sailsSample
+  working_dir: /app
   volumes:
-    - ./:/sailsSample
+    - ./:/app
 
-dev:
+start:
   container_name: sailsSample_dev
   image: agileworks/sails_sample_env
   command: "/bin/sh -l -c 'npm start'"
@@ -54,11 +54,28 @@ dev:
     DOMAIN_HOST: "localhost:1337"
 
   ports:
-    - "8000:1337"
+    - "8800:1337"
 
-  working_dir: /sailsSample
+  working_dir: /app
   volumes:
-    - ./:/sailsSample
+    - ./:/app
+
+dev:
+  container_name: sailsSample_dev
+  image: agileworks/sails_sample_env
+  command: "/bin/sh"
+  environment:
+    PORT: "1337"
+    NODE_ENV: "development"
+    DOMAIN_HOST: "localhost:1337"
+
+  ports:
+    - "8800:1337"
+
+  working_dir: /app
+  volumes:
+    - ./:/app
+
 
 prod:
   container_name: sailsSample_prod
@@ -72,9 +89,9 @@ prod:
   ports:
     - "1337:1337"
 
-  working_dir: /sailsSample
+  working_dir: /app
   volumes:
-    - ./:/sailsSample
+    - ./:/app
 
 
 mysql:

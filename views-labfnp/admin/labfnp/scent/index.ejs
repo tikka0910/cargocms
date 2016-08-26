@@ -67,8 +67,10 @@
 								<tr>
 									<th class="" data-class="expand"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs"/> ID</th>
 									<th class="">排序</th>
-									<th class="">香味分子</th>
-									<th class="">分類</th>
+									<th class="">香味分子名稱</th>
+									<th class="" data-hide="phone,tablet">香味分子標題</th>
+									<th class="" data-hide="phone,tablet">香味分子描述</th>
+									<th class="" data-hide="phone,tablet">分類</th>
 									<th class=""><i class="fa fa-fw fa-sticky-note text-muted hidden-sm hidden-xs"/> 名稱</th>
 									<th class="">顏色</th>
 									<th class="" data-hide="phone,tablet">香味感受</th>
@@ -79,6 +81,8 @@
 									<td><a href="/admin/#/admin/labfnp/scent/show/{{scent.id}}">{{ scent.sequence }}</a></td>
 									<td>{{ scent.sequence }}</td>
 									<td>{{ scent.name }}</td>
+									<td>{{ scent.title }}</td>
+									<td>{{ scent.description }}</td>
 									<td>{{ scent.name.substring(0,1) }} - {{ ({T: '前味', M: '中味', B: '後味'})[scent.name.substring(0,1)] }}</td>
 									<td>{{ scent.scentNote.title }} {{ scent.scentNote.title2 }}</td>
 									<td><span class="color" style="background: {{ scent.color }};">{{ scent.color }}</span></td>

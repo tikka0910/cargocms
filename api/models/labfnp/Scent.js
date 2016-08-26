@@ -3,6 +3,9 @@ module.exports = {
     name: {
       type: Sequelize.STRING
     },
+    title: {
+      type: Sequelize.STRING
+    },
     description: {
       type: Sequelize.STRING
     },
@@ -63,7 +66,7 @@ module.exports = {
       formatForApp: async function({scents}) {
 
         let result = scents.map((scent) => {
-          let {id, name, sequence, feelings} = scent
+          let {id, name, sequence, feelings, title, description } = scent
           let color = ""
           let scentNote = ""
           if (scent.ScentNote) {
@@ -76,7 +79,7 @@ module.exports = {
           //   return {id, title}
           // });
 
-          return {id, sequence, name, color, feelings, scentNote}
+          return {id, sequence, name, color, feelings, title, description, scentNote}
         });
 
         return result

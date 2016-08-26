@@ -109,7 +109,8 @@
               <% if (recipe.visibility == 'PROTECTED') { %>
                 <div class="easy-block-v1-badge rgba-red"><%= recipe.visibilityDesc %></div>
               <% } %>
-							<img id="recipeImage" class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt="">
+							<!--<img id="recipeImage" class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt="">-->
+							<img id="recipeImage" class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="/assets/labfnp/img/recipe-default-cover.png" alt="">
 							<div class="recipeLikeContainer" data-id="<%= recipe.id %>" data-like="<%= recipe.currentUserLike %>">
                 <i id="recipeLikeIcon" class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %> fa-sm"></i>
               </div>
@@ -133,7 +134,13 @@
 							</ul>
 							<% if (recipe.description) { %><p><%= recipe.description %></p><% } %>
 						</div>
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                <%- include ../../lib/rrssbb/recipe.ejs %>
+              </div>
+            </div>
 					</div>
+
 
 				<% }); %>
 

@@ -59,7 +59,7 @@ module.exports = {
       type: Sequelize.DATE,
       get: function() {
         try {
-          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD");
+          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD HH:mm:SS");
         } catch (e) {
           sails.log.error(e);
         }

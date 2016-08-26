@@ -104,8 +104,40 @@ module.exports.bootstrap = async (cb) => {
       });
       adminUsers[0].addRole(adminRole[0]);
     });
-
     const {environment} = sails.config;
+    let allpayConfig = sails.config.allpay;
+    if (allpayConfig) {
+      allpayConfig = {
+        merchantID: '2000132',
+        hashKey: '5294y06JbISpM5x9',
+        hashIV: 'v77hoKGq4kWxNNIS',
+        debug: true,
+        ReturnURL:'/api/allpay/paid',
+        ClientBackURL:'/shop/done',
+        PaymentInfoURL:'/allpay/paymentinfo',
+        paymentMethod:[
+          {
+            code: 'ATM',
+            name: 'ATM'
+          },{
+            code: 'Credit',
+            name: '信用卡'
+          }
+        ]
+      }
+    }
+    let AllpayClass = require('../api/services/libraries/Allpay');
+    global.AllpayService = new AllpayClass.default({
+      merchantID: allpayConfig.merchantID,
+      hashKey: allpayConfig.hashKey,
+      hashIV: allpayConfig.hashIV,
+      debug: allpayConfig.debug,
+      prod: environment === 'production',
+      ReturnURL: allpayConfig.ReturnURL,
+      ClientBackURL: allpayConfig.ClientBackURL,
+      PaymentInfoURL: allpayConfig.PaymentInfoURL,
+      allpayModel: Allpay,
+    });
 
     if (environment === 'development' && sails.config.models.migrate == 'drop') {
       sails.log.info("init Dev data", environment);
