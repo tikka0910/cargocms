@@ -49,6 +49,25 @@
 #recipeLikeIcon:hover {
   color: red;
 }
+.shareSticker {
+  max-width: 360px;
+  margin-bottom: 10px;
+  margin-left: 0px;
+}
+.rrssb-buttons a {
+  -webkit-filter: saturate(0.5);
+  -moz-filter: saturate(0.5);
+  -ms-filter: saturate(0.5);
+  -o-filter: saturate(0.5);
+  filter: saturate(0.5);
+}
+.rrssb-buttons a:hover {
+  -webkit-filter: saturate(1);
+  -moz-filter: saturate(1);
+  -ms-filter: saturate(1);
+  -o-filter: saturate(1);
+  filter: saturate(1);
+}
 </style>
 
 
@@ -134,8 +153,8 @@
 							</ul>
 							<% if (recipe.description) { %><p><%= recipe.description %></p><% } %>
 						</div>
-            <div class="row">
-              <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+            <div class="row shareSticker" >
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <%- include ../../lib/rrssbb/recipe.ejs %>
               </div>
             </div>
