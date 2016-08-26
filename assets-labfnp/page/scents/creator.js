@@ -256,7 +256,7 @@ $(function() {
 
     $.ajax({
       url: endpoint,
-      method: 'post', //create
+      method: method, //create
       dataType: 'json',
       //contentType: 'application/json',
       cache: false,
