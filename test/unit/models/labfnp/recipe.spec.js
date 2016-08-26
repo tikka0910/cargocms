@@ -1,5 +1,5 @@
 describe('test Recipe model operation', function() {
-  it.only('build model.', async (done) => {
+  it('build model.', async (done) => {
     try {
       let emptyRecipe = Recipe.build({},{raw: true});
       console.log("emptyRecipe", emptyRecipe.toJSON());

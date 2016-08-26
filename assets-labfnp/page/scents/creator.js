@@ -200,6 +200,7 @@ $(function() {
 
     drawBubbles(getScentsVisualData());
 	});
+  $('.scents-dropdown').change();
 
 	$('.scents-drops').change(function() {
 		var newVal = parseInt($(this).val(), 10) || 0
@@ -209,6 +210,7 @@ $(function() {
 	  $(this).val(newVal);
     drawBubbles(getScentsVisualData());
 	});
+  $('.scents-drops').change();
 
 	$('.scents-categories').change(function() {
 
@@ -225,6 +227,10 @@ $(function() {
 				.hide();
 		}
 	});
+  $('.scents-categories').change();
+
+
+
 
   $('#main-form').on('submit', function(event) {
 
