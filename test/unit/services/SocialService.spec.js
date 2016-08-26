@@ -1,4 +1,4 @@
-describe.only('about Social Service operation.', function() {
+describe('about Social Service operation.', function() {
   before(async (done) => {
 
     const recipes = [{
@@ -33,11 +33,7 @@ describe.only('about Social Service operation.', function() {
   it('get social data should be success.', async (done) => {
     try {
       const recipes = await Recipe.findAll();
-      const url = sails.getBaseUrl() + '/recipe/';
-      const models = recipes;
-      const {socials} = sails.config
-      let social = SocialService.getAllData({url, models, socials});
-
+      let social = SocialService.forRecipe({recipes});;
       console.log("social", JSON.stringify(social, null, 2));
 
       done();

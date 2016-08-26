@@ -1,35 +1,24 @@
 module.exports = {
-  getData: ({model, url, socials}) => {
+
+
+  forRecipe: ({recipes}) => {
     try {
-      let result = []
+      let socialsConfig = sails.config.socials
 
-      Object.keys(socials).reduce((result, key) => {
-
-        if(socials[key]){
-          let data = {};
-          data.url = url + model.id
-          data.target = key
-
-          result.push(data);
+      const socialData = recipes.map((recipe) => {
+        const {id, description} = recipe;
+        const title = recipe.perfumeName;
+        const url = sails.getBaseUrl() + '/recipe/' + id
+        return {
+          description, title, url
         }
+      });
 
-        return result;
-      }, result)
-
-      return result;
-
-    } catch (e) {
-      throw e;
-    }
-  },
-
-  getAllData: ({url, models, socials}) => {
-    try {
-      let result = models.map((model) => {
-        return SocialService.getData({model, url, socials});
-      })
-
-      return result;
+      let social = {
+        data: socialData,
+        targets: socialsConfig
+      };
+      return social;
     } catch (e) {
       throw e;
     }

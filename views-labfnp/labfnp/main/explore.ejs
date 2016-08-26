@@ -113,15 +113,9 @@
 
 			<div class="grid-boxes">
 
-				<% recipes.forEach(function(recipe) { %>
+				<% recipes.forEach(function(recipe, index) { %>
 
 					<div class="grid-boxes-in">
-
-<!-- <button class="Button LikeButton Module PinLikeButton btn hasIcon isBrioFlat likeSmall rounded"
- data-element-type="1" data-source-interest-id="" type="button">
-<em></em>
-  <span class="accessibilityText">Like</span>
-</button> -->
 
 
 						<a href="/recipe/<%= recipe.id %>" id="recipeImageContainer" class="easy-block-v1">
@@ -153,11 +147,13 @@
 							</ul>
 							<% if (recipe.description) { %><p><%= recipe.description %></p><% } %>
 						</div>
-            <div class="row shareSticker" >
-              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <%- include ../../lib/rrssbb/recipe.ejs %>
+            <% if(social.targets.length > 0){ %>
+              <div class="row shareSticker" >
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <%- include ../../lib/rrssbb.ejs %>
+                </div>
               </div>
-            </div>
+            <% } %>
 					</div>
 
 

@@ -11,18 +11,9 @@ module.exports = {
         currentUser,
       });
 
-      const url = sails.getBaseUrl() + '/recipe/';
-      const models = recipes;
-      const {socials} = sails.config
+      let social = SocialService.forRecipe({recipes});
 
-      let social = SocialService.getAllData({url, models, socials});
-
-      sails.log.info("== social result ==", social);
-
-
-      return res.view({
-        recipes: recipes
-      });
+      return res.view({recipes, social});
 
 
 
