@@ -45,7 +45,12 @@ module.exports = {
       if (!recipe) {
         return res.notFound();
       }
-      return res.view({ recipe });
+
+      let editable = false;
+      if(currentUser && recipe.UserId == currentUser.id)
+        editable = true;
+
+      return res.view({ recipe, editable });
     } catch (e) {
 
       return res.serverError(e);

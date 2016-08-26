@@ -69,10 +69,14 @@ module.exports = {
     const { id } = req.params;
     try {
       sails.log.info('delete recipe controller=>', id);
+      const userId = AuthService.getSessionUser(req).id;
       const recipe = await Recipe.deleteById(id);
       res.ok({
         message: 'Delete recipe success.',
-        data: recipe,
+        data: {
+          userId
+        },
+
       });
     } catch (e) {
       res.serverError(e);

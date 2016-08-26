@@ -235,6 +235,24 @@ $(function() {
 	});
   $('.scents-categories').change();
 
+  $('#recipeDeleteButton').on('click', function(event) {
+    event.preventDefault();
+    var id = $(this).data('id');
+    if(confirm("確定刪除此配方？")){
+      $.ajax({
+        url: '/api/labfnp/recipe/'+id,
+        method: "delete", //create
+        dataType: 'json',
+        cache: false
+      }).done(function(result) {
+        console.log(result);
+        alert(result.message);
+        location.href='/me/' + result.data.userId;
+      });
+    }
+
+  });
+
 
 
 
