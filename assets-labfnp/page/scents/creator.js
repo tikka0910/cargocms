@@ -270,8 +270,7 @@ $(function() {
         description: description,
       }
     }).done(function(result) {
-      console.log(result);
-      location.href='/me';
+      location.href='/me/' + result.data.UserId;
     });
 
   });
