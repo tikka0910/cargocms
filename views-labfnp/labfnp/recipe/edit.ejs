@@ -1,0 +1,45 @@
+<script src="//d3js.org/d3.v3.min.js"></script>
+
+<style>
+.sky-form section {
+  margin-bottom: 0;
+}
+#total-drops {
+	font-size: 48px;
+}
+#orver-drops {
+  visibility: hidden;
+  font-weight: bold;
+  font-size: 16px;
+}
+</style>
+
+<!--=== Content Part ===-->
+<div class="container content">
+	<div class="row">
+
+		<!-- Begin Content -->
+		<div class="col-md-8">
+			<!-- General Unify Forms -->
+      <%- include form.ejs %>
+			<!-- General Unify Forms -->
+
+		</div>
+		<div class="col-md-4">
+		  <p>目前滴數總和 <span id="total-drops"><%= totalDrops %></span> drops</p>
+
+      <section class="text-center">
+        <span id="orver-drops">請勿超過 50 滴！</span></p>
+      </section>
+
+
+      <!-- create container element for visualization -->
+      <div id="d3-container" class="animated"></div>
+
+	  </div>
+		<!-- End Content -->
+	</div>
+</div><!--/container-->
+<!--=== End Content Part ===-->
+
+<% LayoutUtils.addScripts('/assets/labfnp/page/scents/creator.js'); %>
