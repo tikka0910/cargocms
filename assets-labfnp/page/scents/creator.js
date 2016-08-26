@@ -219,12 +219,18 @@ $(function() {
 
 		if (prefix) {
 			var dropdown = $('.scents-dropdown[data-index='+idx+']');
+      var dropdownVal = dropdown.val();
+
+      if(dropdownVal && !dropdownVal.startsWith(prefix))
+        dropdown.val("");
 
 			console.log(prefix);
 			$('option', dropdown)
 				.show()
 				.filter(function(index, element) { return element.value && element.value.substring(0,1)!==prefix; })
 				.hide();
+
+
 		}
 	});
   $('.scents-categories').change();
@@ -254,6 +260,25 @@ $(function() {
     var visibility = $('select[name=visibility]').val();
     var description = $('textarea[name=description]').val();
 
+    var formula = getFormulaData();
+    console.log("=== formula ===", formula);
+
+    let formIsValid = true;
+    if(formula.length == 0) {
+      alert("未選定任一配方")
+      formIsValid = true;
+    };
+
+    formula.forEach(function(oneFormula){
+      if(oneFormula.drops == 0){
+        alert("選擇配方後，滴數不可為 0");
+        formIsValid = false;
+      }
+
+    });
+
+    if(!formIsValid) return false;
+
     $.ajax({
       url: endpoint,
       method: method, //create
@@ -270,7 +295,7 @@ $(function() {
         description: description,
       }
     }).done(function(result) {
-      location.href='/me/' + result.data.UserId;
+      // location.href='/me/' + result.data.UserId;
     });
 
   });
