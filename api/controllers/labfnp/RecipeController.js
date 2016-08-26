@@ -53,6 +53,10 @@ module.exports = {
   },
   edit: async function(req, res) {
     try {
+      let user = AuthService.getSessionUser(req);
+      if (!user) {
+        return res.redirect('/login');
+      }
 
       const { id } = req.params;
       const scents = await Scent.findAllWithRelationFormatForApp()
@@ -63,7 +67,12 @@ module.exports = {
 
       recipe = recipe.toJSON();
 
-      let user = recipe.User;
+      if(recipe.User.id != user.id){
+        const message = "只可維護自己的配方";
+        // return res.forbidden({message});
+        return res.forbidden(message);
+      }
+      user = recipe.User;
       let recipeFormula = recipe.formula;
       let formatFormula = [];
       let totalDrops = 0;

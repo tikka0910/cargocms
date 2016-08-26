@@ -15,7 +15,6 @@ module.exports = {
   },
 
   findOne: async (req, res) => {
-    console.log("=== findOne ===");
     const { id } = req.params;
     try {
       const recipe = await Recipe.findOneWithScent({id})

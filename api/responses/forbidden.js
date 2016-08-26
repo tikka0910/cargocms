@@ -31,9 +31,16 @@ module.exports = function forbidden (data, options) {
   // Only include errors in response if application environment
   // is not set to 'production'.  In production, we shouldn't
   // send back any identifying information about errors.
-  if (sails.config.environment === 'production') {
-    data = undefined;
+  // if (sails.config.environment === 'production') {
+  //   data = undefined;
+  // }
+
+  if(typeof data === 'string'){
+    data = {
+      message: data
+    }
   }
+
 
   // If the user-agent wants JSON, always respond with JSON
   if (req.wantsJSON) {
@@ -47,6 +54,7 @@ module.exports = function forbidden (data, options) {
   // If a view was provided in options, serve it.
   // Otherwise try to guess an appropriate view, or if that doesn't
   // work, just send JSON.
+  console.log("== forbidden ==", data);
   if (options.view) {
     return res.view(options.view, { data: data });
   }
@@ -58,6 +66,7 @@ module.exports = function forbidden (data, options) {
       sails.log.info('Forbidden redirect /admin/login')
       return res.redirect('/admin/login');
     } else {
+
       return res.view('403', { data: data }, function (err, html) {
 
         // If a view error occured, fall back to JSON(P).
