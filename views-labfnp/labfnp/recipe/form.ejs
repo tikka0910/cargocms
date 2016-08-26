@@ -52,7 +52,7 @@
       <section class="col col-4">
         <label class="label">所選之香味分子<%= formula.num %></label>
         <label class="select">
-          <select name="formulaScents[<%= formula.num %>]" class="scents-dropdown" data-index="<%= formula.num %>">
+          <select name="formulaScents[<%= formula.index %>]" class="scents-dropdown" data-index="<%= formula.index %>">
             <option value=""></option>
             <% scents.forEach(function(scent) { %>
               <option <%= formula.scentName == scent.name ?'selected':'' %> value="<%= scent.name %>" data-color="<%= scent.color %>">
