@@ -1,19 +1,23 @@
 describe('test Recipe model operation', function() {
-  it('build model.', async (done) => {
+  it.only('build model.', async (done) => {
     try {
-      let emptyRecipe = Recipe.build();
+      let emptyRecipe = Recipe.build({},{raw: true});
       console.log("emptyRecipe", emptyRecipe.toJSON());
       // 輸出如下
       // { formula: [],
-      //   message: '沒有備註',
-      //   description: '沒有描述',
-      //   visibilityDesc: '公開',
-      //   productionStatusDesc: 'NEW',
-      //   updatedAt: '2016/08/26 09:52:50',
-      //   createdAt: '2016/08/26 09:52:50',
-      //   visibility: 'PUBLIC',
-      //   productionStatus: 'NEW',
-      //   id: null }
+      // message: '沒有備註',
+      // description: '沒有描述',
+      // visibilityDesc: '公開',
+      // productionStatusDesc: 'NEW',
+      // updatedAt: '2016/08/26 11:18:45',
+      // createdAt: '2016/08/26 11:18:45',
+      // authorName: '',
+      // perfumeName: '',
+      // totalDrops: 0,
+      // coverPhoto: '',
+      // visibility: 'PUBLIC',
+      // productionStatus: 'NEW',
+      // id: null }
       done();
     } catch (e) {
       done(e);

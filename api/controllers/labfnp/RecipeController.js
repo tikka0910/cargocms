@@ -8,9 +8,27 @@ module.exports = {
         return res.redirect('/login');
       }
 
+      let recipe = Recipe.build().toJSON();
+      recipe.message = ""
+      recipe.description = ""
+
+      for (var i = 0; i < 6; i++) {
+        let formula = {
+          index: i,
+          num: i+1,
+          scentCategorie: '',
+          scentName: '',
+          drops: 0
+        };
+        recipe.formula.push(formula);
+      }
+      console.log("=== recipe ===", recipe);
+
       return res.view({
         user: currentUser,
+        recipe,
         scents: await Scent.findAllWithRelationFormatForApp()
+
       });
     }
     catch (e) {
