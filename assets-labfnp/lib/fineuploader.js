@@ -23,19 +23,20 @@ var restrictedUploader = new qq.FineUploader({
   },
   callbacks: {
     onError: function(id, name, isError) {
-      // messageApp.show({desc: isError, type: 'error'});
-      // uploadImageAppModel.onError(id, name, isError);
       console.log(id, name, isError);
+      swal({
+        title: '注意',
+        text: isError,
+        type: 'warning',
+      });
     },
     onComplete: function(id, name, response) {
       console.log(id, name, response);
       $('input[name=coverPhotoId]').val(response.data.id);
-      // uploadImageAppModel.onComplete(id, name, response);
     },
     onDeleteComplete: function(id, name, response) {
       console.log(id, name, response);
       $('input[name=coverPhotoId]').val(null);
-      // uploadImageAppModel.onDeleteComplete(id, name, response);
     },
   },
   messages: {
