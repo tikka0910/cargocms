@@ -108,6 +108,58 @@ describe('test user', () => {
     }
   });
 
+  describe('delete user', () => {
+    let deleteThisUser;
+    before(async (done) => {
+      try {
+        deleteThisUser = await User.create({
+          username: `testDeleteWatch`,
+          email: `testDeleteWatch@gmail.com`,
+          firstName: 'test',
+          lastName: 'DeleteWatch'
+        });
+        let passport = await Passport.create({provider: 'local', password: 'user', UserId: deleteThisUser.id});
+        sails.log.info('deleteThisUser.id=>', deleteThisUser.id);
+        done();
+      } catch (e) {
+        done(e);
+      }
+    });
+
+    it('delete @watch', async (done) => {
+
+      try {
+        //search user item
+        browser.url('/admin/#/admin/user');
+        //搜尋該user 進入編輯user頁面
+        browser.waitForExist('#main-table_filter input[type="search"]', 1000);
+        browser.setValue('#main-table_filter input[type="search"]', `testDeleteWatch`);
+        browser
+          .click('#main-table tbody')
+          .click('#ToolTables_main-table_2');
+        //點擊刪除user
+        browser.waitForExist('#main-form .btn.btn-danger', 1000);
+        browser.click('#main-form .btn.btn-danger');
+        //確定刪除
+        browser.waitForExist('#bot1-Msg1', 1000);
+        browser.click('#bot1-Msg1');
+        //等待後端刪除完成 跳轉回user列表
+        browser.waitForExist('#main-table_filter input[type="search"]', 2000);
+
+        let res = await User.find({
+          where: {
+            username: deleteThisUser.username
+          }
+        });
+        (res === null).should.be.true;
+        done();
+      } catch (e) {
+        done(e);
+      }
+
+    });
+  });
+
 
 
 });
