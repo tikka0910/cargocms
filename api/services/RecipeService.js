@@ -17,11 +17,13 @@ module.exports = {
     visibility,
     productionStatus,
     UserId,
+    coverPhotoId,
   }) => {
     try {
       const bubble = (a,b) => a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];
       recipe.formula = recipe.formula.sort(bubble);
       sails.log.info(recipe);
+
       return await Recipe.create(recipe);
     } catch (e) {
       sails.log.error(e);

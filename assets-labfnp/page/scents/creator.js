@@ -247,6 +247,7 @@ $(function() {
     var message = $('textarea[name=message]').val();
     var visibility = $('select[name=visibility]').val();
     var description = $('textarea[name=description]').val();
+    var coverPhotoId = $('input[name=coverPhotoId]').val();
 
     $.ajax({
       url: endpoint,
@@ -262,6 +263,7 @@ $(function() {
         message: message,
         visibility: visibility,
         description: description,
+        coverPhotoId: coverPhotoId,
       }
     }).done(function(result) {
       console.log(result);

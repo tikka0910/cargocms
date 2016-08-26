@@ -29,10 +29,12 @@ var restrictedUploader = new qq.FineUploader({
     },
     onComplete: function(id, name, response) {
       console.log(id, name, response);
+      $('input[name=coverPhotoId]').val(response.data.id);
       // uploadImageAppModel.onComplete(id, name, response);
     },
     onDeleteComplete: function(id, name, response) {
       console.log(id, name, response);
+      $('input[name=coverPhotoId]').val(null);
       // uploadImageAppModel.onDeleteComplete(id, name, response);
     },
   },
