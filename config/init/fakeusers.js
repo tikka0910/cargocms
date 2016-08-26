@@ -14,6 +14,10 @@ module.exports.init = async () => {
         });
       });
     }
+    Slogan.create({
+      content: 'OK',
+      source: 'OK',
+    });
   } catch (e) {
     console.error(e);
   }

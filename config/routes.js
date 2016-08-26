@@ -1,3 +1,4 @@
+
 /**
  * Route Mappings
  * (sails.config.routes)
@@ -47,13 +48,19 @@ module.exports.routes = {
   'get /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.findOne',
   'put /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.update',
   'delete /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.destroy',
+
+  'get /api/labfnp/feeling': 'api/labfnp/FeelingController.find',
+  'get /api/labfnp/feeling/:id': 'api/labfnp/FeelingController.findOne',
+  'post /api/labfnp/feeling': 'api/labfnp/FeelingController.create',
+  'put /api/labfnp/feeling/:id': 'api/labfnp/FeelingController.update',
+  'delete /api/labfnp/feeling/:id': 'api/labfnp/FeelingController.destroy',
+
   'get /api/labfnp/recipe/like/:id': 'api/labfnp/RecipeController.like',
   'get /api/labfnp/recipe/unlike/:id': 'api/labfnp/RecipeController.unlike',
 
   'get /api/labfnp/scent/simpleList': 'api/labfnp/ScentController.find',
   'get /api/labfnp/scent': 'api/labfnp/ScentController.find',
   'get /api/labfnp/scentnote': 'api/labfnp/ScentNoteController.find',
-
 
   'get /api/admin/user': 'api/admin/UserController.find',
   'get /api/admin/user/:id': 'api/admin/UserController.findOne',
@@ -66,6 +73,12 @@ module.exports.routes = {
   'post /api/admin/post': 'api/admin/PostController.create',
   'put /api/admin/post/:id': 'api/admin/PostController.update',
   'delete /api/admin/post/:id': 'api/admin/PostController.destroy',
+
+  'get /api/admin/slogan': 'api/admin/SloganController.find',
+  'get /api/admin/slogan/:id': 'api/admin/SloganController.findOne',
+  'post /api/admin/slogan': 'api/admin/SloganController.create',
+  'put /api/admin/slogan/:id': 'api/admin/SloganController.update',
+  'delete /api/admin/slogan/:id': 'api/admin/SloganController.destroy',
 
   // 'get /api/admin/Default': 'api/admin/DefaultController.find',
   // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',

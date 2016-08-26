@@ -55,6 +55,59 @@ describe('test user', () => {
     }
   });
 
+  it('Update user infomation', async(done) => {
+    try{
+      const updateTargetUser = 'usertest1';
+
+      const userInfo = {
+        username: 'BrooklynBackham',
+        email: 'brooklynBay@email.com',
+        firstName: 'Brooklyn',
+        lastName: 'Backham',
+        password: 'chloe'
+      }
+
+      //search user item
+      browser.url('/admin/#/admin/user');
+      browser.waitForExist('#main-table_filter input[type="search"]', 1000)
+      browser.setValue('#main-table_filter input[type="search"]', updateTargetUser);
+
+      browser
+        .click('#main-table tbody')
+        .click('#ToolTables_main-table_2');
+
+      //loading edit page
+      const updateUserInput = browser.element('#content');
+      updateUserInput.waitForExist(1000);
+
+      updateUserInput
+        .setValue('[name="username"]', userInfo.username)
+        .setValue('[name="email"]', userInfo.email)
+        .setValue('[name="firstName"]', userInfo.firstName)
+        .setValue('[name="lastName"]', userInfo.lastName);
+
+      //save
+      browser
+        .click('#main-form footer button[type="submit"]')
+        .waitForExist('#main-table-widget', 1000, true);
+
+      //降冪排序
+      browser.waitForExist('#main-table-widget tr th:nth-child(1)', 1000);
+      browser.click('#main-table-widget tr th:nth-child(1)');
+
+      //check
+      const userUpdateField = browser.element('#main-table-widget tbody tr:nth-child(1) td:nth-child(4)').getText();
+      const res = await User.find({where: {email: userInfo.email}});
+
+      //檢查更新後資料庫data是否與前端呈現相符
+      expect(res.email).to.be.equal(userUpdateField);
+
+      done();
+    }catch(e){
+      done(e);
+    }
+  });
+
 
 
 });
