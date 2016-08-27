@@ -5,16 +5,20 @@ module.exports = {
     try {
       const { userId } = req.query;
       const currentUser = AuthService.getSessionUser(req);
+
       const recipes = await Recipe.findAndIncludeUserLike({
         findByUserId: userId,
         currentUser,
       });
-      return res.view({
-        recipes: recipes
-      });
+
+      let social = SocialService.forRecipe({recipes});
+
+      return res.view({recipes, social});
+
+
+
     }
     catch (e) {
-      console.log(e);
       res.serverError(e);
     }
   },
@@ -40,7 +44,6 @@ module.exports = {
       });
     }
     catch (e) {
-      console.log(e);
       res.serverError(e);
     }
   },

@@ -50,7 +50,9 @@ module.exports = {
       if(currentUser && recipe.UserId == currentUser.id)
         editable = true;
 
-      return res.view({ recipe, editable });
+      let social = SocialService.forRecipe({recipes: [recipe]});
+
+      return res.view({ recipe, editable, social});
     } catch (e) {
 
       return res.serverError(e);

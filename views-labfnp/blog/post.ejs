@@ -51,9 +51,14 @@
       <% }); %>
     </div>
 
-    <div style="max-width: 400px">
-      <%- include ../lib/rrssbb/blog.ejs %>
-    </div>
+    <% if(social.targets.length > 0){ %>
+      <div style="max-width: 400px">
+        <% var socialData = social.data[0] %>
+        <%- include ../lib/rrssbb.ejs %>
+      </div>
+    <% } %>
+
+
 
   </div>
 </div>
