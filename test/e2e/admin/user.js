@@ -134,19 +134,21 @@ describe('test user', () => {
         //search user item
         browser.url('/admin/#/admin/user');
         //搜尋該user 進入編輯user頁面
-        browser.waitForExist('#main-table_filter input[type="search"]', 1000);
+        browser.waitForExist('#main-table_filter input[type="search"]');
         browser.setValue('#main-table_filter input[type="search"]', deleteThisUser.username);
+        browser.pause(2000);
+        browser.waitForExist('#ToolTables_main-table_2')
         browser
           .click('#main-table tbody')
           .click('#ToolTables_main-table_2');
         //點擊刪除user
-        browser.waitForExist('#main-form .btn.btn-danger', 1000);
+        browser.waitForExist('#main-form .btn.btn-danger');
         browser.click('#main-form .btn.btn-danger');
         //確定刪除
-        browser.waitForExist('#bot1-Msg1', 1000);
+        browser.waitForExist('#bot1-Msg1');
         browser.click('#bot1-Msg1');
         //等待後端完成刪除 跳轉回user列表
-        browser.waitForExist('#main-table_filter input[type="search"]', 5000);
+        browser.waitForExist('#main-table_filter input[type="search"]');
 
         let res = await User.find({
           where: {
