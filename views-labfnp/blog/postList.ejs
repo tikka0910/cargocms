@@ -1,4 +1,4 @@
-<% data.items.forEach(function(post){ %>
+<% data.items.forEach(function(post, index){ %>
   <div class="news-v3 bg-color-white margin-bottom-60">
     <% if (post.coverUrl) { %>
       <% if (post.coverType == 'img') { %>
@@ -59,11 +59,14 @@
           <span class="label label-default"><%= tag %></span>
         <% }); %>
       </div>
-      <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-          <%- include ../lib/rrssbb/blog.ejs %>
+      <% if(social.targets.length > 0){ %>
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <% var socialData = social.data[index] %>
+            <%- include ../lib/rrssbb.ejs %>
+          </div>
         </div>
-      </div>
+      <% } %>
     </div>
   </div>
 <% }); %>
