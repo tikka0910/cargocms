@@ -138,7 +138,7 @@ describe('test user', () => {
         browser.setValue('#main-table_filter input[type="search"]', deleteThisUser.username);
         
         browser.pause(2000);
-        browser.waitForExist('#ToolTables_main-table_2')
+        browser.waitForExist('#ToolTables_main-table_2');
         browser
           .click('#main-table tbody')
           .click('#ToolTables_main-table_2');
