@@ -4,6 +4,7 @@ import {login, logout} from "../../util/e2eHelper.js"
 describe('test user', () => {
   before((done)=>{
     try {
+      console.log("=== admin login ===");
       login("admin");
       done();
     } catch (e) {
@@ -30,9 +31,9 @@ describe('test user', () => {
       };
       // 新增
       browser.url('/admin/#/admin/user');
-      browser.waitForExist('#ToolTables_main-table_1',2000)
+      browser.waitForExist('#ToolTables_main-table_1')
       browser.click('#ToolTables_main-table_1');
-      browser.waitForExist('[class="btn btn-primary"]',1000);
+      browser.waitForExist('[class="btn btn-primary"]');
       //填入資料
       browser.setValue('[name="username"]', userData.username)
       .setValue('[name="email"]', userData.email)
@@ -42,15 +43,17 @@ describe('test user', () => {
       .setValue('[name="passwordConfirm"]', userData.password);
       //送出
       browser.click('[class="btn btn-primary"]')
-      .waitForExist('[class="btn btn-primary"]',1000,true);
+      .waitForExist('[class="btn btn-primary"]', null, true);
       //檢查
       const res = await User.find({where: {username: userData.username}});
+      console.log("res.toJSON()", res.toJSON());
       res.username.should.be.eq(userData.username);
       res.email.should.be.eq(userData.email);
 
       // expect(browser.elements('#ToolTables_main-table_1')!=null).to.equal(true);
       done();
     } catch (e) {
+      console.error(e.stack);
       done(e);
     }
   });
@@ -69,18 +72,17 @@ describe('test user', () => {
 
       //search user item
       browser.url('/admin/#/admin/user');
-      browser.waitForExist('#main-table_filter input[type="search"]', 1000)
+      browser.waitForExist('#main-table_filter input[type="search"]')
       browser.setValue('#main-table_filter input[type="search"]', updateTargetUser);
 
+      browser.pause(2000);
+      browser.waitForExist('#ToolTables_main-table_2')
       browser
         .click('#main-table tbody')
         .click('#ToolTables_main-table_2');
 
-      //loading edit page
-      const updateUserInput = browser.element('#content');
-      updateUserInput.waitForExist(1000);
-
-      updateUserInput
+      browser.waitForExist('[name="username"]');
+      browser
         .setValue('[name="username"]', userInfo.username)
         .setValue('[name="email"]', userInfo.email)
         .setValue('[name="firstName"]', userInfo.firstName)
@@ -88,11 +90,11 @@ describe('test user', () => {
 
       //save
       browser
-        .click('#main-form footer button[type="submit"]')
-        .waitForExist('#main-table-widget', 1000, true);
+        .click('[class="btn btn-primary"]')
+        .waitForExist('[class="btn btn-primary"]', null, true);
 
       //降冪排序
-      browser.waitForExist('#main-table-widget tr th:nth-child(1)', 1000);
+      browser.waitForExist('#main-table-widget tr th:nth-child(1)');
       browser.click('#main-table-widget tr th:nth-child(1)');
 
       //check

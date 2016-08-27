@@ -5,6 +5,8 @@ var host = ip.address();
 module.exports = {
   // browser: 'firefox',
   webdriverio: {
-    baseUrl: 'http://'+host+':1338'
+    baseUrl: 'http://'+host+':1338',
+    waitforTimeout: 5000,
+    screenshotPath: __dirname+"/test/e2e/screenshot"
   },
 };

@@ -2,19 +2,30 @@
 <div class="blog_masonry_3col">
 	<div class="container content grid-boxes">
 
-	  <% var c = 0; feed.data.forEach(function(post) { c++; %>
+	  <% var c = 0; feeds.forEach(function(feed) { c++; %>
 
 			<div class="grid-boxes-in">
-				<img class="img-responsive" src="<%= post.full_picture %>" alt="">
+
+				<% if (feed.fullPicture) { %>
+					<a href="/wall/<%= feed.sourceId %>" title="<%= feed.name %>">
+						<img class="img-responsive" src="<%= feed.fullPicture %>" alt="<%= feed.name %>" />
+					</a>
+				<% } %>
+
 				<div class="grid-boxes-caption">
 					<ul class="list-inline grid-boxes-news">
-						<li><i class="fa fa-clock-o"></i> <%=: post.created_time.substring(0, 10) %></li>
+						<li>
+							<i class="fa fa-clock-o"></i>
+							<%=: feed.createdAt %>
+						</li>
 						<!--<li>|</li>
 						<li><a href="#"><i class="fa fa-comments-o"></i> 06</a></li>-->
 					</ul>
-					<% if (post.message) { %>
-					<p class="dont-break-out"><%= post.message %></p>
-					<% } %>
+					<div class="blog-content">
+						<% if (feed.message) { %>
+							<p class="dont-break-out"><%-: feed.message | nl2br %></p>
+						<% } %>
+					</div>
 				</div>
 			</div>
 
@@ -29,10 +40,9 @@
 
 	  <% }); %>
 
-
 	</div><!--/container-->
 </div>
 <!--=== End Content Part ===-->
 
 <% LayoutUtils.addStylesheets('/assets/unify/css/pages/blog_masonry_3col.css') %>
-<% LayoutUtils.addScripts('/assets/unify/js/pages/blog-masonry.js') %>
+<% LayoutUtils.addScripts('/assets/unify/js/pages/blog-masonry-w240.js') %>

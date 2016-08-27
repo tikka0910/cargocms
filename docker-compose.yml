@@ -44,6 +44,13 @@ test:
   volumes:
     - ./:/app
 
+start-e2e-env:
+  container_name: e2e-env
+  image: selenium/standalone-firefox-debug:2.53.0
+  ports:
+    - "4444:4444"
+    - "5900:5900"
+
 start:
   container_name: sailsSample_dev
   image: agileworks/sails_sample_env
