@@ -143,8 +143,8 @@ describe('test user', () => {
           .click('#main-table tbody')
           .click('#ToolTables_main-table_2');
         //點擊刪除user
-        browser.waitForExist('#main-form .btn.btn-danger');
-        browser.click('#main-form .btn.btn-danger');
+        browser.waitForExist('.btn.btn-danger');
+        browser.click('.btn.btn-danger');
         //確定刪除
         browser.waitForExist('#bot1-Msg1');
         browser.click('#bot1-Msg1');
