@@ -92,6 +92,7 @@ module.exports.routes = {
   '/admin/config.js': 'AdminController.config',
 
   '/recipe/:id':      'labfnp/RecipeController.show',
+  '/recipe/preview/:id': 'labfnp/RecipeController.preview',
   '/recipe/edit/:id': 'labfnp/RecipeController.edit',
   '/creator':         'labfnp/RecipeController.create',
   '/lab':             'labfnp/MainController.explore',
