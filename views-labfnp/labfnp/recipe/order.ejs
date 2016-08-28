@@ -45,7 +45,7 @@
   .required {
     color: red;
   }
-  #smubmit {
+  #submitOrder {
     width: 100%;
   }
   section {
@@ -177,7 +177,7 @@
       </div>
 
       <div class="text-center">
-        <button form="orderForm" id="submitForm" type="sumbit" class="btn-u btn-u-green" data-id="<%= recipe.id %>">
+        <button form="orderForm" id="submitOrder" type="sumbit" class="btn-u btn-u-green" data-id="<%= recipe.id %>">
           <i class="fa fa-check" aria-hidden="true"></i>
           送出
         </button>
@@ -199,37 +199,6 @@
 <% LayoutUtils.addScripts('/assets/labfnp/page/recipe/favorite.js'); %>
 <% LayoutUtils.addScriptBlock(`
   $(document).ready(function(){
-
-    // $('#submitForm').click()
-
-    $('#orderForm').submit(function(e) {
-      // e.preventDefault();
-      // console.log('submit!');
-      //
-      // var id = $('#orderForm').find('input[name="id"]').select(0).val();
-      //
-      // var submitSuccess = function() {
-      //   console.log('submitSuccess!');
-      // };
-      //
-      // var submitFailed = function() {
-      //   console.log('submitFailed!');
-      // };
-      //
-  		// $.ajax({
-  		// 	url: /recipe/buy/' + id
-  		// 	type: 'POST',
-  		// 	dataType: 'json',
-  		// 	data: appModel.data.item,
-  		// 	xhrFields: {
-  		// 		withCredentials: true,
-  		// 	},
-  		// 	success: submitSuccess,
-  		// 	error: submitFailed,
-  		// });
-
-    });
-
 
 
   });
