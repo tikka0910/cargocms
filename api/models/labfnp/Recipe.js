@@ -29,15 +29,21 @@ module.exports = {
         }
       }
     },
+
     formulaLogs: {
       type: Sequelize.TEXT
     },
+
     authorName: {
       type: Sequelize.STRING,
+      defaultValue: ''
     },
+
     perfumeName: {
       type: Sequelize.STRING,
+      defaultValue: ''
     },
+
     message: {
       type: Sequelize.STRING,
       get: function() {
@@ -46,6 +52,7 @@ module.exports = {
         return val;
       }
     },
+
     description: {
       type: Sequelize.STRING,
       get: function() {
@@ -54,16 +61,22 @@ module.exports = {
         return val;
       }
     },
+
     totalDrops: {
       type: Sequelize.INTEGER,
+      defaultValue: 0
     },
+
     coverPhoto: {
       type: Sequelize.STRING,
+      defaultValue: ''
     },
+
     visibility: {
       type: Sequelize.ENUM('PUBLIC', 'PRIVATE', 'PROTECTED'),
       defaultValue: 'PUBLIC',
     },
+
     visibilityDesc: {
       type: Sequelize.VIRTUAL,
       get: function() {
@@ -84,10 +97,12 @@ module.exports = {
         return desc;
       }
     },
+
     productionStatus: {
       type: Sequelize.ENUM("NEW", "RECEIVED", "REQUESTED", "SUBMITTED", "PAID", "PROCESSING", "CANCELLED", "SHIPPED", "DELIVERED", "COMPLETED"),
       defaultValue: 'NEW',
     },
+
     productionStatusDesc: {
       type: Sequelize.VIRTUAL,
       get: function() {
@@ -123,6 +138,7 @@ module.exports = {
         return desc;
       }
     },
+
     updatedAt: {
       type: Sequelize.DATE,
       get: function() {
@@ -133,16 +149,18 @@ module.exports = {
         }
       }
     },
+
     createdAt: {
       type: Sequelize.DATE,
       get: function() {
         try {
-          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD");
+          return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD HH:mm:SS");
         } catch (e) {
           sails.log.error(e);
         }
       }
-    }
+    },
+
   },
   associations: function() {
     Recipe.hasMany(UserLikeRecipe);
@@ -222,7 +240,24 @@ module.exports = {
           throw e;
         }
       },
+      getFeelings: async function({id}){
+        try {
+          const recipe = await Recipe.findOne({where: {id}});
+          const {formula} = recipe;
 
+          const secntNames = formula.map(oneFormula => oneFormula.scent)
+          const where = {name: secntNames}
+
+          const scents = await Scent.findAll({where});
+          let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
+          feelings = RecipeService.sortFeelingsByValue({feelings});
+
+
+          return feelings;
+        } catch (e) {
+          throw e;
+        }
+      },
     },
     instanceMethods: {
       checkCurrentUserLike: async function({ currentUser }) {

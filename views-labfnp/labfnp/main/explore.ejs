@@ -49,6 +49,25 @@
 #recipeLikeIcon:hover {
   color: red;
 }
+.shareSticker {
+  max-width: 360px;
+  margin-bottom: 10px;
+  margin-left: 0px;
+}
+.rrssb-buttons a {
+  -webkit-filter: saturate(0.5);
+  -moz-filter: saturate(0.5);
+  -ms-filter: saturate(0.5);
+  -o-filter: saturate(0.5);
+  filter: saturate(0.5);
+}
+.rrssb-buttons a:hover {
+  -webkit-filter: saturate(1);
+  -moz-filter: saturate(1);
+  -ms-filter: saturate(1);
+  -o-filter: saturate(1);
+  filter: saturate(1);
+}
 </style>
 
 
@@ -94,22 +113,17 @@
 
 			<div class="grid-boxes">
 
-				<% recipes.forEach(function(recipe) { %>
+				<% recipes.forEach(function(recipe, index) { %>
 
 					<div class="grid-boxes-in">
-
-<!-- <button class="Button LikeButton Module PinLikeButton btn hasIcon isBrioFlat likeSmall rounded"
- data-element-type="1" data-source-interest-id="" type="button">
-<em></em>
-  <span class="accessibilityText">Like</span>
-</button> -->
 
 
 						<a href="/recipe/<%= recipe.id %>" id="recipeImageContainer" class="easy-block-v1">
               <% if (recipe.visibility == 'PROTECTED') { %>
                 <div class="easy-block-v1-badge rgba-red"><%= recipe.visibilityDesc %></div>
               <% } %>
-							<img id="recipeImage" class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt="">
+							<!--<img id="recipeImage" class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt="">-->
+							<img id="recipeImage" class="img-responsive lazy" src="http://placehold.it/640x480?text=LOADING" data-src="/assets/labfnp/img/recipe-default-cover.png" alt="">
 							<div class="recipeLikeContainer" data-id="<%= recipe.id %>" data-like="<%= recipe.currentUserLike %>">
                 <i id="recipeLikeIcon" class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %> fa-sm"></i>
               </div>
@@ -133,7 +147,16 @@
 							</ul>
 							<% if (recipe.description) { %><p><%= recipe.description %></p><% } %>
 						</div>
+            <% if(social.targets.length > 0){ %>
+              <div class="row shareSticker" >
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <% var socialData = social.data[index] %>
+                  <%- include ../../lib/rrssbb.ejs %>
+                </div>
+              </div>
+            <% } %>
 					</div>
+
 
 				<% }); %>
 

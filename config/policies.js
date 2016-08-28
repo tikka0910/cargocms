@@ -30,12 +30,16 @@ module.exports.policies = {
     'update': ['nocache'],
     'delete': ['nocache']
   },
-  'RecipeController': {
+  'api/labfnp/RecipeController': {
     'index': ['nocache'],
     'findOne': ['nocache'],
     'create': ['nocache'],
     'update': ['nocache'],
     'delete': ['nocache'],
+  },
+  'labfnp/RecipeController': {
+    'create': ['passport', 'sessionAuth'],
+    'update': ['nocache']
   },
   'BlogController': {
     'index': true
@@ -46,6 +50,13 @@ module.exports.policies = {
   },
   'AdminController': {
     'index': ['passport', 'sessionAuth', 'isAdmin']
+  },
+  'SloganController': {
+    'index': ['nocache'],
+    'findOne': ['nocache'],
+    'create': ['nocache'],
+    'update': ['nocache'],
+    'delete': ['nocache'],
   },
   /***************************************************************************
   *                                                                          *

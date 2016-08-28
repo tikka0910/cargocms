@@ -1,3 +1,4 @@
+
 /**
  * Route Mappings
  * (sails.config.routes)
@@ -47,13 +48,21 @@ module.exports.routes = {
   'get /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.findOne',
   'put /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.update',
   'delete /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.destroy',
+
+  'get /api/labfnp/recipe/:id/feelings': 'api/labfnp/RecipeController.feelings',
+
+  'get /api/labfnp/feeling': 'api/labfnp/FeelingController.find',
+  'get /api/labfnp/feeling/:id': 'api/labfnp/FeelingController.findOne',
+  'post /api/labfnp/feeling': 'api/labfnp/FeelingController.create',
+  'put /api/labfnp/feeling/:id': 'api/labfnp/FeelingController.update',
+  'delete /api/labfnp/feeling/:id': 'api/labfnp/FeelingController.destroy',
+
   'get /api/labfnp/recipe/like/:id': 'api/labfnp/RecipeController.like',
   'get /api/labfnp/recipe/unlike/:id': 'api/labfnp/RecipeController.unlike',
 
   'get /api/labfnp/scent/simpleList': 'api/labfnp/ScentController.find',
   'get /api/labfnp/scent': 'api/labfnp/ScentController.find',
   'get /api/labfnp/scentnote': 'api/labfnp/ScentNoteController.find',
-
 
   'get /api/admin/user': 'api/admin/UserController.find',
   'get /api/admin/user/:id': 'api/admin/UserController.findOne',
@@ -67,6 +76,12 @@ module.exports.routes = {
   'put /api/admin/post/:id': 'api/admin/PostController.update',
   'delete /api/admin/post/:id': 'api/admin/PostController.destroy',
 
+  'get /api/admin/slogan': 'api/admin/SloganController.find',
+  'get /api/admin/slogan/:id': 'api/admin/SloganController.findOne',
+  'post /api/admin/slogan': 'api/admin/SloganController.create',
+  'put /api/admin/slogan/:id': 'api/admin/SloganController.update',
+  'delete /api/admin/slogan/:id': 'api/admin/SloganController.destroy',
+
   // 'get /api/admin/Default': 'api/admin/DefaultController.find',
   // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
   // 'post /api/admin/Default': 'api/admin/DefaultController.create',
@@ -74,13 +89,16 @@ module.exports.routes = {
   // 'delete /api/admin/Default/:id': 'api/admin/DefaultController.destroy',
 
   //----- custom -----
-  '/creator':         'labfnp/MainController.creator',
-  '/lab':             'labfnp/MainController.explore',
-  '/recipe/:id':      'labfnp/MainController.recipe',
-  '/me':              'labfnp/MainController.portfolio',
-  '/me/:id':          'labfnp/MainController.portfolio',
+
   '/admin':           'AdminController.index',
   '/admin/config.js': 'AdminController.config',
+
+  '/recipe/:id':      'labfnp/RecipeController.show',
+  '/recipe/edit/:id': 'labfnp/RecipeController.edit',
+  '/creator':         'labfnp/RecipeController.create',
+  '/lab':             'labfnp/MainController.explore',
+  '/me':              'labfnp/MainController.portfolio',
+  '/me/:id':          'labfnp/MainController.portfolio',
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
@@ -98,6 +116,9 @@ module.exports.routes = {
   "/labfnp/:controller/:action/:id?": {},
   "/admin/:controller/:action/:id?": {},
   "/:controller/:action/:id?": {},
+
+  //----- WallController -----
+  'get /wall/:id': 'WallController.show',
 
 
   /***************************************************************************

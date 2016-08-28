@@ -1,34 +1,58 @@
 
 const ScentNoteData = require('./data/ScentNote');
 const ScentData = require('./data/Scent');
+const ScentDetail = require('./data/ScentDetail.json');
 const FeelingData = require('./data/Feeling');
 
 module.exports.init = async () => {
   try {
 
-
-    ScentNoteData.rows.forEach(function(row) {
-      ScentNote.create(row).then(function(scentNote) {
-
-        ScentData.rows.forEach(function(row) {
-          if (row.scentNote == scentNote.title) {
-            row.scents.forEach(function(scentName) {
-
-              Scent.create({
-                sequence: parseInt(scentName.replace(/[^0-9]+/, '')),
-                name: scentName,
-                feelings: FeelingData[scentName] || []
-              })
-              .then(function(scent) {
-                scentNote.addScent(scent);
-              });
-
-            })
-          }
-        });
-
-      });
+    ScentDetail.rows.forEach(function(scentDetail){
+      Scent.create({
+        sequence: parseInt(scentDetail.name.replace(/[^0-9]+/, '')),
+        name: scentDetail.name,
+        title: scentDetail.title,
+        description: scentDetail.description,
+      })
     });
+
+    Feeling.bulkCreate(FeelingData.rows).then(() => {
+      ScentNoteData.rows.forEach(function(row) {
+        ScentNote.create(row).then(function(scentNote) {
+
+          ScentData.rows.forEach(function(row) {
+            if (row.scentNote == scentNote.title) {
+              row.scents.forEach(function(scentName) {
+                Scent.findOne({
+                  where: {
+                    name: scentName,
+                  }
+                }).then(function(scent) {
+                  if (scent) {
+
+                    Feeling.findAll({where: {scentName: scentName}}).then((feelings) => {
+
+                      feelings = feelings.map((feeling) => {
+                        const key = feeling.title
+                        const value = feeling.score
+                        return {key, value}
+                      })
+
+                      scent.ScentNoteId = scentNote.id;
+                      scent.feelings = feelings
+                      scent.save();
+                    })
+                  }
+                });
+              })
+            }
+          });
+
+        });
+      });
+
+    })
+
 
     let newMenuItems = [
       { icon: 'home', href: '/admin/dashboard', title: '控制台', sequence: 0},
@@ -45,6 +69,8 @@ module.exports.init = async () => {
       { href: '/admin/labfnp/recipe', title: '配方資料', sequence: 40},
       { href: '/admin/labfnp/scent', title: '香味分子', sequence: 50},
       { href: '/admin/labfnp/scentnote', title: '香調', sequence: 60},
+      { href: '/admin/labfnp/feeling', title: '感覺', sequence: 70},
+      { href: '/admin/slogan', title: '口號', sequence: 80},
     ]
 
 
@@ -60,11 +86,13 @@ module.exports.init = async () => {
     createdSubMenuItems = await Promise.all(promises);
     createdMenuItems[2].addSubMenuItems(createdSubMenuItems);
 
-
-
-
-
-
+    const feeling = {
+      title: '花香',
+      scentName: 'BT99',
+      totalRepeat: 4,
+      score: 10,
+    };
+    await Feeling.create(feeling);
 
 
 

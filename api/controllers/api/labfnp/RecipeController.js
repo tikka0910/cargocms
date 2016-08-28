@@ -10,12 +10,11 @@ module.exports = {
           items: recipes
       }});
     } catch (e) {
-      res.serverError({ message: e, data: {}});
+      res.serverError(e);
     }
   },
 
   findOne: async (req, res) => {
-    console.log("=== findOne ===");
     const { id } = req.params;
     try {
       const recipe = await Recipe.findOneWithScent({id})
@@ -25,7 +24,7 @@ module.exports = {
         data: recipe,
       });
     } catch (e) {
-      res.serverError({ message: e, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -43,7 +42,7 @@ module.exports = {
         data: recipe,
       });
     } catch (e) {
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -62,7 +61,7 @@ module.exports = {
         data: recipe,
       });
     } catch (e) {
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -70,13 +69,17 @@ module.exports = {
     const { id } = req.params;
     try {
       sails.log.info('delete recipe controller=>', id);
+      const userId = AuthService.getSessionUser(req).id;
       const recipe = await Recipe.deleteById(id);
       res.ok({
         message: 'Delete recipe success.',
-        data: recipe,
+        data: {
+          userId
+        },
+
       });
     } catch (e) {
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
 
@@ -94,7 +97,7 @@ module.exports = {
       });
     } catch (e) {
       sails.log.error(e);
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
     }
   },
   unlike: async (req, res) => {
@@ -113,7 +116,24 @@ module.exports = {
       });
     } catch (e) {
       sails.log.error(e);
-      res.serverError({ message: e.message, data: {}});
+      res.serverError(e);
+    }
+  },
+  feelings: async (req, res) => {
+    try {
+      const { id } = req.params;
+      console.log("=== id ===", id);
+
+      const feelings = await Recipe.getFeelings({id});
+
+      res.ok({
+        message: 'success dislike recipe',
+        data: {feelings},
+      });
+
+    } catch (e) {
+      sails.log.error(e);
+      res.serverError(e);
     }
   }
 

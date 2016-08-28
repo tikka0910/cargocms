@@ -41,5 +41,23 @@ module.exports = {
         pool: false,
       }
     }
+  },
+  allpay: {
+    merchantID: '2000132',
+    hashKey: '5294y06JbISpM5x9',
+    hashIV: 'v77hoKGq4kWxNNIS',
+    debug: true,
+    ReturnURL:'/api/allpay/paid',
+    ClientBackURL:'/shop/done',
+    PaymentInfoURL:'/allpay/paymentinfo',
+    paymentMethod:[
+      {
+        code: 'ATM',
+        name: 'ATM'
+      },{
+        code: 'Credit',
+        name: '信用卡'
+      }
+    ]
   }
 }

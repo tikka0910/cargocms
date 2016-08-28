@@ -5,7 +5,16 @@ module.exports = {
   },
   associations: () => {},
   options: {
-    classMethods: {},
+    classMethods: {
+      deleteById: async (id) => {
+        try {
+          return await Slogan.destroy({ where: { id } });
+        } catch (e) {
+          sails.log.error(e);
+          throw e;
+        }
+      },
+    },
     instanceMethods: {},
     hooks: {}
   }

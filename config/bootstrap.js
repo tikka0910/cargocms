@@ -104,8 +104,40 @@ module.exports.bootstrap = async (cb) => {
       });
       adminUsers[0].addRole(adminRole[0]);
     });
-
     const {environment} = sails.config;
+    let allpayConfig = sails.config.allpay;
+    if (allpayConfig) {
+      allpayConfig = {
+        merchantID: '2000132',
+        hashKey: '5294y06JbISpM5x9',
+        hashIV: 'v77hoKGq4kWxNNIS',
+        debug: true,
+        ReturnURL:'/api/allpay/paid',
+        ClientBackURL:'/shop/done',
+        PaymentInfoURL:'/allpay/paymentinfo',
+        paymentMethod:[
+          {
+            code: 'ATM',
+            name: 'ATM'
+          },{
+            code: 'Credit',
+            name: '信用卡'
+          }
+        ]
+      }
+    }
+    let AllpayClass = require('../api/services/libraries/Allpay');
+    global.AllpayService = new AllpayClass.default({
+      merchantID: allpayConfig.merchantID,
+      hashKey: allpayConfig.hashKey,
+      hashIV: allpayConfig.hashIV,
+      debug: allpayConfig.debug,
+      prod: environment === 'production',
+      ReturnURL: allpayConfig.ReturnURL,
+      ClientBackURL: allpayConfig.ClientBackURL,
+      PaymentInfoURL: allpayConfig.PaymentInfoURL,
+      allpayModel: Allpay,
+    });
 
     if (environment === 'development' && sails.config.models.migrate == 'drop') {
       sails.log.info("init Dev data", environment);
@@ -147,8 +179,12 @@ module.exports.bootstrap = async (cb) => {
 
       const recipeLove = {
         formula:[
-          {"drops":"1","scent":"BA69","color":"#E87728"},
-          {"drops":"2","scent":"BA70","color":"#B35721"}
+          {"drops":"1","scent":"T12","color":"#E87728"},
+          {"drops":"2","scent":"BA70","color":"#B35721"},
+          {"drops":"3","scent":"T25","color":"#B35721"},
+          {"drops":"4","scent":"BU2","color":"#B35721"},
+          {"drops":"5","scent":"T4","color":"#B35721"},
+          {"drops":"6","scent":"B13","color":"#B35721"}
         ],
         formulaLogs: '',
         authorName: '王大明',
@@ -186,6 +222,7 @@ module.exports.bootstrap = async (cb) => {
 
     // import site-specified data
     require('./init/labfnp').init();
+    require('./init/facebook').init();
 
     cb();
   } catch (e) {

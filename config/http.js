@@ -192,6 +192,9 @@ module.exports.http = {
       },
       formatDateTime: function(dateTime) {
         return moment(dateTime).format('YYYY/MM/DD hh:mm:ss');
+      },
+      nl2br: function(text) {
+        return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
       }
     }
   }
