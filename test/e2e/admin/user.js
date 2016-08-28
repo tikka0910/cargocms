@@ -35,6 +35,7 @@ describe('test user', () => {
       browser.click('#ToolTables_main-table_1');
       browser.waitForExist('[class="btn btn-primary"]');
       //填入資料
+      browser.pause(1000);
       browser.setValue('[name="username"]', userData.username)
       .setValue('[name="email"]', userData.email)
       .setValue('[name="firstName"]', userData.firstName)
@@ -45,6 +46,7 @@ describe('test user', () => {
       browser.click('[class="btn btn-primary"]')
       .waitForExist('[class="btn btn-primary"]', null, true);
       //檢查
+      browser.pause(1000);
       const res = await User.find({where: {username: userData.username}});
       console.log("res.toJSON()", res.toJSON());
       res.username.should.be.eq(userData.username);
@@ -75,12 +77,13 @@ describe('test user', () => {
       browser.waitForExist('#main-table_filter input[type="search"]')
       browser.setValue('#main-table_filter input[type="search"]', updateTargetUser);
 
-      browser.pause(2000);
+      browser.pause(1000);
       browser.waitForExist('#ToolTables_main-table_2')
       browser
         .click('#main-table tbody')
         .click('#ToolTables_main-table_2');
 
+      browser.pause(1000);
       browser.waitForExist('[name="username"]');
       browser
         .setValue('[name="username"]', userInfo.username)
@@ -93,6 +96,7 @@ describe('test user', () => {
         .click('[class="btn btn-primary"]')
         .waitForExist('[class="btn btn-primary"]', null, true);
 
+      browser.pause(1000);
       //降冪排序
       browser.waitForExist('#main-table-widget tr th:nth-child(1)');
       browser.click('#main-table-widget tr th:nth-child(1)');
