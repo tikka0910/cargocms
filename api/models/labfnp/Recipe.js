@@ -36,10 +36,12 @@ module.exports = {
 
     authorName: {
       type: Sequelize.STRING,
+      defaultValue: ''
     },
 
     perfumeName: {
       type: Sequelize.STRING,
+      defaultValue: ''
     },
 
     message: {
@@ -62,10 +64,12 @@ module.exports = {
 
     totalDrops: {
       type: Sequelize.INTEGER,
+      defaultValue: 0
     },
 
     coverPhoto: {
       type: Sequelize.STRING,
+      defaultValue: '',
       get: function() {
         try {
           const thisImage = this.getDataValue('Image');

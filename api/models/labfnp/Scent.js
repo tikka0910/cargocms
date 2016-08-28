@@ -49,6 +49,7 @@ module.exports = {
   },
   options: {
     timestamps: false,
+    paranoid: true,
     classMethods: {
 
       /**

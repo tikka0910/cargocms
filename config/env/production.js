@@ -12,6 +12,7 @@
 
 module.exports = {
   port: 5011,
+  socials: ["facebook", "googleplus", "twitter"],
   /***************************************************************************
    * Set the default database connection for models in the production        *
    * environment (see config/connections.js and config/models.js )           *

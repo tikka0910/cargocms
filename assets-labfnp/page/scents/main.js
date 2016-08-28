@@ -200,6 +200,7 @@ $(function() {
 
     drawBubbles(getScentsVisualData());
 	});
+  $('.scents-dropdown').change();
 
 	$('.scents-drops').change(function() {
 		var newVal = parseInt($(this).val(), 10) || 0
@@ -209,6 +210,7 @@ $(function() {
 	  $(this).val(newVal);
     drawBubbles(getScentsVisualData());
 	});
+  $('.scents-drops').change();
 
 	$('.scents-categories').change(function() {
 
@@ -217,14 +219,42 @@ $(function() {
 
 		if (prefix) {
 			var dropdown = $('.scents-dropdown[data-index='+idx+']');
+      var dropdownVal = dropdown.val();
+
+      if(dropdownVal && !dropdownVal.startsWith(prefix))
+        dropdown.val("");
 
 			console.log(prefix);
 			$('option', dropdown)
 				.show()
 				.filter(function(index, element) { return element.value && element.value.substring(0,1)!==prefix; })
 				.hide();
+
+
 		}
 	});
+  $('.scents-categories').change();
+
+  $('#recipeDeleteButton').on('click', function(event) {
+    event.preventDefault();
+    var id = $(this).data('id');
+    if(confirm("確定刪除此配方？")){
+      $.ajax({
+        url: '/api/labfnp/recipe/'+id,
+        method: "delete", //create
+        dataType: 'json',
+        cache: false
+      }).done(function(result) {
+        console.log(result);
+        alert(result.message);
+        location.href='/me/' + result.data.userId;
+      });
+    }
+
+  });
+
+
+
 
   $('#main-form').on('submit', function(event) {
 
@@ -249,9 +279,28 @@ $(function() {
     var description = $('textarea[name=description]').val();
     var coverPhotoId = $('input[name=coverPhotoId]').val();
 
+    var formula = getFormulaData();
+    console.log("=== formula ===", formula);
+
+    let formIsValid = true;
+    if(formula.length == 0) {
+      alert("未選定任一配方")
+      formIsValid = true;
+    };
+
+    formula.forEach(function(oneFormula){
+      if(oneFormula.drops == 0){
+        alert("選擇配方後，滴數不可為 0");
+        formIsValid = false;
+      }
+
+    });
+
+    if(!formIsValid) return false;
+
     $.ajax({
       url: endpoint,
-      method: 'post', //create
+      method: method, //create
       dataType: 'json',
       //contentType: 'application/json',
       cache: false,
@@ -259,15 +308,14 @@ $(function() {
         authorName: authorName,
         perfumeName: perfumeName,
         formulaLogs: '',
-        formula: getFormulaData(),
+        formula: formula,
         message: message,
         visibility: visibility,
         description: description,
         coverPhotoId: coverPhotoId,
       }
     }).done(function(result) {
-      console.log(result);
-      location.href='/me';
+      location.href='/me/' + result.data.UserId;
     });
 
   });

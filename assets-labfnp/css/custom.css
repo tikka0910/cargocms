@@ -30,21 +30,34 @@ body {
 }
 
 .dont-break-out {
-
-  /* These are technically the same, but use both */
   overflow-wrap: break-word;
   word-wrap: break-word;
-
   -ms-word-break: break-all;
-  /* This is the dangerous one in WebKit, as it breaks things wherever */
   word-break: break-all;
-  /* Instead use this non-standard one: */
   word-break: break-word;
-
-  /* Adds a hyphen where the word breaks, if supported (No Blink) */
   -ms-hyphens: auto;
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+}
 
+/* Facebook Widget */
+
+/* facebook comments */
+.fb-comments, .fb-comments iframe[style], .fb-like-box, .fb-like-box iframe[style] {width: 100% !important;}
+.fb-comments span, .fb-comments iframe span[style], .fb-like-box span, .fb-like-box iframe span[style] {width: 100% !important;}
+
+/* Blog */
+
+.blog-title {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 500;
+}
+
+.blog-content {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 150%;
+  text-rendering: optimizeLegibility;
 }
