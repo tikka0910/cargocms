@@ -15,7 +15,6 @@ module.exports = {
   },
 
   findOne: async (req, res) => {
-    console.log("=== findOne ===");
     const { id } = req.params;
     try {
       const recipe = await Recipe.findOneWithScent({id})
@@ -70,10 +69,14 @@ module.exports = {
     const { id } = req.params;
     try {
       sails.log.info('delete recipe controller=>', id);
+      const userId = AuthService.getSessionUser(req).id;
       const recipe = await Recipe.deleteById(id);
       res.ok({
         message: 'Delete recipe success.',
-        data: recipe,
+        data: {
+          userId
+        },
+
       });
     } catch (e) {
       res.serverError(e);

@@ -16,11 +16,7 @@ restart-production:
 	ssh jenkins@localhost  cd ~/deploy/production && NODE_ENV=production pm2 start -f app.js --name 'production'
 
 start-e2e-docker:
-	- docker run --name selenium-firefox -d -p 4444:4444 -p 5900:5900 selenium/standalone-firefox-debug:2.53.0
-
-e2e-test-with-docker:
-	- docker run --name selenium-firefox -d -p 4444:4444 -p 5900:5900 selenium/standalone-firefox-debug:2.53.0
-	npm run test-e2e-docker
+	- docker-compose up -d start-e2e-env
 
 preview:
 	- pm2 stop cargo-preview

@@ -218,6 +218,7 @@ module.exports.bootstrap = async (cb) => {
 
     // import site-specified data
     require('./init/labfnp').init();
+    require('./init/facebook').init();
 
     cb();
   } catch (e) {
