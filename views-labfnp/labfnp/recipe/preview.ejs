@@ -42,8 +42,46 @@
   .panel-heading {
     padding-right: 0 !important;
   }
+  .blackScreen {
+    position: absolute;
+    z-index: 10;
+    opacity: 0.9;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+  }
+  #orderButton {
+    z-index: 999;
+  }
 
+  @media (min-width: 768px) {
+    .pointer {
+      display: none;
+      position: absolute;
+      top: 43%;
+      left: 57%;
+    }
+    .pointer > i {
+      font-size: 250px;
+      color: white;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pointer {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 53%;
+    }
+    .pointer > i {
+      font-size: 100px;
+      color: white;
+    }
+  }
 </style>
+
+<div class="blackScreen"><div class="pointer"><i class="fa fa-hand-o-down fa-6" aria-hidden="true"></i></div></div>
 
 <div class="container content profile">
   <input type="hidden" name="id" class="hidden" value="<%= recipe.id %>" disabled>
@@ -171,7 +209,9 @@
 <% LayoutUtils.addScriptBlock(`
   $(document).ready(function(){
 
-
+    $('.pointer').fadeIn(2000, function(){
+      $('.blackScreen').fadeOut(2000);
+    });
 
   });
 `); %>
