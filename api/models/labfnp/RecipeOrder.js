@@ -7,9 +7,9 @@ module.exports = {
       type: Sequelize.VIRTUAL,
       get: function() {
         try {
-          const thisRecipeOrders = this.getDataValue('RecipeOrderItems');
-          const recipes = thisRecipeOrders ? thisRecipeOrders.map((order) => order.Recipe.perfumeName) : [];
-          return recipes;
+          const thisRecipe = this.getDataValue('Recipe');
+          const recipe = thisRecipe ? [thisRecipe.perfumeName] : [];
+          return recipe;
         } catch (e) {
           sails.log.error(e);
         }
@@ -18,7 +18,7 @@ module.exports = {
   },
   associations: () => {
     RecipeOrder.belongsTo(User);
-    RecipeOrder.hasMany(RecipeOrderItem);
+    RecipeOrder.belongsTo(Recipe);
   },
   options: {
     classMethods: {
@@ -26,12 +26,7 @@ module.exports = {
         try {
           return await RecipeOrder.findOne({
             where: { id },
-            include: [{
-              model: User
-            }, {
-              model: RecipeOrderItem,
-              include: Recipe,
-            }]
+            include: [User, Recipe]
           });
         } catch (e) {
           sails.log.error(e);

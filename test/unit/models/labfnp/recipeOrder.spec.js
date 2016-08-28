@@ -33,16 +33,8 @@ describe('test Recipe Order model operation', function() {
       try {
         let recipeOrder = await RecipeOrder.create({
           remark: '123',
-        });
-
-        await recipeOrder.setUser(testUser.id);
-        await RecipeOrderItem.addRecipe({
+          UserId: testUser.id,
           RecipeId: recipeOrderTest.id,
-          RecipeOrderId: recipeOrder.id,
-        });
-        await RecipeOrderItem.addRecipe({
-          RecipeId: recipeOrderTest.id,
-          RecipeOrderId: recipeOrder.id,
         });
         done();
       } catch (e) {
@@ -77,16 +69,8 @@ describe('test Recipe Order model operation', function() {
 
         recipeOrder = await RecipeOrder.create({
           remark: '123',
-        });
-
-        await recipeOrder.setUser(testUser.id);
-        await RecipeOrderItem.addRecipe({
+          UserId: testUser.id,
           RecipeId: recipeOrderTest.id,
-          RecipeOrderId: recipeOrder.id,
-        });
-        await RecipeOrderItem.addRecipe({
-          RecipeId: recipeOrderTest.id,
-          RecipeOrderId: recipeOrder.id,
         });
 
         done()

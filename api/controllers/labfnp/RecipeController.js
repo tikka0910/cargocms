@@ -119,22 +119,22 @@ module.exports = {
       if (!user) {
         return res.redirect('/login');
       }
-      let recipeOrder = await RecipeOrder.create();
-      await recipeOrder.setUser(user.id);
-      await RecipeOrderItem.addRecipe({
+      let recipeOrder = await RecipeOrder.create({
+        UserId: user.id,
         RecipeId: id,
-        RecipeOrderId: recipeOrder.id,
       });
+
+      recipeOrder = await RecipeOrder.findByIdHasJoin(recipeOrder.id);
 
       const allPayData = await AllpayService.getAllpayConfig({
         relatedKeyValue: {
           RecipeOrderId: recipeOrder.id,
         },
         MerchantTradeNo: crypto.randomBytes(32).toString('hex').substr(0, 8),
-        tradeDesc: 'test gen config',
+        tradeDesc: '',
         totalAmount: 999,
         paymentMethod: 'ATM',
-        itemArray: ['Item01', 'Item02'],
+        itemArray: recipeOrder.ItemNameArray,
       });
       return res.view({
         AioCheckOut: AllpayService.getPostUrl(),
