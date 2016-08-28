@@ -1,23 +1,20 @@
 module.exports = {
   index: async (req, res) => {
     try {
-
-      res.view('blog/index', {
-        message: 'blog index',
-        data: {
-          items: await Post.findAllHasJoin('DESC'),
-        }
-      });
+      const posts = await Post.findAllHasJoin('DESC');
+      const social = SocialService.forPost({posts});
+      const items = posts;
+      const data = {items}
+      res.view('blog/index', {data, social});
     } catch (e) {
       res.serverError(e);
     }
   },
   show: async (req, res) => {
     try {
-      res.view('blog/show', {
-        message: 'blog index',
-        data: await Post.findByIdHasJoin(req.params.id),
-      });
+      let data = await Post.findByIdHasJoin(req.params.id);
+      const social = SocialService.forPost({posts: [data]});
+      res.view('blog/show', {data, social});
     } catch (e) {
       res.serverError(e);
     }

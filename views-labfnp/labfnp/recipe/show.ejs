@@ -32,8 +32,11 @@
 
     <div class="col-md-8 col-md-offset-2">
 
-      <div class="margin-bottom-10">
-        <button class="btn-u btn-u-default" onclick="window.history.back()">返回</button>
+      <div class="panel-heading overflow-h">
+
+        <a href="/recipe/edit/<%= recipe.id %>" class="btn-u btn-u-dark pull-right <%= editable?'':'hidden' %>">編輯</a>
+        <a href="page_profile_comments.html" onclick="window.history.back()" class="btn-u btn-u-dark pull-right">返回</a>
+
       </div>
 
       <!-- begin .profile-body -->
@@ -46,18 +49,16 @@
         </div>
         <div class="projects">
 
-          <div style="float:right">
+          <div class= "pull-right">
             <button id="likeButton" class="btn-u btn-u-red" data-id="<%= recipe.id %>" data-like="<%= recipe.currentUserLike %>">
               <i class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %>" aria-hidden="true"></i>
               收藏
             </button>
           </div>
 
-          <h1>
-            <p>
+          <h2>
               <span class="padding-5"><%= recipe.perfumeName %></span>
-            </p>
-          </h1>
+          </h2>
 
           <ul class="list-unstyled list-inline blog-info-v2">
             <li>
@@ -101,11 +102,14 @@
           </ul>
         </h4>
       </div>
-      <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-          <%- include ../../lib/rrssbb/recipe.ejs %>
+      <% if(social.targets.length > 0){ %>
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+            <% var socialData = social.data[0] %>
+            <%- include ../../lib/rrssbb.ejs %>
+          </div>
         </div>
-      </div>
+      <% } %>
       <!-- <div class="project-share">
 					<ul class="list-inline comment-list-v2 pull-left">
 						<li><i class="fa fa-eye"></i> <a href="#">25</a></li>
