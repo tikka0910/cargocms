@@ -115,9 +115,20 @@ module.exports = {
   buy: async function(req, res) {
     try {
       const { id } = req.params;
+      let user = AuthService.getSessionUser(req);
+      if (!user) {
+        return res.redirect('/login');
+      }
+      let recipeOrder = await RecipeOrder.create();
+      await recipeOrder.setUser(user.id);
+      await RecipeOrderItem.addRecipe({
+        RecipeId: id,
+        RecipeOrderId: recipeOrder.id,
+      });
+
       const allPayData = await AllpayService.getAllpayConfig({
         relatedKeyValue: {
-          RecipeId: id,
+          RecipeOrderId: recipeOrder.id,
         },
         MerchantTradeNo: crypto.randomBytes(32).toString('hex').substr(0, 8),
         tradeDesc: 'test gen config',
