@@ -249,7 +249,9 @@ module.exports = {
           const where = {name: secntNames}
 
           const scents = await Scent.findAll({where});
-          const feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
+          let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
+          feelings = RecipeService.sortFeelingsByValue({feelings});
+
 
           return feelings;
         } catch (e) {
