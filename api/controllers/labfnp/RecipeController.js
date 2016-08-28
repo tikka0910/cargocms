@@ -108,7 +108,7 @@ module.exports = {
 
       const social = SocialService.forRecipe({ recipes: [recipe] });
 
-      return res.view({ recipe, editable, social});
+      return res.view({ recipe, editable, social, user: currentUser });
     } catch (e) {
 
       return res.serverError(e);
@@ -195,20 +195,13 @@ module.exports = {
   },
 
   buy: async function(req, res) {
+    console.log('body=>', req.body);
     try {
       const { id } = req.params;
-      let user = AuthService.getSessionUser(req);
-      if (!user) {
-        return res.redirect('/login');
-      }
-      let recipeOrder = await RecipeOrder.create({
-        UserId: user.id,
-        RecipeId: id,
-      });
-      console.log(req.body);
+      const user = AuthService.getSessionUser(req);
+      if (!user) return res.redirect('/login');
 
       const { recipient, phone, address, paymentMethod } = req.body;
-
       const verifyInputs = (() => {
         let verifyInputExists = 0;
         const hasRecipient = typeof recipient === 'string';
@@ -231,15 +224,23 @@ module.exports = {
         verifyPaymentMethodValid = verifyPaymentMethodValid > 0;;
         if (!verifyPaymentMethodValid) return res.forbidden('付款方式錯誤！');
 
-        if (phone.indexOf(0) !==0 ) return res.forbidden('收件人電話格式錯誤！');
+        if (phone.indexOf(0) !== 0) return res.forbidden('收件人電話格式錯誤！');
 
         return true;
       })();
+      if (!verifyInputs) return res.forbidden('訂單資料錯誤！');
 
-      console.log("verifyInputs=>", verifyInputs);
+      const { email, note, perfumeName, description, message } = req.body;
 
-      const { perfumeName, description, message } = req.body;
-
+      let recipeOrder = await RecipeOrder.create({
+        UserId: user.id,
+        RecipeId: id,
+        recipient,
+        phone,
+        address,
+        email,
+        note,
+      });
       recipeOrder = await RecipeOrder.findByIdHasJoin(recipeOrder.id);
 
       const allPayData = await AllpayService.getAllpayConfig({
@@ -252,6 +253,7 @@ module.exports = {
         paymentMethod: paymentMethod,
         itemArray: recipeOrder.ItemNameArray,
       });
+
       return res.view({
         AioCheckOut: AllpayService.getPostUrl(),
         ...allPayData
