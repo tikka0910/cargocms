@@ -93,6 +93,7 @@ module.exports.routes = {
 
   '/recipe/:id':      'labfnp/RecipeController.show',
   '/recipe/preview/:id': 'labfnp/RecipeController.preview',
+  '/recipe/order/:id': 'labfnp/RecipeController.order',
   '/recipe/edit/:id': 'labfnp/RecipeController.edit',
   '/creator':         'labfnp/RecipeController.create',
   '/lab':             'labfnp/MainController.explore',
