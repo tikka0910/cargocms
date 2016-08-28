@@ -168,6 +168,11 @@ $(function() {
         .show()
         .filter(function(index, element) { return element.value && element.value.substring(0,1)!==prefix; })
         .hide();
+    } else {
+      $('option', dropdown)
+        .show()
+        .filter(function(index, element) { return false })
+        .hide();
     }
   });
   $('.scents-categories').change();
