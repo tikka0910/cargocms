@@ -78,8 +78,8 @@
           <hr/>
 
           <div class="row">
-            <div id="cloudContainer" class="col col-md-12">
-              <div id="cloud" class="text-center"></div>
+            <div id="wordCloudContainer" class="col col-md-12">
+              <div id="wordCloud" class="text-center" data-id="<%= recipe.id %>" ></div>
             </div>
             <div class="col col-md-12">
               <div id="pieChart" class="text-center"></div>
@@ -138,3 +138,4 @@
 <% LayoutUtils.addScripts ('/assets/admin/js/plugin/d3/d3pie.min.js'); %>
 <% LayoutUtils.addScripts('/assets/labfnp/lib/d3.layout.cloud.js'); %>
 <% LayoutUtils.addScripts('/assets/labfnp/page/recipe/show.js'); %>
+<% LayoutUtils.addScripts('/assets/labfnp/page/wordCloud.js'); %>
