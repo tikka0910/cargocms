@@ -190,7 +190,7 @@ $(function() {
 
       $(this).css('color', color);
       scentDetail.removeClass("hidden");
-      scentDetail.find("#scent-detail").css('border-top', 'solid 2px ' + color);
+      scentDetail.find("#scent-content").css('border-top', 'solid 2px ' + color);
 
 	    if (drops.val() == 0) {
 	      drops.val(1);
