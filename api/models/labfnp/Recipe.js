@@ -240,7 +240,24 @@ module.exports = {
           throw e;
         }
       },
+      getFeelings: async function({id}){
+        try {
+          const recipe = await Recipe.findOne({where: {id}});
+          const {formula} = recipe;
 
+          const secntNames = formula.map(oneFormula => oneFormula.scent)
+          const where = {name: secntNames}
+
+          const scents = await Scent.findAll({where});
+          let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
+          feelings = RecipeService.sortFeelingsByValue({feelings});
+
+
+          return feelings;
+        } catch (e) {
+          throw e;
+        }
+      },
     },
     instanceMethods: {
       checkCurrentUserLike: async function({ currentUser }) {
