@@ -1,5 +1,5 @@
 var fill = d3.scale.category20b();
-var w = 600,
+var w = 700,
     h = 400;
 var max,fontSize;
 
@@ -72,10 +72,24 @@ function draw(data, bounds) {
 function update() {
   layout.font('impact');
   fontSize = d3.scale['sqrt']().range([10, 100]);
+
+  var w = document.getElementById('wordCloudContainer').offsetWidth,
+      h = document.getElementById('wordCloudContainer').offsetHeight;
+  var wordLength = parseInt(w * h / 10000);
+
+  var maxWord = tags.length;
+
+  if(tags.length > wordLength)
+    maxWord = wordLength;
+
+  console.log("maxWord", maxWord);
+  var words = tags.slice(0, maxWord);
+
+
   if (tags.length){
-      fontSize.domain([+tags[tags.length - 1].value || 1, +tags[0].value]);
+    fontSize.domain([+words[words.length - 1].value || 1, +words[0].value]);
   }
-  layout.stop().words(tags).start();
+  layout.stop().words(words).start();
 }
 
 
