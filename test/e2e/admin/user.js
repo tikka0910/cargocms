@@ -33,9 +33,10 @@ describe('test user', () => {
       browser.url('/admin/#/admin/user');
       browser.waitForExist('#ToolTables_main-table_1')
       browser.click('#ToolTables_main-table_1');
-      browser.waitForExist('[class="btn btn-primary"]');
+
       //填入資料
       browser.pause(1000);
+      browser.waitForExist('[class="btn btn-primary"]');
       browser.setValue('[name="username"]', userData.username)
       .setValue('[name="email"]', userData.email)
       .setValue('[name="firstName"]', userData.firstName)
