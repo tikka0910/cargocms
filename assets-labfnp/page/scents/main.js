@@ -2,9 +2,6 @@ var diameter = parseInt(d3.select('#d3-container').style('width')),
     format = d3.format(",d"),
     color = d3.scale.category20c();
 
-// console.log(d3.scale.linear()
-//     .range([10, 20])
-//     .domain([0, 480])(diameter));
 
 var bubble = d3.layout.pack()
     .sort(null)
@@ -12,38 +9,12 @@ var bubble = d3.layout.pack()
     .radius(function(d) { return 8 + 1.25*Math.random(); })
     .padding(1);
 
-//var scale = d3.scale.linear().domain([ 5, 5 ]).range([ 10, 10 ]);
 
 var svg = d3.select("#d3-container")
     .append("svg")
     .attr("width", diameter)
     .attr("height", diameter)
     .attr("class", "bubble");
-
-// var drawBubbles = function(root) {
-
-//   var node = svg.selectAll(".node")
-//       .data(bubble.nodes(root).filter(function(d) { return !d.children; }))
-//       .enter().append("g")
-//       .attr("class", "node")
-//       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-
-//   // node.append("title")
-//   //     .text(function(d) { return d.className + ": " + format(d.value); });
-
-//   node.append("circle")
-//       .attr("r", function(d) { return d.r; })
-//       .style("fill", function(d) { return d.color; });
-
-//   // node.append("text")
-//   //     //.attr("dy", ".3em")
-//   //     .style("text-anchor", "middle")
-//   //     .style("fill", "#ffffff")
-//   //     .style("font-weight", "normal")
-//   //     .style("font-size", "5px")
-//   //     .text(function(d) { return d.className.substring(0, d.r / 3); });
-
-// };
 
 var drawBubbles = function (root) {
 
@@ -121,7 +92,6 @@ function shuffle(array) {
 var getScentsVisualData = function() {
 
   var scentsData = [];
-
   var totalDrops = 0;
 
   $('.scents-dropdown').each(function() {
@@ -145,7 +115,6 @@ var getScentsVisualData = function() {
     }
   });
 
-  // console.log(scentsData);
 
   $('#total-drops').text(totalDrops);
 
@@ -183,21 +152,62 @@ var getFormulaData = function() {
 };
 
 $(function() {
-	$('.scents-dropdown').change(function() {
-    $(this).css('color', $('option:selected', this).data('color'));
+  $('.scents-categories').change(function() {
 
     var idx = $(this).data('index');
+    var prefix = $(this).val();
+
+    if (prefix) {
+      var dropdown = $('.scents-dropdown[data-index='+idx+']');
+      var dropdownVal = dropdown.val();
+
+      if(dropdownVal && !dropdownVal.startsWith(prefix))
+        dropdown.val("");
+
+      $('option', dropdown)
+        .show()
+        .filter(function(index, element) { return element.value && element.value.substring(0,1)!==prefix; })
+        .hide();
+    } else {
+      $('option', dropdown)
+        .show()
+        .filter(function(index, element) { return false })
+        .hide();
+    }
+  });
+  $('.scents-categories').change();
+
+
+	$('.scents-dropdown').change(function() {
+    var idx = $(this).data('index');
+    console.log("idx", idx);
+    var selectedScent = $('option:selected', this);
+    var scentDetail = $('.scent-detail[data-index='+idx+']');
     var drops = $('.scents-drops[data-index='+idx+']');
+    var title = "";
+    var description = "";
+
 
     if ($(this).val() != '') {
+      var color = selectedScent.data('color');
+      title = selectedScent.data('title');
+      description = selectedScent.data('description');
+
+      $(this).css('color', color);
+      scentDetail.removeClass("hidden");
+      scentDetail.find("#scent-content").css('border-top', 'solid 2px ' + color);
+
 	    if (drops.val() == 0) {
 	      drops.val(1);
 	    }
     }
     else {
+      scentDetail.addClass("hidden");
 	    drops.val(0);
     }
 
+    scentDetail.find("#scent-title").html(title)
+    scentDetail.find("#scent-description").html(description)
     drawBubbles(getScentsVisualData());
 	});
   $('.scents-dropdown').change();
@@ -212,28 +222,7 @@ $(function() {
 	});
   $('.scents-drops').change();
 
-	$('.scents-categories').change(function() {
 
-		var idx = $(this).data('index');
-		var prefix = $(this).val();
-
-		if (prefix) {
-			var dropdown = $('.scents-dropdown[data-index='+idx+']');
-      var dropdownVal = dropdown.val();
-
-      if(dropdownVal && !dropdownVal.startsWith(prefix))
-        dropdown.val("");
-
-			console.log(prefix);
-			$('option', dropdown)
-				.show()
-				.filter(function(index, element) { return element.value && element.value.substring(0,1)!==prefix; })
-				.hide();
-
-
-		}
-	});
-  $('.scents-categories').change();
 
   $('#recipeDeleteButton').on('click', function(event) {
     event.preventDefault();
