@@ -128,6 +128,7 @@ module.exports.bootstrap = async (cb) => {
     }
     let AllpayClass = require('../api/services/libraries/Allpay');
     global.AllpayService = new AllpayClass.default({
+      domain: allpayConfig.domain,
       merchantID: allpayConfig.merchantID,
       hashKey: allpayConfig.hashKey,
       hashIV: allpayConfig.hashIV,

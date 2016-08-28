@@ -147,9 +147,9 @@ export default class Allpay {
       if (!findAllpayInfo) {
         throw new Error(`${callBackData.MerchantTradeNo} 嚴重錯誤!!付款後找不到訂單!!`);
       }
-      if (findAllpayInfo.ShouldTradeAmt !== callBackData.TradeAmt) {
-        throw new Error(`${callBackData.MerchantTradeNo} 嚴重錯誤!!金額錯誤!!`);
-      }
+      // if (findAllpayInfo.ShouldTradeAmt !== callBackData.TradeAmt) {
+      //   throw new Error(`${callBackData.MerchantTradeNo} 嚴重錯誤!!金額錯誤!!`);
+      // }
       return findAllpayInfo;
     } catch (e) {
       throw e;
