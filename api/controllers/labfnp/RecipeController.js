@@ -72,11 +72,10 @@ module.exports = {
       if (!recipe) return res.notFound();
 
       const recipeJson = recipe.toJSON();
-      // if (recipeJson.UserId !== currentUser.id) {
-      //   const message = "只可維護自己的配方";
-      //   // return res.forbidden({message});
-      //   return res.forbidden(message);
-      // }
+      if (recipeJson.UserId !== currentUser.id) {
+        const message = "預覽功能僅限於您自己建立的配方！";
+        return res.forbidden(message);
+      }
 
       let editable = false;
       const belongUser = recipe.UserId == currentUser.id;
@@ -206,6 +205,40 @@ module.exports = {
         UserId: user.id,
         RecipeId: id,
       });
+      console.log(req.body);
+
+      const { recipient, phone, address, paymentMethod } = req.body;
+
+      const verifyInputs = (() => {
+        let verifyInputExists = 0;
+        const hasRecipient = typeof recipient === 'string';
+        const hasPhone = typeof phone === 'string';
+        const hasAddress = typeof address === 'string';
+        const hasPaymentMethod = typeof paymentMethod === 'string';
+
+        const checkArray = [ hasRecipient, hasPhone, hasAddress, hasPaymentMethod ];
+        for (var result of checkArray) {
+          if (result) verifyInputExists += 1;
+        }
+        verifyInputExists = verifyInputExists === checkArray.length;
+        if (!verifyInputExists) return res.forbidden('訂單資料缺失或不正確！');
+
+        let verifyPaymentMethodValid = 0;
+        const validPaymentMethods = [ 'ATM', 'Credit' ];
+        for (var method of validPaymentMethods) {
+          if (paymentMethod === method) verifyPaymentMethodValid += 1;
+        }
+        verifyPaymentMethodValid = verifyPaymentMethodValid > 0;;
+        if (!verifyPaymentMethodValid) return res.forbidden('付款方式錯誤！');
+
+        if (phone.indexOf(0) !==0 ) return res.forbidden('收件人電話格式錯誤！');
+
+        return true;
+      })();
+
+      console.log("verifyInputs=>", verifyInputs);
+
+      const { perfumeName, description, message } = req.body;
 
       recipeOrder = await RecipeOrder.findByIdHasJoin(recipeOrder.id);
 
@@ -214,9 +247,9 @@ module.exports = {
           RecipeOrderId: recipeOrder.id,
         },
         MerchantTradeNo: crypto.randomBytes(32).toString('hex').substr(0, 8),
-        tradeDesc: '',
+        tradeDesc: `配方名稱：${perfumeName}, (備註：${message})`,
         totalAmount: 999,
-        paymentMethod: 'ATM',
+        paymentMethod: paymentMethod,
         itemArray: recipeOrder.ItemNameArray,
       });
       return res.view({
