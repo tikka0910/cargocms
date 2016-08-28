@@ -179,8 +179,12 @@ module.exports.bootstrap = async (cb) => {
 
       const recipeLove = {
         formula:[
-          {"drops":"1","scent":"BA69","color":"#E87728"},
-          {"drops":"2","scent":"BA70","color":"#B35721"}
+          {"drops":"1","scent":"T12","color":"#E87728"},
+          {"drops":"2","scent":"BA70","color":"#B35721"},
+          {"drops":"3","scent":"T25","color":"#B35721"},
+          {"drops":"4","scent":"BU2","color":"#B35721"},
+          {"drops":"5","scent":"T4","color":"#B35721"},
+          {"drops":"6","scent":"B13","color":"#B35721"}
         ],
         formulaLogs: '',
         authorName: '王大明',
