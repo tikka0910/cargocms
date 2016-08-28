@@ -3,14 +3,12 @@ module.exports = {
   attributes: {
     title: {
       type: Sequelize.STRING,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
 
     scentName: {
       type: Sequelize.STRING,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
 
     totalRepeat: {
