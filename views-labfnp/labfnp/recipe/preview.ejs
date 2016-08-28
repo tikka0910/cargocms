@@ -56,9 +56,9 @@
       <div class="panel-heading overflow-h">
 
         <h2 class="pull-left">
-          <i class="fa fa-info-circle" aria-hidden="true"></i>預覽訂單</h2>
+          <i class="fa fa-question-circle" aria-hidden="true"></i>預覽配方</h2>
         <a href="/recipe/edit/<%= recipe.id %>" class="btn-u btn-u-dark pull-right <%= editable?'':'hidden' %>">編輯</a>
-        <a href="page_profile_comments.html" onclick="window.history.back()" class="btn-u btn-u-dark pull-right">返回</a>
+        <a href="/lab" class="btn-u btn-u-dark pull-right">ＯＫ</a>
 
       </div>
 
@@ -77,10 +77,14 @@
               <i class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %>" aria-hidden="true"></i>
               收藏
             </button>
-            <button id="orderButton" class="btn-u btn-u-blue" data-id="<%= recipe.id %>">
+            <a href="/recipe/order/<%= recipe.id %>" id="orderButton" class="btn-u btn-u-blue" data-id="<%= recipe.id %>">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-              放大成 100ml
-            </button>
+              訂購
+            </a>
+            <!-- <a href="/recipe/feedback/<%= recipe.id %>" id="orderButton" class="btn-u btn-u-gray" data-id="<%= recipe.id %>">
+              <i class="fa fa-info-circle" aria-hidden="true"></i>
+              回饋
+            </a> -->
           </div>
 
           <h2>
@@ -164,12 +168,9 @@
 <% LayoutUtils.addScripts('/assets/labfnp/page/recipe/show.js'); %>
 
 <% LayoutUtils.addScriptBlock(`
-$(document).ready(function(){
+  $(document).ready(function(){
 
-  $('#orderButton').click(function() {
-    var id = $(this).attr('data-id');
-    location.href = '/recipe/order/' + id;
+
+
   });
-
-});
 `); %>

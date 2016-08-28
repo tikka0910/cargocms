@@ -63,19 +63,51 @@ module.exports = {
     const { id } = req.params;
     try {
       const currentUser = AuthService.getSessionUser(req);
+      if (!currentUser) return res.redirect('/login');
+
       const recipe = await Recipe.findOneAndIncludeUserLike({
         findByRecipeId: id,
         currentUser
       });
-      if (!recipe) {
-        return res.notFound();
-      }
+      if (!recipe) return res.notFound();
+
+      const recipeJson = recipe.toJSON();
+      // if (recipeJson.UserId !== currentUser.id) {
+      //   const message = "只可維護自己的配方";
+      //   // return res.forbidden({message});
+      //   return res.forbidden(message);
+      // }
 
       let editable = false;
-      if (currentUser && recipe.UserId == currentUser.id)
-        editable = true;
+      const belongUser = recipe.UserId == currentUser.id;
+      if (currentUser && belongUser) editable = true;
 
-      const social = SocialService.forRecipe({recipes: [recipe]});
+      const social = SocialService.forRecipe({ recipes: [recipe] });
+
+      return res.view({ recipe, editable, social });
+    } catch (e) {
+
+      return res.serverError(e);
+    }
+  },
+
+  order: async function(req, res) {
+    const { id } = req.params;
+    try {
+      const currentUser = AuthService.getSessionUser(req);
+      if (!currentUser) return res.redirect('/login');
+
+      const recipe = await Recipe.findOneAndIncludeUserLike({
+        findByRecipeId: id,
+        currentUser
+      });
+      if (!recipe) return res.notFound();
+
+      let editable = false;
+      const belongUser = recipe.UserId == currentUser.id;
+      if (currentUser && belongUser) editable = true;
+
+      const social = SocialService.forRecipe({ recipes: [recipe] });
 
       return res.view({ recipe, editable, social});
     } catch (e) {
@@ -84,7 +116,7 @@ module.exports = {
     }
   },
 
-  order: async function(req, res) {
+  feedback: async function(req, res) {
     const { id } = req.params;
     try {
       const currentUser = AuthService.getSessionUser(req);

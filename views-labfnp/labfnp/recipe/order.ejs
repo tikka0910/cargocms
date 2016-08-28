@@ -130,6 +130,7 @@
 
       <div class="projects form-group" id="orderFormWrapper">
         <form class="orderForm" id="orderForm" action="" method="post">
+          <input type="hidden" name="id" value="<%= recipe.id %>">
 
           <section class="col">
             <label for="reciverName">收件人姓名<span class="required">*</span>
@@ -155,7 +156,6 @@
             <select class="form-control" id="payment" class="form-control" name="payment" required>
               <option value="creditCard">信用卡</option>
               <option value="atm">ATM轉帳</option>
-              <option value="shop">到店付款</option>
             </select>
           </section>
 
@@ -182,4 +182,12 @@
 </div>
 <% LayoutUtils.addScripts ('/assets/admin/js/plugin/d3/d3.min.js'); %>
 <% LayoutUtils.addScripts ('/assets/admin/js/plugin/d3/d3pie.min.js'); %>
-<% LayoutUtils.addScripts('/assets/labfnp/page/recipe/show.js'); %>
+<% LayoutUtils.addScripts('/assets/labfnp/page/recipe/pieChart.js'); %>
+<% LayoutUtils.addScripts('/assets/labfnp/page/recipe/favorite.js'); %>
+<% LayoutUtils.addScriptBlock(`
+  $(document).ready(function(){
+
+
+
+  });
+`); %>

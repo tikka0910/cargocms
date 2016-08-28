@@ -42,6 +42,15 @@
   .panel-heading {
     padding-right: 0 !important;
   }
+  .required {
+    color: red;
+  }
+  #smubmit {
+    width: 100%;
+  }
+  section {
+    padding-bottom: 10px;
+  }
 
 </style>
 
@@ -56,32 +65,15 @@
       <div class="panel-heading overflow-h">
 
         <h2 class="pull-left">
-          <i class="fa fa-info-circle" aria-hidden="true"></i>配方內容</h2>
-        <a href="/recipe/edit/<%= recipe.id %>" class="btn-u btn-u-dark pull-right <%= editable?'':'hidden' %>">編輯</a>
-        <a href="page_profile_comments.html" onclick="window.history.back()" class="btn-u btn-u-dark pull-right">返回</a>
+          <i class="fa fa-shopping-cart " aria-hidden="true"></i>確認訂單</h2>
+        <a href="#!" onclick="window.history.back()" class="btn-u btn-u-dark pull-right">返回</a>
 
       </div>
 
       <!-- begin .profile-body -->
       <div class="profile-body">
 
-        <div class="easy-block-v1">
-          <div class="easy-block-v1-badge rgba-red">精選</div>
-          <!--<img class="img-responsive cover-photo" src="http://loremflickr.com/640/480/perfume/all?<%= Math.random() * Date.now() %>" alt=""/>-->
-          <img class="img-responsive cover-photo" src="/assets/labfnp/img/recipe-default-cover.png" alt=""/>
-        </div>
         <div class="projects">
-
-          <div class="pull-right">
-            <button id="likeButton" class="btn-u btn-u-red" data-id="<%= recipe.id %>" data-like="<%= recipe.currentUserLike %>">
-              <i class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %>" aria-hidden="true"></i>
-              收藏
-            </button>
-            <a href="/recipe/order/<%= recipe.id %>" id="orderButton" class="btn-u btn-u-blue" data-id="<%= recipe.id %>">
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-              訂購
-            </a>
-          </div>
 
           <h2>
             <span class="padding-5"><%= recipe.perfumeName %></span>
@@ -126,28 +118,57 @@
           </ul>
         </h4>
       </div>
-      <% if(social.targets.length > 0){ %>
-        <div class="row shareSticker">
-          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <% var socialData = social.data[0] %>
-            <%- include ../../lib/rrssbb.ejs %>
-          </div>
-        </div>
-      <% } %>
-      <!-- <div class="project-share">
-					<ul class="list-inline comment-list-v2 pull-left">
-						<li><i class="fa fa-eye"></i> <a href="#">25</a></li>
-						<li><i class="fa fa-comments"></i> <a href="#">32</a></li>
-						<li><i class="fa fa-retweet"></i> <a href="#">77</a></li>
-					</ul>
-					<ul class="list-inline star-vote pull-right">
-						<li><i class="color-green fa fa-star"></i></li>
-						<li><i class="color-green fa fa-star"></i></li>
-						<li><i class="color-green fa fa-star"></i></li>
-						<li><i class="color-green fa fa-star-half-o"></i></li>
-						<li><i class="color-green fa fa-star-o"></i></li>
-					</ul>
-				</div> -->
+
+      <br/>
+
+      <div class="text-center">
+        <h3>
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+          <label>配送資料</label>
+        </h3>
+      </div>
+
+      <div class="projects form-group" id="orderFormWrapper">
+        <form class="orderForm" id="orderForm" action="" method="post">
+
+          <section class="col">
+            <label for="reciverName">收件人姓名<span class="required">*</span>
+            </label>
+            <input type="text" id="reciverName" class="form-control" name="reciverName" value="" placeholder="請輸入姓名..." required>
+          </section>
+
+          <section class="col">
+            <label for="phone">收件人電話<span class="required">*</span>
+            </label>
+            <input type="text" id="phone" class="form-control" name="phone" value="" placeholder="請輸入電話..." required>
+          </section>
+
+          <section class="col">
+            <label for="address">收件地址<span class="required">*</span>
+            </label>
+            <input type="text" id="address" class="form-control" name="address" value="" placeholder="請輸入地址..." required>
+          </section>
+
+          <section class="col">
+            <label for="payment">付款方式<span class="required">*</span>
+            </label>
+            <select class="form-control" id="payment" class="form-control" name="payment" required>
+              <option value="creditCard">信用卡</option>
+              <option value="atm">ATM轉帳</option>
+              <option value="shop">到店付款</option>
+            </select>
+          </section>
+
+        </form>
+
+      </div>
+
+      <div class="text-center">
+        <button form="orderForm" id="smubmit" type="sumbit" class="btn-u btn-u-green" data-id="<%= recipe.id %>">
+          <i class="fa fa-check" aria-hidden="true"></i>
+          送出
+        </button>
+      </div>
 
     </div>
     <!-- end .profile-body -->
