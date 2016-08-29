@@ -17,10 +17,12 @@ module.exports = {
     visibility,
     productionStatus,
     UserId,
+    coverPhotoId,
   }) => {
     try {
       recipe.formula = RecipeService.sortFormulaByScentName({formula: recipe.formula});
       sails.log.info(recipe);
+
       return await Recipe.create(recipe);
     } catch (e) {
       sails.log.error(e);

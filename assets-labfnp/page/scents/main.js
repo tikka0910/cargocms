@@ -266,6 +266,7 @@ $(function() {
     var message = $('textarea[name=message]').val();
     var visibility = $('select[name=visibility]').val();
     var description = $('textarea[name=description]').val();
+    var coverPhotoId = $('input[name=coverPhotoId]').val();
 
     var formula = getFormulaData();
     console.log("=== formula ===", formula);
@@ -300,6 +301,7 @@ $(function() {
         message: message,
         visibility: visibility,
         description: description,
+        coverPhotoId: coverPhotoId,
       }
     }).done(function(result) {
       location.href='/me/' + result.data.UserId;

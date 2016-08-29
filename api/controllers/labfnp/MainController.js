@@ -40,6 +40,7 @@ module.exports = {
         recipes: await Recipe.findAll({
           where: { userId: user.id },
           order: 'updatedAt desc',
+          include: Image,
         })
       });
     }

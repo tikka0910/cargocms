@@ -69,7 +69,15 @@ module.exports = {
 
     coverPhoto: {
       type: Sequelize.STRING,
-      defaultValue: ''
+      defaultValue: '',
+      get: function() {
+        try {
+          const thisImage = this.getDataValue('Image');
+          return thisImage ? thisImage.url : '/assets/labfnp/img/recipe-default-cover.png';
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
     },
 
     visibility: {
@@ -165,6 +173,11 @@ module.exports = {
   associations: function() {
     Recipe.hasMany(UserLikeRecipe);
     Recipe.belongsTo(User);
+    Recipe.belongsTo(Image, {
+      foreignKey: {
+        name: 'coverPhotoId'
+      }
+    });
   },
   options: {
     classMethods: {
@@ -175,7 +188,7 @@ module.exports = {
           where: {
             id
           },
-          include: User,
+          include: [User, Image],
         });
         return recipes;
       },
@@ -211,10 +224,12 @@ module.exports = {
           const currentUserId = currentUser ? currentUser.id : -1;
           return {
             ...whereParam,
-            include: {
+            include: [{
               model: UserLikeRecipe,
               required: false
-            }
+            }, {
+              model: Image,
+            }]
           };
         } catch (e) {
           throw e;
