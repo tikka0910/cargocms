@@ -30,7 +30,7 @@
   <!-- begin row -->
   <div class="row">
 
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-8 col-md-offset-2">
 
       <div class="panel-heading overflow-h">
 
@@ -45,7 +45,7 @@
         <div class="easy-block-v1">
           <div class="easy-block-v1-badge rgba-red">精選</div>
           <!--<img class="img-responsive cover-photo" src="http://loremflickr.com/640/480/perfume/all?<%= Math.random() * Date.now() %>" alt=""/>-->
-          <img class="img-responsive cover-photo" src="/assets/labfnp/img/recipe-default-cover.png" alt=""/>
+          <img class="img-responsive cover-photo" src="<%= recipe.coverPhoto %>" alt=""/>
         </div>
         <div class="projects">
 
@@ -78,6 +78,9 @@
           <hr/>
 
           <div class="row">
+            <div id="wordCloudContainer" class="col col-md-12">
+              <div id="wordCloud" class="text-center" data-id="<%= recipe.id %>" ></div>
+            </div>
             <div class="col col-md-12">
               <div id="pieChart" class="text-center"></div>
             </div>
@@ -133,4 +136,6 @@
 </div>
 <% LayoutUtils.addScripts ('/assets/admin/js/plugin/d3/d3.min.js'); %>
 <% LayoutUtils.addScripts ('/assets/admin/js/plugin/d3/d3pie.min.js'); %>
+<% LayoutUtils.addScripts('/assets/labfnp/lib/d3.layout.cloud.js'); %>
 <% LayoutUtils.addScripts('/assets/labfnp/page/recipe/show.js'); %>
+<% LayoutUtils.addScripts('/assets/labfnp/page/wordCloud.js'); %>

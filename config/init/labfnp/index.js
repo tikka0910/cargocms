@@ -16,29 +16,43 @@ module.exports.init = async () => {
       })
     });
 
-    ScentNoteData.rows.forEach(function(row) {
-      ScentNote.create(row).then(function(scentNote) {
+    Feeling.bulkCreate(FeelingData.rows).then(() => {
+      ScentNoteData.rows.forEach(function(row) {
+        ScentNote.create(row).then(function(scentNote) {
 
-        ScentData.rows.forEach(function(row) {
-          if (row.scentNote == scentNote.title) {
-            row.scents.forEach(function(scentName) {
-              Scent.findOne({
-                where: {
-                  name: scentName,
-                }
-              }).then(function(scent) {
-                if (scent) {
-                  scent.feelings = FeelingData[scentName] || [];
-                  scent.ScentNoteId = scentNote.id;
-                  scent.save();
-                }
-              });
-            })
-          }
+          ScentData.rows.forEach(function(row) {
+            if (row.scentNote == scentNote.title) {
+              row.scents.forEach(function(scentName) {
+                Scent.findOne({
+                  where: {
+                    name: scentName,
+                  }
+                }).then(function(scent) {
+                  if (scent) {
+
+                    Feeling.findAll({where: {scentName: scentName}}).then((feelings) => {
+
+                      feelings = feelings.map((feeling) => {
+                        const key = feeling.title
+                        const value = feeling.score
+                        return {key, value}
+                      })
+
+                      scent.ScentNoteId = scentNote.id;
+                      scent.feelings = feelings
+                      scent.save();
+                    })
+                  }
+                });
+              })
+            }
+          });
+
         });
-
       });
-    });
+
+    })
+
 
     let newMenuItems = [
       { icon: 'home', href: '/admin/dashboard', title: '控制台', sequence: 0},

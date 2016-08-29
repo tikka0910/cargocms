@@ -120,4 +120,22 @@ module.exports = {
     }
   },
 
+  feelings: async (req, res) => {
+    try {
+      const { id } = req.params;
+      console.log("=== id ===", id);
+
+      const feelings = await Recipe.getFeelings({id});
+
+      res.ok({
+        message: 'success dislike recipe',
+        data: {feelings},
+      });
+
+    } catch (e) {
+      sails.log.error(e);
+      res.serverError(e);
+    }
+  }
+
 }
