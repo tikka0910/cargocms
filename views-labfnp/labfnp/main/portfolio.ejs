@@ -117,7 +117,7 @@
 		    			<div class="timeline-panel">
 		    				<div class="timeline-heading">
       						<a href="/recipe/<%= recipe.id %>">
-    				        <img class="img-responsive" src="http://loremflickr.com/640/480/perfume<%= ([',girl', ',boy', ''])[parseInt(Math.random() * 3)] %>/all?<%= Math.random() * Date.now() %>" alt=""/>
+    				        <img class="img-responsive" src="<%= recipe.coverPhoto %>" alt=""/>
                   </a>
                 </div>
 		    				<div class="timeline-body text-justify">
@@ -132,6 +132,7 @@
 		    						<!-- <li><i class="fa fa-comments-o"></i> <a href="#">12 Comments</a></li> -->
 		    					</ul>
 		    					<!-- <a class="likes" href="#"><i class="fa fa-heart"></i>87</a> -->
+									<!-- <a class="likes" href="/recipe/order/<%= recipe.id %>"><i class="fa fa-shopping-cart"></i>確認訂購</a> -->
 		    				</div>
 		    			</div>
 		    		</li>

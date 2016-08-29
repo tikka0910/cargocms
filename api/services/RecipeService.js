@@ -17,16 +17,28 @@ module.exports = {
     visibility,
     productionStatus,
     UserId,
+    coverPhotoId,
   }) => {
     try {
-      const bubble = (a,b) => a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];
-      recipe.formula = recipe.formula.sort(bubble);
+      recipe.formula = RecipeService.sortFormulaByScentName({formula: recipe.formula});
       sails.log.info(recipe);
+
       return await Recipe.create(recipe);
     } catch (e) {
       sails.log.error(e);
       throw e;
     }
+  },
+  sortFormulaByScentName: ({formula}) => {
+    const bubble = (a, b) => a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];
+    let result = formula.sort(bubble);
+    return result;
+  },
+  sortFeelingsByValue: ({feelings}) => {
+    console.log(feelings[0]);
+    const bubble = (a, b) => parseInt(b.value, 10)-parseInt(a.value, 10);
+    let result = feelings.sort(bubble);
+    return result;
   },
 
   update: async (recipe = {
