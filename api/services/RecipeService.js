@@ -29,11 +29,13 @@ module.exports = {
       throw e;
     }
   },
+
   sortFormulaByScentName: ({formula}) => {
     const bubble = (a, b) => a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];
     let result = formula.sort(bubble);
     return result;
   },
+
   sortFeelingsByValue: ({feelings}) => {
     console.log(feelings[0]);
     const bubble = (a, b) => parseInt(b.value, 10)-parseInt(a.value, 10);
@@ -78,4 +80,29 @@ module.exports = {
       throw e;
     }
   },
+
+  loadRecipe: async function(recipeId, currentUser) {
+    try {
+      const recipe = await Recipe.findOneAndIncludeUserLike({
+        findByRecipeId: recipeId,
+        currentUser
+      });
+      if (!recipe) {
+        const error = new Error('can not find recipe');
+        error.type = 'notFound';
+        throw error;
+      }
+
+      let editable = false;
+      const belongUser = recipe.UserId === currentUser.id;
+      if (currentUser && belongUser) editable = true;
+
+      const social = SocialService.forRecipe({ recipes: [recipe] });
+
+      return { recipe, editable, social };
+    } catch (e) {
+      throw e;
+    }
+  },
+
 }

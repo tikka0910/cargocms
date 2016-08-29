@@ -38,26 +38,53 @@ module.exports = {
     const { id } = req.params;
     try {
       const currentUser = AuthService.getSessionUser(req);
-      const recipe = await Recipe.findOneAndIncludeUserLike({
-        findByRecipeId: id,
-        currentUser
-      });
-      if (!recipe) {
-        return res.notFound();
-      }
+      if (!currentUser) return res.redirect('/login');
 
-      let editable = false;
-      if(currentUser && recipe.UserId == currentUser.id)
-        editable = true;
+      const { recipe, editable, social } = await RecipeService.loadRecipe(id, currentUser);
 
-      let social = SocialService.forRecipe({recipes: [recipe]});
-
-      return res.view({ recipe, editable, social});
+      return res.view({ recipe, editable, social });
     } catch (e) {
-
+      if (e.type === 'notFound') return res.notFound();
       return res.serverError(e);
     }
   },
+
+  preview: async function(req, res) {
+    const { id } = req.params;
+    try {
+      const currentUser = AuthService.getSessionUser(req);
+      if (!currentUser) return res.redirect('/login');
+
+      const { recipe, editable, social } = await RecipeService.loadRecipe(id, currentUser);
+
+      const recipeJson = recipe.toJSON();
+      if (recipeJson.UserId !== currentUser.id) {
+        const message = '預覽功能僅限於您自己建立的配方！';
+        return res.forbidden(message);
+      }
+
+      return res.view({ recipe, editable, social });
+    } catch (e) {
+      if (e.type === 'notFound') return res.notFound();
+      return res.serverError(e);
+    }
+  },
+
+  order: async function(req, res) {
+    const { id } = req.params;
+    try {
+      const currentUser = AuthService.getSessionUser(req);
+      if (!currentUser) return res.redirect('/login');
+
+      const { recipe, editable, social } = await RecipeService.loadRecipe(id, currentUser);
+
+      return res.view({ recipe, editable, social, user: currentUser });
+    } catch (e) {
+      if (e.type === 'notFound') return res.notFound();
+      return res.serverError(e);
+    }
+  },
+
   edit: async function(req, res) {
     try {
       let user = AuthService.getSessionUser(req);
@@ -112,18 +139,53 @@ module.exports = {
     }
   },
 
-  buy: async function(req, res) {
+  allpay: async function(req, res) {
+    console.log('body=>', req.body);
     try {
       const { id } = req.params;
-      let user = AuthService.getSessionUser(req);
-      if (!user) {
-        return res.redirect('/login');
-      }
+      const user = AuthService.getSessionUser(req);
+      if (!user) return res.redirect('/login');
+
+      const { recipient, phone, address, paymentMethod } = req.body;
+      const verifyInputs = (() => {
+        let verifyInputExists = 0;
+        const hasRecipient = typeof recipient === 'string';
+        const hasPhone = typeof phone === 'string';
+        const hasAddress = typeof address === 'string';
+        const hasPaymentMethod = typeof paymentMethod === 'string';
+
+        const checkArray = [ hasRecipient, hasPhone, hasAddress, hasPaymentMethod ];
+        for (var result of checkArray) {
+          if (result) verifyInputExists += 1;
+        }
+        verifyInputExists = verifyInputExists === checkArray.length;
+        if (!verifyInputExists) return res.forbidden('訂單資料缺失或不正確！');
+
+        let verifyPaymentMethodValid = 0;
+        const validPaymentMethods = [ 'ATM', 'Credit' ];
+        for (var method of validPaymentMethods) {
+          if (paymentMethod === method) verifyPaymentMethodValid += 1;
+        }
+        verifyPaymentMethodValid = verifyPaymentMethodValid > 0;;
+        if (!verifyPaymentMethodValid) return res.forbidden('付款方式錯誤！');
+
+        if (phone.indexOf(0) !== 0) return res.forbidden('收件人電話格式錯誤！');
+
+        return true;
+      })();
+      if (!verifyInputs) return res.forbidden('訂單資料錯誤！');
+
+      const { email, note, perfumeName, description, message } = req.body;
+
       let recipeOrder = await RecipeOrder.create({
         UserId: user.id,
         RecipeId: id,
+        recipient,
+        phone,
+        address,
+        email,
+        note,
       });
-
       recipeOrder = await RecipeOrder.findByIdHasJoin(recipeOrder.id);
 
       const allPayData = await AllpayService.getAllpayConfig({
@@ -131,11 +193,12 @@ module.exports = {
           RecipeOrderId: recipeOrder.id,
         },
         MerchantTradeNo: crypto.randomBytes(32).toString('hex').substr(0, 8),
-        tradeDesc: '',
+        tradeDesc: `配方名稱：${perfumeName}, (備註：${message})`,
         totalAmount: 999,
-        paymentMethod: 'ATM',
+        paymentMethod: paymentMethod,
         itemArray: recipeOrder.ItemNameArray,
       });
+
       return res.view({
         AioCheckOut: AllpayService.getPostUrl(),
         ...allPayData

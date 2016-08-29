@@ -1,5 +1,22 @@
 module.exports = {
   attributes: {
+    recipient:{
+      type: Sequelize.STRING,
+    },
+    address: {
+      type: Sequelize.STRING,
+    },
+    phone: {
+      type: Sequelize.STRING,
+    },
+    email: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    note: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
     remark: {
       type: Sequelize.STRING,
     },
