@@ -29,11 +29,13 @@ module.exports = {
       throw e;
     }
   },
+
   sortFormulaByScentName: ({formula}) => {
     const bubble = (a, b) => a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];
     let result = formula.sort(bubble);
     return result;
   },
+
   sortFeelingsByValue: ({feelings}) => {
     console.log(feelings[0]);
     const bubble = (a, b) => parseInt(b.value, 10)-parseInt(a.value, 10);
@@ -78,4 +80,37 @@ module.exports = {
       throw e;
     }
   },
+
+  loadRecipeByAction: async function(req, res, action) {
+    const { id } = req.params;
+    try {
+      const currentUser = AuthService.getSessionUser(req);
+      if (!currentUser) return res.redirect('/login');
+
+      const recipe = await Recipe.findOneAndIncludeUserLike({
+        findByRecipeId: id,
+        currentUser
+      });
+      if (!recipe) return res.notFound();
+
+      if (action === 'preview') {
+        const recipeJson = recipe.toJSON();
+        if (recipeJson.UserId !== currentUser.id) {
+          const message = "預覽功能僅限於您自己建立的配方！";
+          return res.forbidden(message);
+        }
+      }
+
+      let editable = false;
+      const belongUser = recipe.UserId == currentUser.id;
+      if (currentUser && belongUser) editable = true;
+
+      const social = SocialService.forRecipe({ recipes: [recipe] });
+
+      return { recipe, editable, social };
+    } catch (e) {
+      return res.serverError(e);
+    }
+  },
+
 }
