@@ -24,11 +24,19 @@
         <option <%= recipe.visibility == 'PRIVATE'?'selected':'' %> value="PRIVATE">私密</option>
       </select>
       <i></i>
+  </section>
+  
   <section>
     <label class="label">香水描述</label>
     <label class="textarea textarea-resizable">
       <textarea name="description" value="<%= recipe.description %>" rows="3"></textarea>
     </label>
+  </section>
+
+  <section>
+    <label class="label">封面圖片</label>
+    <%- include ../../lib/fineuploader.ejs %>
+    <div id="fine-uploader-validation"></div>
   </section>
 
 </fieldset>
