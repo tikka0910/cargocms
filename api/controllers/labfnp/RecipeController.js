@@ -65,7 +65,7 @@ module.exports = {
 
       return res.view({ recipe, editable, social });
     } catch (e) {
-      if (e === '404') return res.notFound();
+      if (e === 'notFound') return res.notFound();
       return res.serverError(e);
     }
   },
@@ -80,7 +80,7 @@ module.exports = {
 
       return res.view({ recipe, editable, social, user: currentUser });
     } catch (e) {
-      if (e === '403') return res.notFound();
+      if (e === 'notFound') return res.notFound();
       return res.serverError(e);
     }
   },

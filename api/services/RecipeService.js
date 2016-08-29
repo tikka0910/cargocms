@@ -87,7 +87,7 @@ module.exports = {
         findByRecipeId: recipeId,
         currentUser
       });
-      if (!recipe) throw '404';
+      if (!recipe) throw 'notFound';
 
       let editable = false;
       const belongUser = recipe.UserId === currentUser.id;
