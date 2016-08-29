@@ -139,9 +139,10 @@ describe('test user', () => {
         
         browser.pause(2000);
         browser.waitForExist('#ToolTables_main-table_2');
-        browser
-          .click('#main-table tbody')
-          .click('#ToolTables_main-table_2');
+        browser.click('#main-table tbody')
+        browser.pause(1000);
+        browser.click('#ToolTables_main-table_2');
+          
         browser.waitForExist('[name="username"]');
         //點擊刪除user
         browser.click('.btn.btn-danger');
