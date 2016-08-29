@@ -35,22 +35,37 @@ module.exports = {
   },
 
   show: async function(req, res) {
+    const { id } = req.params;
     try {
-      const result = await RecipeService.loadRecipeByAction(req, res, 'show');
-      console.log('result=>',result);
+      const currentUser = AuthService.getSessionUser(req);
+      if (!currentUser) return res.redirect('/login');
 
-      return res.view(result);
+      const { recipe, editable, social } = await RecipeService.loadRecipe(id, currentUser);
+
+      return res.view({ recipe, editable, social });
     } catch (e) {
+      if (e === '404') return res.notFound();
       return res.serverError(e);
     }
   },
 
   preview: async function(req, res) {
+    const { id } = req.params;
     try {
-      const result = await RecipeService.loadRecipeByAction(req, res, 'preview');
+      const currentUser = AuthService.getSessionUser(req);
+      if (!currentUser) return res.redirect('/login');
 
-      return res.view(result);
+      const { recipe, editable, social } = await RecipeService.loadRecipe(id, currentUser);
+
+      const recipeJson = recipe.toJSON();
+      if (recipeJson.UserId !== currentUser.id) {
+        const message = "預覽功能僅限於您自己建立的配方！";
+        return res.forbidden(message);
+      }
+
+      return res.view({ recipe, editable, social });
     } catch (e) {
+      if (e === '404') return res.notFound();
       return res.serverError(e);
     }
   },
@@ -61,21 +76,11 @@ module.exports = {
       const currentUser = AuthService.getSessionUser(req);
       if (!currentUser) return res.redirect('/login');
 
-      const recipe = await Recipe.findOneAndIncludeUserLike({
-        findByRecipeId: id,
-        currentUser
-      });
-      if (!recipe) return res.notFound();
-
-      let editable = false;
-      const belongUser = recipe.UserId == currentUser.id;
-      if (currentUser && belongUser) editable = true;
-
-      const social = SocialService.forRecipe({ recipes: [recipe] });
+      const { recipe, editable, social } = await RecipeService.loadRecipe(id, currentUser);
 
       return res.view({ recipe, editable, social, user: currentUser });
     } catch (e) {
-
+      if (e === '403') return res.notFound();
       return res.serverError(e);
     }
   },

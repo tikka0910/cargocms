@@ -129,7 +129,7 @@
       </div>
 
       <div class="projects form-group" id="orderFormWrapper">
-        <form class="orderForm" id="orderForm" action="/recipe/pay/<%= recipe.id %>" method="post">
+        <form class="orderForm" id="orderForm" action="/recipe/allpay/<%= recipe.id %>" method="post">
           <input type="hidden" name="id" value="<%= recipe.id %>">
           <input type="hidden" name="perfumeName" value="<%= recipe.perfumeName %>">
           <input type="hidden" name="description" value="<%= recipe.description %>">

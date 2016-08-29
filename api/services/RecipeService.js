@@ -81,35 +81,23 @@ module.exports = {
     }
   },
 
-  loadRecipeByAction: async function(req, res, action) {
-    const { id } = req.params;
+  loadRecipe: async function(recipeId, currentUser) {
     try {
-      const currentUser = AuthService.getSessionUser(req);
-      if (!currentUser) return res.redirect('/login');
-
       const recipe = await Recipe.findOneAndIncludeUserLike({
-        findByRecipeId: id,
+        findByRecipeId: recipeId,
         currentUser
       });
-      if (!recipe) return res.notFound();
-
-      if (action === 'preview') {
-        const recipeJson = recipe.toJSON();
-        if (recipeJson.UserId !== currentUser.id) {
-          const message = "預覽功能僅限於您自己建立的配方！";
-          return res.forbidden(message);
-        }
-      }
+      if (!recipe) throw '404';
 
       let editable = false;
-      const belongUser = recipe.UserId == currentUser.id;
+      const belongUser = recipe.UserId === currentUser.id;
       if (currentUser && belongUser) editable = true;
 
       const social = SocialService.forRecipe({ recipes: [recipe] });
 
       return { recipe, editable, social };
     } catch (e) {
-      return res.serverError(e);
+      throw e;
     }
   },
 
