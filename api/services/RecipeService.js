@@ -87,9 +87,9 @@ module.exports = {
         findByRecipeId: recipeId,
         currentUser
       });
-      if (!recipe){
-        const error = new Error("can not find recipe")
-        error.type = "notFound"
+      if (!recipe) {
+        const error = new Error('can not find recipe');
+        error.type = 'notFound';
         throw error;
       }
 

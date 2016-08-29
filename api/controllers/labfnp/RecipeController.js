@@ -59,7 +59,7 @@ module.exports = {
 
       const recipeJson = recipe.toJSON();
       if (recipeJson.UserId !== currentUser.id) {
-        const message = "預覽功能僅限於您自己建立的配方！";
+        const message = '預覽功能僅限於您自己建立的配方！';
         return res.forbidden(message);
       }
 
