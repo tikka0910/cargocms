@@ -76,12 +76,14 @@ module.exports.routes = {
   'put /api/admin/post/:id': 'api/admin/PostController.update',
   'delete /api/admin/post/:id': 'api/admin/PostController.destroy',
 
+  'post /api/allpay/paid': 'api/AllpayController.paid',
+  'post /api/allpay/paymentinfo': 'api/AllpayController.paymentinfo',
+
   'get /api/admin/slogan': 'api/admin/SloganController.find',
   'get /api/admin/slogan/:id': 'api/admin/SloganController.findOne',
   'post /api/admin/slogan': 'api/admin/SloganController.create',
   'put /api/admin/slogan/:id': 'api/admin/SloganController.update',
   'delete /api/admin/slogan/:id': 'api/admin/SloganController.destroy',
-
   // 'get /api/admin/Default': 'api/admin/DefaultController.find',
   // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
   // 'post /api/admin/Default': 'api/admin/DefaultController.create',
@@ -95,6 +97,7 @@ module.exports.routes = {
 
   '/recipe/:id':      'labfnp/RecipeController.show',
   '/recipe/edit/:id': 'labfnp/RecipeController.edit',
+  '/recipe/order/:id':  'labfnp/RecipeController.buy',
   '/creator':         'labfnp/RecipeController.create',
   '/lab':             'labfnp/MainController.explore',
   '/me':              'labfnp/MainController.portfolio',

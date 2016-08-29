@@ -76,7 +76,7 @@ module.exports = {
     },
   },
   associations: function() {
-    Allpay.belongsTo(Recipe);
+    Allpay.belongsTo(RecipeOrder);
   },
   options: {
     classMethods: {},
