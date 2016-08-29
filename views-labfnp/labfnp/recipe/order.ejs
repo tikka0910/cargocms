@@ -129,7 +129,7 @@
       </div>
 
       <div class="projects form-group" id="orderFormWrapper">
-        <form class="orderForm" id="orderForm" action="/recipe/buy/<%= recipe.id %>" method="post">
+        <form class="orderForm" id="orderForm" action="/recipe/pay/<%= recipe.id %>" method="post">
           <input type="hidden" name="id" value="<%= recipe.id %>">
           <input type="hidden" name="perfumeName" value="<%= recipe.perfumeName %>">
           <input type="hidden" name="description" value="<%= recipe.description %>">
@@ -154,8 +154,8 @@
           </section>
 
           <section class="col">
-            <label for="address">收件人電子信箱（選填）</label>
-            <input type="email" id="email" class="form-control" name="email" value="<%= user.email %>" placeholder="請輸入 Email...">
+            <label for="address">收件人電子信箱<span class="required">*</span></label>
+            <input type="email" id="email" class="form-control" name="email" value="<%= user.email %>" placeholder="請輸入 Email..." required>
           </section>
 
           <section class="col">
@@ -173,7 +173,6 @@
           </section>
 
         </form>
-
       </div>
 
       <div class="text-center">

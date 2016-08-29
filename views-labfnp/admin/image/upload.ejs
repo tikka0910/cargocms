@@ -21,7 +21,7 @@
         uploadImageAppModel[key] = value;
       },
       setup: function() {
-        const restrictedUploader = new qq.FineUploader({
+        var restrictedUploader = new qq.FineUploader({
           element: document.getElementById("fine-uploader-validation"),
           template: 'qq-template-validation',
           autoUpload: false,

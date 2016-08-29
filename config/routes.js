@@ -100,7 +100,7 @@ module.exports.routes = {
   '/recipe/order/:id': 'labfnp/RecipeController.order',
   // '/recipe/feedback/:id': 'labfnp/RecipeController.feedback',
   '/recipe/edit/:id': 'labfnp/RecipeController.edit',
-  '/recipe/buy/:id':  'labfnp/RecipeController.buy',
+  '/recipe/pay/:id':  'labfnp/RecipeController.buy',
   '/creator':         'labfnp/RecipeController.create',
   '/lab':             'labfnp/MainController.explore',
   '/me':              'labfnp/MainController.portfolio',
