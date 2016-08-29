@@ -120,13 +120,13 @@ describe('test user', () => {
     it('Double Click into info page.', async(done) => {
       try{
         browser.url('/admin/#/admin/user');
-        browser.waitForExist('#main-table_filter input[type="search"]',5000);
+        browser.waitForExist('#main-table_filter input[type="search"]');
 
         const userEmail = browser.element('#main-table-widget tbody tr:nth-child(1) td:nth-child(4)')
                           .getText();
         browser.doubleClick('#main-table-widget tbody tr:nth-child(1)');
         //進入檢視頁面，比對email是否相同
-        browser.waitForExist('#main-show',5000);
+        browser.waitForExist('#main-show');
         browser.getText('ul.list-unstyled > li:nth-child(1) > p > a')
         .should.be.equal(userEmail);
         done();
@@ -140,14 +140,14 @@ describe('test user', () => {
     it('select one record, click view button ', async (done) =>{
       try{
         browser.url('/admin/#/admin/user');
-        browser.waitForExist('#main-table_filter input[type="search"]',5000);
+        browser.waitForExist('#main-table_filter input[type="search"]');
 
         const userEmail = browser.element('#main-table-widget tbody tr:nth-child(1) td:nth-child(4)')
                           .getText();
         browser.click('#main-table-widget tbody tr:nth-child(1)');
         browser.click('#ToolTables_main-table_0');
         //進入檢視頁面，比對email是否相同
-        browser.waitForExist('#main-show',5000);
+        browser.waitForExist('#main-show');
         browser.getText('ul.list-unstyled > li:nth-child(1) > p > a')
         .should.be.equal(userEmail);
         done();
@@ -160,14 +160,14 @@ describe('test user', () => {
     it('click view button on the right', async (done) =>{
       try{
         browser.url('/admin/#/admin/user');
-        browser.waitForExist('#main-table_filter input[type="search"]',5000);
+        browser.waitForExist('#main-table_filter input[type="search"]');
 
         const userEmail = browser.element('#main-table-widget tbody tr:nth-child(1) td:nth-child(4)')
                           .getText();
 
         browser.click('#main-table > tbody > tr:nth-child(1) > td:nth-child(6) > div > a:nth-child(1)');
         //進入檢視頁面，比對email是否相同
-        browser.waitForExist('#main-show',5000);
+        browser.waitForExist('#main-show');
         browser.getText('ul.list-unstyled > li:nth-child(1) > p > a')
         .should.be.equal(userEmail);
         done();
@@ -180,13 +180,13 @@ describe('test user', () => {
     it('click edit button on the right', async (done) =>{
       try{
         browser.url('/admin/#/admin/user');
-        browser.waitForExist('#main-table_filter input[type="search"]',5000);
+        browser.waitForExist('#main-table_filter input[type="search"]');
 
         const userEmail = browser.element('#main-table-widget tbody tr:nth-child(1) td:nth-child(4)')
                           .getText();
         browser.click('#main-table > tbody > tr:nth-child(1) > td:nth-child(6) > div > a:nth-child(2)');
         //進入編輯頁面，比對email是否相同
-        browser.waitForExist('#main-edit',5000);
+        browser.waitForExist('#main-edit');
 
         browser.getValue('[type=email]').should.be.equal(userEmail);
         done();
