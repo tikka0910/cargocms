@@ -115,6 +115,85 @@ describe('test user', () => {
     }
   });
 
+  describe('User List Test', () =>{
+    //double click 進入檢視畫面
+    it('Double Click into info page.', async(done) => {
+      try{
+        browser.url('/admin/#/admin/user');
+        browser.waitForExist('#main-table_filter input[type="search"]');
 
+        const userEmail = browser.element('#main-table-widget tbody tr:nth-child(1) td:nth-child(4)')
+                          .getText();
+        browser.doubleClick('#main-table-widget tbody tr:nth-child(1)');
+        //進入檢視頁面，比對email是否相同
+        browser.waitForExist('#main-show');
+        browser.getText('ul.list-unstyled > li:nth-child(1) > p > a')
+        .should.be.equal(userEmail);
+        done();
+      }
+      catch(e){
+        done(e);
+      }
+    });
 
+    //click 點擊一筆資料，並點選表格上方檢視按鈕，進入檢視畫面
+    it('select one record, click view button ', async (done) =>{
+      try{
+        browser.url('/admin/#/admin/user');
+        browser.waitForExist('#main-table_filter input[type="search"]');
+
+        const userEmail = browser.element('#main-table-widget tbody tr:nth-child(1) td:nth-child(4)')
+                          .getText();
+        browser.click('#main-table-widget tbody tr:nth-child(1)');
+        browser.click('#ToolTables_main-table_0');
+        //進入檢視頁面，比對email是否相同
+        browser.waitForExist('#main-show');
+        browser.getText('ul.list-unstyled > li:nth-child(1) > p > a')
+        .should.be.equal(userEmail);
+        done();
+      }
+      catch(e){
+        done(e);
+      }
+    });
+    //click 點擊一筆資料的右方「檢視」按鈕進入檢視畫面
+    it('click view button on the right', async (done) =>{
+      try{
+        browser.url('/admin/#/admin/user');
+        browser.waitForExist('#main-table_filter input[type="search"]');
+
+        const userEmail = browser.element('#main-table-widget tbody tr:nth-child(1) td:nth-child(4)')
+                          .getText();
+
+        browser.click('#main-table > tbody > tr:nth-child(1) > td:nth-child(6) > div > a:nth-child(1)');
+        //進入檢視頁面，比對email是否相同
+        browser.waitForExist('#main-show');
+        browser.getText('ul.list-unstyled > li:nth-child(1) > p > a')
+        .should.be.equal(userEmail);
+        done();
+      }
+      catch(e){
+        done(e);
+      }
+    });
+    //click 點擊一筆資料的右方「編輯」按鈕進入編輯畫面
+    it('click edit button on the right', async (done) =>{
+      try{
+        browser.url('/admin/#/admin/user');
+        browser.waitForExist('#main-table_filter input[type="search"]');
+
+        const userEmail = browser.element('#main-table-widget tbody tr:nth-child(1) td:nth-child(4)')
+                          .getText();
+        browser.click('#main-table > tbody > tr:nth-child(1) > td:nth-child(6) > div > a:nth-child(2)');
+        //進入編輯頁面，比對email是否相同
+        browser.waitForExist('#main-edit');
+
+        browser.getValue('[type=email]').should.be.equal(userEmail);
+        done();
+      }
+      catch(e){
+        done(e);
+      }
+    });
+  });
 });
