@@ -194,7 +194,7 @@ module.exports = {
     }
   },
 
-  buy: async function(req, res) {
+  allpay: async function(req, res) {
     console.log('body=>', req.body);
     try {
       const { id } = req.params;
