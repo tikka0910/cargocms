@@ -3,7 +3,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const loginUser = AuthService.getSessionUser(req);
-      if (!loginUser) throw Error('Forbidden');
+      if (!loginUser) res.forbidden();
       const data = { follower: loginUser.id, following: id };
       await Follow.findOrCreate({
         where: data,
@@ -19,7 +19,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const loginUser = AuthService.getSessionUser(req);
-      if (!loginUser) throw Error('Forbidden');
+      if (!loginUser) res.forbidden();
       await Follow.destroy({
         where: {
           follower: loginUser.id,
