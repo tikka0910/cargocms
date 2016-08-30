@@ -1,5 +1,5 @@
 module.exports = {
-  
+
   find: async (req, res) => {
     try {
       const { query } = req;
@@ -13,6 +13,30 @@ module.exports = {
         result = { data: { items } };
       }
       res.ok(result);
+    } catch (e) {
+      res.serverError(e);
+    }
+  },
+
+  findOne: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const item = await Allpay.findOne({ id });
+      res.ok({ data: { item } });
+    } catch (e) {
+      res.serverError(e);
+    }
+  },
+
+  update: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+      const message = 'Update success.';
+      const item = await Allpay.update(data ,{
+        where: { id, },
+      });
+      res.ok({ message, data: { item } });
     } catch (e) {
       res.serverError(e);
     }
