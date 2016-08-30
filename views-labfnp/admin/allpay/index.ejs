@@ -4,26 +4,17 @@
 	<thead>
 		<tr>
 			<th class="" data-hide="phone"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs"/> ID</th>
-			<th class="" data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-sm hidden-xs"/> TradeNo </th>
+			<th class="" data-class="expand"><i class="fa fa-fw text-muted hidden-sm hidden-xs"/> TradeNo </th>
       <th class="">MerchantTradeNo</th>
       <th class="">RtnCode</th>
       <th class="">RtnMsg</th>
       <th class="">PaymentDate</th>
-      <th class="">TradeDate</th>
       <th class="">PaymentType</th>
-      <th class="">ShouldTradeAmt</th>
       <th class="">TradeAmt</th>
-      <th class="">BankCode</th>
       <th class="">vAccount</th>
-      <th class="">ExpireDate</th>
-      <th class="">PaymentNo</th>
-      <th class="">Barcode1</th>
-      <th class="">Barcode2</th>
-      <th class="">Barcode3</th>
-      <th class="">CheckMacValue</th>
-      <th class="">MerchantTradeDate</th>
 			<th class="">RecipeOrderId</th>
-			<th class="" data-hide="phone,tablet"><i class="fa fa-fw fa-clock-o text-muted hidden-sm hidden-xs"/> createdAt</th>
+      <th class="" data-hide="phone,tablet"><i class="fa fa-fw fa-clock-o text-muted hidden-sm hidden-xs"/> createdAt</th>
+			<th class="" data-hide="phone,tablet"><i class="fa fa-fw fa-clock-o text-muted hidden-sm hidden-xs"/> updatedAt</th>
 			<th class="" data-hide="phone,tablet"></th>
 		</tr>
 	</thead>
@@ -31,26 +22,17 @@
 	<tbody>
 		<tr v-for="item in data.items">
       <td>{{ item.id }}</td>
-			<td>{{ item.TradeNo }}</td>
-			<td><a href="/admin/#/admin/{{modelName}}/show/{{item.id}}">{{ item.MerchantTradeNo }}</a></td>
+			<td><a href="/admin/#/admin/{{modelName}}/show/{{item.id}}">{{ item.TradeNo }}</a></td>
+			<td>{{ item.MerchantTradeNo }}</td>
 			<td>{{ item.RtnCode }}</td>
 			<td>{{ item.RtnMsg }}</td>
       <td>{{ item.PaymentDate }} </td>
-      <td>{{ item.TradeDate }} </td>
       <td>{{ item.PaymentType }} </td>
-      <td>{{ item.ShouldTradeAmt }} </td>
       <td>{{ item.TradeAmt }} </td>
-      <td>{{ item.BankCode }} </td>
       <td>{{ item.vAccount }} </td>
-      <td>{{ item.ExpireDate }} </td>
-      <td>{{ item.PaymentNo }} </td>
-      <td>{{ item.Barcode1 }} </td>
-      <td>{{ item.Barcode2 }} </td>
-      <td>{{ item.Barcode3 }} </td>
-      <td>{{ item.CheckMacValue }} </td>
-      <td>{{ item.MerchantTradeDate }} </td>
       <td>{{ item.RecipeOrderId }} </td>
-			<td>{{ item.createdAt }} </td>
+      <td>{{ item.createdAt }} </td>
+			<td>{{ item.updatedAt }} </td>
 			<td align="center" style="cursor: pointer;">
 				<div class="row">
 					<a class="btn btn-default btn-xs" role="button" v-on:click="show(item.id)">
@@ -77,21 +59,12 @@
 			{ "data": "RtnCode" },
       { "data": "RtnMsg" },
       { "data": "PaymentDate" },
-      { "data": "TradeDate" },
       { "data": "PaymentType" },
-      { "data": "ShouldTradeAmt" },
       { "data": "TradeAmt" },
-      { "data": "BankCode" },
       { "data": "vAccount" },
-      { "data": "ExpireDate" },
-      { "data": "PaymentNo" },
-      { "data": "Barcode1" },
-      { "data": "Barcode2" },
-      { "data": "Barcode3" },
-      { "data": "CheckMacValue" },
-      { "data": "MerchantTradeDate" },
       { "data": "RecipeOrderId" },
       { "data": "createdAt" },
+      { "data": "updatedAt" },
 			{ "data": null }
 		]
 
