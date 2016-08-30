@@ -219,7 +219,28 @@ module.exports.bootstrap = async (cb) => {
 
       // let path = "";
       // await ScentNote.importFeelingFromFile({path});
+
+      //建立一筆 Allpay 資料，使用上方 testRecipe資料
+      const recipeOrder = await RecipeOrder.create({
+        remark: '123',
+        UserId: 1,
+        RecipeId: testRecipe.id,
+      });
+      const data = {
+        relatedKeyValue: {
+          //RecipeId: recipe.id,
+          RecipeOrderId: recipeOrder.id,
+        },
+        MerchantTradeNo: '123',
+        tradeDesc: 'test gen config',
+        totalAmount: 999,
+        paymentMethod: 'ATM',
+        itemArray: ['Item01', 'Item02'],
+      }
+      const result = await AllpayService.getAllpayConfig(data);
     }
+
+
 
     // import site-specified data
     require('./init/labfnp').init();
