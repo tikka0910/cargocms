@@ -1,131 +1,258 @@
 <fieldset>
 
   <section>
-    <label class="label">權限</label>
-    <label class="checkbox state-disabled">
-      <input type="checkbox" id="admin" name="admin" value="admin" v-model="data.item.RolesArray">
-      <i></i>管理員</label>
-    <label class="user checkbox state-disabled">
-      <input type="checkbox" id="user" name="user" value="user" v-model="data.item.RolesArray" checked disabled>
-      <i></i>使用者</label>
-  </section>
-
-  <br>
-  <hr>
-  <br>
-
-  <section>
-    <label class="input state-disabled"><i class="icon-append fa fa-user"></i>
-      <input type="text" name="username" placeholder="使用者名稱" v-model="data.item.username" disabled>
-      <b class="tooltip tooltip-bottom-right">請輸入使用者名稱</b></label>
+    <label class="input state-disabled">TradeNo
+      <input type="text" name="TradeNo" placeholder="TradeNo" v-model="data.item.TradeNo" disabled>
+      <b class="tooltip tooltip-bottom-right">TradeNo</b></label>
   </section>
 
   <section>
-    <label class="input state-disabled"><i class="icon-append fa fa-envelope-o"></i>
-      <input type="email" name="email" placeholder="Email" v-model="data.item.email" disabled>
-      <b class="tooltip tooltip-bottom-right">請輸入 Email</b></label>
+    <label class="input state-disabled">MerchantTradeNo
+      <input type="text" name="MerchantTradeNo" placeholder="MerchantTradeNo" v-model="data.item.MerchantTradeNo" disabled>
+      <b class="tooltip tooltip-bottom-right">MerchantTradeNo</b></label>
   </section>
 
-  <div class="row">
-    <section class="col col-xs-12 col-sm-6">
-      <label class="input state-disabled">
-        <input type="text" name="firstName" placeholder="名" v-model="data.item.firstName" disabled>
-      </label>
-    </section>
-    <section class="col col-6">
-      <label class="input">
-        <input type="text" name="lastName" placeholder="姓" v-model="data.item.lastName" disabled>
-      </label>
-    </section>
-  </div>
-
-  <div class="row">
-    <section class="col col-xs-12 col-sm-6">
-      <label class="input state-disabled"> <i class="icon-append fa fa-lock"></i>
-        <input type="password" name="password" placeholder="密碼" id="password" v-model="data.item.Passports[0].password" disabled>
-        <b class="tooltip tooltip-bottom-right">請輸入密碼</b> </label>
-    </section>
-
-    <section class="col col-xs-12 col-sm-6">
-      <label class="input state-disabled"> <i class="icon-append fa fa-lock"></i>
-        <input type="password" name="passwordConfirm" placeholder="確認密碼" v-model="data.option.passwordConfirm" disabled>
-        <b class="tooltip tooltip-bottom-right">請輸入密碼</b> </label>
-    </section>
-  </div>
-  <!--
-  <div class="row">
-    <section class="col col-6">
-      <label class="select">
-        <select name="gender">
-          <option value="0" selected="" disabled="">Gender</option>
-          <option value="1">Male</option>
-          <option value="2">Female</option>
-          <option value="3">Prefer not to answer</option>
-        </select> <i></i> </label>
-    </section>
-    <section class="col col-6">
-      <label class="input"> <i class="icon-append fa fa-calendar"></i>
-        <input type="text" name="request" placeholder="Request activation on" class="datepicker" data-dateformat='dd/mm/yy'>
-      </label>
-    </section>
-  </div>
+  <section>
+    <label class="input state-disabled">RtnCode
+      <input type="text" name="RtnCode" placeholder="RtnCode" v-model="data.item.RtnCode" disabled>
+      <b class="tooltip tooltip-bottom-right">RtnCode</b></label>
+  </section>
 
   <section>
-    <label class="checkbox">
-      <input type="checkbox" name="subscription" id="subscription">
-      <i></i>I want to receive news and special offers</label>
-    <label class="checkbox">
-      <input type="checkbox" name="terms" id="terms">
-      <i></i>I agree with the Terms and Conditions</label>
-  </section> -->
+    <label class="input state-disabled">RtnMsg
+      <input type="text" name="RtnMsg" placeholder="RtnMsg" v-model="data.item.RtnMsg" disabled>
+      <b class="tooltip tooltip-bottom-right">RtnMsg</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">PaymentDate
+      <input type="text" name="PaymentDate" placeholder="PaymentDate" v-model="data.item.PaymentDate" disabled>
+      <b class="tooltip tooltip-bottom-right">PaymentDate</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">TradeDate
+      <input type="text" name="TradeDate" placeholder="PaymentDate" v-model="data.item.TradeDate" disabled>
+      <b class="tooltip tooltip-bottom-right">TradeDate</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">PaymentType
+      <input type="text" name="PaymentType" placeholder="PaymentType" v-model="data.item.PaymentType" disabled>
+      <b class="tooltip tooltip-bottom-right">PaymentType</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">ShouldTradeAmt
+      <input type="text" name="ShouldTradeAmt" placeholder="ShouldTradeAmt" v-model="data.item.ShouldTradeAmt" disabled>
+      <b class="tooltip tooltip-bottom-right">ShouldTradeAmt</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">TradeAmt
+      <input type="text" name="TradeAmt" placeholder="TradeAmt" v-model="data.item.TradeAmt" disabled>
+      <b class="tooltip tooltip-bottom-right">TradeAmt</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">BankCode
+      <input type="text" name="BankCode" placeholder="BankCode" v-model="data.item.BankCode" disabled>
+      <b class="tooltip tooltip-bottom-right">BankCode</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">vAccount
+      <input type="text" name="vAccount" placeholder="vAccount" v-model="data.item.vAccount" disabled>
+      <b class="tooltip tooltip-bottom-right">vAccount</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">ExpireDate
+      <input type="text" name="ExpireDate" placeholder="ExpireDate" v-model="data.item.ExpireDate" disabled>
+      <b class="tooltip tooltip-bottom-right">ExpireDate</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">PaymentNo
+      <input type="text" name="PaymentNo" placeholder="PaymentNo" v-model="data.item.PaymentNo" disabled>
+      <b class="tooltip tooltip-bottom-right">PaymentNo</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">Barcode1
+      <input type="text" name="Barcode1" placeholder="Barcode1" v-model="data.item.Barcode1" disabled>
+      <b class="tooltip tooltip-bottom-right">Barcode1</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">Barcode2
+      <input type="text" name="Barcode2" placeholder="Barcode2" v-model="data.item.Barcode2" disabled>
+      <b class="tooltip tooltip-bottom-right">Barcode2</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">Barcode3
+      <input type="text" name="Barcode3" placeholder="Barcode3" v-model="data.item.Barcode3" disabled>
+      <b class="tooltip tooltip-bottom-right">Barcode3</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">CheckMacValue
+      <input type="text" name="CheckMacValue" placeholder="CheckMacValue" v-model="data.item.CheckMacValue" disabled>
+      <b class="tooltip tooltip-bottom-right">CheckMacValue</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">MerchantTradeDate
+      <input type="text" name="MerchantTradeDate" placeholder="MerchantTradeDate" v-model="data.item.MerchantTradeDate" disabled>
+      <b class="tooltip tooltip-bottom-right">MerchantTradeDate</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">RecipeOrderId
+      <input type="text" name="RecipeOrderId" placeholder="RecipeOrderId" v-model="data.item.RecipeOrderId" disabled>
+      <b class="tooltip tooltip-bottom-right">RecipeOrderId</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">createdAt
+      <input type="text" name="createdAt" placeholder="createdAt" v-model="data.item.createdAt" disabled>
+      <b class="tooltip tooltip-bottom-right">createdAt</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">updatedAt
+      <input type="text" name="updatedAt" placeholder="updatedAt" v-model="data.item.updatedAt" disabled>
+      <b class="tooltip tooltip-bottom-right">updatedAt</b></label>
+  </section>
+
 </fieldset>
+
 <script>
 var formRules = {
-  username : {
+  TradeNo : {
     required : true
   },
-  email : {
+  MerchantTradeNo : {
     required : true,
-    email : true
   },
-  firstname : {
+  RtnCode : {
     required : true
   },
-  lastname : {
+  RtnMsg : {
     required : true
   },
-  password : {
-    required : true,
-    minlength : 3,
+  PaymentDate : {
+    required : true
   },
-  passwordConfirm : {
+  TradeDate : {
     required : true,
-    minlength : 3,
-    equalTo : '#password'
+  },
+  PaymentType : {
+    required : true,
+  },
+  ShouldTradeAmt : {
+    required : true,
+  },
+  TradeAmt : {
+    required : true,
+  },
+  BankCode : {
+    required : true,
+  },
+  vAccount : {
+    required : true,
+  },
+  ExpireDate : {
+    required : true,
+  },
+  PaymentNo : {
+    required : true,
+  },
+  Barcode1 : {
+    required : true,
+  },
+  Barcode2 : {
+    required : true,
+  },
+  Barcode3 : {
+    required : true,
+  },
+  CheckMacValue : {
+    required : true,
+  },
+  MerchantTradeDate : {
+    required : true,
+  },
+  RecipeOrderId : {
+    required : true,
   },
 }
 
   // Messages for form validation
 var formMessages = {
-  username : {
-    required : '請輸入使用者帳號'
+  TradeNo : {
+    required : 'Plase Enter TradeNo'
   },
-  email : {
-    required : '請輸入 Email',
-    email : '請確認輸入的 Email 格式'
+  MerchantTradeNo : {
+    required : 'Plase Enter MerchantTradeNo',
   },
-  firstname : {
-    required : '請輸入使用者姓'
+  RtnCode : {
+    required : 'Plase check RtnCode',
   },
-  lastname : {
-    required : '請輸入使用者名'
+  RtnMsg : {
+    required : 'Plase check RtnMsg',
   },
-  password : {
-    required : '請輸入密碼'
+  PaymentDate : {
+    required : 'Plase check PaymentDate',
   },
-  passwordConfirm : {
-    required : '請再次輸入密碼以便確認',
-    equalTo : '請輸入相同的密碼'
+  TradeDate : {
+    required : 'Plase check TradeDate',
+  },
+  PaymentType : {
+    required : 'Plase check PaymentType',
+  },
+  ShouldTradeAmt : {
+    required : 'Plase check ShouldTradeAmt',
+  },
+  TradeAmt : {
+    required : 'Plase check TradeAmt',
+  },
+  BankCode : {
+    required : 'Plase check BankCode',
+  },
+  vAccount : {
+    required : 'Plase check vAccount',
+  },
+  ExpireDate : {
+    required : 'Plase check ExpireDate',
+  },
+  PaymentNo : {
+    required : 'Plase check PaymentNo',
+  },
+  Barcode1 : {
+    required : 'Plase check Barcode1',
+  },
+  Barcode2 : {
+    required : 'Plase check Barcode2',
+  },
+  Barcode3 : {
+    required : 'Plase check Barcode3',
+  },
+  CheckMacValue : {
+    required : 'Plase check CheckMacValue',
+  },
+  MerchantTradeDate : {
+    required : 'Plase check MerchantTradeDate',
+  },
+  RecipeOrderId : {
+    required : 'Plase check RecipeOrderId',
+  },
+  createdAt : {
+    required : 'Plase check createdAt',
+  },
+  updatedAt : {
+    required : 'Plase check updatedAt',
   },
 }
 </script>
