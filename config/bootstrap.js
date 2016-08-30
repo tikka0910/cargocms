@@ -8,103 +8,21 @@
  * For more information on bootstrapping your app, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.bootstrap.html
  */
-
+import MailerService from 'sails-service-mailer';
 module.exports.bootstrap = async (cb) => {
 
   // 這個已經用 config/urls.js 定義預設值
   //if(!sails.config.urls) sails.config.urls = {afterSignIn: "/"};
-
-
-
   _.extend(sails.hooks.http.app.locals, sails.config.http.locals);
 
-  let porductionInitDb = async () => {
-    let {connection} = sails.config.models;
-    let {environment} = sails.config;
+  const {environment} = sails.config;
 
-    if(connection == 'mysql' && environment == 'production'){
-
-      let {database} = sails.config.connections.mysql;
-
-      let tableList = await sequelize.query(`
-        select table_name
-        from information_schema.tables
-        where table_schema='${database}';
-      `);
-
-      if(tableList[0].length == 0){
-        sails.log.info("=== porduction init database ===");
-        await sequelize.sync({ force: 'drop' });
-      }
-    }
-  }
 
   try {
 
     sails.log.info("=== start bootstrap ===");
     sails.services.passport.loadStrategies();
 
-    await porductionInitDb();
-
-    if (!sails.config.hasOwnProperty('offAuth'))
-      sails.config.offAuth = false;
-
-    if(environment == 'production')
-      sails.config.offAuth = false;
-
-    let adminRole = await Role.findOrCreate({
-      where: {authority: 'admin'},
-      defaults: {authority: 'admin'}
-    });
-
-    let userRole = await Role.findOrCreate({
-      where: {authority: 'user'},
-      defaults: {authority: 'user'}
-    });
-
-    User.create({
-      username: 'user',
-      email: 'user@example.com',
-      firstName: '王',
-      lastName: '大明'
-    }).then(function(user) {
-      Passport.create({
-        provider: 'local',
-        password: 'user',
-        UserId: user.id
-      });
-
-
-
-    });
-
-
-
-    User.findOrCreate({
-      where: {
-        username: 'admin'
-      },
-      defaults: {
-        username: 'admin',
-        email: 'admin@example.com',
-        firstName: '管',
-        lastName: '李仁'
-      }
-    }).then(function(adminUsers) {
-      Passport.findOrCreate({
-        where: {
-          provider: 'local',
-          UserId: adminUsers[0].id
-        },
-        defaults: {
-          provider: 'local',
-          password: 'admin',
-          UserId: adminUsers[0].id
-        }
-      });
-      adminUsers[0].addRole(adminRole[0]);
-    });
-    const {environment} = sails.config;
     let allpayConfig = sails.config.allpay;
     if (!allpayConfig) {
       allpayConfig = {
@@ -140,8 +58,74 @@ module.exports.bootstrap = async (cb) => {
       allpayModel: Allpay,
     });
 
+    let {environment} = sails.config;
+    let {connection} = sails.config.models;
+
+    if (!sails.config.hasOwnProperty('offAuth'))
+      sails.config.offAuth = false;
+
+    if(environment == 'production')
+      sails.config.offAuth = false;
+
+    let adminRole = await Role.findOrCreate({
+      where: {authority: 'admin'},
+      defaults: {authority: 'admin'}
+    });
+
+    let userRole = await Role.findOrCreate({
+      where: {authority: 'user'},
+      defaults: {authority: 'user'}
+    });
+
+    User.findOrCreate({
+      where: {
+        username: 'admin'
+      },
+      defaults: {
+        username: 'admin',
+        email: 'admin@example.com',
+        firstName: '管',
+        lastName: '李仁'
+      }
+    }).then(function(adminUsers) {
+      Passport.findOrCreate({
+        where: {
+          provider: 'local',
+          UserId: adminUsers[0].id
+        },
+        defaults: {
+          provider: 'local',
+          password: 'admin',
+          UserId: adminUsers[0].id
+        }
+      });
+      adminUsers[0].addRole(adminRole[0]);
+    });
+
+    let menuItems = await MenuItem.findAll();
+    if(menuItems.length == 0){
+      require('./init/labfnp').init();
+      require('./init/facebook').init();
+    }
+
+
+
+
     if (environment === 'development' && sails.config.models.migrate == 'drop') {
       sails.log.info("init Dev data", environment);
+
+      User.create({
+        username: 'user',
+        email: 'user@example.com',
+        firstName: '王',
+        lastName: '大明'
+      }).then(function(user) {
+        Passport.create({
+          provider: 'local',
+          password: 'user',
+          UserId: user.id
+        });
+      });
 
 
       // 大量假帳號
@@ -211,23 +195,13 @@ module.exports.bootstrap = async (cb) => {
 
       let testRecipe = await Recipe.create(recipeLoveAgain);
 
-
-      // const execSync = require('child_process').execSync;
-      // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scentNote.sql`);
-      // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/scent.sql`);
-      // execSync(`sqlite3 ${__dirname}/../sqlite.db < ${__dirname}/../import/feeling.sql`);
-
-      // let path = "";
-      // await ScentNote.importFeelingFromFile({path});
     }
 
-    // import site-specified data
-    require('./init/labfnp').init();
-    require('./init/facebook').init();
+
 
     cb();
   } catch (e) {
-    console.error(e);
+    console.error(e.stack);
     cb(e);
   }
 };

@@ -26,7 +26,7 @@ node {
     // sh "npm install pm2 -g"
 
     stage 'build project'
-    sh "npm install"
+    sh "npm install && npm run build"
 
     stage 'test project'
     sh "npm run test-ci"

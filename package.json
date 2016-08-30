@@ -50,6 +50,8 @@
     "sails-disk": "~0.10.0",
     "sails-hook-autoreload": "^0.13.2",
     "sails-hook-sequelize": "^1.0.1",
+    "sails-service-mailer": "^3.2.1",
+    "sprintf-js": "^1.0.3",
     "sqlite3": "^3.1.1",
     "tracer": "0.8.3",
     "validator": "^4.3.0"
@@ -61,7 +63,6 @@
     "test-e2e": "npm run clean-e2e && chimp --mocha --path=test/e2e",
     "test-e2e-docker": "npm run clean-e2e && make start-e2e-docker && chimp chimp-docker.js --mocha --path=test/e2e",
     "test-e2e-watch": "npm run clean-e2e && chimp --mocha --path=test/e2e --watch",
-
     "clean-e2e": "rm -rf test/e2e/screenshot/*.png",
     "build": "npm i && node_modules/grunt-cli/bin/grunt build",
     "start": "node app.js",
