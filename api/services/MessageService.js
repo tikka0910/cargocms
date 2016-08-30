@@ -142,7 +142,7 @@ module.exports = {
 
     try {
 
-      if(true || sails.config.environment === 'production'){
+      if(sails.config.environment === 'production'){
 
         await MailerService.send(message.toJSON());
         message.error = '';
