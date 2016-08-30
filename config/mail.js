@@ -1,11 +1,14 @@
 
 module.exports.mail = {
-  type: 'ses',
+  type: 'smtp',
   config: {
     from: '',
     provider: {
-      accessKeyId: '',
-      secretAccessKey: '',
+      host: '',
+      auth: {
+        user: '',
+        pass: '',
+      }
     }
   },
   templete: {

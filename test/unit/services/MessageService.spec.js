@@ -11,9 +11,9 @@ describe("about Mailer service", () => {
   it.only('send paymentConfirm', async (done) => {
 
     try {
-      let messageConfig = await CustomMailerService.paymentConfirm(order);
+      let messageConfig = await MessageService.paymentConfirm(order);
       let message = await Message.create(messageConfig);
-      await CustomMailerService.sendMail(message);
+      await MessageService.sendMail(message);
       done();
     } catch (e) {
       done(e);
@@ -24,7 +24,7 @@ describe("about Mailer service", () => {
   it('send deliveryConfirm', async (done) => {
 
     try {
-      await CustomMailerService.deliveryConfirm(order);
+      await MessageService.deliveryConfirm(order);
       done();
     } catch (e) {
       done(e);

@@ -141,9 +141,10 @@ module.exports = {
   sendMail: async (message) => {
 
     try {
+
       if(true || sails.config.environment === 'production'){
-        console.log(message.toJSON());
-        await sails.config.mail.mailer.send(message.toJSON());
+
+        await MailerService.send(message.toJSON());
         message.error = '';
       }
       else {
