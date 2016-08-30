@@ -46,10 +46,14 @@
 
 			<div class="user-profile-block margin-bottom-20">
 				<div style="float:right">
-					<button class="btn btn-primary" onclick="$(this).toggleClass('btn-primary').toggleClass('btn-default').text($(this).text()=='追蹤'?'取消追蹤':'追蹤').blur()">追蹤</button>
+					<% if(isMe) {%>
+						<button id="edit-button" class="btn btn-primary">修改個人資料</button>
+					<% } else { %>
+						<button id="follow-button" class="btn btn-primary">追蹤</button>
+					<% } %>
 				</div>
 				<h1>
-					<div><%= user.username %></div>
+					<div><%= user.displayName %></div>
 					<div><small>創作者</small></div>
 				</h1>
 				<hr />
@@ -60,17 +64,17 @@
 				<hr />
 				<ul class="list-inline">
 					<li class="text-center">
-						<strong>12</strong>
+						<strong><%= followers %></strong>
 						<br/>
 						Followers
 					</li>
 					<li class="text-center">
-						<strong>25</strong>
+						<strong><%= starred %></strong>
 						<br/>
 						Starred
 					</li>
 					<li class="text-center">
-						<strong>7</strong>
+						<strong><%= following %></strong>
 						<br/>
 						Following
 					</li>
@@ -155,3 +159,12 @@
 
   </div>
 </div>
+<% LayoutUtils.addScriptBlock(`
+jQuery(document).ready(function() {
+	$("#follow-button").on('click', function() {
+		$(this).toggleClass('btn-primary')
+		.toggleClass('btn-default')
+		.text($(this).text()=='追蹤'?'取消追蹤':'追蹤').blur()
+	})
+});
+`); %>

@@ -26,15 +26,18 @@ module.exports = {
   portfolio: async function(req, res) {
 
     let user = null;
-
+    let isMe = false;
+    let loginUser = AuthService.getSessionUser(req);
     if (req.params.id) {
       user = await User.findById(req.params.id);
     }
     else {
-      user = AuthService.getSessionUser(req);
+      user = loginUser
       if(!user)
         return res.redirect("/login");
     }
+    isMe = (loginUser == user);
+
     const recipes = await Recipe.findAll({
       where: { userId: user.id },
       order: 'Recipe.updatedAt desc',
@@ -43,11 +46,11 @@ module.exports = {
 
     let followers = 0
     let starred = 0
-    let Following = 0
+    let following = 0
 
     try {
       return res.view({
-        user, recipes, followers, starred, following
+        user, recipes, followers, starred, following, isMe
       });
     }
     catch (e) {
