@@ -32,6 +32,8 @@ module.exports = {
     }
     else {
       user = AuthService.getSessionUser(req);
+      if(!user)
+        return res.redirect("/login");
     }
 
     try {
@@ -39,7 +41,7 @@ module.exports = {
         user,
         recipes: await Recipe.findAll({
           where: { userId: user.id },
-          order: 'updatedAt desc',
+          order: 'Recipe.updatedAt desc',
           include: Image,
         })
       });
