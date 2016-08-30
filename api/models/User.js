@@ -74,6 +74,10 @@ module.exports = {
       type: Sequelize.STRING,
       defaultValue: '/assets/admin/img/avatars/default.png'
     },
+    score: {
+      type: Sequelize.INTEGER,
+      defaultValues: 0
+    },
     updatedAt: {
       type: Sequelize.DATE,
       get: function() {
