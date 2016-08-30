@@ -90,6 +90,9 @@ module.exports.routes = {
   // 'put /api/admin/Default/:id': 'api/admin/DefaultController.update',
   // 'delete /api/admin/Default/:id': 'api/admin/DefaultController.destroy',
 
+  'post /api/user/follow/:id': 'api/UserController.follow',
+  'post /api/user/unfollow/:id': 'api/UserController.unfollow',
+
   //----- custom -----
 
   '/admin':           'AdminController.index',

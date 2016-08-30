@@ -36,21 +36,37 @@ module.exports = {
       if(!user)
         return res.redirect("/login");
     }
-    isMe = (loginUser == user);
-
+    isMe = (loginUser.id == user.id);
+    let notShowPrivateRecipe = {};
+    if(!isMe) {
+      notShowPrivateRecipe = { visibility: { $not: 'PRIVATE' } };
+    }
     const recipes = await Recipe.findAll({
-      where: { userId: user.id },
+      where: {
+        userId: user.id,
+        ...notShowPrivateRecipe
+      },
       order: 'Recipe.updatedAt desc',
       include: Image,
     })
 
-    let followers = 0
+    let followers = await Follow.count({ where: { following: user.id }});
     let starred = 0
-    let following = 0
+    let following = await Follow.count({ where: { follower: user.id }});
+    let isFollowing = false;
+    if(loginUser) {
+      isFollowing  = await Follow.findOne({
+        where: {
+          follower: loginUser.id,
+          following: user.id,
+        }
+      });
+    }
 
     try {
       return res.view({
-        user, recipes, followers, starred, following, isMe
+        user, recipes, followers, starred, following, isMe,
+        isFollowing: !!isFollowing,
       });
     }
     catch (e) {
