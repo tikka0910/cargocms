@@ -76,7 +76,7 @@ module.exports = {
     },
     score: {
       type: Sequelize.INTEGER,
-      defaultValues: 0
+      defaultValue: 0
     },
     updatedAt: {
       type: Sequelize.DATE,
