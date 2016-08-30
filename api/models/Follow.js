@@ -13,12 +13,6 @@ module.exports = {
         name: 'following'
       }
     });
-    Follow.belongsTo(User, {
-      foreignKey: {
-        name: 'starred'
-      }
-    });
-
 
   },
   options: {
