@@ -8,14 +8,11 @@
  * For more information on bootstrapping your app, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.bootstrap.html
  */
-
+import MailerService from 'sails-service-mailer';
 module.exports.bootstrap = async (cb) => {
 
   // 這個已經用 config/urls.js 定義預設值
   //if(!sails.config.urls) sails.config.urls = {afterSignIn: "/"};
-
-
-
   _.extend(sails.hooks.http.app.locals, sails.config.http.locals);
 
   const {environment} = sails.config;
