@@ -171,7 +171,7 @@ jQuery(document).ready(function() {
 
 		if(status == '追蹤'){
 			$.ajax({
-				url: "/api/follow?userId=" + userId,
+				url: "/api/user/follow/" + userId,
 				method: 'get',
 				dataType: 'json',
 				cache: false
@@ -184,7 +184,7 @@ jQuery(document).ready(function() {
 
 		if(status == '取消追蹤'){
 			$.ajax({
-				url: "/api/unfollow?userId=" + userId,
+				url: "/api/user/unfollow/" + userId,
 				method: 'get',
 				dataType: 'json',
 				cache: false
