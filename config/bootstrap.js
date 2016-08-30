@@ -24,7 +24,7 @@ module.exports.bootstrap = async (cb) => {
     sails.services.passport.loadStrategies();
 
     let allpayConfig = sails.config.allpay;
-    if (allpayConfig) {
+    if (!allpayConfig) {
       allpayConfig = {
         merchantID: '2000132',
         hashKey: '5294y06JbISpM5x9',
