@@ -47,9 +47,9 @@
 			<div class="user-profile-block margin-bottom-20">
 				<div style="float:right">
 					<% if(isMe) {%>
-						<button id="edit-button" class="btn btn-primary">修改個人資料</button>
+						<button id="edit-button" data-user-id="<%= user.id %>" class="btn btn-primary">修改個人資料</button>
 					<% } else { %>
-						<button id="follow-button" class="btn btn-primary">追蹤</button>
+						<button id="follow-button" data-user-id="<%= user.id %>" class="btn btn-primary">追蹤</button>
 					<% } %>
 				</div>
 				<h1>
@@ -58,8 +58,9 @@
 				</h1>
 				<hr />
 				<div>
+					<i class="fa fa-star-o"></i><span> <%= user.score %></span><br/>
 					<i class="fa fa-map-marker"></i><span> Taiwan</span><br/>
-					<i class="fa fa-clock-o" aria-hidden="true"></i> Joined on 29 Apr 2012
+					<i class="fa fa-clock-o" aria-hidden="true"></i> <%= user.createdAt %>
 				</div>
 				<hr />
 				<ul class="list-inline">
@@ -161,10 +162,38 @@
 </div>
 <% LayoutUtils.addScriptBlock(`
 jQuery(document).ready(function() {
+
+
+	var userId = $("#follow-button").data("user-id");
+
 	$("#follow-button").on('click', function() {
-		$(this).toggleClass('btn-primary')
-		.toggleClass('btn-default')
-		.text($(this).text()=='追蹤'?'取消追蹤':'追蹤').blur()
+		var status = $(this).text();
+
+		if(status == '追蹤'){
+			$.ajax({
+				url: "/api/follow?userId=" + userId,
+				method: 'get',
+				dataType: 'json',
+				cache: false
+			}).done(function(result) {
+				$(this).toggleClass('btn-primary')
+				.toggleClass('btn-default')
+				.text('取消追蹤').blur()
+			});
+		}
+
+		if(status == '取消追蹤'){
+			$.ajax({
+				url: "/api/unfollow?userId=" + userId,
+				method: 'get',
+				dataType: 'json',
+				cache: false
+			}).done(function(result) {
+				$(this).toggleClass('btn-primary')
+				.toggleClass('btn-default')
+				.text('追蹤').blur()
+			});
+		}
 	})
 });
 `); %>
