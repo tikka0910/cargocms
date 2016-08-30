@@ -106,7 +106,7 @@ module.exports.bootstrap = async (cb) => {
     });
     const {environment} = sails.config;
     let allpayConfig = sails.config.allpay;
-    if (allpayConfig) {
+    if (!allpayConfig) {
       allpayConfig = {
         merchantID: '2000132',
         hashKey: '5294y06JbISpM5x9',
