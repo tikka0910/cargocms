@@ -25,8 +25,15 @@ module.exports = {
       get: function () {
         try {
           var feelings = this.getDataValue('feelings');
+
           if (feelings) {
-            return JSON.parse(feelings);
+            let dataJson = JSON.parse(feelings);
+            let NumOfData = dataJson.length;            
+            let data = [];
+            for(var i=0 ; i<NumOfData ; i++){
+              data.push(dataJson[i]["key"]);
+            }
+            return data;
           }
           else {
             return [];
