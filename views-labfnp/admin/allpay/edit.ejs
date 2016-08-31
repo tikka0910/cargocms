@@ -8,7 +8,11 @@
 	var pagefunction = function() {
 		<%- include vue.ejs %>
 		appMain.$mount("#main-edit");
-		appMain.loadItem(appMain.onEnterPageEdit);
+		appMain.loadItem(function() {
+      appMain.onEnterPageEdit();
+      $('.allpay').attr('disabled', true);
+      $('.allpaydisabled').addClass('state-disabled');
+    });
 		appMain.setupForm("edit");
 	};
 
