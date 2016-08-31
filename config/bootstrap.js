@@ -10,7 +10,7 @@
  */
 import MailerService from 'sails-service-mailer';
 module.exports.bootstrap = async (cb) => {
-  if(!sails.config.domainName) sails.config.domainName = "localhost"
+  if(!sails.config.shareUrl) sails.config.shareUrl = "localhost:"+ sails.config.port
   // 這個已經用 config/urls.js 定義預設值
   //if(!sails.config.urls) sails.config.urls = {afterSignIn: "/"};
   _.extend(sails.hooks.http.app.locals, sails.config.http.locals);
