@@ -26,22 +26,47 @@ module.exports = {
   portfolio: async function(req, res) {
 
     let user = null;
-
+    let isMe = false;
+    let loginUser = AuthService.getSessionUser(req);
     if (req.params.id) {
       user = await User.findById(req.params.id);
     }
     else {
-      user = AuthService.getSessionUser(req);
+      user = loginUser
+      if(!user)
+        return res.redirect("/login");
+    }
+    isMe = (loginUser.id == user.id);
+    let notShowPrivateRecipe = {};
+    if(!isMe) {
+      notShowPrivateRecipe = { visibility: { $not: 'PRIVATE' } };
+    }
+    const recipes = await Recipe.findAll({
+      where: {
+        userId: user.id,
+        ...notShowPrivateRecipe
+      },
+      order: 'Recipe.updatedAt desc',
+      include: Image,
+    })
+
+    let followers = await Follow.count({ where: { following: user.id }});
+    let starred = 0
+    let following = await Follow.count({ where: { follower: user.id }});
+    let isFollowing = false;
+    if(loginUser) {
+      isFollowing  = await Follow.findOne({
+        where: {
+          follower: loginUser.id,
+          following: user.id,
+        }
+      });
     }
 
     try {
       return res.view({
-        user,
-        recipes: await Recipe.findAll({
-          where: { userId: user.id },
-          order: 'updatedAt desc',
-          include: Image,
-        })
+        user, recipes, followers, starred, following, isMe,
+        isFollowing: !!isFollowing,
       });
     }
     catch (e) {
