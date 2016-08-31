@@ -92,7 +92,7 @@ module.exports = {
       formatForApp: async function({scents}) {
 
         let result = scents.map((scent) => {
-          let {id, name, sequence, feelings, title, description } = scent
+          let {id, name, sequence, feelings, title, description, displayFeeling } = scent
           let color = ""
           let scentNote = ""
           if (scent.ScentNote) {
@@ -105,7 +105,7 @@ module.exports = {
           //   return {id, title}
           // });
 
-          return {id, sequence, name, color, feelings, title, description, scentNote}
+          return {id, sequence, name, color, feelings, title, description, scentNote, displayFeeling}
         });
 
         return result
