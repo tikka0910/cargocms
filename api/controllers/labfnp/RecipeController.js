@@ -38,7 +38,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const currentUser = AuthService.getSessionUser(req);
-      if (!currentUser) return res.redirect('/login');
+      // if (!currentUser) return res.redirect('/login');
 
       const { recipe, editable, social } = await RecipeService.loadRecipe(id, currentUser);
 
