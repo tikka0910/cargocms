@@ -25,15 +25,33 @@ module.exports = {
       get: function () {
         try {
           var feelings = this.getDataValue('feelings');
+          if (feelings) {
+            return JSON.parse(feelings);
+          }
+          else {
+            return [];
+          }
+        }
+        catch (e) {
+          console.log(e);
+          return [];
+        }
+      }
+    },
+    displayFeeling: {
+      type: Sequelize.VIRTUAL,
+      get: function () {
+        try {
+          var feelings = this.getDataValue('feelings');
 
           if (feelings) {
             let dataJson = JSON.parse(feelings);
-            let NumOfData = dataJson.length;            
-            let data = [];
+            let NumOfData = dataJson.length;
+            let displayFeeling = [];
             for(var i=0 ; i<NumOfData ; i++){
-              data.push(dataJson[i]["key"]);
+              displayFeeling.push(dataJson[i]["key"]);
             }
-            return data;
+            return displayFeeling;
           }
           else {
             return [];
