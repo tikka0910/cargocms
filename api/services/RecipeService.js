@@ -94,7 +94,7 @@ module.exports = {
       }
 
       let editable = false;
-      const belongUser = recipe.UserId === currentUser.id;
+      const belongUser = currentUser != null && recipe.UserId === currentUser.id;
       if (currentUser && belongUser) editable = true;
 
       const social = SocialService.forRecipe({ recipes: [recipe] });
