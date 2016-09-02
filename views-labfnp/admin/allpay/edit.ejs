@@ -10,8 +10,7 @@
 		appMain.$mount("#main-edit");
 		appMain.loadItem(function() {
       appMain.onEnterPageEdit();
-      $('.allpay').attr('disabled', true);
-      $('.allpaydisabled').addClass('state-disabled');
+      appMain.disableAllpay();
     });
 		appMain.setupForm("edit");
 	};
