@@ -69,7 +69,7 @@ module.exports = {
       //   RecipeOrderId: data.RecipeOrderId,
       // };
       const recipeData = {
-        recipient: data.recipient,
+        recipient: data.Recipient,
         address: data.Address,
         phone: data.Phone,
         email: data.Email,
