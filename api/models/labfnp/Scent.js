@@ -42,7 +42,7 @@ module.exports = {
       type: Sequelize.VIRTUAL,
       get: function () {
         try {
-          var feelings = this.getDataValue('feelings');
+          const feelings = this.getDataValue('feelings');
 
           if (feelings) {
             let dataJson = JSON.parse(feelings);
@@ -92,7 +92,7 @@ module.exports = {
       formatForApp: async function({scents}) {
 
         let result = scents.map((scent) => {
-          let {id, name, sequence, feelings, title, description, displayFeeling } = scent
+          const {id, name, sequence, feelings, title, description, displayFeeling } = scent
           let color = ""
           let scentNote = ""
           if (scent.ScentNote) {
