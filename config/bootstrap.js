@@ -195,9 +195,73 @@ module.exports.bootstrap = async (cb) => {
 
       let testRecipe = await Recipe.create(recipeLoveAgain);
 
+      //建立一筆 Allpay 資料，使用上方 testRecipe資料
+      let recipeOrder = await RecipeOrder.create({
+        remark: '123',
+        UserId: 1,
+        RecipeId: testRecipe.id,
+      });
+      let data = {
+        relatedKeyValue: {
+          //RecipeId: recipe.id,
+          RecipeOrderId: recipeOrder.id,
+        },
+        "TradeNo": "1608301610017019",
+        "MerchantTradeNo": "57feb73f",
+        "RtnCode": 1,
+        "RtnMsg": "付款成功",
+        "PaymentDate": "2016-08-30 16:11:59",
+        "TradeDate": "2016-08-30 16:10:21",
+        "PaymentType": "ATM_TAISHIN",
+        "ShouldTradeAmt": 999,
+        "TradeAmt": 999,
+        "BankCode": "812",
+        "vAccount": "9966627013152469",
+        "ExpireDate": "2016/09/02",
+        "PaymentNo": null,
+        "Barcode1": null,
+        "Barcode2": null,
+        "Barcode3": null,
+        "CheckMacValue": null,
+        "MerchantTradeDate": null,
+        "RecipeOrderId": recipeOrder.id,
+      }
+      await Allpay.create(data);
+
+      recipeOrder = await RecipeOrder.create({
+        remark: '456',
+        UserId: 1,
+        RecipeId: testRecipe.id,
+      });
+
+      data = {
+        relatedKeyValue: {
+          //RecipeId: recipe.id,
+          RecipeOrderId: recipeOrder.id,
+        },
+        "TradeNo": "1608301605202918",
+        "MerchantTradeNo": "301ea83b",
+        "RtnCode": 1,
+        "RtnMsg": "交易成功",
+        "PaymentDate": "2016-08-30 16:07:23",
+        "TradeDate": null,
+        "PaymentType": "Credit_CreditCard",
+        "ShouldTradeAmt": null,
+        "TradeAmt": 999,
+        "BankCode": null,
+        "vAccount": null,
+        "ExpireDate": null,
+        "PaymentNo": null,
+        "Barcode1": null,
+        "Barcode2": null,
+        "Barcode3": null,
+        "CheckMacValue": null,
+        "MerchantTradeDate": null,
+        "RecipeOrderId": recipeOrder.id,
+      }
+      await Allpay.create(data);
+
     }
-
-
 
     cb();
   } catch (e) {

@@ -49,7 +49,15 @@ module.exports = {
           sails.log.error(e);
           throw e;
         }
-      }
+      },
+      deleteById: async (id) => {
+        try {
+          return await RecipeOrder.destroy({ where: { id } });
+        } catch (e) {
+          sails.log.error(e);
+          throw e;
+        }
+      },
     },
     instanceMethods: {},
     hooks: {}

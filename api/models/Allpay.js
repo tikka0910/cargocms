@@ -74,12 +74,152 @@ module.exports = {
     MerchantTradeDate: {
       type: Sequelize.DATE,
     },
+
+    Recipient: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const recipeOrder = this.getDataValue('RecipeOrder');
+          let recipient = '';
+          if(recipeOrder){
+            recipient = recipeOrder.recipient;
+          }
+          return recipient;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    Address: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const recipeOrder = this.getDataValue('RecipeOrder');
+          let address = '';
+          if(recipeOrder){
+            address = recipeOrder.address;
+          }
+          return address;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    Phone: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const recipeOrder = this.getDataValue('RecipeOrder');
+          let phone = '';
+          if(recipeOrder){
+            phone = recipeOrder.phone;
+          }
+          return phone;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    Email: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const recipeOrder = this.getDataValue('RecipeOrder');
+          let email = '';
+          if(recipeOrder){
+            email = recipeOrder.email;
+          }
+          return email;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    Note: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const recipeOrder = this.getDataValue('RecipeOrder');
+          let note = '';
+          if(recipeOrder){
+            note = recipeOrder.note;
+          }
+          return note;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    Remark: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const recipeOrder = this.getDataValue('RecipeOrder');
+          let remark = '';
+          if(recipeOrder){
+            remark = recipeOrder.remark;
+          }
+          return remark;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    ItemNameArray: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const recipeOrder = this.getDataValue('RecipeOrder');
+          let ItemNameArray = '';
+          if(recipeOrder){
+            ItemNameArray = recipeOrder.ItemNameArray.join(',');
+          }
+          return ItemNameArray;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    UserName: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const recipeOrder = this.getDataValue('RecipeOrder');
+          let userName = '';
+          if(recipeOrder){
+            if(recipeOrder.User){
+               userName = recipeOrder.User.displayName;
+            }
+          }
+          return userName;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
   },
   associations: function() {
     Allpay.belongsTo(RecipeOrder);
   },
   options: {
-    classMethods: {},
+    classMethods: {
+      deleteById: async (id) => {
+        try {
+          return await Allpay.destroy({ where: { id } });
+        } catch (e) {
+          sails.log.error(e);
+          throw e;
+        }
+      },
+    },
     instanceMethods: {},
     hooks: {}
   }

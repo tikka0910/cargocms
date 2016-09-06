@@ -84,6 +84,12 @@ module.exports.routes = {
   'post /api/admin/slogan': 'api/admin/SloganController.create',
   'put /api/admin/slogan/:id': 'api/admin/SloganController.update',
   'delete /api/admin/slogan/:id': 'api/admin/SloganController.destroy',
+
+  'get /api/admin/allpay':        'api/AllpayController.find',
+  'get /api/admin/allpay/:id':    'api/AllpayController.findOne',
+  'post /api/admin/allpay':       'api/AllpayController.create',
+  'put /api/admin/allpay/:id':    'api/AllpayController.update',
+  'delete /api/admin/allpay/:id': 'api/AllpayController.destroy',
   // 'get /api/admin/Default': 'api/admin/DefaultController.find',
   // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
   // 'post /api/admin/Default': 'api/admin/DefaultController.create',

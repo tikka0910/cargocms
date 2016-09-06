@@ -71,6 +71,7 @@ module.exports.init = async () => {
       { href: '/admin/labfnp/scentnote', title: '香調', sequence: 60},
       { href: '/admin/labfnp/feeling', title: '感覺', sequence: 70},
       { href: '/admin/slogan', title: '口號', sequence: 80},
+      { href: '/admin/allpay', title: '訂單', sequence: 90},
     ]
 
 
