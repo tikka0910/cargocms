@@ -271,7 +271,7 @@ $(function() {
     var formula = getFormulaData();
     console.log("=== formula ===", formula);
 
-    let formIsValid = true;
+    var formIsValid = true;
     if(formula.length == 0) {
       alert("未選定任一配方")
       formIsValid = true;
