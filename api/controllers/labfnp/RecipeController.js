@@ -36,6 +36,7 @@ module.exports = {
 
   show: async function(req, res) {
     const { id } = req.params;
+    sails.log.info('res=>',res);
     try {
       const currentUser = AuthService.getSessionUser(req);
       // if (!currentUser) return res.redirect('/login');
