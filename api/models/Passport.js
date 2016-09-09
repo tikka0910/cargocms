@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt"
+import crypto from "crypto"
 
 module.exports = {
   attributes: {
@@ -21,8 +22,10 @@ module.exports = {
         sails.log.info('value', value);
         return this.setDataValue('tokens', JSON.stringify(value));
       }
-    }
+    },
+    salt: Sequelize.STRING
   },
+
   associations: function() {
     Passport.belongsTo(User);
   },
@@ -69,23 +72,37 @@ module.exports = {
       }
     },
     instanceMethods: {
-      validatePassword: async (password, passport) => {
+      validatePassword: async function (password) {
         try {
-          return await new Promise((defer, reject) => {
-            bcrypt.compare(password, passport.password, (err, result) => {
+          var that = this;
+          var result = await new Promise((defer, reject) => {
+            bcrypt.compare(password, that.password, (err, result) => {
               if (err) defer(false);
               else defer(result);
             });
           });
+
+          if(result) return result
+
+          var comparePassword = crypto.pbkdf2Sync(password, new Buffer(this.salt, 'base64'), 10000, 64).toString('base64');
+
+          console.log(comparePassword);
+          console.log(that.password);
+          if(comparePassword == that.password){
+            result = true
+          }
+
+          return result
+
         } catch (e) {
           throw e;
         }
       }
     },
     hooks: {
-      beforeCreate: async (passport) => {
-        await Passport.hashPassword(passport);
-      },
+      // beforeCreate: async (passport) => {
+      //   // await Passport.hashPassword(passport);
+      // },
       beforeUpdate: async (passport) => {
         await Passport.hashPassword(passport);
       }

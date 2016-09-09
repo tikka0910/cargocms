@@ -1,18 +1,6 @@
-const userdata = require('../../../config/init/labfnp/data/users.json');
+
 
 describe('about User model operation.', function() {
-  describe.only('legacy data import', function() {
-
-    it('should be success.', function(done) {
-
-      console.log("=== userdata.length ===", userdata.length);
-
-      done();
-    });
-
-
-  });
-
   describe('test update userAgent', function() {
     let user;
     before(async (done) => {
