@@ -169,6 +169,30 @@ module.exports = {
       }
     },
 
+    createdAtIso: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const date = new Date(this.getDataValue('createdAt'));
+          return date.toISOString();
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    updatedAtIso: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const date = new Date(this.getDataValue('updatedAt'));
+          return date.toISOString();
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
   },
   associations: function() {
     Recipe.hasMany(UserLikeRecipe);

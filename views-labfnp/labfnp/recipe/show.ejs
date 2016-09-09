@@ -7,11 +7,12 @@
 <% LayoutUtils.addMeta({ property:"og:description", content:recipe.description }); %>
 <% LayoutUtils.addMeta({ property:"og:image", content:sails.getBaseUrl() + recipe.coverPhoto }); %>
 <% LayoutUtils.addMeta({ property:"og:image:type", content:"image/jpeg" }); %>
+<% LayoutUtils.addMeta({ property:"og:image:type", content:"image/png" }); %>
 <% LayoutUtils.addMeta({ property:"og:image:width", content:"576" }); %>
 <% LayoutUtils.addMeta({ property:"og:image:height", content:"430" }); %>
 <% LayoutUtils.addMeta({ property:"og:type", content:"article" }); %>
-<% LayoutUtils.addMeta({ property:"article:published_time", content:recipe.createdAt }); %>
-<% LayoutUtils.addMeta({ property:"article:modified_time", content:recipe.createdAt }); %>
+<% LayoutUtils.addMeta({ property:"article:published_time", content:recipe.createdAtIso })  %>
+<% LayoutUtils.addMeta({ property:"article:modified_time", content:recipe.updatedAtIso }) %>
 <% LayoutUtils.addMeta({ property:"article:author", content:recipe.authorFbPage }); %>
 <% LayoutUtils.addMeta({ property:"article:section", content:"配方實驗室" }); %>
 <% LayoutUtils.addMeta({ property:"article:tag", content:"配方" }); %>
