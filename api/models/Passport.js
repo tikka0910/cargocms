@@ -82,12 +82,15 @@ module.exports = {
             });
           });
 
-          if(result) return result
+          if(result) return result;
 
+          console.log("=== this.salt ===", that.salt);
+          console.log("=== this.salt ===", result);
+          if(!this.salt) return result;
+
+          console.log("=== check two ===");
           var comparePassword = crypto.pbkdf2Sync(password, new Buffer(this.salt, 'base64'), 10000, 64).toString('base64');
 
-          console.log(comparePassword);
-          console.log(that.password);
           if(comparePassword == that.password){
             result = true
           }
@@ -100,9 +103,9 @@ module.exports = {
       }
     },
     hooks: {
-      // beforeCreate: async (passport) => {
-      //   // await Passport.hashPassword(passport);
-      // },
+      beforeCreate: async (passport) => {
+        await Passport.hashPassword(passport);
+      },
       beforeUpdate: async (passport) => {
         await Passport.hashPassword(passport);
       }
