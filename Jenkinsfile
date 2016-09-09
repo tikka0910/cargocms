@@ -4,6 +4,7 @@ node {
     // slackSend message: "started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
 
     def preview = false;
+    def skiptest = false;
 
     try{
       timeout(time:10, unit:'SECONDS') {
@@ -11,6 +12,17 @@ node {
           input message: "wanner preview?", ok: "start preview"
       }
       preview = true;
+
+      if(preview){
+        timeout(time:5, unit:'SECONDS') {
+            stage 'skip test'
+            input message: "skip test?", ok: "skip test"
+        }
+
+        skiptest = true;
+      }
+
+
     }catch(e){
 
     }
@@ -28,13 +40,13 @@ node {
     stage 'build project'
     sh "npm install && npm run build"
 
-    stage 'test project'
-    sh "npm run test-ci"
-    step([$class: 'JUnitResultArchiver', testResults: 'test-results.xml'])
-    step([$class: 'CloverPublisher', cloverReportDir: 'coverage', cloverReportFileName: 'clover.xml'])
-    sh "npm run test-e2e-docker"
-
-
+    if(!skiptest){
+      stage 'test project'
+      sh "npm run test-ci"
+      step([$class: 'JUnitResultArchiver', testResults: 'test-results.xml'])
+      step([$class: 'CloverPublisher', cloverReportDir: 'coverage', cloverReportFileName: 'clover.xml'])
+      sh "npm run test-e2e-docker"
+    }
 
     if(preview) sh "npm run preview"
 
