@@ -2,10 +2,14 @@ import moment from 'moment';
 module.exports = {
   attributes: {
     username: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true
     },
     email: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: true,
+      unique: true
     },
     firstName: {
       type: Sequelize.STRING

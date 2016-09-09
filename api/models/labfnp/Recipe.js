@@ -146,6 +146,7 @@ module.exports = {
         return desc;
       }
     },
+
     updatedAt: {
       type: Sequelize.DATE,
       get: function() {
