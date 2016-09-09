@@ -1,6 +1,6 @@
 
 var MongoClient = require('mongodb').MongoClient;
-describe.only('legacy data', function() {
+describe.skip('legacy data', function() {
 
   it('user import should be success.', async (done) => {
     // {
