@@ -1,3 +1,11 @@
+<% LayoutUtils.addMeta({ property:"og:type", content:"website.perfume" }); %>
+<% LayoutUtils.addMeta({ property:"og:title", content:"LFP: 香料香水實驗室，客製專屬香水 | 配方名稱："+recipe.perfumeName+"/>" }); %>
+<% LayoutUtils.addMeta({ property:"og:description", content:recipe.description }); %>
+<% LayoutUtils.addMeta({ property:"og:image", content:recipe.coverPhoto }); %>
+<% LayoutUtils.addMeta({ property:"og:image", content:"image/jpeg" }); %>
+<% LayoutUtils.addMeta({ property:"og:image", content:"576" }); %>
+<% LayoutUtils.addMeta({ property:"og:image", content:"430" }); %>
+
 <% LayoutUtils.addStylesheets('/assets/unify/css/pages/profile.css'); %>
 <!--<div class="container">-->
 <!--<pre><%= JSON.stringify(recipe, null, 2) %></pre>-->
@@ -44,14 +52,6 @@
   }
 
 </style>
-
-<meta property="og:type" content="website.perfume" />
-<meta property="og:title" content="LFP: 香料香水實驗室，客製專屬香水 | 配方名稱：<%= recipe.perfumeName %>" />
-<meta property="og:description" content="<%= recipe.description %>" />
-<meta property="og:image" content="<%= recipe.coverPhoto %>" />
-<meta property="og:image:type" content="image/jpeg" />
-<meta property="og:image:width" content="576" />
-<meta property="og:image:height" content="430" />
 
 <div class="container content profile">
   <input type="hidden" name="id" class="hidden" value="<%= recipe.id %>" disabled>
@@ -114,7 +114,7 @@
 
           <div class="row">
             <div id="wordCloudContainer" class="col col-md-12">
-              <div id="wordCloud" class="text-center" data-id="<%= recipe.id %>" ></div>
+              <div id="wordCloud" class="text-center" data-id="<%= recipe.id %>"></div>
             </div>
             <div class="col col-md-12">
               <div id="pieChart" class="text-center"></div>

@@ -11,10 +11,14 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
+<% LayoutUtils.getMetas().forEach(function(meta) { %> <meta property="<%= meta.property %>" content="<%= meta.content %>" /> <% }); %>
+
+
 <!-- Favicon -->
 <link rel="shortcut icon" type="image/x-icon" href="/assets/labfnp/favicon.ico">
 
 <% include partials/styles.ejs %>
+
 
 </head>
 

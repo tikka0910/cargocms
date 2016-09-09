@@ -120,6 +120,7 @@ module.exports.http = {
       res._stylesheetBlock = '';
       res._scripts = [];
       res._scriptBlock = '';
+      res._metas = [];
 
       res.locals.addScripts = function() {
         for (var i = 0; i < arguments.length; i++) {
@@ -150,6 +151,14 @@ module.exports.http = {
       res.locals.getStylesheetBlock = function() {
         return res._stylesheetBlock;
       };
+      res.locals.addMeta = function(meta) {
+        for (var i = 0; i < arguments.length; i++) {
+          res._metas.push(arguments[i]);
+        }
+      },
+      res.locals.getMetas = function() {
+        return res._metas;
+      },
 
       res.locals.LayoutUtils = {
         addScripts: function() {
@@ -179,6 +188,14 @@ module.exports.http = {
         },
         getStylesheetBlock: function() {
           return res._stylesheetBlock;
+        },
+        addMeta: function(meta) {
+          for (var i = 0; i < arguments.length; i++) {
+            res._metas.push(arguments[i]);
+          }
+        },
+        getMetas: function() {
+          return res._metas;
         },
       };
 
