@@ -74,9 +74,6 @@ module.exports = {
       type: Sequelize.INTEGER,
       defaultValue: 0
     },
-    legacyId: {
-      type: Sequelize.STRING
-    },
     updatedAt: {
       type: Sequelize.DATE,
       get: function() {
