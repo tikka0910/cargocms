@@ -146,10 +146,6 @@ module.exports = {
         return desc;
       }
     },
-    legacyUserId: {
-      type: Sequelize.STRING
-    },
-
     updatedAt: {
       type: Sequelize.DATE,
       get: function() {
