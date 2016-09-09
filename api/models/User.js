@@ -2,14 +2,10 @@ import moment from 'moment';
 module.exports = {
   attributes: {
     username: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      unique: true
+      type: Sequelize.STRING
     },
     email: {
-      type: Sequelize.STRING,
-      allowNull: true,
-      unique: true
+      type: Sequelize.STRING
     },
     firstName: {
       type: Sequelize.STRING
@@ -77,6 +73,9 @@ module.exports = {
     score: {
       type: Sequelize.INTEGER,
       defaultValue: 0
+    },
+    legacyId: {
+      type: Sequelize.STRING
     },
     updatedAt: {
       type: Sequelize.DATE,
@@ -163,7 +162,6 @@ module.exports = {
     hooks: {
       afterCreate: async function(user, options) {
         const userRole = await Role.findOne({where: {authority: 'user'}});
-        sails.log.info(userRole.toJSON());
         await user.addRole(userRole);
       }
     }
