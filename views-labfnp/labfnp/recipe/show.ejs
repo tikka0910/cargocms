@@ -8,8 +8,8 @@
 <% LayoutUtils.addMeta({ property:"og:type", content:"article" }); %>
 <% LayoutUtils.addMeta({ property:"article:published_time", content:recipe.createdAt }); %>
 <% LayoutUtils.addMeta({ property:"article:modified_time", content:recipe.createdAt }); %>
-<% LayoutUtils.addMeta({ property:"article:author", content:"https://www.facebook.com/LabFnP" }); %>
-<!-- <% LayoutUtils.addMeta({ property:"article:author", content:recipe.user.fbId }); %> -->
+
+<% LayoutUtils.addMeta({ property:"article:author", content:recipe.authorFbPage }); %>
 <% LayoutUtils.addMeta({ property:"article:section", content:"配方實驗室" }); %>
 <% LayoutUtils.addMeta({ property:"article:tag", content:"配方" }); %>
 <% LayoutUtils.addMeta({ property:"article:tag", content:"香水" }); %>
