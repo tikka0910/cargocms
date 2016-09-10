@@ -44,7 +44,7 @@ module.exports = {
       const { recipe, editable, social } = await RecipeService.loadRecipe(id, currentUser);
 
       // todo
-      recipe.authorFbPage = "LabFnP";
+      recipe.authorFbPage = "https://www.facebook.com/LabFnP";
 
       return res.view({ recipe, editable, social });
     } catch (e) {
