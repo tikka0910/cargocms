@@ -4,7 +4,11 @@ module.exports = {
 
     try {
       let user = AuthService.getSessionUser(req);
-      const recipes = await Recipe.findAndIncludeUserLike({currentUser: user});
+      const recipes = await Recipe.findAndIncludeUserLike({
+        currentUser: user,
+        start: 0,
+        length: 5,
+      });
       res.ok({
         data: {
           items: recipes
@@ -100,7 +104,7 @@ module.exports = {
       res.serverError(e);
     }
   },
-  
+
   unlike: async (req, res) => {
     try {
       const { id } = req.params;
