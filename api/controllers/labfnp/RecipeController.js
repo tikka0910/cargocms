@@ -2,7 +2,7 @@ import crypto from 'crypto';
 module.exports = {
   create: async function(req, res) {
     let user, recipe, scents, totalDrops, feelings
-    const {from} = req.query
+    let {from} = req.query
     if(!from) from = "scent";
 
     try {
