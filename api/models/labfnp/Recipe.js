@@ -39,6 +39,11 @@ module.exports = {
       defaultValue: ''
     },
 
+    authorFbPage: {
+      type: Sequelize.STRING,
+      defaultValue: 'https://www.facebook.com/LabFnP'
+    },
+
     perfumeName: {
       type: Sequelize.STRING,
       defaultValue: ''
@@ -173,8 +178,7 @@ module.exports = {
       type: Sequelize.VIRTUAL,
       get: function() {
         try {
-          const date = new Date(this.getDataValue('createdAt'));
-          return date.toISOString();
+          return moment(this.getDataValue('createdAt'), moment.ISO_8601);
         } catch (e) {
           sails.log.error(e);
         }
@@ -185,8 +189,7 @@ module.exports = {
       type: Sequelize.VIRTUAL,
       get: function() {
         try {
-          const date = new Date(this.getDataValue('updatedAt'));
-          return date.toISOString();
+          return moment(this.getDataValue('updatedAt'), moment.ISO_8601);
         } catch (e) {
           sails.log.error(e);
         }
