@@ -17,33 +17,27 @@ module.exports = {
       recipe.message = ""
       recipe.description = ""
 
-      if(from == 'scent'){
-        for (var i = 0; i < 6; i++) {
-          let formula = {
-            index: i,
-            num: i + 1,
-            scentCategory: '',
-            scentName: '',
-            drops: 0
-          };
-          recipe.formula.push(formula);
-        }
+      for (var i = 0; i < 6; i++) {
+        let formula = {
+          index: i,
+          num: i + 1,
+          scentCategory: '',
+          scentName: '',
+          feeling: '',
+          drops: 0
+        };
+        recipe.formula.push(formula);
+      }
 
+      if(from == 'scent'){
         return res.view({user, recipe, scents, totalDrops});
-      }else if(from == 'feeling'){
-        for (var i = 0; i < 6; i++) {
-          let formula = {
-            index: i,
-            num: i + 1,
-            feeling: '',
-            scentName: '',
-            drops: 0
-          };
-          recipe.formula.push(formula);
-        }
+      }
+
+      if(from == 'feeling'){
         feelings = await Feeling.findRamdomFeelings();
         return res.view({user, recipe, scents, feelings, totalDrops});
       }
+
     }
     catch (e) {
       res.serverError(e);
