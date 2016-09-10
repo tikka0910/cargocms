@@ -28,7 +28,7 @@ module.exports = {
       if (existProvider && checkProviderType) {
         recipe.authorFbPage = passport.identfier;
       }
-      recipe.formula = RecipeService.sortFormulaByScentName({formula: recipe.formula});
+      recipe.formula = RecipeService.sortFormulaByScentName({ formula: recipe.formula });
 
       console.log('existProvider=>',existProvider);
       console.log('checkProviderType=>',checkProviderType, 'type=>', passport.provider);
