@@ -12,7 +12,7 @@
       <!-- End About -->
 
       <!-- Latest -->
-      <div class="col-md-3 md-margin-bottom-40">
+      <!-- <div class="col-md-3 md-margin-bottom-40">
         <div class="posts">
           <div class="headline"><h2>近期活動</h2></div>
           <ul class="list-unstyled latest-list">
@@ -30,7 +30,15 @@
             </li>
           </ul>
         </div>
-      </div><!--/col-md-3-->
+      </div> -->
+      <!-- End Latest -->
+      <!-- Latest -->
+      <div class="col-md-3 md-margin-bottom-40">
+        <div class="posts">
+          <div class="headline"><h2>最新配方</h2></div>
+          <ul id="newRecipe" class="list-unstyled latest-list"></ul>
+        </div>
+      </div>
       <!-- End Latest -->
 
       <!-- Link List -->
@@ -86,3 +94,20 @@
 </div><!--/copyright-->
 </div>
 <!--=== End Footer Version 1 ===-->
+<% LayoutUtils.addScriptBlock(`
+$(document).ready(function(){
+  $.get('/api/labfnp/recipe/new', function(result){
+    console.log(result);
+    var ul = $('#newRecipe');
+    result.data.recipes.forEach(function(recipe){
+      ul.append(
+      '<li>' +
+        '<a href=/recipe/'+ recipe.id +'>' +
+          recipe.perfumeName + ' - ' + recipe.authorName +
+        '</a>' +
+      '</li>'
+      );
+    });
+  });
+});
+`); %>

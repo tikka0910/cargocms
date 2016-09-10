@@ -100,7 +100,7 @@ module.exports = {
       res.serverError(e);
     }
   },
-  
+
   unlike: async (req, res) => {
     try {
       const { id } = req.params;
@@ -137,6 +137,23 @@ module.exports = {
       sails.log.error(e);
       res.serverError(e);
     }
-  }
+  },
+
+  topNew: async (req, res) => {
+    try {
+      const recipes = await Recipe.findAll({
+        where: { visibility: { $not: 'PRIVATE' } },
+        offset: 0,
+        limit: 3,
+      });
+      res.ok({
+        message: 'success get new recipe',
+        data: { recipes },
+      });
+    } catch (e) {
+      sails.log.error(e);
+      res.serverError(e);
+    }
+  },
 
 }

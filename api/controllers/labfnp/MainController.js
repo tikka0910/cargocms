@@ -1,6 +1,5 @@
 module.exports = {
 
-
   explore: async function(req, res) {
     try {
       const { userId } = req.query;
