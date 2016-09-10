@@ -18,9 +18,20 @@ module.exports = {
     productionStatus,
     UserId,
     coverPhotoId,
+    authorFbPage
   }) => {
     try {
+      const passport =  await Passport.find({ UserId: recipe.UserId });
+      const existProvider = typeof passport.provider === 'string';
+      const checkProviderType = passport.provider === 'facebook';
+
+      if (existProvider && checkProviderType) {
+        recipe.authorFbPage = passport.identfier;
+      }
       recipe.formula = RecipeService.sortFormulaByScentName({formula: recipe.formula});
+
+      console.log('existProvider=>',existProvider);
+      console.log('checkProviderType=>',checkProviderType, 'type=>', passport.provider);
       sails.log.info(recipe);
 
       return await Recipe.create(recipe);
