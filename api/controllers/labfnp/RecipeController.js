@@ -1,33 +1,49 @@
 import crypto from 'crypto';
 module.exports = {
   create: async function(req, res) {
-    try {
-      let user = AuthService.getSessionUser(req);
+    let user, recipe, scents, totalDrops, feelings
+    const {from} = req.query
+    if(!from) from = "scent";
 
+    try {
+      user = AuthService.getSessionUser(req);
       if (!user) {
         return res.redirect('/login');
       }
 
-      let recipe = Recipe.build().toJSON();
+      scents = await Scent.findAllWithRelationFormatForApp()
+      totalDrops = 0;
+      recipe = Recipe.build().toJSON();
       recipe.message = ""
       recipe.description = ""
 
-      for (var i = 0; i < 6; i++) {
-        let formula = {
-          index: i,
-          num: i + 1,
-          scentCategory: '',
-          scentName: '',
-          drops: 0
-        };
-        recipe.formula.push(formula);
+      if(from == 'scent'){
+        for (var i = 0; i < 6; i++) {
+          let formula = {
+            index: i,
+            num: i + 1,
+            scentCategory: '',
+            scentName: '',
+            drops: 0
+          };
+          recipe.formula.push(formula);
+        }
+
+        return res.view({user, recipe, scents, totalDrops});
+      }else if(from == 'feeling'){
+        for (var i = 0; i < 6; i++) {
+          let formula = {
+            index: i,
+            num: i + 1,
+            feeling: '',
+            scentName: '',
+            drops: 0
+          };
+          recipe.formula.push(formula);
+        }
+        feelings = await Feeling.findRamdomFeelings();
+        return res.view({user, recipe, scents, feelings, totalDrops});
       }
-
-      let scents = await Scent.findAllWithRelationFormatForApp()
-
-      let totalDrops = 0;
-
-      return res.view({user, recipe, scents, totalDrops});
     }
     catch (e) {
       res.serverError(e);
