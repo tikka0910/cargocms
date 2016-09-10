@@ -205,10 +205,10 @@ module.exports.http = {
   locals: {
     filters: {
       formatDate: function(date) {
-        return moment(date).format('YYYY/MM/DD');
+        return moment(date, 'YYYY/MM/DD');
       },
       formatDateTime: function(dateTime) {
-        return moment(dateTime).format('YYYY/MM/DD hh:mm:ss');
+        return moment(dateTime, 'YYYY/MM/DD hh:mm:ss');
       },
       nl2br: function(text) {
         return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
