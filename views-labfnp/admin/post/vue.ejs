@@ -31,23 +31,6 @@ var postAppModel = {
   }
 }
 
-var newSummernote = function() {
-  $('.summernote').summernote({
-    height: 300,
-    placeholder: '請輸入內容',
-    toolbar: [
-      ['style', ['style']],
-      ['font', ['bold', 'italic', 'underline', 'clear']],
-      ['fontname', ['fontname']],
-      ['color', ['color']],
-      ['para', ['ul', 'ol', 'paragraph']],
-      ['height', ['height']],
-      ['table', ['table']],
-      ['view', ['fullscreen', 'codeview', 'help']]
-    ]
-  });
-};
-
 var postApp = new Vue({
   data: postAppModel,
   methods: {
@@ -136,7 +119,7 @@ var postApp = new Vue({
         tagClass: 'tagsInputLabel',
       });
       if(type == 'create') {
-        this.newSummernote();
+        postApp.newSummernote();
       }
       var registerForm = $("#post-form");
       registerForm.validate({
@@ -398,6 +381,7 @@ var postApp = new Vue({
           ['para', ['ul', 'ol', 'paragraph']],
           ['height', ['height']],
           ['table', ['table']],
+          // ['insert', ['link', 'picture', 'hr']],
           ['view', ['fullscreen', 'codeview', 'help']]
         ]
       });

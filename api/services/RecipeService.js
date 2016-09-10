@@ -22,7 +22,7 @@ module.exports = {
     try {
       recipe.formula = RecipeService.sortFormulaByScentName({formula: recipe.formula});
       sails.log.info(recipe);
-
+      recipe.coverPhotoId = recipe.coverPhotoId == "" ? null : recipe.coverPhotoId;
       return await Recipe.create(recipe);
     } catch (e) {
       sails.log.error(e);

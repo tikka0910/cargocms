@@ -286,7 +286,6 @@ $(function() {
     });
 
     if(!formIsValid) return false;
-
     $.ajax({
       url: endpoint,
       method: method, //create
