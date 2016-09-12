@@ -6,13 +6,16 @@ module.exports = {
       let user = AuthService.getSessionUser(req);
       const recipes = await Recipe.findAndIncludeUserLike({
         currentUser: user,
-        start: 0,
-        length: 5,
+        start: parseInt(req.query.start, 10) || 0,
+        length: parseInt(req.query.length, 10) || 5,
       });
+      let social = SocialService.forRecipe({recipes});
       res.ok({
         data: {
-          items: recipes
-      }});
+          items: recipes,
+          social,
+        }
+      });
     } catch (e) {
       res.serverError(e);
     }

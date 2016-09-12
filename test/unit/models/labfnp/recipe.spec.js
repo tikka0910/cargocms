@@ -108,7 +108,7 @@ describe('test Recipe model operation', function() {
         };
         await Recipe.create(newRecipeLoveTest2);
 
-        let time = '123456789'
+        let time = '01234567890'
         for(let index of [...time]) {
           await Recipe.create({
             formula:[
@@ -144,7 +144,7 @@ describe('test Recipe model operation', function() {
         let result = await Recipe.findAndIncludeUserLike({
           currentUser: user,
           start: 0,
-          length: 6,
+          length: 5,
         });
         console.log("=== result.length ===", result.length);
         result.length.should.be.eq(5);
