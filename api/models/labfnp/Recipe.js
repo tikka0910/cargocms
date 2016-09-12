@@ -24,8 +24,28 @@ module.exports = {
           }
         }
         catch (e) {
-          console.log(e);
+          sails.log.error(e);
           return [];
+        }
+      }
+    },
+
+    formulaTotalDrops: {
+      type: Sequelize.INTEGER,
+      get: function () {
+        try {
+          var formula = this.getDataValue('formula');
+          let formulaTotalDrops = 0;
+          if (formula) {
+            JSON.parse(formula).forEach((element, index, array) => {
+              formulaTotalDrops += Number(element.drops);
+            })
+          }
+          return formulaTotalDrops;
+        }
+        catch (e) {
+          sails.log.error(e);
+          return 0;
         }
       }
     },
@@ -82,7 +102,7 @@ module.exports = {
 
     visibility: {
       type: Sequelize.ENUM('PUBLIC', 'PRIVATE', 'PROTECTED'),
-      defaultValue: 'PUBLIC',
+      defaultValue: 'PRIVATE',
     },
 
     visibilityDesc: {
