@@ -29,9 +29,9 @@ $("#likeButton").on("click", function (event) {
 					open('/register', '_self');
 				}
 			});
-			document.querySelector('.sweet-overlay').onclick = function(event) {
+			$('.sweet-overlay').click(function(event) {
 				swal.close();
-			};
+			});
 		}
 	}
 	if (isLike) {

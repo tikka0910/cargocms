@@ -74,9 +74,9 @@ $(document).ready(function(){
               open('/register', '_self');
             }
           });
-          document.querySelector('.sweet-overlay').onclick = function(event) {
+          $('.sweet-overlay').click(function(event) {
             swal.close();
-          };
+          });
         }
       }
       if (isLike) {
