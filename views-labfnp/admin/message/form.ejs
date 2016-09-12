@@ -1,34 +1,101 @@
 <fieldset>
 
   <section>
-    <label class="input state-disabled">
-      <input type="text" name="content" placeholder="內容" v-model="data.item.content" disabled>
-      <b class="tooltip tooltip-bottom-right">請輸入內容</b></label>
+    <label class="input state-disabled">發送方式
+      <input type="text" name="sendBy" placeholder="發送方式" v-model="data.item.sendBy" disabled>
+      <b class="tooltip tooltip-bottom-right">請發送方式</b></label>
   </section>
 
   <section>
-    <label class="input state-disabled">
-      <input type="text" name="source" placeholder="來源" v-model="data.item.source" disabled>
+    <label class="input state-disabled">類型
+      <input type="text" name="type" placeholder="類型" v-model="data.item.type" disabled>
       <b class="tooltip tooltip-bottom-right">請輸入來源</b></label>
   </section>
+
+  <section>
+    <label class="input state-disabled">寄件人
+      <input type="text" name="from" placeholder="寄件人" v-model="data.item.from" disabled>
+      <b class="tooltip tooltip-bottom-right">請輸入寄件人</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">收件人
+      <input type="text" name="to" placeholder="收件人" v-model="data.item.to" disabled>
+      <b class="tooltip tooltip-bottom-right">請輸入收件人</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">主旨
+      <input type="text" name="subject" placeholder="主旨" v-model="data.item.subject" disabled>
+      <b class="tooltip tooltip-bottom-right">請輸入主旨</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">訊息內容
+      <input type="text" name="text" placeholder="訊息內容" v-model="data.item.text" disabled>
+      <b class="tooltip tooltip-bottom-right">請輸入訊息內容</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">Html
+      <input type="text" name="html" placeholder="Html" v-model="data.item.html" disabled>
+      <b class="tooltip tooltip-bottom-right">請輸入html</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">發送成功
+      <input type="text" name="success" placeholder="發送成功" v-model="data.item.success" disabled>
+      <b class="tooltip tooltip-bottom-right">請輸入發送成功</b></label>
+  </section>
+
+  <section>
+    <label class="input state-disabled">異常訊息
+      <input type="text" name="error" placeholder="異常訊息" v-model="data.item.error" disabled>
+      <b class="tooltip tooltip-bottom-right">請輸入異常訊息</b></label>
+  </section>
+
 </fieldset>
 <script>
 var formRules = {
-  content : {
-    required : true
+  sendBy: {
+    required: true
   },
-  source : {
-    required : true
+  type: {
+    required: true
+  },
+  to: {
+    required: true
+  },
+  subject: {
+    required: true
+  },
+  text: {
+    required: true
+  },
+  success: {
+    required: true
   },
 }
 
 // Messages for form validation
 var formMessages = {
-  content : {
-    required : '請給予內容'
+  sendBy : {
+    required : '請給予發送方式'
   },
-  source : {
-    required : '請給予來源'
+  type: {
+    required: '請給予發送類別'
+  },
+  to: {
+    required: '請給予收件者'
+  },
+  subject: {
+    required: '請給予主旨'
+  },
+  text: {
+    required: '請給予發送內容'
+  },
+  success: {
+    required: '請給予是否成功'
   },
 }
 </script>
