@@ -310,7 +310,44 @@ module.exports = {
           const secntNames = formula.map(oneFormula => oneFormula.scent)
           const where = {name: secntNames}
 
+	      function processData(data){
+			var feelAndScent = [];
+			for (var dataIDX in data) {
+			  //console.log("===")
+			  //console.log(data[idx])
+			  var curScent = data[dataIDX]['name'];
+			  var feelings = [];
+			  for (var feelIDX in data[dataIDX]['feelings']  ) {
+				var feelName = data[dataIDX]['feelings'][feelIDX]['key'];
+				feelAndScent.push({'feeling': feelName, 'scent': curScent });
+			  }
+			}
+			
+			var groupFeel = [];
+			for (var outIDX in feelAndScent) {
+				var feeling = feelAndScent[outIDX]['feeling'];
+				var scent = feelAndScent[outIDX]['scent'];
+
+				var findIDX = undefined;
+				for (var insIDX in groupFeel){
+				  if ( feeling === groupFeel[insIDX]['feeling'] ) {
+				    findIDX = insIDX;
+					break;
+				  }
+				}
+
+				if ( findIDX === undefined ) {
+				  groupFeel.push({'feeling': feeling, 'scent': [scent] });
+				}
+				else {
+				  groupFeel[findIDX]['scent'].push(scent);
+				}
+			}
+			return groupFeel;
+		  }
           const scents = await Scent.findAll({where});
+		  scentsLink = processData(scents)
+
           let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
           feelings = RecipeService.sortFeelingsByValue({feelings});
 
