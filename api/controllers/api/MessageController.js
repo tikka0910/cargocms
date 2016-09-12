@@ -21,7 +21,7 @@ module.exports = {
   findOne: async (req, res) => {
     try {
       const { id } = req.params;
-      const item = await Message.findOne({ id });
+      const item = await Message.findById(id);
       res.ok({ data: { item } });
     } catch (e) {
       res.serverError(e);
