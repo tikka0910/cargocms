@@ -3,23 +3,22 @@
 	<thead>
 		<tr>
 			<th class="" data-hide="phone"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs"/> ID</th>
-			<th class="" data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-sm hidden-xs"/> 發送方式</th>
+			<th class="" data-class="expand"><i class="fa fa-fw text-muted hidden-sm hidden-xs"/> 發送方式</th>
       <th class=""> 類型</th>
       <th class=""> 寄件人</th>
       <th class=""> 收件人</th>
       <th class=""> 主旨</th>
-      <th class=""> Text</th>
-      <th class=""> Html</th>
+      <th class=""> 訊息內容</th>
       <th class=""> Html</th>
       <th class=""> 發送成功</th>
-      <th class=""> 異常</th>
+      <th class=""> 異常訊息</th>
 			<th class="" data-hide="phone,tablet"></th>
 		</tr>
 	</thead>
 	<!-- client only -->
 	<tbody>
 		<tr v-for="item in data.items">
-			<td><a href="/admin/#/admin/{{modelName}}/show/{{item.id}}">{{ item.id }}</a></td>
+			<td>{{ item.id }}</td>
 			<td>{{ item.sendBy }}</td>
       <td>{{ item.type }}</td>
       <td>{{ item.from }}</td>
