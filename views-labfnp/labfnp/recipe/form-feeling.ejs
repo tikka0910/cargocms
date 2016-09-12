@@ -1,3 +1,19 @@
+
+<% LayoutUtils.addStylesheets('/assets/labfnp/css/chosen/chosen.css'); %>
+
+<style media="screen">
+  a.chosen-single.chosen-default {
+    background-color: white;
+    border-radius: 0px 0px 0px 0px;
+    -moz-border-radius: 0px 0px 0px 0px;
+    -webkit-border-radius: 0px 0px 0px 0px;
+    border: 1px solid #bbb;
+    height: 33px;
+    background: white;
+    margin-bottom: 10px;
+    padding-top: 1%;
+  }
+</style>
 <header>新香水配方- 感覺</header>
 <input type="hidden" name="from" value="<%= from %>" />
 
@@ -43,47 +59,52 @@
 </fieldset>
 
 
+<!--
 <% feelings.forEach(function(feeling) { %>
   <label class="feeling"><%= feeling %></label>
 <% }); %>
+-->
 
 <fieldset>
-  <% recipe.formula.forEach(function(formula) { %>
+  <% recipe.formula.forEach(function(formula, index) { %>
     <div class="row">
-      <section class="col col-3">
-        <label class="label">分類</label>
+      <section class="col col-6">
+        <% if (index === 0) { %>
+          <label class="label">分類</label>
+        <% } %>
         <label class="select">
-          <select class="scents-categories" data-index="<%= formula.index %>">
+          <select class="scents-categories chosen-select" data-placeholder="選擇一種你喜歡的感覺" data-index="<%= formula.index %>">
             <option></option>
-            <option value="T" <%= formula.scentCategory == 'T'?'selected':'' %> >T - 前位</option>
-            <option value="M" <%= formula.scentCategory == 'M'?'selected':'' %> >M - 中位</option>
-            <option value="B" <%= formula.scentCategory == 'B'?'selected':'' %> >B - 後位</option>
+            <% feelings.forEach(function(feeling) { %>
+              <option value="<%= feeling.id %>" <%= formula.feelingTitle === feeling?'selected':'' %> ><%= feeling %></option>
+            <% }); %>
           </select>
-          <i></i>
         </label>
       </section>
-      <section class="col col-7">
-        <label class="label">所選之香味分子<%= formula.num %></label>
+      <section class="col col-4">
+        <% if (index === 0) { %>
+          <label class="label">所選之香味分子</label>
+        <% } %>
         <label class="select">
-          <select name="formulaScents[<%= formula.index %>]" class="scents-dropdown" data-index="<%= formula.index %>">
+          <select name="formulaScents[<%= formula.index %>]" class="scents-dropdown chosen-select" data-placeholder="選擇一個香味分子" data-index="<%= formula.index %>">
             <option value=""></option>
             <% scents.forEach(function(scent) { %>
               <option
-                <%= formula.scentName == scent.name ?'selected':'' %>
+                <%= formula.scentName === scent.name ?'selected':'' %>
                 value="<%= scent.name %>"
                 data-color="<%= scent.color %>"
                 data-title="<%= scent.title %>"
-                data-description="<%= scent.description %>"
               >
-                <%= scent.name +" - "+ scent.description.split("，")[0].split("。")[0] %>
+                <%= scent.name %>
               </option>
             <% }); %>
           </select>
-          <i></i>
         </label>
       </section>
       <section class="col col-2">
-        <label class="label">滴數</label>
+        <% if (index === 0) { %>
+          <label class="label">滴數</label>
+        <% } %>
         <label class="input">
           <input type="number" name="formulaDrops[<%= formula.index %>]" value="<%= formula.drops %>" class="scents-drops" data-index="<%= formula.index %>">
         </label>
@@ -117,3 +138,36 @@
   <button type="button" class="btn-u btn-u-default" onclick="window.history.back();">返回</button>
   <button id="recipeDeleteButton" data-id="<%= recipe.id %>" type="button" class="btn-u btn-u-red pull-right <%= req.options.action== 'edit'?'':'hidden' %>" >刪除</button>
 </footer>
+
+<% LayoutUtils.addScripts('/assets/labfnp/lib/chosen/chosen.jquery.min.js'); %>
+
+<% LayoutUtils.addScriptBlock(`
+var config = {
+  '.chosen-select'           : {allow_single_deselect: true},
+}
+for (var selector in config) {
+  $(selector).chosen(config[selector]);
+}
+var styles = {
+  'background-color': 'white',
+  'border-radius': '0px 0px 0px 0px',
+  '-moz-border-radius': '0px 0px 0px 0px',
+  '-webkit-border-radius': '0px 0px 0px 0px',
+  'border': '1px solid #bbb',
+  'height': '33px',
+  'background': 'white',
+  'margin-bottom': '10px',
+  'padding-top': '1%',
+}
+$('.chosen-select').change(function() {
+  for (var style in styles) {
+    $('a.chosen-single.chosen-default').css(style, styles[style]);
+  }
+});
+
+// $('option', dropdown)
+// .show()
+// .filter(function(index, element) { return element.value && element.value.substring(0,1)!==prefix; })
+// .hide();
+
+`); %>

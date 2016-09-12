@@ -49,10 +49,10 @@ module.exports = {
   options: {
     classMethods: {
       findDistinctFeelings: async function() {
-        const  feelings = await Feeling.findAll({
-          attributes: ['title'],
-          group: ["Feeling.title"]
-        })
+        const feelings = await Feeling.findAll({
+          attributes: ['title', 'id'],
+          group: ['Feeling.title', 'Feeling.id']
+        });
         return feelings;
       },
       findRamdomFeelings: async function() {
