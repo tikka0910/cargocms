@@ -1,4 +1,8 @@
 module.exports = {
+  getShareUrl: function() {
+    const url = "http://" + sails.config.shareUrl
+    return url;
+  },
 
 
   forRecipe: ({recipes}) => {
@@ -8,7 +12,7 @@ module.exports = {
       const socialData = recipes.map((recipe) => {
         const {id, description} = recipe;
         const title = recipe.perfumeName;
-        const url = sails.getBaseUrl() + '/recipe/' + id
+        const url = SocialService.getShareUrl() + '/recipe/' + id
         return {
           description, title, url
         }
@@ -31,7 +35,7 @@ module.exports = {
       const socialData = posts.map((post) => {
         const {id, title} = post;
         const description = "";
-        const url = sails.getBaseUrl() + '/blog/show/' + id
+        const url = SocialService.getShareUrl() + '/blog/show/' + id
         return {
           description, title, url
         }
