@@ -37,3 +37,5 @@ $("#likeButton").on("click", function (event) {
 		$.get('/api/labfnp/recipe/like/' + id).done(successCatch).fail(failCatch);
 	}
 })
+
+$('#fb-comments').append('<div class="fb-comments" data-href="' + location.href + '" data-numposts="5"></div>');

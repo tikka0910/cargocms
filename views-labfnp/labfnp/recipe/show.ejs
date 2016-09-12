@@ -127,6 +127,20 @@
               <p class="padding-5"><%= recipe.message %></p>
             </li>
           </ul>
+
+          <!-- <label for="message">Facebook Comments</label> -->
+          <ul class="list-unstyled list-inline fb-comments">
+            <div id="fb-comments"></div>
+            <script>
+              (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.7";
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));
+            </script>
+          </ul>
         </h4>
       </div>
       <% if(social.targets.length > 0){ %>
