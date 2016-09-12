@@ -79,7 +79,8 @@
 	<!-- Creator -->
 	<% if (req.session.authenticated) { %>
 		<div class="text-center">
-		  <a href="/creator" class="btn btn-primary">
+		  <!-- <a href="/creator" class="btn btn-primary"> -->
+		  <a href="#" class="btn btn-primary" id="btn-create-recipe">
 		    <i class="fa fa-flask fa-fw"></i>
 		    創作一個新配方
 		  </a>
@@ -168,6 +169,7 @@
 
 </div>
 
+<%- include recipeCreateBox.ejs %>
 
 <% LayoutUtils.addScriptBlock(`
 $(document).ready(function(){
