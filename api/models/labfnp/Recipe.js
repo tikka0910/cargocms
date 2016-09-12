@@ -82,7 +82,7 @@ module.exports = {
 
     visibility: {
       type: Sequelize.ENUM('PUBLIC', 'PRIVATE', 'PROTECTED'),
-      defaultValue: 'PUBLIC',
+      defaultValue: 'PRIVATE',
     },
 
     visibilityDesc: {

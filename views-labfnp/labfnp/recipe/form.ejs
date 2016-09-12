@@ -19,9 +19,9 @@
     <label class="label">公開狀態</label>
     <label class="select">
       <select name="visibility" class="scents-categories">
-        <option <%= recipe.visibility == 'PRIVATE'?'selected':'' %> value="PRIVATE">私密</option>
         <option <%= recipe.visibility == 'PUBLIC'?'selected':'' %> value="PUBLIC" selected>公開</option>
-        <option <%= recipe.visibility == 'PROTECTED'?'selected':'' %> value="PROTECTED">半公開</option>
+        <option <%= recipe.visibility == 'PRIVATE'?'selected':'' %> value="PRIVATE">私密</option>
+        <!--option <%= recipe.visibility == 'PROTECTED'?'selected':'' %> value="PROTECTED">半公開</option-->
       </select>
       <i></i>
   </section>
