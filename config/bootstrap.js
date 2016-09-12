@@ -102,10 +102,12 @@ module.exports.bootstrap = async (cb) => {
       adminUsers[0].addRole(adminRole[0]);
     });
 
-    let menuItems = await MenuItem.findAll();
-    if(menuItems.length == 0){
-      require('./init/labfnp').init();
-      require('./init/facebook').init();
+    if (environment !== 'test') {
+      let menuItems = await MenuItem.findAll();
+      if(menuItems.length == 0){
+        require('./init/labfnp').init();
+        require('./init/facebook').init();
+      }
     }
 
 

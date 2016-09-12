@@ -1,4 +1,4 @@
-describe.only('test Feeling model operation', function() {
+describe('test Feeling model operation', function() {
   before(async (done) =>{
     try {
 
