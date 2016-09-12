@@ -4,7 +4,6 @@ module.exports = {
     let user, recipe, scents, totalDrops, feelings
     let {from} = req.query
     if(!from) from = "scent";
-
     try {
       user = AuthService.getSessionUser(req);
       if (!user) {
@@ -29,11 +28,11 @@ module.exports = {
         recipe.formula.push(formula);
       }
 
-      if(from == 'scent'){
+      if (from == 'scent') {
         return res.view({ from, user, recipe, scents, totalDrops });
       }
 
-      if(from == 'feeling'){
+      if (from == 'feeling') {
         feelings = await Feeling.findRamdomFeelings();
 
         let feelingArray = [];

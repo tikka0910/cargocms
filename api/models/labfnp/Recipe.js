@@ -24,8 +24,28 @@ module.exports = {
           }
         }
         catch (e) {
-          console.log(e);
+          sails.log.error(e);
           return [];
+        }
+      }
+    },
+
+    formulaTotalDrops: {
+      type: Sequelize.INTEGER,
+      get: function () {
+        try {
+          var formula = this.getDataValue('formula');
+          let formulaTotalDrops = 0;
+          if (formula) {
+            JSON.parse(formula).forEach((element, index, array) => {
+              formulaTotalDrops += Number(element.drops);
+            })
+          }
+          return formulaTotalDrops;
+        }
+        catch (e) {
+          sails.log.error(e);
+          return 0;
         }
       }
     },
@@ -37,6 +57,11 @@ module.exports = {
     authorName: {
       type: Sequelize.STRING,
       defaultValue: ''
+    },
+
+    authorFbPage: {
+      type: Sequelize.STRING,
+      defaultValue: 'https://www.facebook.com/LabFnP'
     },
 
     perfumeName: {
@@ -85,7 +110,7 @@ module.exports = {
 
     visibility: {
       type: Sequelize.ENUM('PUBLIC', 'PRIVATE', 'PROTECTED'),
-      defaultValue: 'PUBLIC',
+      defaultValue: 'PRIVATE',
     },
 
     visibilityDesc: {
@@ -166,6 +191,28 @@ module.exports = {
       get: function() {
         try {
           return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    createdAtIso: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          return moment(this.getDataValue('createdAt'), moment.ISO_8601);
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    updatedAtIso: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          return moment(this.getDataValue('updatedAt'), moment.ISO_8601);
         } catch (e) {
           sails.log.error(e);
         }
