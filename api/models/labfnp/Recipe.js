@@ -24,7 +24,7 @@ module.exports = {
           }
         }
         catch (e) {
-          console.log(e);
+          sails.log.error(e);
           return [];
         }
       }
@@ -39,17 +39,12 @@ module.exports = {
           if (formula) {
             JSON.parse(formula).forEach((element, index, array) => {
               formulaTotalDrops += Number(element.drops);
-              console.log(element.drops);
             })
-
-            return formulaTotalDrops;
           }
-          else {
-            return 0;
-          }
+          return formulaTotalDrops;
         }
         catch (e) {
-          console.log(e);
+          sails.log.error(e);
           return 0;
         }
       }
