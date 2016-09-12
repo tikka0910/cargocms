@@ -22,7 +22,11 @@
 		<div class="col-md-8">
 			<!-- General Unify Forms -->
       <form id="main-form" action="/api/labfnp/recipe" method="post" class="sky-form">
-        <%- include form.ejs %>
+        <% if (from === 'scent') { %>
+          <%- include form.ejs %>
+        <% } else { %>
+          <%- include form-feeling.ejs %>
+        <% } %>
       </form>
 			<!-- General Unify Forms -->
 
