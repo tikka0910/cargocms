@@ -175,7 +175,7 @@ var styles = {
 }
 $('.chosen-select').change(function() {
   for (var style in styles) {
-    $('a.chosen-single.chosen-default').css(style, styles[style]);
+    $('a.chosen-single').css(style, styles[style]);
   }
 });
 $('.feeling-scents-categories').change(function() {
