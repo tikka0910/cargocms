@@ -12,13 +12,17 @@
 }
 
 .header .logo img {
-  margin: 20px 15px;
-  height: 30px;
+  margin: 20px 0 15px 0;
+  height: 20px;
   opacity: .8;
 }
 
 .header .topbar ul.loginbar > li > a, .header .topbar ul.loginbar > li > a:hover {
   font-size: 13px;
+}
+
+.header .navbar-nav > li > a:hover, .header .navbar-nav > .active > a {
+  border-bottom-width: 8px;
 }
 
 .header .navbar-nav > li > a {

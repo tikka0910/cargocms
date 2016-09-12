@@ -163,7 +163,6 @@ module.exports = {
     hooks: {
       afterCreate: async function(user, options) {
         const userRole = await Role.findOne({where: {authority: 'user'}});
-        sails.log.info(userRole.toJSON());
         await user.addRole(userRole);
       }
     }

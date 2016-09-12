@@ -96,7 +96,7 @@ exports.login = async (req, identifier, password, next) => {
       query.where.username = identifier;
     }
     let user = await User.findOne(query);
-
+    console.log("== user ==", user.toJSON());
     if (!user) {
       if (isEmail) {
         throw new Error('Error.Passport.Email.NotFound');
@@ -112,7 +112,7 @@ exports.login = async (req, identifier, password, next) => {
     })
 
     if (passport) {
-      let result = await passport.validatePassword(password, passport);
+      let result = await passport.validatePassword(password);
       if (result) {
         const userAgent = req.headers['user-agent'];
         await user.loginSuccess({ userAgent });

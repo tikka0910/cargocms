@@ -1,3 +1,28 @@
+<!-- common tags-->
+<% LayoutUtils.addMeta({ property:"author", content:recipe.authorName }); %>
+<% LayoutUtils.addMeta({ property:"description", content:recipe.description }); %>
+
+<!-- FB OG tags-->
+<% LayoutUtils.addMeta({ property:"og:title", content:"LFP: 香料香水實驗室，客製專屬香水 | 配方名稱：" + recipe.perfumeName }); %>
+<% LayoutUtils.addMeta({ property:"og:description", content:recipe.description }); %>
+<% LayoutUtils.addMeta({ property:"og:image", content:sails.getBaseUrl() + recipe.coverPhoto }); %>
+<% LayoutUtils.addMeta({ property:"og:image:url", content:sails.getBaseUrl() + recipe.coverPhoto }); %>
+<% LayoutUtils.addMeta({ property:"og:image:type", content:"image/jpeg" }); %>
+<% LayoutUtils.addMeta({ property:"og:image:type", content:"image/png" }); %>
+<% LayoutUtils.addMeta({ property:"og:image:width", content:"576" }); %>
+<% LayoutUtils.addMeta({ property:"og:image:height", content:"430" }); %>
+<% LayoutUtils.addMeta({ property:"og:type", content:"article" }); %>
+<% LayoutUtils.addMeta({ property:"article:published_time", content:recipe.createdAtIso })  %>
+<% LayoutUtils.addMeta({ property:"article:modified_time", content:recipe.updatedAtIso }) %>
+<% LayoutUtils.addMeta({ property:"article:author", content:recipe.authorFbPage }); %>
+<% LayoutUtils.addMeta({ property:"article:section", content:"配方實驗室" }); %>
+<% LayoutUtils.addMeta({ property:"article:tag", content:"配方" }); %>
+<% LayoutUtils.addMeta({ property:"article:tag", content:"香水" }); %>
+<% LayoutUtils.addMeta({ property:"article:tag", content:"perfume" }); %>
+<% LayoutUtils.addMeta({ property:"article:tag", content:"LFP" }); %>
+<% LayoutUtils.addMeta({ property:"article:tag", content:"LabFnP" }); %>
+
+
 <% LayoutUtils.addStylesheets('/assets/unify/css/pages/profile.css'); %>
 <!--<div class="container">-->
 <!--<pre><%= JSON.stringify(recipe, null, 2) %></pre>-->
@@ -106,7 +131,7 @@
 
           <div class="row">
             <div id="wordCloudContainer" class="col col-md-12">
-              <div id="wordCloud" class="text-center" data-id="<%= recipe.id %>" ></div>
+              <div id="wordCloud" class="text-center" data-id="<%= recipe.id %>"></div>
             </div>
             <div class="col col-md-12">
               <div id="pieChart" class="text-center"></div>
@@ -119,13 +144,29 @@
               <p class="padding-5"><%= recipe.description %></p>
             </li>
           </ul>
-          <hr/>
 
-          <!-- <label for="message">備註</label> -->
-          <ul class="list-unstyled list-inline message">
-            <li>
-              <p class="padding-5"><%= recipe.message %></p>
-            </li>
+		  <% if(recipe.message.length >0){ %>
+            <!-- <label for="message">備註</label> -->
+            <hr/>
+            <ul class="list-unstyled list-inline message">
+              <li>
+                <p class="padding-5"><%= recipe.message %></p>
+              </li>
+            </ul>
+          <% } %>
+
+          <!-- <label for="message">Facebook Comments</label> -->
+          <ul class="list-unstyled list-inline fb-comments">
+            <div id="fb-comments"></div>
+            <script>
+              (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.7";
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));
+            </script>
           </ul>
         </h4>
       </div>
