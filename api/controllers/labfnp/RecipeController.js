@@ -30,12 +30,17 @@ module.exports = {
       }
 
       if(from == 'scent'){
-        return res.view({user, recipe, scents, totalDrops});
+        return res.view({ from, user, recipe, scents, totalDrops });
       }
 
       if(from == 'feeling'){
         feelings = await Feeling.findRamdomFeelings();
-        return res.view({user, recipe, scents, feelings, totalDrops});
+
+        let feelingArray = [];
+        for (const feeling of feelings) {
+          feelingArray.push(feeling.title);
+        }
+        return res.view({ from, user, recipe, scents, feelings: feelingArray, totalDrops });
       }
 
     }
