@@ -1,4 +1,4 @@
-<header>新香水配方</header>
+<header>新香水配方- 感覺</header>
 <input type="hidden" name="from" value="<%= from %>" />
 
 <fieldset>
@@ -41,6 +41,11 @@
   </section>
 
 </fieldset>
+
+
+<% feelings.forEach(function(feeling) { %>
+  <label class="feeling"><%= feeling %></label>
+<% }); %>
 
 <fieldset>
   <% recipe.formula.forEach(function(formula) { %>
