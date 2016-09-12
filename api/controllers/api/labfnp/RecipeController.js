@@ -100,7 +100,7 @@ module.exports = {
       res.serverError(e);
     }
   },
-  
+
   unlike: async (req, res) => {
     try {
       const { id } = req.params;

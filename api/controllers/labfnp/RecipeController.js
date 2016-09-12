@@ -2,13 +2,13 @@ import crypto from 'crypto';
 module.exports = {
   create: async function(req, res) {
     try {
-      let user = AuthService.getSessionUser(req);
+      const user = AuthService.getSessionUser(req);
 
       if (!user) {
         return res.redirect('/login');
       }
 
-      let recipe = Recipe.build().toJSON();
+      const recipe = Recipe.build().toJSON();
       recipe.message = ""
       recipe.description = ""
 
@@ -23,9 +23,9 @@ module.exports = {
         recipe.formula.push(formula);
       }
 
-      let scents = await Scent.findAllWithRelationFormatForApp()
+      const scents = await Scent.findAllWithRelationFormatForApp();
 
-      let totalDrops = 0;
+      const totalDrops = 0;
 
       return res.view({user, recipe, scents, totalDrops});
     }

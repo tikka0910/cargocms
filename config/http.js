@@ -120,6 +120,7 @@ module.exports.http = {
       res._stylesheetBlock = '';
       res._scripts = [];
       res._scriptBlock = '';
+      res._metas = [];
 
       res.locals.addScripts = function() {
         for (var i = 0; i < arguments.length; i++) {
@@ -150,6 +151,14 @@ module.exports.http = {
       res.locals.getStylesheetBlock = function() {
         return res._stylesheetBlock;
       };
+      res.locals.addMeta = function(meta) {
+        for (var i = 0; i < arguments.length; i++) {
+          res._metas.push(arguments[i]);
+        }
+      },
+      res.locals.getMetas = function() {
+        return res._metas;
+      },
 
       res.locals.LayoutUtils = {
         addScripts: function() {
@@ -180,6 +189,14 @@ module.exports.http = {
         getStylesheetBlock: function() {
           return res._stylesheetBlock;
         },
+        addMeta: function(meta) {
+          for (var i = 0; i < arguments.length; i++) {
+            res._metas.push(arguments[i]);
+          }
+        },
+        getMetas: function() {
+          return res._metas;
+        },
       };
 
       return next();
@@ -188,10 +205,10 @@ module.exports.http = {
   locals: {
     filters: {
       formatDate: function(date) {
-        return moment(date).format('YYYY/MM/DD');
+        return moment(date, 'YYYY/MM/DD');
       },
       formatDateTime: function(dateTime) {
-        return moment(dateTime).format('YYYY/MM/DD hh:mm:ss');
+        return moment(dateTime, 'YYYY/MM/DD hh:mm:ss');
       },
       nl2br: function(text) {
         return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
