@@ -30,6 +30,31 @@ module.exports = {
       }
     },
 
+    formulaTotalDrops: {
+      type: Sequelize.INTEGER,
+      get: function () {
+        try {
+          var formula = this.getDataValue('formula');
+          let formulaTotalDrops = 0;
+          if (formula) {
+            JSON.parse(formula).forEach((element, index, array) => {
+              formulaTotalDrops += Number(element.drops);
+              console.log(element.drops);
+            })
+
+            return formulaTotalDrops;
+          }
+          else {
+            return 0;
+          }
+        }
+        catch (e) {
+          console.log(e);
+          return 0;
+        }
+      }
+    },
+
     formulaLogs: {
       type: Sequelize.TEXT
     },
