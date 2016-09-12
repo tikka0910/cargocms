@@ -39,6 +39,8 @@ module.exports = {
         for (const feeling of feelings) {
           feelingArray.push(feeling.title);
         }
+        console.log(feelingArray);
+        console.log(scents[20]);
         return res.view({ from, user, recipe, scents, feelings: feelingArray, totalDrops });
       }
 

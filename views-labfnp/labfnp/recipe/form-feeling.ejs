@@ -13,6 +13,14 @@
     margin-bottom: 10px;
     padding-top: 1%;
   }
+  .tag {
+    background: #7e7c79;
+    display: inline-block;
+    padding: 3px 7px;
+    color: white;
+    font-style: normal;
+    margin: 3px;
+  }
 </style>
 <header>新香水配方- 感覺</header>
 <input type="hidden" name="from" value="<%= from %>" />
@@ -73,10 +81,10 @@
           <label class="label">分類</label>
         <% } %>
         <label class="select">
-          <select class="scents-categories chosen-select" data-placeholder="選擇一種你喜歡的感覺" data-index="<%= formula.index %>">
+          <select class="feeling-scents-categories chosen-select" data-placeholder="選擇一種你喜歡的感覺" data-index="<%= formula.index %>">
             <option></option>
             <% feelings.forEach(function(feeling) { %>
-              <option value="<%= feeling.id %>" <%= formula.feelingTitle === feeling?'selected':'' %> ><%= feeling %></option>
+              <option value="<%= feeling %>" <%= formula.feelingTitle === feeling?'selected':'' %> ><%= feeling %></option>
             <% }); %>
           </select>
         </label>
@@ -86,19 +94,23 @@
           <label class="label">所選之香味分子</label>
         <% } %>
         <label class="select">
-          <select name="formulaScents[<%= formula.index %>]" class="scents-dropdown chosen-select" data-placeholder="選擇一個香味分子" data-index="<%= formula.index %>">
-            <option value=""></option>
+          <select name="formulaScents[<%= formula.index %>]" class="scents-dropdown" data-placeholder="選擇一個香味分子" data-index="<%= formula.index %>">
+            <option value="">選擇分子</option>
             <% scents.forEach(function(scent) { %>
               <option
                 <%= formula.scentName === scent.name ?'selected':'' %>
                 value="<%= scent.name %>"
+                data-feelings="<%= JSON.stringify(scent.feelings) %>"
                 data-color="<%= scent.color %>"
                 data-title="<%= scent.title %>"
+                data-description="<%= scent.description %>"
+                style="display: none;"
               >
                 <%= scent.name %>
               </option>
             <% }); %>
           </select>
+          <i />
         </label>
       </section>
       <section class="col col-2">
@@ -115,6 +127,8 @@
         <div id="scent-content" class="funny-boxes bg-color-white">
           <h2 id="scent-title">AAA</h2>
           <p id="scent-description">BBB</p>
+          <div class="tags" >
+          </div>
         </div>
       </div>
     </div>
@@ -162,6 +176,36 @@ var styles = {
 $('.chosen-select').change(function() {
   for (var style in styles) {
     $('a.chosen-single.chosen-default').css(style, styles[style]);
+  }
+});
+$('.feeling-scents-categories').change(function() {
+  var idx = $(this).data('index');
+  var prefix = $(this).val();
+  $('.scent-detail[data-index='+idx+']').addClass("hidden");
+
+  if (prefix) {
+    var dropdown = $('.scents-dropdown[data-index='+idx+']');
+    dropdown.val("");
+
+    $('option', dropdown)
+      .hide()
+      .filter(function(index, element) {
+        if(index === 0){
+          return true;
+        }
+        var feelings = $(element).data('feelings');
+        var visible = false;
+        feelings.forEach(function(e) {
+          if(e.key === prefix){
+            visible = true;
+          }
+        });
+        return visible;
+      })
+      .show();
+  } else {
+    $('option', dropdown)
+      .hide()
   }
 });
 

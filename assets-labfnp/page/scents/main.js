@@ -175,6 +175,7 @@ $(function() {
         .hide();
     }
   });
+
   $('.scents-categories').change();
 
 
@@ -187,8 +188,19 @@ $(function() {
     var title = "";
     var description = "";
 
+    function successCatch(e) {
+      $(e.data).each(function(i, e) {
+        scentDetail.find(".tags").append('<div class="tag">' + e.title + '</div>')
+      });
+    }
+
+    function failCatch() {
+
+    }
 
     if ($(this).val() != '') {
+      $.get('http://localhost:5001/api/labfnp/feeling?serverSidePaging=true&draw=0&columns%5B0%5D%5Bdata%5D=scentName&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=score&columns%5B1%5D%5Bsearchable%5D=false&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=1&order%5B0%5D%5Bdir%5D=desc&start=0&length=10&search%5Bvalue%5D='+$(this).val())
+        .done(successCatch).fail(failCatch);
       var color = selectedScent.data('color');
       title = selectedScent.data('title');
       description = selectedScent.data('description');
@@ -196,6 +208,7 @@ $(function() {
       $(this).css('color', color);
       scentDetail.removeClass("hidden");
       scentDetail.find("#scent-content").css('border-top', 'solid 2px ' + color);
+      scentDetail.find(".tags").empty();
 
 	    if (drops.val() == 0) {
 	      drops.val(1);
