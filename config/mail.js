@@ -31,11 +31,6 @@ module.exports.mail = {
       <br />戶名： %(accountName)s
       <br />匯款金額： $ %(paymentTotalAmount)s
 
-      <br />匯款後請按至以下連結確認:
-
-      <br /><a href='%(orderConfirmLink)s'>匯款確認</a>
-
-      <br />煩請你確認。
 
       <br />From %(storeName)s
       </body></html>`
