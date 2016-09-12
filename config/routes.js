@@ -45,6 +45,7 @@ module.exports.routes = {
 
   'get /api/labfnp/recipe': 'api/labfnp/RecipeController.find',
   'post /api/labfnp/recipe': 'api/labfnp/RecipeController.create',
+  'get /api/labfnp/recipe/new': 'api/labfnp/RecipeController.topNew',
   'get /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.findOne',
   'put /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.update',
   'delete /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.destroy',

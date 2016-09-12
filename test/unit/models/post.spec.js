@@ -63,8 +63,7 @@ describe('about Post model operation.', function() {
           longitude: 10,
           latitude: 10,
         });
-        location.addPost(post.id);
-
+        await location.addPost(post.id);
         let checkPost = await Post.findById(post.id);
         checkPost.LocationId.should.be.eq(location.id)
         done();
@@ -149,7 +148,7 @@ describe('about Post model operation.', function() {
           longitude: 10,
           latitude: 10,
         });
-        location.addPost(post.id);
+        await location.addPost(post.id);
         done();
       } catch (e) {
         done(e)

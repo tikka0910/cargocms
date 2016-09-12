@@ -59,6 +59,11 @@ module.exports = {
       defaultValue: ''
     },
 
+    authorFbPage: {
+      type: Sequelize.STRING,
+      defaultValue: 'https://www.facebook.com/LabFnP'
+    },
+
     perfumeName: {
       type: Sequelize.STRING,
       defaultValue: ''
@@ -183,6 +188,28 @@ module.exports = {
       get: function() {
         try {
           return moment(this.getDataValue('createdAt')).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    createdAtIso: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          return moment(this.getDataValue('createdAt'), moment.ISO_8601);
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    updatedAtIso: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          return moment(this.getDataValue('updatedAt'), moment.ISO_8601);
         } catch (e) {
           sails.log.error(e);
         }

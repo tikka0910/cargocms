@@ -18,10 +18,19 @@ module.exports = {
     productionStatus,
     UserId,
     coverPhotoId,
+    authorFbPage
   }) => {
     try {
-      recipe.formula = RecipeService.sortFormulaByScentName({formula: recipe.formula});
-      sails.log.info(recipe);
+
+      const passport =  await Passport.find({ UserId: recipe.UserId });
+      const existProvider = typeof passport.provider === 'string';
+      const checkProviderType = passport.provider === 'facebook';
+
+      if (existProvider && checkProviderType) {
+        recipe.authorFbPage = passport.identfier;
+      }
+      recipe.formula = RecipeService.sortFormulaByScentName({ formula: recipe.formula });
+      recipe.coverPhotoId = recipe.coverPhotoId == "" ? null : recipe.coverPhotoId;
 
       return await Recipe.create(recipe);
     } catch (e) {
