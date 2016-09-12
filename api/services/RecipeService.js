@@ -30,10 +30,6 @@ module.exports = {
       }
       recipe.formula = RecipeService.sortFormulaByScentName({ formula: recipe.formula });
 
-      console.log('existProvider=>',existProvider);
-      console.log('checkProviderType=>',checkProviderType, 'type=>', passport.provider);
-      sails.log.info(recipe);
-
       return await Recipe.create(recipe);
     } catch (e) {
       sails.log.error(e);
