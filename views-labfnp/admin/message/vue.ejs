@@ -6,15 +6,21 @@ var COMMON = {
 
 var itemBeforeEdit = {};
 var prefix = 'admin/';
-var modelName = "slogan";
+var modelName = "message";
 var appModel = {
   modelName: modelName,
   prefix: prefix,
   data: {
     item: {
       id: '',
-      content: '',
-      source: '',
+      sendBy: '',
+      type: '',
+      from: '',
+      subject: '',
+      text: '',
+      html: '',
+      success: '',
+      error: '',
     },
     items: [],
     option: {}
