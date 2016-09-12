@@ -60,7 +60,19 @@ $(document).ready(function(){
           swal({
             title: '請先登入',
             text: '如果要使用收藏功能，請先進行登入。',
-            type: 'warning',
+          	type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: "#e6caa8",
+            confirmButtonText: "登入",
+            cancelButtonText: "註冊",
+            closeOnConfirm: false,
+            closeOnCancel: false,
+          },function(isConform){
+            if(isConform){
+              open('/login', '_self');
+            }else{
+              open('/register', '_self');
+            }
           });
         }
       }
