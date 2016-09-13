@@ -118,7 +118,6 @@ describe('test Recipe model operation', function() {
       try {
         let user = likeUser;
         let result = await Recipe.findAndIncludeUserLike({currentUser: user});
-        console.log("=== result.length ===", result.length, result[0].toJSON(), result[1].toJSON());
         done();
       } catch (e) {
         done(e);

@@ -11,9 +11,12 @@ describe("about Mailer service", () => {
   it('send paymentConfirm', async (done) => {
 
     try {
-      let messageConfig = await MessageService.paymentConfirm(order);
+      let messageConfig = await MessageService.paymentConfirm({
+        email: '123@gmail.com',
+        serialNumber: '123456787893f',
+        username: 'BBBB',
+      });
       let message = await Message.create(messageConfig);
-      console.log("!!!!!", message.toJSON());
       await MessageService.sendMail(message);
       done();
     } catch (e) {
@@ -22,7 +25,7 @@ describe("about Mailer service", () => {
 
   });
 
-  it.only('send orderConfirm', async (done) => {
+  it('send orderConfirm', async (done) => {
 
     try {
       let messageConfig = await MessageService.orderConfirm({
@@ -38,9 +41,9 @@ describe("about Mailer service", () => {
         paymentTotalAmount: 'paymentTotalAmount!!!!',
         shipmentUsername: 'shipmentUsername!!!!',
         shipmentAddress: 'shipmentAddress!!!!',
+        expireDate: '2016/09/13'
       });
       let message = await Message.create(messageConfig);
-      console.log("!!!!!", message.toJSON());
       await MessageService.sendMail(message);
       done();
     } catch (e) {

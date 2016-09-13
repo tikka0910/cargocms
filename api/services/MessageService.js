@@ -91,16 +91,18 @@ module.exports = {
     }
 
   },
-  paymentConfirm: (order) => {
+  paymentConfirm: (order = {
+    email, serialNumber, username
+  }) => {
     try {
 
       var paymentConfirmTemplete = sails.config.mail.templete.paymentConfirm;
-      var mailSendConfig = {...paymentConfirmTemplete, to: order.User.email};
+      var mailSendConfig = {...paymentConfirmTemplete, to: order.email};
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
       mailSendConfig.text = sprintf(mailSendConfig.text, {
         storeName: 'LFP',
-        username: order.User.username
+        username: order.username
       });
 
       mailSendConfig.type = 'paymentConfirm';

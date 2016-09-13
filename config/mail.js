@@ -28,8 +28,8 @@ module.exports.mail = {
       <br />銀行名稱： %(bankName)s
       <br />銀行代碼： %(bankId)s
       <br />帳號： %(accountId)s
-      <br />戶名： %(accountName)s
       <br />匯款金額： $ %(paymentTotalAmount)s
+      <br />匯款期限： %(expireDate)s
 
 
       <br />From %(storeName)s
