@@ -8,8 +8,7 @@ module.exports = {
       set: function (val) {
         if (val) {
           this.setDataValue('formula', JSON.stringify(val));
-        }
-        else {
+        } else {
           this.setDataValue('formula', "[]");
         }
       },
@@ -18,8 +17,7 @@ module.exports = {
           var formula = this.getDataValue('formula');
           if (formula) {
             return JSON.parse(formula);
-          }
-          else {
+          } else {
             return [];
           }
         }
@@ -328,39 +326,35 @@ module.exports = {
           const scents = await Scent.findAll({where});
 
           // get data like [ {feeling: f1, scent:s1},{feeling: f1, scent:s2} ]
-    			var feelAndScent = [];
-    			for (var scentsIDX in scents) {
-    			  //console.log("===")
-    			  //console.log(scents[idx])
-    			  var curScent = scents[scentsIDX]['name'];
-    			  var feelings = [];
-    			  for (var feelIDX in scents[scentsIDX]['feelings']  ) {
-    				var feelName = scents[scentsIDX]['feelings'][feelIDX]['key'];
-    				feelAndScent.push({'feeling': feelName, 'scent': curScent });
-    			  }
-    			}
-    			
+          let feelAndScents = []
+          scents.map(function(scent) {
+            let curScent = scent['name'];
+            scent['feelings'].map(function(feel) {
+              feelAndScents.push({'feeling': feel['key'], 'scent': curScent})
+            });
+          });
+          
           // grouping data like [ {feeling: f1, scent: [s1,s2] } ]
-    			var groupFeel = [];
-    			for (var outIDX in feelAndScent) {
-    				var feeling = feelAndScent[outIDX]['feeling'];
-    				var scent = feelAndScent[outIDX]['scent'];
+          let groupFeel = [];
+          feelAndScents.map(function(fas) {
+            let feeling = fas['feeling'];
+            let scent = fas['scent'];
+
+            let findIDX = undefined;
+            for (let insIDX in groupFeel){
+              if ( feeling === groupFeel[insIDX]['feeling'] ) {
+                findIDX = insIDX;
+                break;
+              }
+            }
     
-    				var findIDX = undefined;
-    				for (var insIDX in groupFeel){
-    				  if ( feeling === groupFeel[insIDX]['feeling'] ) {
-    				    findIDX = insIDX;
-    					break;
-    				  }
-    				}
-    
-    				if ( findIDX === undefined ) {
-    				  groupFeel.push({'feeling': feeling, 'scent': [scent] });
-    				}
-    				else {
-    				  groupFeel[findIDX]['scent'].push(scent);
-    				}
-    			}
+            if ( findIDX === undefined ) {
+              groupFeel.push({'feeling': feeling, 'scent': [scent] });
+            } else {
+              groupFeel[findIDX]['scent'].push(scent);
+            }
+          
+          })
 
           let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
           feelings = RecipeService.sortFeelingsByValue({feelings});
