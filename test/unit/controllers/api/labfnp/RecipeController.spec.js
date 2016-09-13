@@ -56,7 +56,7 @@ describe('about LikeRecipe Controller operation.', function() {
     }
   });
 
-  it.only('Recipe feelings should be success.', async (done) => {
+  it('Recipe feelings should be success.', async (done) => {
     try {
       const res = await request(sails.hooks.http.app)
       .get(`/api/labfnp/recipe/${recipe.id}/feelings`);
