@@ -1,4 +1,4 @@
-var autoSize = $('.drops-chart').width()*0.7 > 230 ? $('.drops-chart').width()*0.7 : 230;
+var autoSize = $('.drops-chart').width()*0.95 > 230 ? $('.drops-chart').width()*0.95 : 230;
 var pie = null;
 var drawPieChart = function (data) {
   var pieHeader = {
@@ -24,7 +24,7 @@ var drawPieChart = function (data) {
   var pieSize = {
     "canvasWidth": autoSize,
     "canvasHeight": autoSize,
-    "pieOuterRadius": "80%"
+    "pieOuterRadius": "50%"
   };
   var pieParam = {
     "sortOrder": "value-desc",
