@@ -194,14 +194,23 @@ $(function() {
     // console.log("idx", idx);
     var selectedScent = $('option:selected', this);
     var scentDetail = $('.scent-detail[data-index='+idx+']');
+    var feelingScentsCategories = $('.feeling-scents-categories[data-index='+idx+']');
     var drops = $('.scents-drops[data-index='+idx+']');
     var title = "";
     var description = "";
 
     function successCatch(e) {
+      var tags = [];
       $(e.data).each(function(i, e) {
-        scentDetail.find(".tags").append('<div class="tag">' + e.title + '</div>')
+        tags.push(e.title);
       });
+      $(tags).each(function(i, e) {
+        scentDetail.find(".tags").append('<div class="tag">' + e + '</div>')
+      });
+      var Text = feelingScentsCategories.val();
+      if(tags.indexOf(Text) === -1){
+        scentDetail.find(".tags").append('<div class="tag">' + Text + '</div>')
+      }
     }
 
     function failCatch() {
