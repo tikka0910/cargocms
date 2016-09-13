@@ -1,5 +1,5 @@
 
-describe.only('about Allpay controllers', () => {
+describe('about Allpay controllers', () => {
 
   describe('second if allpay order create success allpay will callback data , use paymentinfo() handle', () => {
 

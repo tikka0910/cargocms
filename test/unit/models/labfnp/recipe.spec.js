@@ -136,7 +136,7 @@ describe('test Recipe model operation', function() {
         done(e)
       }
     })
-    it.only('find by likeUser should be success.', async (done) => {
+    it('find by likeUser should be success.', async (done) => {
       try {
         let user = likeUser;
         let result = await Recipe.findAndIncludeUserLike({currentUser: user, start: 0, length: 5});
