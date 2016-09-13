@@ -45,6 +45,7 @@ module.exports.routes = {
 
   'get /api/labfnp/recipe': 'api/labfnp/RecipeController.find',
   'post /api/labfnp/recipe': 'api/labfnp/RecipeController.create',
+  'get /api/labfnp/recipe/new': 'api/labfnp/RecipeController.topNew',
   'get /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.findOne',
   'put /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.update',
   'delete /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.destroy',
@@ -90,6 +91,12 @@ module.exports.routes = {
   'post /api/admin/allpay':       'api/AllpayController.create',
   'put /api/admin/allpay/:id':    'api/AllpayController.update',
   'delete /api/admin/allpay/:id': 'api/AllpayController.destroy',
+
+  'get /api/admin/message':        'api/admin/MessageController.find',
+  'get /api/admin/message/:id':    'api/admin/MessageController.findOne',
+  'post /api/admin/message':       'api/admin/MessageController.create',
+  'put /api/admin/message/:id':    'api/admin/MessageController.update',
+  'delete /api/admin/message/:id': 'api/admin/MessageController.destroy',
   // 'get /api/admin/Default': 'api/admin/DefaultController.find',
   // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
   // 'post /api/admin/Default': 'api/admin/DefaultController.create',
