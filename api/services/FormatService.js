@@ -16,8 +16,8 @@ module.exports = {
         result.push(data);
         return result;
       }, []);
-      data.offset = input.start;
-      data.limit = input.length;
+      data.offset = parseInt(input.start);
+      data.limit = parseInt(input.length);
       data.order = input.order.map((data) => {
         let columnIndex = data.column;
         let sortColumn = input.columns[columnIndex].data;

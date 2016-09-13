@@ -84,6 +84,7 @@ describe('test Recipe model operation', function() {
           perfumeName: 'love test',
           message: 'this is love test',
           UserId: testUser.id,
+          visibility: 'PUBLIC',
         };
 
         recipeLoveTest = await Recipe.create(newRecipeLoveTest);
@@ -112,6 +113,7 @@ describe('test Recipe model operation', function() {
           perfumeName: 'love test',
           message: 'this is love test',
           UserId: testUser.id,
+          visibility: 'PUBLIC',
         };
         await Recipe.create(newRecipeLoveTest2);
 

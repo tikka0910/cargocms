@@ -18,7 +18,8 @@ module.exports = {
     productionStatus,
     UserId,
     coverPhotoId,
-    authorFbPage
+    authorFbPage,
+    createdBy,
   }) => {
     try {
       

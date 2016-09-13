@@ -98,7 +98,8 @@
 	<!-- Creator -->
 	<% if (req.session.authenticated) { %>
 		<div class="text-center">
-		  <a href="/creator" class="btn btn-primary">
+		  <!-- <a href="/creator" class="btn btn-primary"> -->
+		  <a href="#" class="btn btn-primary btn-create-recipe">
 		    <i class="fa fa-flask fa-fw"></i>
 		    創作一個新配方
 		  </a>
@@ -173,5 +174,7 @@
   </script>
 
 </div>
+
+<%- include recipeCreateBox.ejs %>
 
 <% LayoutUtils.addScripts('/assets/labfnp/page/explore/index.js'); %>

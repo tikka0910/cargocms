@@ -106,6 +106,11 @@ module.exports = {
       }
     },
 
+    createdBy: {
+      type: Sequelize.ENUM('scent', 'feeling'),
+      defaultValue: "scent"
+    },
+
     totalDrops: {
       type: Sequelize.INTEGER,
       defaultValue: 0
@@ -256,6 +261,7 @@ module.exports = {
           },
           include: [User, Image],
         });
+        console.log('findOneWithScent recipe=>', recipes);
         return recipes;
       },
 
