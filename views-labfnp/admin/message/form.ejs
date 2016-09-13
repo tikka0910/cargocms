@@ -1,15 +1,26 @@
 <fieldset>
 
   <section>
-    <label class="input state-disabled">發送方式
-      <input type="text" name="sendBy" placeholder="發送方式" v-model="data.item.sendBy" disabled>
-      <b class="tooltip tooltip-bottom-right">請發送方式</b></label>
+    <label class="input state-disabled">發送方式</label>
+    <label class="select state-disabled">
+      <select name="sendBy" v-model="data.item.sendBy" disabled>
+        <option value="email">Email</option>
+        <option value="sms">SMS</option>
+      </select><i></i>
+    </label>
   </section>
 
   <section>
-    <label class="input state-disabled">類型
-      <input type="text" name="type" placeholder="類型" v-model="data.item.type" disabled>
-      <b class="tooltip tooltip-bottom-right">請輸入來源</b></label>
+    <label class="input state-disabled">類型</label>
+    <label class="select state-disabled">
+      <select name="type" v-model="data.item.type" disabled>
+        <option value="greeting">問候</option>
+        <option value="orderConfirm">訂單確認</option>
+        <option value="paymentConfirm">付款確認</option>
+        <option value="deliveryConfirm">寄送確認</option>
+        <!-- <option value="orderSync"></option> -->
+      </select><i></i>
+    </label>
   </section>
 
   <section>
@@ -43,9 +54,13 @@
   </section>
 
   <section>
-    <label class="input state-disabled">發送成功
-      <input type="text" name="success" placeholder="發送成功" v-model="data.item.success" disabled>
-      <b class="tooltip tooltip-bottom-right">請輸入發送成功</b></label>
+    <label class="input state-disabled">發送成功</label>
+      <label class="select state-disabled">
+        <select name="success" v-model="data.item.success" disabled>
+          <option value="1">True</option>
+          <option value="0">False</option>
+        </select><i></i>
+      </label>
   </section>
 
   <section>
