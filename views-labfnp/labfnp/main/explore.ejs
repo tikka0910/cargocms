@@ -68,6 +68,22 @@
   -o-filter: saturate(1);
   filter: saturate(1);
 }
+.grid-boxes-in {
+  animation: slidein 0.3s 0.2s backwards;
+  animation-timing-function: ease-in-out;
+  width: 30%;
+  float: left;
+}
+@keyframes slidein {
+  from {
+    opacity: 0;
+    transform: translateY(8em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
 
 
