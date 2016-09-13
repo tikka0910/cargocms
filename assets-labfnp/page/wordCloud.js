@@ -95,17 +95,17 @@ function update() {
       h = 400;
   var wordLength = parseInt(w * h / 5000);
   console.log("wordLength", wordLength);
-  console.log("tags.length", tags.length);
-  var maxWord = tags.length;
+  console.log("tags.feels.length", tags.feels.length);
+  var maxWord = tags.feels.length;
 
-  if(tags.length > wordLength)
+  if(tags.feels.length > wordLength)
     maxWord = wordLength;
 
   console.log("maxWord", maxWord);
-  var words = tags.slice(0, maxWord);
+  var words = tags.feels.slice(0, maxWord);
 
 
-  if (tags.length){
+  if (tags.feels.length){
     fontSize.domain([+words[words.length - 1].value || 1, +words[0].value]);
   }
   layout.stop().words(words).start();
@@ -128,7 +128,15 @@ $(function() {
 
 
     $("#wordCloud-svg").find("text").on("click", function(){
-      alert($(this).html());
+      var curFeel=$(this).html();
+
+      for (var feelIDX in tags.links) {
+        if (tags.links[feelIDX].feeling === curFeel) {
+          break;
+        }
+      }
+      alert(tags.links[feelIDX].scent)
+
     })
   });
 

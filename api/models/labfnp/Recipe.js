@@ -310,49 +310,50 @@ module.exports = {
           const secntNames = formula.map(oneFormula => oneFormula.scent)
           const where = {name: secntNames}
 
-	      function processData(data){
-			var feelAndScent = [];
-			for (var dataIDX in data) {
-			  //console.log("===")
-			  //console.log(data[idx])
-			  var curScent = data[dataIDX]['name'];
-			  var feelings = [];
-			  for (var feelIDX in data[dataIDX]['feelings']  ) {
-				var feelName = data[dataIDX]['feelings'][feelIDX]['key'];
-				feelAndScent.push({'feeling': feelName, 'scent': curScent });
-			  }
-			}
-			
-			var groupFeel = [];
-			for (var outIDX in feelAndScent) {
-				var feeling = feelAndScent[outIDX]['feeling'];
-				var scent = feelAndScent[outIDX]['scent'];
-
-				var findIDX = undefined;
-				for (var insIDX in groupFeel){
-				  if ( feeling === groupFeel[insIDX]['feeling'] ) {
-				    findIDX = insIDX;
-					break;
-				  }
-				}
-
-				if ( findIDX === undefined ) {
-				  groupFeel.push({'feeling': feeling, 'scent': [scent] });
-				}
-				else {
-				  groupFeel[findIDX]['scent'].push(scent);
-				}
-			}
-			return groupFeel;
-		  }
+          // lookup data
           const scents = await Scent.findAll({where});
-		  scentsLink = processData(scents)
+
+          // get data like [ {feeling: f1, scent:s1},{feeling: f1, scent:s2} ]
+    			var feelAndScent = [];
+    			for (var scentsIDX in scents) {
+    			  //console.log("===")
+    			  //console.log(scents[idx])
+    			  var curScent = scents[scentsIDX]['name'];
+    			  var feelings = [];
+    			  for (var feelIDX in scents[scentsIDX]['feelings']  ) {
+    				var feelName = scents[scentsIDX]['feelings'][feelIDX]['key'];
+    				feelAndScent.push({'feeling': feelName, 'scent': curScent });
+    			  }
+    			}
+    			
+          // grouping data like [ {feeling: f1, scent: [s1,s2] } ]
+    			var groupFeel = [];
+    			for (var outIDX in feelAndScent) {
+    				var feeling = feelAndScent[outIDX]['feeling'];
+    				var scent = feelAndScent[outIDX]['scent'];
+    
+    				var findIDX = undefined;
+    				for (var insIDX in groupFeel){
+    				  if ( feeling === groupFeel[insIDX]['feeling'] ) {
+    				    findIDX = insIDX;
+    					break;
+    				  }
+    				}
+    
+    				if ( findIDX === undefined ) {
+    				  groupFeel.push({'feeling': feeling, 'scent': [scent] });
+    				}
+    				else {
+    				  groupFeel[findIDX]['scent'].push(scent);
+    				}
+    			}
 
           let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
           feelings = RecipeService.sortFeelingsByValue({feelings});
+          
+          console.log(groupFeel)
 
-
-          return feelings;
+          return {'feels': feelings, 'links':groupFeel};
         } catch (e) {
           throw e;
         }
