@@ -11,7 +11,7 @@ $(document).ready(function(){
     $container.masonry({
       itemSelector : '.grid-boxes-in',
       gutterWidth: gutter,
-      isAnimated: true,
+      isAnimated: false,
       columnWidth: function( containerWidth ) {
         var box_width = (((containerWidth - 2 * gutter)/3) | 0) ;
 
