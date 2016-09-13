@@ -263,6 +263,18 @@ module.exports.bootstrap = async (cb) => {
       }
       await Allpay.create(data);
 
+      // == Message ==
+      let order = {
+        serialNumber: 'test',
+        User: {
+          username: 'testUser',
+          email: 'smlsun@gmail.com'
+        }
+      }
+      let messageConfig = await MessageService.paymentConfirm(order);
+      let message = await Message.create(messageConfig);
+      await MessageService.sendMail(message);
+      // == Message done. ==
     }
 
     cb();
