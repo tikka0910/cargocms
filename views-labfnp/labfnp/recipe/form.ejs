@@ -1,4 +1,8 @@
-<header>新香水配方</header>
+<% if (recipe.createdBy === 'scent') { %>
+  <header>新香水配方 - 自訂香味分子</header>
+<% } else { %>
+  <header>新香水配方 - 由感覺選取</header>
+<% } %>
 <input type="text" class="hidden" name="createdBy" value="<%= recipe.createdBy %>" />
 
 <fieldset>
