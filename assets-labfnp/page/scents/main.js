@@ -131,7 +131,7 @@ var getScentsVisualData = function() {
 
 var getFormulaData = function(createdBy) {
   var result = [];
-  var isFromFeeling = createdBy === 'scent';
+  var isFromFeeling = createdBy === 'feeling';
 
   $('.scents-dropdown').each(function() {
     if ($(this).val()) {
@@ -149,8 +149,10 @@ var getFormulaData = function(createdBy) {
 
       if (isFromFeeling) {
         feeling = $('.feeling-dropdown[data-index='+idx+']').val();
-        formulaObj.feeling = feeling
+        formulaObj.feeling = feeling;
+        // console.log('feeling=>', feeling);
       }
+      // console.log('formulaObj=>', formulaObj);
 
 	    result.push(formulaObj);
     }
@@ -189,7 +191,7 @@ $(function() {
 
 	$('.scents-dropdown').change(function() {
     var idx = $(this).data('index');
-    console.log("idx", idx);
+    // console.log("idx", idx);
     var selectedScent = $('option:selected', this);
     var scentDetail = $('.scent-detail[data-index='+idx+']');
     var drops = $('.scents-drops[data-index='+idx+']');
@@ -254,7 +256,7 @@ $(function() {
         dataType: 'json',
         cache: false
       }).done(function(result) {
-        console.log(result);
+        // console.log(result);
         alert(result.message);
         location.href='/me/' + result.data.userId;
       });
@@ -278,8 +280,8 @@ $(function() {
     var endpoint = $(this).attr('action');
     var method = $(this).attr('method');
 
-    console.log(endpoint + ':' + method);
-    console.log( $(this).serializeArray() );
+    // console.log(endpoint + ':' + method);
+    // console.log( $(this).serializeArray() );
 
     var authorName = $('input[name=authorName]').val();
     var perfumeName = $('input[name=perfumeName]').val();
@@ -289,8 +291,8 @@ $(function() {
     var coverPhotoId = $('input[name=coverPhotoId]').val();
     var createdBy = $('input[name=createdBy]').val();
 
-    var formula = getFormulaData();
-    console.log("=== formula ===", formula);
+    var formula = getFormulaData(createdBy);
+    // console.log("=== formula ===", formula);
 
     var formIsValid = true;
     if (formula.length == 0) {
@@ -324,7 +326,7 @@ $(function() {
         createdBy: createdBy,
       }
     }).done(function(result) {
-      location.href='/me/' + result.data.UserId;
+      // location.href='/me/' + result.data.UserId;
     });
 
   });
