@@ -108,6 +108,20 @@ describe('test Recipe model operation', function() {
         };
         await Recipe.create(newRecipeLoveTest2);
 
+        let time = '01234567890'
+        for(let index of [...time]) {
+          await Recipe.create({
+            formula:[
+              {"drops":"1","scent":"BA69","color":"#E87728"},
+              {"drops":"2","scent":"BA70","color":"#B35721"}
+            ],
+            formulaLogs: '',
+            authorName: '王大明',
+            perfumeName: 'love test',
+            message: 'this is love test',
+            UserId: testUser.id,
+          });
+        }
         done()
 
       } catch (e) {
@@ -117,7 +131,7 @@ describe('test Recipe model operation', function() {
     it('find by likeUser should be success.', async (done) => {
       try {
         let user = likeUser;
-        let result = await Recipe.findAndIncludeUserLike({currentUser: user});
+        let result = await Recipe.findAndIncludeUserLike({currentUser: user, start: 0, length: 5});
         done();
       } catch (e) {
         done(e);
@@ -126,8 +140,13 @@ describe('test Recipe model operation', function() {
     it('find by testUser should be success.', async (done) => {
       try {
         let user = testUser;
-        let result = await Recipe.findAndIncludeUserLike({currentUser: user});
+        let result = await Recipe.findAndIncludeUserLike({
+          currentUser: user,
+          start: 0,
+          length: 5,
+        });
         console.log("=== result.length ===", result.length);
+        result.length.should.be.eq(5);
         console.log(JSON.stringify(result, null, 2));
         done();
       } catch (e) {
