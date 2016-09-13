@@ -325,41 +325,60 @@ module.exports = {
           // lookup data
           const scents = await Scent.findAll({where});
 
-          // get data like [ {feeling: f1, scent:s1},{feeling: f1, scent:s2} ]
-          let feelAndScents = []
-          scents.map(function(scent) {
-            let curScent = scent['name'];
-            scent['feelings'].map(function(feel) {
-              feelAndScents.push({'feeling': feel['key'], 'scent': curScent})
+          // get data like [ {feeling: f1, scent:s1, value:10},{feeling: f1, scent:s2, value:3} ]
+          let feelings = []
+          scents.forEach(function(scent) {
+            let currentScent = scent.name;
+            scent.feelings.forEach((feel) => {
+              feelings.push({
+                feeling: feel.key,
+                value: feel.value,
+                scent: currentScent
+              })
             });
           });
           
-          // grouping data like [ {feeling: f1, scent: [s1,s2] } ]
-          let groupFeel = [];
-          feelAndScents.map(function(fas) {
-            let feeling = fas['feeling'];
-            let scent = fas['scent'];
+          sails.log(feelings)
 
+          // grouping data like [ {feeling: f1, value:13, scent: [s1,s2] } ]
+          let groupFeel = [];
+          feelings.forEach((item) => {
+            // check this feel already in groupFeel or not
             let findIDX = undefined;
-            for (let insIDX in groupFeel){
-              if ( feeling === groupFeel[insIDX]['feeling'] ) {
-                findIDX = insIDX;
-                break;
+            groupFeel.forEach((inListFeel,inListFeelIndex) => {
+              if (item.feeling === inListFeel.feeling) {
+                findIDX = inListFeelIndex;
               }
-            }
-    
-            if ( findIDX === undefined ) {
-              groupFeel.push({'feeling': feeling, 'scent': [scent] });
+            })
+
+            if (findIDX === undefined) {
+              groupFeel.push({
+                feeling: item.feeling,
+                value: item.value,
+                scent: [item.scent],
+              })
             } else {
-              groupFeel[findIDX]['scent'].push(scent);
+              groupFeel[findIDX].value+=item.value;
+              groupFeel[findIDX].scent.push(item.scent);
             }
           
           })
+          sails.log(groupFeel)
 
+          /*
           let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
           feelings = RecipeService.sortFeelingsByValue({feelings});
+
+          //add scents to feelings
+          let feelingsWithScent = feelings.map((feeling) => {
+            console.log("")
+          })
           
-          return {'feels': feelings, 'links':groupFeel};
+          return feelings;
+
+          */
+          return groupFeel;
+
         } catch (e) {
           throw e;
         }
