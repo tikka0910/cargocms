@@ -55,12 +55,19 @@ describe('test Recipe model operation', function() {
     let recipeLoveTest, testUser, likeUser, testUser2;
     before(async (done) => {
       try {
+
         testUser = await User.create({
           username: 'testUserLike',
           email: 'testUserLike@gmail.com',
           password: ''
         });
 
+        Passport.create({
+          provider: 'facebook',
+          identfier: '123',
+          password: 'user',
+          UserId: testUser.id
+        });
 
         likeUser = await User.create({
           username: 'likeUser',
