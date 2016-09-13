@@ -55,12 +55,19 @@ describe('test Recipe model operation', function() {
     let recipeLoveTest, testUser, likeUser, testUser2;
     before(async (done) => {
       try {
+
         testUser = await User.create({
           username: 'testUserLike',
           email: 'testUserLike@gmail.com',
           password: ''
         });
 
+        Passport.create({
+          provider: 'facebook',
+          identfier: '123',
+          password: 'user',
+          UserId: testUser.id
+        });
 
         likeUser = await User.create({
           username: 'likeUser',
@@ -129,10 +136,11 @@ describe('test Recipe model operation', function() {
         done(e)
       }
     })
-    it('find by likeUser should be success.', async (done) => {
+    it.only('find by likeUser should be success.', async (done) => {
       try {
         let user = likeUser;
         let result = await Recipe.findAndIncludeUserLike({currentUser: user, start: 0, length: 5});
+        console.log(result.toJSON());
         done();
       } catch (e) {
         done(e);

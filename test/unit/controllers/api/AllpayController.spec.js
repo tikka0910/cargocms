@@ -1,5 +1,5 @@
 
-describe('about Allpay controllers', () => {
+describe.only('about Allpay controllers', () => {
 
   describe('second if allpay order create success allpay will callback data , use paymentinfo() handle', () => {
 
@@ -103,6 +103,7 @@ describe('about Allpay controllers', () => {
           Barcode3: '103027000000100',
         };
         const result = await AllpayService.paymentinfo(data);
+        sails.log.debug(result.toJSON());
         result.dataValues.MerchantTradeNo.should.be.an.equal(data.MerchantTradeNo);
         result.dataValues.RtnCode.should.be.an.equal(data.RtnCode);
         result.dataValues.ShouldTradeAmt.should.be.an.equal(data.TradeAmt);
