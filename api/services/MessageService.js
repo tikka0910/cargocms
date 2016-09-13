@@ -30,29 +30,23 @@ module.exports = {
     }
 
   },
-  orderConfirm: (result) => {
+  orderConfirm: (result = {
+    productName, serialNumber, email, username, bankId, bankName, bankName,
+    accountId, accountName, paymentTotalAmount, shipmentUsername, shipmentAddress,
+  }) => {
 
     try {
 
-      var orderConfirmTemplete = sails.config.mail.templete.orderConfirm;
-      var mailSendConfig = {...orderConfirmTemplete, to: result.order.User.email};
-      var productsName = result.products.map((product) => product.name);
-      var DOMAIN_HOST = process.env.DOMAIN_HOST || 'localhost:1337';
-      var orderConfirmLink = `http://${DOMAIN_HOST}/order/paymentConfirm?serial=${result.order.serialNumber}`
-      var {bank} = sails.config;
+      let orderConfirmTemplete = sails.config.mail.templete.orderConfirm;
+      let mailSendConfig = {...orderConfirmTemplete, to: result.email};
+      let orderSerialNumber = result.serialNumber;
+      let DOMAIN_HOST = process.env.DOMAIN_HOST || 'localhost:5001';
+      let orderConfirmLink = `http://${DOMAIN_HOST}/order/paymentConfirm?serial=${orderSerialNumber}`
 
-      mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: result.order.serialNumber});
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, { orderSerialNumber });
       mailSendConfig.html = sprintf(mailSendConfig.html, {
-        username: result.order.User.username,
-        orderSerialNumber: result.order.serialNumber,
-        productName: productsName.join('、'),
-        bankId: bank.bankId,
-        bankName: bank.bankName,
-        accountId: bank.accountId,
-        accountName: bank.accountName,
-        paymentTotalAmount: result.order.paymentTotalAmount,
-        shipmentUsername: result.order.Shipment.username,
-        shipmentAddress: result.order.Shipment.address,
+        ...result,
+        orderSerialNumber,
         storeName: 'LFP',
         orderConfirmLink
       });
@@ -97,16 +91,18 @@ module.exports = {
     }
 
   },
-  paymentConfirm: (order) => {
+  paymentConfirm: (order = {
+    email, serialNumber, username
+  }) => {
     try {
 
       var paymentConfirmTemplete = sails.config.mail.templete.paymentConfirm;
-      var mailSendConfig = {...paymentConfirmTemplete, to: order.User.email};
+      var mailSendConfig = {...paymentConfirmTemplete, to: order.email};
 
       mailSendConfig.subject = sprintf(mailSendConfig.subject, {orderSerialNumber: order.serialNumber});
       mailSendConfig.text = sprintf(mailSendConfig.text, {
         storeName: 'LFP',
-        username: order.User.username
+        username: order.username
       });
 
       mailSendConfig.type = 'paymentConfirm';
