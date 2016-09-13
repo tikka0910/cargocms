@@ -32,6 +32,9 @@
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+.heart {
+	color: red;
+}
 `); %>
 
 <div class="container content">
@@ -58,7 +61,7 @@
 				</h1>
 				<hr />
 				<div>
-					<i class="fa fa-star-o"></i><span> <%= user.score %></span><br/>
+					<i class="fa fa-heart"></i><span> <%= user.score %></span><br/>
 					<i class="fa fa-map-marker"></i><span> Taiwan</span><br/>
 					<i class="fa fa-clock-o" aria-hidden="true"></i> <%= user.createdAt %>
 				</div>
@@ -72,7 +75,7 @@
 					<li class="text-center">
 						<strong><%= starred %></strong>
 						<br/>
-						Starred
+						favorited
 					</li>
 					<li class="text-center">
 						<strong><%= following %></strong>
@@ -87,7 +90,10 @@
 					<a href="/me"><i class="fa fa-bar-chart-o"></i> 我的配方</a>
 				</li>
 				<li class="list-group-item">
-					<a href="/creator"><i class="fa fa-flask"></i> 創作新配方</a>
+				  <a href="#" id="btn-create-recipe">
+				    <i class="fa fa-flask"></i>
+				    創作一個新配方
+				  </a>
 				</li>
 				<!-- <li class="list-group-item">
 					<a href="page_profile_users.html"><i class="fa fa-group"></i> 粉絲</a>
@@ -160,6 +166,9 @@
 
   </div>
 </div>
+
+<%- include recipeCreateBox.ejs %>
+
 <% LayoutUtils.addScriptBlock(`
 jQuery(document).ready(function() {
 

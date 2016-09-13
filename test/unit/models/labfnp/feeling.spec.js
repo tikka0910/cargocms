@@ -3,9 +3,10 @@ describe('test Feeling model operation', function() {
     try {
 
       await Feeling.bulkCreate([
-        {title: '感覺棒'}, {title: '感覺棒'}, {title: '感覺棒'},
-        {title: '感覺棒棒'}, {title: '感覺棒棒'},
-        {title: '感覺棒棒棒'}
+        {title: '感覺棒', scentName: 'BU1'}, {title: '感覺棒', scentName: 'BU2'},
+        {title: '感覺棒', scentName: 'BU3'},
+        {title: '感覺棒棒', scentName: 'BU4'}, {title: '感覺棒棒', scentName: 'BU5'},
+        {title: '感覺棒棒棒', scentName: 'BU6'}
       ])
 
       done()
