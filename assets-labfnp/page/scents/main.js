@@ -335,7 +335,7 @@ $(function() {
         createdBy: createdBy,
       }
     }).done(function(result) {
-      // location.href='/me/' + result.data.UserId;
+      location.href='/me/' + result.data.UserId;
     });
 
   });
