@@ -351,8 +351,6 @@ module.exports = {
           let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
           feelings = RecipeService.sortFeelingsByValue({feelings});
           
-          console.log(groupFeel)
-
           return {'feels': feelings, 'links':groupFeel};
         } catch (e) {
           throw e;
