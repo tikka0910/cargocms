@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-	$('#btn-create-recipe').click(showBox);
+	$('.btn-create-recipe').click(showBox);
 
 	$('#btn-cancel').click(hideBox);
 
@@ -46,7 +46,7 @@ var hideBox = function (event) {
 
 var clickOutOfBox = function (event) {
   var checkTarget1 = !$(event.target).closest('.box-inner').length;
-  var checkTarget2 = !$(event.target).closest('#btn-create-recipe').length;
+  var checkTarget2 = !$(event.target).closest('.btn-create-recipe').length;
   var checkVisable = $('.box-wrapper').is(":visible");
 
   if (checkTarget1 && checkTarget2 && checkVisable) {

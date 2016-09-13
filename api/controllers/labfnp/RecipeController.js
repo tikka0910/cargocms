@@ -13,8 +13,9 @@ module.exports = {
       scents = await Scent.findAllWithRelationFormatForApp()
       totalDrops = 0;
       recipe = Recipe.build().toJSON();
-      recipe.message = ""
-      recipe.description = ""
+      recipe.message = "";
+      recipe.description = "";
+      recipe.createdBy = from;
 
       for (var i = 0; i < 6; i++) {
         let formula = {
@@ -29,7 +30,7 @@ module.exports = {
       }
 
       if (from == 'scent') {
-        return res.view({ from, user, recipe, scents, totalDrops });
+        return res.view({ user, recipe, scents, totalDrops });
       }
 
       if (from == 'feeling') {
@@ -39,7 +40,8 @@ module.exports = {
         for (const feeling of feelings) {
           feelingArray.push(feeling.title);
         }
-        return res.view({ from, user, recipe, scents, feelings: feelingArray, totalDrops });
+
+        return res.view({ user, recipe, scents, feelings: feelingArray, totalDrops });
       }
 
     }
@@ -100,6 +102,8 @@ module.exports = {
   },
 
   edit: async function(req, res) {
+    let { from } = req.query
+    if (!from) from = 'scent';
     try {
       let user = AuthService.getSessionUser(req);
       if (!user) {
@@ -114,6 +118,7 @@ module.exports = {
       });
 
       recipe = recipe.toJSON();
+      recipe.createdBy = from;
 
       if(recipe.User.id != user.id){
         const message = "只可維護自己的配方";
@@ -124,6 +129,7 @@ module.exports = {
       let recipeFormula = recipe.formula;
       let formatFormula = [];
       let totalDrops = 0;
+      let feelings = {}; 
 
       for (var i = 0; i < 6; i++) {
         let formula = {
@@ -133,21 +139,31 @@ module.exports = {
           scentName: '',
           drops: 0
         };
-        if(recipeFormula[i] != null){
+        if (recipeFormula[i] != null) {
           formula.drops = recipeFormula[i].drops;
           formula.scentName = recipeFormula[i].scent;
           formula.scentCategory = recipeFormula[i].scent.charAt(0);
         }
 
         totalDrops += parseInt(formula.drops, 10);
-
         formatFormula.push(formula);
-
       }
       recipe.formula = formatFormula;
 
-      return res.view({user, recipe, scents, totalDrops});
+      if (from === 'scent') {
+        return res.view({ user, recipe, scents, totalDrops });
+      }
 
+      if (from === 'feeling') {
+        feelings = await Feeling.findRamdomFeelings();
+
+        let feelingArray = [];
+        for (const feeling of feelings) {
+          feelingArray.push(feeling.title);
+        }
+
+        return res.view({ user, recipe, scents, feelings: feelingArray, totalDrops });
+      }
     } catch (e) {
       return res.serverError(e);
     }

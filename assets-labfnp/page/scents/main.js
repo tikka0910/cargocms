@@ -129,8 +129,9 @@ var getScentsVisualData = function() {
   return { children: shuffle(scentsData) };
 };
 
-var getFormulaData = function() {
+var getFormulaData = function(createdBy) {
   var result = [];
+  var isFromFeeling = createdBy === 'scent';
 
   $('.scents-dropdown').each(function() {
     if ($(this).val()) {
@@ -139,12 +140,19 @@ var getFormulaData = function() {
       var scent = $(this).val();
       var drops = $('.scents-drops[data-index='+idx+']').val();
       var color = $('option:selected', this).data('color');
+      var feeling = '';
+      var formulaObj = {
+  	      "scent": scent,
+  	      "drops": drops,
+          "color": color
+  	    };
 
-	    result.push({
-	      "scent": scent,
-	      "drops": drops,
-        "color": color
-	    });
+      if (isFromFeeling) {
+        feeling = $('.feeling-dropdown[data-index='+idx+']').val();
+        formulaObj.feeling = feeling
+      }
+
+	    result.push(formulaObj);
     }
   });
 
@@ -279,12 +287,13 @@ $(function() {
     var visibility = $('select[name=visibility]').val();
     var description = $('textarea[name=description]').val();
     var coverPhotoId = $('input[name=coverPhotoId]').val();
+    var createdBy = $('input[name=createdBy]').val();
 
     var formula = getFormulaData();
     console.log("=== formula ===", formula);
 
     var formIsValid = true;
-    if(formula.length == 0) {
+    if (formula.length == 0) {
       alert("未選定任一配方")
       formIsValid = true;
     };
@@ -294,7 +303,6 @@ $(function() {
         alert("選擇配方後，滴數不可為 0");
         formIsValid = false;
       }
-
     });
 
     if(!formIsValid) return false;
@@ -313,6 +321,7 @@ $(function() {
         visibility: visibility,
         description: description,
         coverPhotoId: coverPhotoId,
+        createdBy: createdBy,
       }
     }).done(function(result) {
       location.href='/me/' + result.data.UserId;
