@@ -191,7 +191,7 @@ $(function() {
     // console.log("idx", idx);
     var selectedScent = $('option:selected', this);
     var scentDetail = $('.scent-detail[data-index='+idx+']');
-    var feelingScentsCategories = $('.feeling-scents-categories[data-index='+idx+']');
+    var feelingScentsCategories = $('.feeling-dropdown[data-index='+idx+']');
     var drops = $('.scents-drops[data-index='+idx+']');
     var title = "";
     var description = "";
@@ -205,7 +205,7 @@ $(function() {
         scentDetail.find(".tags").append('<div class="tag">' + e + '</div>')
       });
       var Text = feelingScentsCategories.val();
-      console.log(feelingScentsCategories[0]);
+      // console.log(feelingScentsCategories[0]);
       if(tags.indexOf(Text) === -1){
         scentDetail.find(".tags").append('<div class="tag">' + Text + '</div>')
       }
@@ -251,8 +251,6 @@ $(function() {
 	});
   $('.scents-drops').change();
 
-
-
   $('#recipeDeleteButton').on('click', function(event) {
     event.preventDefault();
     var id = $(this).data('id');
@@ -270,9 +268,6 @@ $(function() {
     }
 
   });
-
-
-
 
   $('#main-form').on('submit', function(event) {
 

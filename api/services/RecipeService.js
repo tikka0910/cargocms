@@ -22,14 +22,7 @@ module.exports = {
     createdBy,
   }) => {
     try {
-
-      const passport =  await Passport.find({ UserId: recipe.UserId });
-      const existProvider = typeof passport.provider === 'string';
-      const checkProviderType = passport.provider === 'facebook';
-
-      if (existProvider && checkProviderType) {
-        recipe.authorFbPage = passport.identfier;
-      }
+      
       recipe.formula = RecipeService.sortFormulaByScentName({ formula: recipe.formula });
       recipe.coverPhotoId = recipe.coverPhotoId == "" ? null : recipe.coverPhotoId;
 
