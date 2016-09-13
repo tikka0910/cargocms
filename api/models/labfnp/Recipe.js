@@ -337,8 +337,6 @@ module.exports = {
               })
             });
           });
-          
-          sails.log(feelings)
 
           // grouping data like [ {feeling: f1, value:13, scent: [s1,s2] } ]
           let groupFeel = [];
@@ -353,7 +351,7 @@ module.exports = {
 
             if (findIDX === undefined) {
               groupFeel.push({
-                feeling: item.feeling,
+                key: item.feeling,
                 value: item.value,
                 scent: [item.scent],
               })
@@ -363,20 +361,14 @@ module.exports = {
             }
           
           })
-          sails.log(groupFeel)
+          //should order but it not working now
+          //groupFeel = RecipeService.sortFeelingsByValue({groupFeel});
 
           /*
           let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
           feelings = RecipeService.sortFeelingsByValue({feelings});
-
-          //add scents to feelings
-          let feelingsWithScent = feelings.map((feeling) => {
-            console.log("")
-          })
-          
-          return feelings;
-
           */
+          
           return groupFeel;
 
         } catch (e) {

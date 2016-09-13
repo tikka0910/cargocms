@@ -127,19 +127,19 @@ $(function() {
     update();
 
 
-    /*
     $("#wordCloud-svg").find("text").on("click", function(){
       var curFeel=$(this).html();
-
-      for (var feelIDX in tags.links) {
-        if (tags.links[feelIDX].feeling === curFeel) {
-          break;
+      
+      var foundPosition;
+      tags.forEach((item,index) => {
+        if (item.key==curFeel) {
+          foundPosition = index;
         }
-      }
-      alert(tags.links[feelIDX].scent)
+      })
+      alert(tags[foundPosition].scent);
 
     })
-    */
+
   });
 
 
