@@ -1,4 +1,4 @@
-var diameter = parseInt(d3.select('#d3-container').style('width')),
+var diameter = 0,//parseInt(d3.select('#d3-container').style('width')),
     format = d3.format(",d"),
     color = d3.scale.category20c();
 
@@ -237,7 +237,8 @@ $(function() {
 
     scentDetail.find("#scent-title").html(title)
     scentDetail.find("#scent-description").html(description)
-    drawBubbles(getScentsVisualData());
+    // drawBubbles(getScentsVisualData());
+    updatePieChart();
 	});
   $('.scents-dropdown').change();
 
@@ -247,7 +248,8 @@ $(function() {
 			newVal = 0;
 		}
 	  $(this).val(newVal);
-    drawBubbles(getScentsVisualData());
+    // drawBubbles(getScentsVisualData());
+    updatePieChart();
 	});
   $('.scents-drops').change();
 

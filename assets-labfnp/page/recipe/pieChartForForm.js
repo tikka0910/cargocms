@@ -1,4 +1,5 @@
 var autoSize = $('.drops-chart').width()*0.7 > 230 ? $('.drops-chart').width()*0.7 : 230;
+var pie = null;
 var drawPieChart = function (data) {
   var pieHeader = {
     "title": {
@@ -134,23 +135,26 @@ var drawPieChart = function (data) {
       color: e.color,
     });
   })
-  var pie = new d3pie("pieChart", pieParam);
+  if(pie) pie.destroy()
+  pie = new d3pie("pieChart", pieParam);
   return pie;
 }
-var ttt = drawPieChart([{
-  scent: 'kjhkk',
-  drops: 1,
-  color: 'green'
-},{
-  scent: 'kjhkk',
-  drops: 1,
-  color: 'green'
-},{
-  scent: 'kjhkk',
-  drops: 1,
-  color: 'green'
-},{
-  scent: 'kjhkk',
-  drops: 1,
-  color: 'green'
-}])
+
+function updatePieChart(){
+  var newData = [];
+  $('.scents-dropdown').each(function(index, el) {
+    var idx = $(el).data('index');
+    var inputDrop = $('.scents-drops[data-index=' + idx + ']');
+    if($(el).val() === '') return;
+    var scent = $(el).val();
+    var drops = inputDrop.val();
+    var color = $(':selected',el).data('color');
+    newData.push({
+      scent: scent,
+      drops: drops,
+      color: color,
+    });
+  });
+  console.log(newData);
+  drawPieChart(newData);
+}
