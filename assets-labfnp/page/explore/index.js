@@ -11,7 +11,7 @@ $(document).ready(function(){
     $container.masonry({
       itemSelector : '.grid-boxes-in',
       gutterWidth: gutter,
-      isAnimated: true,
+      isAnimated: false,
       columnWidth: function( containerWidth ) {
         var box_width = (((containerWidth - 2 * gutter)/3) | 0) ;
 
@@ -44,6 +44,7 @@ $(document).ready(function(){
   }
 
   var bindLike = function() {
+    $(".recipeLikeContainer").unbind('click');
     $(".recipeLikeContainer").on("click", function(event){
       event.preventDefault()
       var id = $(this).data('id');
@@ -74,6 +75,9 @@ $(document).ready(function(){
               open('/register', '_self');
             }
           });
+          document.querySelector('.sweet-overlay').onclick = function(event) {
+            swal.close();
+          };
         }
       }
       if (isLike) {
@@ -81,7 +85,18 @@ $(document).ready(function(){
       } else {
         $.get('/api/labfnp/recipe/like/'+id).done(successCatch).fail(failCatch);
       }
-    })
+    });
+    $('.rrssb-buttons').each(function(index) {
+      var url = $(this).data('url');
+      var title = $(this).data('title');
+      var description = $(this).data('description');
+      var params = {
+        url: url,
+        title: title,
+        description: description
+      }
+      $(this).rrssb(params);
+    });
   }
 
   var getRecipe = function({start, length}){
@@ -94,6 +109,7 @@ $(document).ready(function(){
     });
 
     function ajaxSuccess(result) {
+
       result.data.items.forEach(function(recipe, i) {
         append(recipe, result.data.social.data[i], result.data.social.targets);
       });

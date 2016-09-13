@@ -31,7 +31,7 @@ module.exports = {
     },
 
     formulaTotalDrops: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.VIRTUAL,
       get: function () {
         try {
           var formula = this.getDataValue('formula');
@@ -60,8 +60,27 @@ module.exports = {
     },
 
     authorFbPage: {
-      type: Sequelize.STRING,
-      defaultValue: 'https://www.facebook.com/LabFnP'
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const thisUser = this.getDataValue('User');
+          let fbId = 'https://www.facebook.com/LabFnP';
+          if (thisUser) {
+            if (thisUser.Passports) {
+              thisUser.Passports.forEach((passport) => {
+                const existProvider = typeof passport.dataValues.provider === 'string';
+                const checkProviderType = passport.dataValues.provider === 'facebook';
+                if (existProvider && checkProviderType) {
+                  fbId = passport.dataValues.identifier;
+                }
+              });
+            }
+          }
+          return fbId;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
     },
 
     perfumeName: {
@@ -284,6 +303,12 @@ module.exports = {
               required: false
             }, {
               model: Image,
+            }, {
+              model: User,
+              include: {
+                model: Passport,
+                attributes: ['provider', 'identifier']
+              },
             }]
           };
         } catch (e) {
