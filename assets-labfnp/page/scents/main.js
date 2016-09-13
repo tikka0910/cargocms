@@ -186,9 +186,6 @@ $(function() {
     }
   });
 
-  $('.scents-categories').change();
-
-
 	$('.scents-dropdown').change(function() {
     var idx = $(this).data('index');
     // console.log("idx", idx);
@@ -208,6 +205,7 @@ $(function() {
         scentDetail.find(".tags").append('<div class="tag">' + e + '</div>')
       });
       var Text = feelingScentsCategories.val();
+      console.log(feelingScentsCategories[0]);
       if(tags.indexOf(Text) === -1){
         scentDetail.find(".tags").append('<div class="tag">' + Text + '</div>')
       }

@@ -91,7 +91,10 @@
 <% LayoutUtils.addScripts('/assets/labfnp/lib/chosen/chosen.jquery.min.js'); %>
 <% LayoutUtils.addScriptBlock(`
 var config = {
-  '.chosen-select'           : {allow_single_deselect: false},
+  '.chosen-select': {
+    allow_single_deselect: false,
+    width: "100%",
+  },
 }
 for (var selector in config) {
   $(selector).chosen(config[selector]);
@@ -106,6 +109,9 @@ var styles = {
   'background': 'white',
   'margin-bottom': '10px',
   'padding-top': '1%',
+}
+for (var style in styles) {
+  $('a.chosen-single').css(style, styles[style]);
 }
 $('.chosen-select').change(function() {
   for (var style in styles) {
@@ -141,5 +147,45 @@ $('.feeling-dropdown').change(function() {
     $('option', dropdown)
       .hide()
   }
+});
+$(function(){
+  $('.scents-dropdown').each(function(i, e){
+    // if()
+    var idx = $(this).data('index');
+    var feelingDropdown = $('.feeling-dropdown[data-index='+idx+']');
+    var prefix = feelingDropdown.val();
+    // $('.scent-detail[data-index='+idx+']').addClass("hidden");
+
+
+    if (prefix) {
+      console.log(prefix);
+      // var dropdown = $('.scents-dropdown[data-index='+idx+']');
+      var dropdown = $(this);
+      console.log(dropdown[0]);
+      // dropdown.val("");
+
+      $('option', this)
+      .hide()
+      .filter(function(index, element) {
+        if(index === 0){
+          return true;
+        }
+        var feelings = $(element).data('feelings');
+        var visible = false;
+        feelings.forEach(function(e) {
+          var check = e.key === prefix;
+          if(check){
+            visible = true;
+            //return e.key;
+          } //else return visible;
+        });
+        return visible;
+      })
+      .show();
+    } else {
+      $('option', dropdown)
+      .hide()
+    }
+  });
 });
 `); %>

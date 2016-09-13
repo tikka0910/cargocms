@@ -129,7 +129,7 @@ module.exports = {
       let recipeFormula = recipe.formula;
       let formatFormula = [];
       let totalDrops = 0;
-      let feelings = {}; 
+      let feelings = {};
 
       for (var i = 0; i < 6; i++) {
         let formula = {
@@ -143,6 +143,7 @@ module.exports = {
           formula.drops = recipeFormula[i].drops;
           formula.scentName = recipeFormula[i].scent;
           formula.scentCategory = recipeFormula[i].scent.charAt(0);
+          formula.feeling = recipeFormula[i].feeling;
         }
 
         totalDrops += parseInt(formula.drops, 10);
