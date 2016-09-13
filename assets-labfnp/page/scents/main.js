@@ -199,7 +199,7 @@ $(function() {
     }
 
     if ($(this).val() != '') {
-      $.get('http://localhost:5001/api/labfnp/feeling?serverSidePaging=true&draw=0&columns%5B0%5D%5Bdata%5D=scentName&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=score&columns%5B1%5D%5Bsearchable%5D=false&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=1&order%5B0%5D%5Bdir%5D=desc&start=0&length=10&search%5Bvalue%5D='+$(this).val())
+      $.get('/api/labfnp/feeling?serverSidePaging=true&draw=0&columns%5B0%5D%5Bdata%5D=scentName&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=score&columns%5B1%5D%5Bsearchable%5D=false&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=1&order%5B0%5D%5Bdir%5D=desc&start=0&length=10&search%5Bvalue%5D='+$(this).val())
         .done(successCatch).fail(failCatch);
       var color = selectedScent.data('color');
       title = selectedScent.data('title');
