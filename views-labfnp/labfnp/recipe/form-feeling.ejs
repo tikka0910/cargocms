@@ -45,7 +45,7 @@
     <label class="select">
       <select name="visibility" class="scents-categories">
         <option <%= recipe.visibility == 'PUBLIC'?'selected':'' %> value="PUBLIC" selected>公開</option>
-        <option <%= recipe.visibility == 'PROTECTED'?'selected':'' %> value="PROTECTED">半公開</option>
+        <!-- <option <%= recipe.visibility == 'PROTECTED'?'selected':'' %> value="PROTECTED">半公開</option>%> -->
         <option <%= recipe.visibility == 'PRIVATE'?'selected':'' %> value="PRIVATE">私密</option>
       </select>
       <i></i>
@@ -208,10 +208,5 @@ $('.feeling-scents-categories').change(function() {
       .hide()
   }
 });
-
-// $('option', dropdown)
-// .show()
-// .filter(function(index, element) { return element.value && element.value.substring(0,1)!==prefix; })
-// .hide();
 
 `); %>
