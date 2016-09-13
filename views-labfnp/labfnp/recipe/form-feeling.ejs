@@ -23,6 +23,8 @@
   }
 </style>
 
+
+
 <fieldset>
   <% recipe.formula.forEach(function(formula, index) { %>
     <div class="row">
@@ -34,7 +36,7 @@
           <select class="feeling-dropdown chosen-select" data-placeholder="選擇一種你喜歡的感覺" data-index="<%= formula.index %>">
             <option></option>
             <% feelings.forEach(function(feeling) { %>
-              <option value="<%= feeling %>" <%= formula.feelingTitle === feeling?'selected':'' %> ><%= feeling %></option>
+              <option value="<%= feeling %>" <%= formula.feeling === feeling?'selected':'' %> ><%= feeling %></option>
             <% }); %>
           </select>
         </label>
@@ -89,7 +91,7 @@
 <% LayoutUtils.addScripts('/assets/labfnp/lib/chosen/chosen.jquery.min.js'); %>
 <% LayoutUtils.addScriptBlock(`
 var config = {
-  '.chosen-select'           : {allow_single_deselect: true},
+  '.chosen-select'           : {allow_single_deselect: false},
 }
 for (var selector in config) {
   $(selector).chosen(config[selector]);
