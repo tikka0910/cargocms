@@ -136,7 +136,7 @@ module.exports = {
       const feelings = await Recipe.getFeelings({id});
 
       res.ok({
-        message: 'success dislike recipe',
+        message: 'success get recipe\'s feelings',
         data: {feelings},
       });
 

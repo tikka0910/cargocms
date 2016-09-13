@@ -56,6 +56,23 @@ describe('about LikeRecipe Controller operation.', function() {
     }
   });
 
+  it.only('Recipe feelings should be success.', async (done) => {
+    try {
+      const res = await request(sails.hooks.http.app)
+      .get(`/api/labfnp/recipe/${recipe.id}/feelings`);
+      res.status.should.be.eq(200);
+
+      sails.log(res.body.data);
+      // test content
+      res.body.data.feelings.feels.should.be.Array;
+      res.body.data.feelings.links.should.be.Array;
+
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
 
 
 });
