@@ -62,9 +62,13 @@ module.exports = {
       });
     }
 
+    const userRecipes = await Recipe.findAll({where: { UserId: user.id }});
+    const userRecipeIdArray = userRecipes.map((recipe) => recipe.id);
+    const score = await UserLikeRecipe.count({where: { RecipeId: userRecipeIdArray }});
+
     try {
       return res.view({
-        user, recipes, followers, favorited, following, isMe,
+        user, recipes, followers, favorited, following, isMe, score,
         isFollowing: !!isFollowing,
       });
     }
