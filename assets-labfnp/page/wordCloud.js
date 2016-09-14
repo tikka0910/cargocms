@@ -129,9 +129,9 @@ $(function() {
 
     $("#wordCloud-svg").find("text").on("click", function(){
       var clickedFeel=$(this).html();
-      
+
       var foundPosition;
-      tags.forEach((item,index) => {
+      tags.forEach(function(item,index) {
         if (item.key==clickedFeel) {
           foundPosition = index;
         }
@@ -140,7 +140,7 @@ $(function() {
       var foundScents=tags[foundPosition].scent;
       //console.log(foundScents);
 
-      // if need all Scent's Name, using this 
+      // if need all Scent's Name, using this
       /*
       var sourceScent=foundScents.map((item) => {
         return item.name;
@@ -149,7 +149,7 @@ $(function() {
       */
 
       var mostStrength = undefined;
-      tags[foundPosition].scent.forEach((item) => {
+      tags[foundPosition].scent.forEach(function (item){
         if (mostStrength === undefined || item.value > mostStrength.value )  {
           mostStrength=item;
         }
