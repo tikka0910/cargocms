@@ -19,7 +19,7 @@ var restrictedUploader = new qq.FineUploader({
   validation: {
     allowedExtensions: ['jpeg', 'jpg', 'png'],
     itemLimit: 1,
-    sizeLimit: 10240 * 1024 // 50 kB = 50 * 1024 bytes
+    sizeLimit: 3 * 1024 * 1024 // 50 kB = 50 * 1024 bytes
   },
   callbacks: {
     onError: function(id, name, isError) {
