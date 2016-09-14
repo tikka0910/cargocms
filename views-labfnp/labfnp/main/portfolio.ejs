@@ -125,18 +125,19 @@
 
 			<% if (recipes && recipes.length > 0) { %>
 
-	    	<ul class="timeline-v1">
-
-	    		<li class="timeline">
-	    			<div class="timeline-badge primary"><i class="glyphicon glyphicon-record<%= i%2?' invert':'' %>"></i></div>
-	    			<div class="timeline-panel">
-	    				<div class="timeline-body text-justify">
-	    					<h2>新配方？</h2>
-	    					<p><span class="brand-font">LFP</span> 香料香水實驗室的好友們，正在關注您的創作。</p>
-								<a href="#" class="btn-create-recipe btn-u btn-u-sm">繼續創作</a>
-	    				</div>
-	    			</div>
-	    		</li>
+  	    <ul class="timeline-v1">
+          <% if(isMe) {%>
+  	    		<li class="timeline">
+  	    			<div class="timeline-badge primary"><i class="glyphicon glyphicon-record<%= i%2?' invert':'' %>"></i></div>
+  	    			<div class="timeline-panel">
+  	    				<div class="timeline-body text-justify">
+  	    					<h2>新配方？</h2>
+  	    					<p><span class="brand-font">LFP</span> 香料香水實驗室的好友們，正在關注您的創作。</p>
+  								<a href="#" class="btn-create-recipe btn-u btn-u-sm">繼續創作</a>
+  	    				</div>
+  	    			</div>
+            <% } %>
+  	    	</li>
 
 	        <% var i = 0; recipes.forEach(function(recipe) { %>
 		    		<li class="timeline<%= i%2?'':'-inverted' %>">
