@@ -8,7 +8,7 @@ $(document).ready(function () {
 				for (var k = 0; k < feelings.length - 1; k++) {
 					var checkWrap = $(o).parent('span').length !== 0;
 					var checkFeeling = feelings[k].key === prefix;
-					checkFeeling && checkWrap && $(o).unwrap();
+					checkFeeling && checkWrap && $(o).unwrap().show();
 				}
 			}
 			var checkVal = $(o).val() !== '';
@@ -21,7 +21,7 @@ $(document).ready(function () {
 			var checkDefault = $(o).val() !== '';
 			var checkWrap = $(o).parent('span').length === 0;
 			var checkAll = checkWrap && checkDefault;
-			checkAll && $(o).wrap('<span>');
+			checkAll && $(o).wrap('<span>').hide();
 		});
 	};
 
