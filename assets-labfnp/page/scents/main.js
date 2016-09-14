@@ -162,28 +162,39 @@ var getFormulaData = function(createdBy) {
 };
 
 $(function() {
-  $('.scents-categories').change(function() {
+  var allScentOptions = $('option', $('.scents-dropdown[data-index=0]'));
+  var allScents = []
 
+  for (var i = 0; i < allScentOptions.length; i++) {
+    var scent = $(allScentOptions[i]);
+    allScents.push($("<option></option>")
+    .attr("value",scent.val())
+    .data('color', scent.data('color'))
+    .data('title', scent.data('title'))
+    .data('description', scent.data('description'))
+    .text(scent.val()));
+  }
+
+  $('.scents-categories').change(function() {
     var idx = $(this).data('index');
     var prefix = $(this).val();
+    var filterOptions = [$("<option selected='selected'></option>").attr("value","").text("請選擇")]
+    var dropdown = $('.scents-dropdown[data-index='+idx+']');
+    $('option', dropdown).detach();
 
     if (prefix) {
-      var dropdown = $('.scents-dropdown[data-index='+idx+']');
-      var dropdownVal = dropdown.val();
-
-      if(dropdownVal && !dropdownVal.startsWith(prefix))
-        dropdown.val("");
-
-      $('option', dropdown)
-        .show()
-        .filter(function(index, element) { return element.value && element.value.substring(0,1)!==prefix; })
-        .hide();
+      for (var i = 0; i < allScents.length; i++) {
+        if(allScents[i].val().substring(0,1) == prefix)
+          filterOptions.push(allScents[i]);
+      }
     } else {
-      $('option', dropdown)
-        .show()
-        .filter(function(index, element) { return false })
-        .hide();
+      for (var i = 0; i < allScents.length; i++) {
+        filterOptions.push(allScents[i]);
+      }
     }
+
+    dropdown.append(filterOptions);
+    dropdown.change();
   });
 
 	$('.scents-dropdown').change(function() {
