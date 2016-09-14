@@ -8,9 +8,12 @@
 		<div class="col-md-8 col-md-offset-2">
       <div class="error-v1">
 				<span>訂購完成</span>
-        <h2><%= item.RecipeOrder.Recipe.perfumeName + " 100 ml"%></h2>
         <table class="table table-striped">
           <tbody>
+            <tr>
+              <td>訂購商品</td>
+              <td><%= item.RecipeOrder.Recipe.perfumeName + " 100 ml" %></td>
+            </tr>
             <tr>
               <td>交易編號</td>
               <td><%= item.TradeNo %></td>
