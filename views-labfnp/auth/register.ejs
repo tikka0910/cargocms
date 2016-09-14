@@ -68,7 +68,7 @@
         <div class="row">
           <div class="col-sm-6">
             <label>密碼 <span class="color-red">*</span></label>
-            <input type="password" name="password" class="form-control margin-bottom-20">
+            <input id="firstPassword" type="password" name="password" class="form-control margin-bottom-20">
           </div>
           <div class="col-sm-6">
             <label>再次確認密碼 <span class="color-red">*</span></label>
@@ -223,6 +223,9 @@ D.    轉由廠商出貨。
           required: true,
           email: true
         },
+        username: {
+          required: true
+        },
         password: {
           required: true,
           minlength: 6
@@ -230,14 +233,29 @@ D.    轉由廠商出貨。
         passwordAgain: {
           required: true,
           minlength: 6,
-          equalTo: "input[name='passwordAgain']"
+          equalTo: "#firstPassword"
         },
         agree: "required"
 
       },
       messages: {
-        email: "請輸入有效的email",
-        agree: "請同意條款"
+        email: {
+          required: "請輸入 Email",
+          email: "請輸入有效的 Email"
+        },
+        username:{
+          required: "請輸入帳號"
+        },
+        password: {
+          required: "請輸入密碼",
+          minlength: "密碼長度不足"
+        },
+        passwordAgain: {
+          required: "請輸入密碼",
+          minlength: "密碼長度不足",
+          equalTo: "請輸入相同密碼"
+        },
+        agree: "尚未同意使用者條款"
       }
     });
 
