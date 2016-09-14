@@ -39,7 +39,6 @@ var drawPieChart = function (data) {
         if (context.section === 'outer') {
             label = label + ' - ' + context.value + '滴';
         }
-        console.log('context=>', context);
         return label;
       },
       "outer": {
