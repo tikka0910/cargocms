@@ -326,11 +326,11 @@ module.exports = {
           const scents = await Scent.findAll({where});
 
           // get data like [ {feeling: f1, scent:s1, value:10},{feeling: f1, scent:s2, value:3} ]
-          let feelings = []
+          let ungroupfeelings = []
           scents.forEach(function(scent) {
             let currentScent = scent.name;
             scent.feelings.forEach((feel) => {
-              feelings.push({
+              ungroupfeelings.push({
                 feeling: feel.key,
                 value: feel.value,
                 scent: currentScent
@@ -339,37 +339,36 @@ module.exports = {
           });
 
           // grouping data like [ {feeling: f1, value:13, scent: [s1,s2] } ]
-          let groupFeel = [];
-          feelings.forEach((item) => {
-            // check this feel already in groupFeel or not
+          let feelings = [];
+          ungroupfeelings.forEach((item) => {
+            // check this feel already in feelings or not
             let findIDX = undefined;
-            groupFeel.forEach((inListFeel,inListFeelIndex) => {
+            feelings.forEach((inListFeel,inListFeelIndex) => {
               if (item.feeling === inListFeel.feeling) {
                 findIDX = inListFeelIndex;
               }
             })
 
             if (findIDX === undefined) {
-              groupFeel.push({
+              feelings.push({
                 key: item.feeling,
                 value: item.value,
                 scent: [item.scent],
               })
             } else {
-              groupFeel[findIDX].value+=item.value;
-              groupFeel[findIDX].scent.push(item.scent);
+              feelings[findIDX].value+=item.value;
+              feelings[findIDX].scent.push(item.scent);
             }
           
           })
-          //should order but it not working now
-          //groupFeel = RecipeService.sortFeelingsByValue({groupFeel});
+          feelings = RecipeService.sortFeelingsByValue({feelings});
 
           /*
           let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
           feelings = RecipeService.sortFeelingsByValue({feelings});
           */
           
-          return groupFeel;
+          return feelings;
 
         } catch (e) {
           throw e;
