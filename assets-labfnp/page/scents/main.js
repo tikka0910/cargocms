@@ -235,7 +235,7 @@ $(document).ready(function () {
 			});
 			var Text = feelingScentsCategories.val();
 			// console.log('=>',feelingScentsCategories[0]);
-			if (tags.indexOf(Text) === -1) {
+			if(Text != undefined && tags.indexOf(Text) === -1){
 				scentDetail.find(".tags").append('<div class="tag">' + Text + '</div>')
 			}
 		};
