@@ -1,7 +1,9 @@
 var pieChart = null
 var apiRecipe = '/api/labfnp/recipe/';
 var recipeId = $('input[name="id"]').val();
-var autoSize = $('.col.col-md-12').width() * 0.75 > 300 ? $('.col.col-md-12').width() * 0.75 : 300;
+var minSize = 240;
+var autoSize = $('.col.col-md-12').width() * 0.75 > minSize ? $('.col.col-md-12').width() * 0.75 : minSize;
+var autoOuter = autoSize > minSize ? "60%" : "40%";
 var pieHeader = {
 	"title": {
 		"text": "",
@@ -25,7 +27,7 @@ var pieFooter = {
 var pieSize = {
 	"canvasWidth": autoSize,
 	"canvasHeight": autoSize,
-	"pieOuterRadius": "60%"
+	"pieOuterRadius": autoOuter
 };
 var pieParam = {
 	"sortOrder": "value-desc",
@@ -45,7 +47,7 @@ var pieParam = {
 		},
 		"outer": {
 			format: "label",
-			"pieDistance": 30
+			"pieDistance": 10
 		},
 		"inner": {
 			format: "percentage",
@@ -70,7 +72,7 @@ var pieParam = {
 		},
 		"truncation": {
 			"enabled": true,
-			truncateLength: 30
+			truncateLength: 10
 		},
 	},
 	"effects": {
@@ -89,7 +91,7 @@ var pieParam = {
 	"misc": {
 		"gradient": {
 			"enabled": false,
-			"percentage": 100
+			"percentage": 0
 		},
 		canvasPadding: {
 			top: 5,
