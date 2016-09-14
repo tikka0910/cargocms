@@ -99,7 +99,9 @@ $(document).ready(function(){
     });
   }
 
-  var getRecipe = function({start, length}){
+  var getRecipe = function(config){
+    start = config.start;
+    length = config.length;
     $.ajax({
       url: '/api/labfnp/recipe?start='+ start +'&length='+ length,
       type: 'GET',
