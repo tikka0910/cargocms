@@ -129,8 +129,9 @@ var getScentsVisualData = function() {
   return { children: shuffle(scentsData) };
 };
 
-var getFormulaData = function() {
+var getFormulaData = function(createdBy) {
   var result = [];
+  var isFromFeeling = createdBy === 'feeling';
 
   $('.scents-dropdown').each(function() {
     if ($(this).val()) {
@@ -139,12 +140,21 @@ var getFormulaData = function() {
       var scent = $(this).val();
       var drops = $('.scents-drops[data-index='+idx+']').val();
       var color = $('option:selected', this).data('color');
+      var feeling = '';
+      var formulaObj = {
+  	      "scent": scent,
+  	      "drops": drops,
+          "color": color
+  	    };
 
-	    result.push({
-	      "scent": scent,
-	      "drops": drops,
-        "color": color
-	    });
+      if (isFromFeeling) {
+        feeling = $('.feeling-dropdown[data-index='+idx+']').val();
+        formulaObj.feeling = feeling;
+        // console.log('feeling=>', feeling);
+      }
+      // console.log('formulaObj=>', formulaObj);
+
+	    result.push(formulaObj);
     }
   });
 
@@ -175,27 +185,46 @@ $(function() {
         .hide();
     }
   });
-  $('.scents-categories').change();
-
 
 	$('.scents-dropdown').change(function() {
     var idx = $(this).data('index');
-    console.log("idx", idx);
+    // console.log("idx", idx);
     var selectedScent = $('option:selected', this);
     var scentDetail = $('.scent-detail[data-index='+idx+']');
+    var feelingScentsCategories = $('.feeling-dropdown[data-index='+idx+']');
     var drops = $('.scents-drops[data-index='+idx+']');
     var title = "";
     var description = "";
 
+    function successCatch(e) {
+      var tags = [];
+      $(e.data).each(function(i, e) {
+        tags.push(e.title);
+      });
+      $(tags).each(function(i, e) {
+        scentDetail.find(".tags").append('<div class="tag">' + e + '</div>')
+      });
+      var Text = feelingScentsCategories.val();
+      // console.log(feelingScentsCategories[0]);
+      if(tags.indexOf(Text) === -1){
+        scentDetail.find(".tags").append('<div class="tag">' + Text + '</div>')
+      }
+    }
+
+    function failCatch() {
+
+    }
 
     if ($(this).val() != '') {
+      $.get('/api/labfnp/feeling?serverSidePaging=true&draw=0&columns%5B0%5D%5Bdata%5D=scentName&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=score&columns%5B1%5D%5Bsearchable%5D=false&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=1&order%5B0%5D%5Bdir%5D=desc&start=0&length=10&search%5Bvalue%5D='+$(this).val())
+        .done(successCatch).fail(failCatch);
       var color = selectedScent.data('color');
       title = selectedScent.data('title');
       description = selectedScent.data('description');
 
-      $(this).css('color', color);
       scentDetail.removeClass("hidden");
       scentDetail.find("#scent-content").css('border-top', 'solid 2px ' + color);
+      scentDetail.find(".tags").empty();
 
 	    if (drops.val() == 0) {
 	      drops.val(1);
@@ -222,8 +251,6 @@ $(function() {
 	});
   $('.scents-drops').change();
 
-
-
   $('#recipeDeleteButton').on('click', function(event) {
     event.preventDefault();
     var id = $(this).data('id');
@@ -234,16 +261,13 @@ $(function() {
         dataType: 'json',
         cache: false
       }).done(function(result) {
-        console.log(result);
+        // console.log(result);
         alert(result.message);
         location.href='/me/' + result.data.userId;
       });
     }
 
   });
-
-
-
 
   $('#main-form').on('submit', function(event) {
 
@@ -258,8 +282,8 @@ $(function() {
     var endpoint = $(this).attr('action');
     var method = $(this).attr('method');
 
-    console.log(endpoint + ':' + method);
-    console.log( $(this).serializeArray() );
+    // console.log(endpoint + ':' + method);
+    // console.log( $(this).serializeArray() );
 
     var authorName = $('input[name=authorName]').val();
     var perfumeName = $('input[name=perfumeName]').val();
@@ -267,12 +291,13 @@ $(function() {
     var visibility = $('select[name=visibility]').val();
     var description = $('textarea[name=description]').val();
     var coverPhotoId = $('input[name=coverPhotoId]').val();
+    var createdBy = $('input[name=createdBy]').val();
 
-    var formula = getFormulaData();
-    console.log("=== formula ===", formula);
+    var formula = getFormulaData(createdBy);
+    // console.log("=== formula ===", formula);
 
     var formIsValid = true;
-    if(formula.length == 0) {
+    if (formula.length == 0) {
       alert("未選定任一配方")
       formIsValid = true;
     };
@@ -282,7 +307,6 @@ $(function() {
         alert("選擇配方後，滴數不可為 0");
         formIsValid = false;
       }
-
     });
 
     if(!formIsValid) return false;
@@ -301,6 +325,7 @@ $(function() {
         visibility: visibility,
         description: description,
         coverPhotoId: coverPhotoId,
+        createdBy: createdBy,
       }
     }).done(function(result) {
       location.href='/me/' + result.data.UserId;
