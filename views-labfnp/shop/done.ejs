@@ -35,6 +35,14 @@
               <td><%= item.ExpireDate %></td>
             </tr>
             <tr>
+              <td>收件者電話</td>
+              <td><%= item.RecipeOrder.phone ? item.RecipeOrder.phone : " " %></td>
+            </tr>
+            <tr>
+              <td>收件者住址</td>
+              <td><%= item.RecipeOrder.address ? item.RecipeOrder.address : " " %></td>
+            </tr>
+            <tr>
               <td>備註</td>
               <td><%= item.RecipeOrder.note ? item.RecipeOrder.note : " " %></td>
             </tr>
