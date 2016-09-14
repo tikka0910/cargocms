@@ -58,7 +58,7 @@
             <option value="">選擇分子</option>
             <% scents.forEach(function(scent) { %>
               <option
-                <%= formula.scentName === scent.name ?'selected':'' %>
+                <%= formula.scentName === scent.name ? 'selected':'' %>
                 value="<%= scent.name %>"
                 data-feelings="<%= JSON.stringify(scent.feelings) %>"
                 data-color="<%= scent.color %>"
