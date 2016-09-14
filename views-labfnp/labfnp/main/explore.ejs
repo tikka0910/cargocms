@@ -51,8 +51,7 @@
 }
 .shareSticker {
   max-width: 360px;
-  margin-bottom: 10px;
-  margin-left: 0px;
+  padding-top: 10px;
 }
 .rrssb-buttons a {
   -webkit-filter: saturate(0.5);
@@ -86,6 +85,22 @@
 }
 .grid-boxes {
   min-height: 500px;
+}
+.list-inline {
+  width: 95%;
+  line-height: 14px;
+}
+.author-name {
+  max-width: 30%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.text-overflow {
+  max-width: 99%;
+  overflow: hidden;
+  text-overflow: ellipsis;;
+  white-space: nowrap;
 }
 </style>
 
@@ -149,9 +164,9 @@
         </div>
       </a>
       <div class="grid-boxes-caption">
-        <h3><a href="/recipe/${recipe.id}">${recipe.perfumeName}</a></h3>
+        <h3 class="text-overflow"><a href="/recipe/${recipe.id}">${recipe.perfumeName}</a></h3>
         <ul class="list-inline grid-boxes-news">
-          <li>
+          <li class="text-overflow author-name">
             <i class="fa fa-user"></i>
             <a href="/lab?userId=${recipe.UserId}">
               ${recipe.authorName}
@@ -169,8 +184,8 @@
           <p>${recipe.description}</p>
         {{/if}}
       </div>
-      <%- include ../../lib/rrssbbtmpl.ejs %>
     </div>
+    <!-- <%- include ../../lib/rrssbbtmpl.ejs %> -->
   </script>
 
 </div>
