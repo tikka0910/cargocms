@@ -24,6 +24,9 @@
 .rounded-x {
     border-radius: 50% !important;
 }
+label.error{
+  color: red;
+}
 </style>
 
 <!--=== Content Part ===-->
@@ -59,11 +62,19 @@
           </div>
         </div>
 
-        <label>Email <span class="color-red">*</span></label>
-        <input type="text" name="email" value="<%= data.user.email %>" class="form-control margin-bottom-20">
+        <div class="row">
+          <div class="col-sm-12">
+            <label>Email <span class="color-red">*</span></label>
+            <input type="text" name="email" value="<%= data.user.email %>" class="form-control margin-bottom-20">
+          </div>
+        </div>
 
-        <label>帳號 <span class="color-red">*</span></label>
-        <input type="text" name="username" value="<%= data.user.username %>" class="form-control margin-bottom-20">
+        <div class="row">
+          <div class="col-sm-12">
+            <label>帳號 <span class="color-red">*</span></label>
+            <input type="text" name="username" value="<%= data.user.username %>" class="form-control margin-bottom-20">
+          </div>
+        </div>
 
         <div class="row">
           <div class="col-sm-6">
@@ -255,7 +266,7 @@ D.    轉由廠商出貨。
           minlength: "密碼長度不足",
           equalTo: "請輸入相同密碼"
         },
-        agree: "尚未同意使用者條款"
+        agree: "尚未同意會員服務條款"
       }
     });
 
