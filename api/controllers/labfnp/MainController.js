@@ -49,9 +49,9 @@ module.exports = {
       include: Image,
     })
 
-    let followers = await Follow.count({ where: { following: user.id }});
-    let starred = 0
-    let following = await Follow.count({ where: { follower: user.id }});
+    const followers = await Follow.count({ where: { following: user.id }});
+    const favorited = await UserLikeRecipe.count({where: { UserId: user.id }});
+    const following = await Follow.count({ where: { follower: user.id }});
     let isFollowing = false;
     if(loginUser) {
       isFollowing  = await Follow.findOne({
@@ -62,9 +62,13 @@ module.exports = {
       });
     }
 
+    const userRecipes = await Recipe.findAll({where: { UserId: user.id }});
+    const userRecipeIdArray = userRecipes.map((recipe) => recipe.id);
+    const score = await UserLikeRecipe.count({where: { RecipeId: userRecipeIdArray }});
+
     try {
       return res.view({
-        user, recipes, followers, starred, following, isMe,
+        user, recipes, followers, favorited, following, isMe, score,
         isFollowing: !!isFollowing,
       });
     }
