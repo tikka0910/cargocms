@@ -24,49 +24,53 @@ module.exports = {
 
   portfolio: async function(req, res) {
 
-    let user = null;
-    let isMe = false;
-    let loginUser = AuthService.getSessionUser(req);
-    if (req.params.id) {
-      user = await User.findById(req.params.id);
-    }
-    else {
-      user = loginUser
-      if(!user)
-        return res.redirect("/login");
-    }
-    isMe = (loginUser.id == user.id);
-    let notShowPrivateRecipe = {};
-    if(!isMe) {
-      notShowPrivateRecipe = { visibility: { $not: 'PRIVATE' } };
-    }
-    const recipes = await Recipe.findAll({
-      where: {
-        userId: user.id,
-        ...notShowPrivateRecipe
-      },
-      order: 'Recipe.updatedAt desc',
-      include: Image,
-    })
-
-    const followers = await Follow.count({ where: { following: user.id }});
-    const favorited = await UserLikeRecipe.count({where: { UserId: user.id }});
-    const following = await Follow.count({ where: { follower: user.id }});
-    let isFollowing = false;
-    if(loginUser) {
-      isFollowing  = await Follow.findOne({
-        where: {
-          follower: loginUser.id,
-          following: user.id,
-        }
-      });
-    }
-
-    const userRecipes = await Recipe.findAll({where: { UserId: user.id }});
-    const userRecipeIdArray = userRecipes.map((recipe) => recipe.id);
-    const score = await UserLikeRecipe.count({where: { RecipeId: userRecipeIdArray }});
-
     try {
+      let user = null;
+      let isMe = false;
+      let loginUser = AuthService.getSessionUser(req);
+      let {id} = req.params;
+      if (id) {
+        user = await User.findOne({where:{id}});
+        if(!user)
+          return res.notFound("查無使用者");
+      }
+      else {
+        user = loginUser
+        if(!user)
+          return res.redirect("/login");
+      }
+
+      isMe = (loginUser && (loginUser.id == user.id));
+      let notShowPrivateRecipe = {};
+      if(!isMe) {
+        notShowPrivateRecipe = { visibility: { $not: 'PRIVATE' } };
+      }
+      const recipes = await Recipe.findAll({
+        where: {
+          userId: user.id,
+          ...notShowPrivateRecipe
+        },
+        order: 'Recipe.updatedAt desc',
+        include: Image,
+      })
+
+      const followers = await Follow.count({ where: { following: user.id }});
+      const favorited = await UserLikeRecipe.count({where: { UserId: user.id }});
+      const following = await Follow.count({ where: { follower: user.id }});
+      let isFollowing = false;
+      if(loginUser) {
+        isFollowing  = await Follow.findOne({
+          where: {
+            follower: loginUser.id,
+            following: user.id,
+          }
+        });
+      }
+
+      const userRecipes = await Recipe.findAll({where: { UserId: user.id }});
+      const userRecipeIdArray = userRecipes.map((recipe) => recipe.id);
+      const score = await UserLikeRecipe.count({where: { RecipeId: userRecipeIdArray }});
+
       return res.view({
         user, recipes, followers, favorited, following, isMe, score,
         isFollowing: !!isFollowing,

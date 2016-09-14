@@ -119,8 +119,8 @@ module.exports.routes = {
   '/recipe/allpay/:id':  'labfnp/RecipeController.allpay',
   '/creator':         'labfnp/RecipeController.create',
   '/lab':             'labfnp/MainController.explore',
-  '/me':              'labfnp/MainController.portfolio',
-  '/me/:id':          'labfnp/MainController.portfolio',
+  '/me/:id?':          'labfnp/MainController.portfolio',
+
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
