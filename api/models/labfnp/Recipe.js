@@ -340,6 +340,9 @@ module.exports = {
         try {
           const findParam = this.getFindAndIncludeUserLikeParam({findByRecipeId, findByUserId, currentUser });
           const recipe = await Recipe.findOne(findParam);
+
+          if(!recipe)return recipe;
+
           await recipe.checkCurrentUserLike({currentUser})
           return recipe;
         } catch (e) {
@@ -357,7 +360,7 @@ module.exports = {
           // lookup data
           const scents = await Scent.findAll({where});
 
-          // get data like 
+          // get data like
           // [ {key: f1, scent:s1, value:10},{key: f1, scent:s2, value:3} ]
           let ungroupfeelings = []
           scents.forEach(function(scent) {
@@ -371,7 +374,7 @@ module.exports = {
             });
           });
 
-          // grouping data like 
+          // grouping data like
           // [ {key: f1, value:13, scent: [{name: s1, value: 10},{name: s2, value: 3}] } ]
           let feelings = [];
           ungroupfeelings.forEach((item) => {
@@ -394,7 +397,7 @@ module.exports = {
               feelings[findIDX].value+=strength;
               feelings[findIDX].scent.push({name: item.scent, value: strength});
             }
-          
+
           })
           feelings = RecipeService.sortFeelingsByValue({feelings});
           sails.log("my-feeling")
@@ -407,12 +410,12 @@ module.exports = {
           sails.log("leagcy-feeling")
           sails.log(feelings);
           */
-           
+
           /*
           let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
           feelings = RecipeService.sortFeelingsByValue({feelings});
           */
-          
+
           return feelings;
 
         } catch (e) {
