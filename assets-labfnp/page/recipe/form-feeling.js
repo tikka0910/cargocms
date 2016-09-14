@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
 	var showOption = function (options, prefix) {
 		$(options).each(function (i, o) {
 			hideOption(o);
@@ -71,11 +70,10 @@ $(document).ready(function () {
 		}
 	});
 
+
 	$('.feeling-dropdown').change(function () {
 		var idx = $(this).data('index');
 		var prefix = $(this).val();
-		var dropdown = $('.scents-dropdown[data-index=' + idx + ']');
-		dropdown.val('');
 
 		var options = $('.scents-dropdown[data-index=' + idx + '] option');
 		if (prefix) {
@@ -83,6 +81,7 @@ $(document).ready(function () {
 		} else {
 			hideOption(options);
 		}
+		$('.scents-dropdown').change();
 	});
 
 	hideAllOption();
