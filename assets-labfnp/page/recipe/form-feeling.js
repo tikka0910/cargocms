@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
 	var showOption = function (options, prefix) {
 		$(options).each(function (i, o) {
 			hideOption(o);
@@ -8,7 +7,7 @@ $(document).ready(function () {
 				for (var k = 0; k < feelings.length - 1; k++) {
 					var checkWrap = $(o).parent('span').length !== 0;
 					var checkFeeling = feelings[k].key === prefix;
-					checkFeeling && checkWrap && $(o).unwrap();
+					checkFeeling && checkWrap && $(o).unwrap().show();
 				}
 			}
 			var checkVal = $(o).val() !== '';
@@ -21,7 +20,7 @@ $(document).ready(function () {
 			var checkDefault = $(o).val() !== '';
 			var checkWrap = $(o).parent('span').length === 0;
 			var checkAll = checkWrap && checkDefault;
-			checkAll && $(o).wrap('<span>');
+			checkAll && $(o).wrap('<span>').hide();
 		});
 	};
 
@@ -71,11 +70,10 @@ $(document).ready(function () {
 		}
 	});
 
+
 	$('.feeling-dropdown').change(function () {
 		var idx = $(this).data('index');
 		var prefix = $(this).val();
-		var dropdown = $('.scents-dropdown[data-index=' + idx + ']');
-		dropdown.val('');
 
 		var options = $('.scents-dropdown[data-index=' + idx + '] option');
 		if (prefix) {
@@ -83,6 +81,7 @@ $(document).ready(function () {
 		} else {
 			hideOption(options);
 		}
+		$('.scents-dropdown').change();
 	});
 
 	hideAllOption();

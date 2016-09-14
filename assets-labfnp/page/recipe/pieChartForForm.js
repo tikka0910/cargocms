@@ -144,9 +144,10 @@ function updatePieChart(){
   var totalDrops = 0;
   $('.scents-dropdown').each(function(index, el) {
     var idx = $(el).data('index');
+    var selected = document.getElementsByName("formulaScents[" + idx + "]")[0].value;
     var inputDrop = $('.scents-drops[data-index=' + idx + ']');
-    if($(el).val() === '') return;
-    var scent = $(el).val();
+    if(selected === '') return;
+    var scent = selected;
     var drops = inputDrop.val();
     totalDrops = totalDrops + parseInt(drops);
     var color = $(':selected',el).data('color');
@@ -156,7 +157,6 @@ function updatePieChart(){
       color: color,
     });
   });
-  console.log(newData);
   drawPieChart(newData);
   $('#total-drops').text(totalDrops);
 }
