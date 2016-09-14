@@ -64,8 +64,7 @@ describe('about LikeRecipe Controller operation.', function() {
 
       sails.log(res.body.data);
       // test content
-      res.body.data.feelings.feels.should.be.Array;
-      res.body.data.feelings.links.should.be.Array;
+      res.body.data.feelings.should.be.Array;
 
       done();
     } catch (e) {
