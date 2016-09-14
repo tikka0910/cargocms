@@ -142,12 +142,14 @@ var drawPieChart = function (data) {
 
 function updatePieChart(){
   var newData = [];
+  var totalDrops = 0;
   $('.scents-dropdown').each(function(index, el) {
     var idx = $(el).data('index');
     var inputDrop = $('.scents-drops[data-index=' + idx + ']');
     if($(el).val() === '') return;
     var scent = $(el).val();
     var drops = inputDrop.val();
+    totalDrops = totalDrops + parseInt(drops);
     var color = $(':selected',el).data('color');
     newData.push({
       scent: scent,
@@ -157,4 +159,5 @@ function updatePieChart(){
   });
   console.log(newData);
   drawPieChart(newData);
+  $('#total-drops').text(totalDrops);
 }
