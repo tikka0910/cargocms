@@ -1,4 +1,5 @@
 <style type="text/css">
+
   .box-wrapper {
     z-index: 10;
     position: absolute;
@@ -89,6 +90,38 @@
   article.description {
     padding: 10px;
   }
+  @media (max-width: 990px) {
+    .box-wrapper {
+      background: white;
+    }
+    .box-inner {
+      margin: 100px auto 0;
+      -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,0);
+      -moz-box-shadow: 0 0 0 0 rgba(0,0,0,0);
+      box-shadow: 0 0 0 0 rgba(0,0,0,0);
+      max-height: 100%;
+    }
+    .content {
+      background: white;
+      margin-bottom: 200px;
+      border-bottom-width: 1px;
+      border-bottom-color: gray;
+      border-style: groove;
+      border-left: 0;
+      border-top: 0;
+      border-right: 0;
+    }
+    .box-byFeeling {
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom-width: 1px;
+      border-bottom-color: gray;
+      border-style: dotted;
+      border-left: 0;
+      border-top: 0;
+      border-right: 0;
+    }
+  }
 
 </style>
 
@@ -126,7 +159,7 @@
           <label for="img-wrapper">以<b>氣味感覺</b>快速建立配方</label>
           <div class="img-wrapper">
             <a href="#!" id="btn-byFeeling">
-              <img src="/assets/labfnp/img/recipe-default-cover.1.jpg" alt="byFeeling"/>
+              <img src="/assets/labfnp/img/recipe-create-by-feeling.jpg" alt="byFeeling"/>
             </a>
           </div>
           <label for="img-wrapper">第一次來嗎？請選擇這個。</label>
@@ -135,7 +168,7 @@
           <label for="img-wrapper">自訂<b>香味分子</b>以建立配方</label>
           <div class="img-wrapper">
             <a href="#!" id="btn-byScent">
-              <img src="/assets/labfnp/img/recipe-default-cover.1.jpg" alt="byScent"/>
+              <img src="/assets/labfnp/img/recipe-create-by-scent.jpg" alt="byScent"/>
             </a>
           </div>
           <label for="img-wrapper">你是調香高手？請選擇這裡。</label>
