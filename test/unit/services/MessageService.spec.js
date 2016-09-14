@@ -32,6 +32,7 @@ describe("about Mailer service", () => {
         productName: 'productName!!!!',
         serialNumber: 'serialNumber!!!!',
         email: 'email!!!!',
+        phone: 'phone!!!!!',
         username: 'username!!!!',
         bankId: 'bankId!!!!',
         bankName: 'bankName!!!!',

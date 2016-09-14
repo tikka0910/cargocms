@@ -21,6 +21,7 @@ module.exports.mail = {
       <br />感謝你的訂購，你所購買的產品 %(productName)s 已訂購完成
       <br />訂單編號為： %(orderSerialNumber)s
       <br />收件者為： %(shipmentUsername)s
+      <br />收件者電話： %(phone)s
       <br />收件地址為： %(shipmentAddress)s
       <br />備註： %(note)s
       <br />
