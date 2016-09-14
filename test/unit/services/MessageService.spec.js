@@ -41,7 +41,8 @@ describe("about Mailer service", () => {
         paymentTotalAmount: 'paymentTotalAmount!!!!',
         shipmentUsername: 'shipmentUsername!!!!',
         shipmentAddress: 'shipmentAddress!!!!',
-        expireDate: '2016/09/13'
+        expireDate: '2016/09/13',
+        note: 'note!!!!!!!',
       });
       let message = await Message.create(messageConfig);
       await MessageService.sendMail(message);

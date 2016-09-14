@@ -122,7 +122,8 @@ module.exports = {
       get: function() {
         try {
           const thisImage = this.getDataValue('Image');
-          return thisImage ? thisImage.url : '/assets/labfnp/img/recipe-default-cover.png';
+          const thisId = this.getDataValue('id');
+          return thisImage ? thisImage.url : `/assets/labfnp/img/recipe-default-cover.${thisId % 8}.jpg`;
         } catch (e) {
           sails.log.error(e);
         }

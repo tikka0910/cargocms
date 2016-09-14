@@ -33,6 +33,7 @@ module.exports = {
   orderConfirm: (result = {
     productName, serialNumber, email, username, bankId, bankName, bankName,
     accountId, accountName, paymentTotalAmount, shipmentUsername, shipmentAddress,
+    note,
   }) => {
 
     try {
