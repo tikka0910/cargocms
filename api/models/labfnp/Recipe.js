@@ -356,44 +356,57 @@ module.exports = {
           // lookup data
           const scents = await Scent.findAll({where});
 
-          // get data like [ {feeling: f1, scent:s1, value:10},{feeling: f1, scent:s2, value:3} ]
+          // get data like 
+          // [ {key: f1, scent:s1, value:10},{key: f1, scent:s2, value:3} ]
           let ungroupfeelings = []
           scents.forEach(function(scent) {
             let currentScent = scent.name;
             scent.feelings.forEach((feel) => {
               ungroupfeelings.push({
-                feeling: feel.key,
+                key: feel.key,
                 value: feel.value,
                 scent: currentScent
               })
             });
           });
 
-          // grouping data like [ {feeling: f1, value:13, scent: [s1,s2] } ]
+          // grouping data like 
+          // [ {key: f1, value:13, scent: [{name: s1, value: 10},{name: s2, value: 3}] } ]
           let feelings = [];
           ungroupfeelings.forEach((item) => {
             // check this feel already in feelings or not
             let findIDX = undefined;
             feelings.forEach((inListFeel,inListFeelIndex) => {
-              if (item.feeling === inListFeel.feeling) {
+              if (item.key === inListFeel.key) {
                 findIDX = inListFeelIndex;
               }
             })
+            let strength = parseInt(item.value)
 
             if (findIDX === undefined) {
               feelings.push({
-                key: item.feeling,
-                value: item.value,
-                scent: [item.scent],
+                key: item.key,
+                value: strength,
+                scent: [{name: item.scent, value: item.value}],
               })
             } else {
-              feelings[findIDX].value+=item.value;
-              feelings[findIDX].scent.push(item.scent);
+              feelings[findIDX].value+=strength;
+              feelings[findIDX].scent.push({name: item.scent, value: strength});
             }
           
           })
           feelings = RecipeService.sortFeelingsByValue({feelings});
+          sails.log("my-feeling")
+          sails.log(feelings);
 
+
+          /*
+          feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
+          feelings = RecipeService.sortFeelingsByValue({feelings});
+          sails.log("leagcy-feeling")
+          sails.log(feelings);
+          */
+           
           /*
           let feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
           feelings = RecipeService.sortFeelingsByValue({feelings});
