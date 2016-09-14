@@ -161,6 +161,7 @@ module.exports = {
         messageConfig.username = recipeOrder.User.displayName;
         messageConfig.shipmentUsername = recipeOrder.recipient;
         messageConfig.shipmentAddress = recipeOrder.address;
+        messageConfig.note = recipeOrder.note;
       }
       messageConfig = await MessageService.orderConfirm(messageConfig);
       const message = await Message.create(messageConfig);

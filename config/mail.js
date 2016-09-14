@@ -22,16 +22,16 @@ module.exports.mail = {
       <br />訂單編號為： %(orderSerialNumber)s
       <br />收件者為： %(shipmentUsername)s
       <br />收件地址為： %(shipmentAddress)s
-
+      <br />備註： %(note)s
+      <br />
       <br />如果上述資料正確，請將款項 $ %(paymentTotalAmount)s 匯款至以下帳號：
-
+      <br />
       <br />銀行名稱： %(bankName)s
       <br />銀行代碼： %(bankId)s
       <br />帳號： %(accountId)s
       <br />匯款金額： $ %(paymentTotalAmount)s
       <br />匯款期限： %(expireDate)s
-
-
+      <br />
       <br />From %(storeName)s
       </body></html>`
     },
