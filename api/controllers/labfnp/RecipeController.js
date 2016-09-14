@@ -151,7 +151,7 @@ module.exports = {
       }
       recipe.formula = formatFormula;
 
-      if (from === 'scent' || !from) {
+      if (from === 'scent') {
         return res.view({ user, recipe, scents, totalDrops });
       }
 
