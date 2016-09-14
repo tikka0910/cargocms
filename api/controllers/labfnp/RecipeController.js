@@ -61,6 +61,9 @@ module.exports = {
       return res.view({ recipe, editable, social });
     } catch (e) {
       if (e.type === 'notFound') return res.notFound();
+
+      if (e.type === 'noPermission') return res.forbidden("配方限定於擁有者瀏覽");
+
       return res.serverError(e);
     }
   },
