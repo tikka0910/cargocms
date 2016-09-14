@@ -218,16 +218,18 @@ module.exports = {
         note,
       });
       recipeOrder = await RecipeOrder.findByIdHasJoin(recipeOrder.id);
-
+      const formatName = recipeOrder.ItemNameArray.map((name) => {
+        return name + ' 100 ml';
+      });
       const allPayData = await AllpayService.getAllpayConfig({
         relatedKeyValue: {
           RecipeOrderId: recipeOrder.id,
         },
         MerchantTradeNo: crypto.randomBytes(32).toString('hex').substr(0, 8),
-        tradeDesc: `配方名稱：${perfumeName}, (備註：${message})`,
-        totalAmount: 999,
+        tradeDesc: `配方名稱：${perfumeName} 100 ml, (備註：${message})`,
+        totalAmount: 1550,
         paymentMethod: paymentMethod,
-        itemArray: recipeOrder.ItemNameArray,
+        itemArray: formatName,
       });
 
       return res.view({

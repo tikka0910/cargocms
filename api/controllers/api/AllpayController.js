@@ -156,7 +156,7 @@ module.exports = {
       messageConfig.expireDate = allpay.ExpireDate;
       if (allpay.RecipeOrderId) {
         const recipeOrder = await RecipeOrder.findByIdHasJoin(allpay.RecipeOrderId);
-        messageConfig.productName = recipeOrder.Recipe.perfumeName;
+        messageConfig.productName = recipeOrder.Recipe.perfumeName + ' 100 ml';
         messageConfig.email = recipeOrder.email;
         messageConfig.username = recipeOrder.User.displayName;
         messageConfig.shipmentUsername = recipeOrder.recipient;
