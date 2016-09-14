@@ -342,6 +342,18 @@ module.exports = {
         try {
           const findParam = this.getFindAndIncludeUserLikeParam({findByRecipeId, findByUserId, currentUser });
           const recipe = await Recipe.findOne(findParam);
+
+          if(!recipe){
+            const isPrivateRecipe = await Recipe.findById(findParam.where.id);
+            if(isPrivateRecipe){
+              const error = new Error('no Permission');
+              error.type = 'noPermission';
+              throw error;
+            } else{
+              return recipe;
+            }
+          }
+
           await recipe.checkCurrentUserLike({currentUser})
           return recipe;
         } catch (e) {
