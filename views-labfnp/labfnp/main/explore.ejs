@@ -166,9 +166,9 @@
           <div class="easy-block-v1-badge rgba-red">${recipe.visibilityDesc}</div>
         {{/if}}
         <img id="recipeImage" class="img-responsive lazy" src="${recipe.coverPhoto}" data-src="${recipe.coverPhoto}" alt="">
-        <div class="recipeLikeContainer" data-id="${recipe.id}" data-like="${recipe.currentUserLike}">
-          <i id="recipeLikeIcon" class="fa {{if recipe.currentUserLike }} fa-heart {{else}} fa-heart-o {{/if}} fa-sm"></i>
-        </div>
+        <!-- <div class="recipeLikeContainer" data-id="${recipe.id}" data-like="${recipe.currentUserLike}">
+           <i id="recipeLikeIcon" class="fa {{if recipe.currentUserLike }} fa-heart {{else}} fa-heart-o {{/if}} fa-sm"></i>
+        </div> --!>
       </a>
       <div class="grid-boxes-caption">
         <h3 class="text-overflow"><a href="/recipe/${recipe.id}">${recipe.perfumeName}</a></h3>
