@@ -117,6 +117,8 @@ exports.login = async (req, identifier, password, next) => {
         const userAgent = req.headers['user-agent'];
         await user.loginSuccess({ userAgent });
         return next(null, user);
+      } else {
+        throw new Error('Error.Passport.Password.CheckFail');
       }
 
     } else {
@@ -125,6 +127,6 @@ exports.login = async (req, identifier, password, next) => {
 
   } catch (e) {
     sails.log.error(e.stack);
-    next(err);
+    next(e);
   }
 };
