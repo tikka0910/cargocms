@@ -34,6 +34,10 @@
               <td>付款期限</td>
               <td><%= item.ExpireDate %></td>
             </tr>
+            <tr>
+              <td>備註</td>
+              <td><%= item.RecipeOrder.note ? item.RecipeOrder.note : " " %></td>
+            </tr>
           </tbody>
         </table>
 
