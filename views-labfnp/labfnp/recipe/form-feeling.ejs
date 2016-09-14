@@ -21,6 +21,9 @@
     font-style: normal;
     margin: 3px;
   }
+  .label-feeling {
+    margin-top: 20px;
+  }
 </style>
 
 
@@ -31,6 +34,9 @@
       <section class="col col-6">
         <% if (index === 0) { %>
           <label class="label">感覺</label>
+        <% } else { %>
+          <div class="hidden-md hidden-lg hidden-sm"><hr /></div>
+          <label class="label label-feeling hidden-md hidden-lg hidden-sm">感覺 <%= index %></label>
         <% } %>
         <label class="select">
           <select class="feeling-dropdown chosen-select" data-placeholder="選擇一種你喜歡的感覺" data-index="<%= formula.index %>">
@@ -44,6 +50,8 @@
       <section class="col col-4">
         <% if (index === 0) { %>
           <label class="label">所選之香味分子</label>
+        <% } else { %>
+          <label class="label hidden-md hidden-lg hidden-sm">所選之香味分子</label>
         <% } %>
         <label class="select">
           <select name="formulaScents[<%= formula.index %>]" class="scents-dropdown" data-placeholder="選擇一個香味分子" data-index="<%= formula.index %>">
@@ -68,6 +76,8 @@
       <section class="col col-2">
         <% if (index === 0) { %>
           <label class="label">滴數</label>
+        <% } else { %>
+          <label class="label hidden-md hidden-lg hidden-sm">滴數</label>
         <% } %>
         <label class="input">
           <input type="number" name="formulaDrops[<%= formula.index %>]" value="<%= formula.drops %>" class="scents-drops" data-index="<%= formula.index %>">

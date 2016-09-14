@@ -1,7 +1,7 @@
 var pieChart = null
 var apiRecipe = '/api/labfnp/recipe/';
 var recipeId = $('input[name="id"]').val();
-var autoSize = $('.col.col-md-12').width() * 0.7 > 230 ? $('.col.col-md-12').width() * 0.7 : 230;
+var autoSize = $('.col.col-md-12').width() * 0.75 > 300 ? $('.col.col-md-12').width() * 0.75 : 300;
 var pieHeader = {
 	"title": {
 		"text": "",
@@ -25,7 +25,7 @@ var pieFooter = {
 var pieSize = {
 	"canvasWidth": autoSize,
 	"canvasHeight": autoSize,
-	"pieOuterRadius": "75%"
+	"pieOuterRadius": "60%"
 };
 var pieParam = {
 	"sortOrder": "value-desc",

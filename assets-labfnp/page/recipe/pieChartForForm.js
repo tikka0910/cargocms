@@ -1,4 +1,5 @@
-var autoSize = $('.col.col-md-12').width()*0.7 > 230 ? $('.col.col-md-12').width()*0.7 : 230;
+var autoSize = $('.drops-chart').width()*0.95 > 230 ? $('.drops-chart').width()*0.95 : 230;
+var pie = null;
 var drawPieChart = function (data) {
   var pieHeader = {
     "title": {
@@ -23,7 +24,7 @@ var drawPieChart = function (data) {
   var pieSize = {
     "canvasWidth": autoSize,
     "canvasHeight": autoSize,
-    "pieOuterRadius": "80%"
+    "pieOuterRadius": "50%"
   };
   var pieParam = {
     "sortOrder": "value-desc",
@@ -127,10 +128,33 @@ var drawPieChart = function (data) {
       },
   	}
   };
-  pieParam.data.content.push({
-    label: data.scent,
-    value: parseInt(data.drops),
-    color: data.color,
+  $(data).each(function (i, e) {
+    pieParam.data.content.push({
+      label: e.scent,
+      value: parseInt(e.drops),
+      color: e.color,
+    });
+  })
+  if(pie) pie.destroy()
+  pie = new d3pie("pieChart", pieParam);
+  return pie;
+}
+
+function updatePieChart(){
+  var newData = [];
+  $('.scents-dropdown').each(function(index, el) {
+    var idx = $(el).data('index');
+    var inputDrop = $('.scents-drops[data-index=' + idx + ']');
+    if($(el).val() === '') return;
+    var scent = $(el).val();
+    var drops = inputDrop.val();
+    var color = $(':selected',el).data('color');
+    newData.push({
+      scent: scent,
+      drops: drops,
+      color: color,
+    });
   });
-  var pie = new d3pie("pieChart", pieParam);
+  console.log(newData);
+  drawPieChart(newData);
 }
