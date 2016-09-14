@@ -82,8 +82,9 @@
 
         <h2 class="pull-left">
           <i class="fa fa-info-circle" aria-hidden="true"></i>配方內容</h2>
-        <a href="/recipe/edit/<%= recipe.id %>" class="btn-u btn-u-dark pull-right <%= editable?'':'hidden' %>">編輯</a>
-        <a href="page_profile_comments.html" onclick="window.history.back()" class="btn-u btn-u-dark pull-right">返回</a>
+        <a href="/recipe/edit/<%= recipe.id %>?from=<%= recipe.createdBy%>"
+          class="btn-u btn-u-dark pull-right <%= editable?'':'hidden' %>">編輯</a>
+        <a href="/lab" class="btn-u btn-u-dark pull-right">返回</a>
 
       </div>
 
@@ -115,7 +116,7 @@
           <ul class="list-unstyled list-inline blog-info-v2">
             <li>
               <i class="fa fa-user"></i>
-              <a class="color-green" href="#">
+              <a class="color-green" href="/me/<%= recipe.UserId %>">
                 <%= recipe.authorName %>
               </a>
             </li>
@@ -145,14 +146,14 @@
             </li>
           </ul>
 
-		  <% if(recipe.message.length >0){ %>
-            <!-- <label for="message">備註</label> -->
+          <% if(recipe.message.length >0){ %>
+            <!-- <label for="message">備註</label>
             <hr/>
             <ul class="list-unstyled list-inline message">
               <li>
                 <p class="padding-5"><%= recipe.message %></p>
               </li>
-            </ul>
+            </ul>-->
           <% } %>
 
           <!-- <label for="message">Facebook Comments</label> -->

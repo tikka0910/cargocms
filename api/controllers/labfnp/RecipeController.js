@@ -1,16 +1,21 @@
 import crypto from 'crypto';
 module.exports = {
   create: async function(req, res) {
+    let user, recipe, scents, totalDrops, feelings
+    let {from} = req.query
+    if(!from) from = "scent";
     try {
-      const user = AuthService.getSessionUser(req);
-
+      user = AuthService.getSessionUser(req);
       if (!user) {
         return res.redirect('/login');
       }
 
-      const recipe = Recipe.build().toJSON();
-      recipe.message = ""
-      recipe.description = ""
+      scents = await Scent.findAllWithRelationFormatForApp()
+      totalDrops = 0;
+      recipe = Recipe.build().toJSON();
+      recipe.message = "";
+      recipe.description = "";
+      recipe.createdBy = from;
 
       for (var i = 0; i < 6; i++) {
         let formula = {
@@ -18,16 +23,27 @@ module.exports = {
           num: i + 1,
           scentCategory: '',
           scentName: '',
+          feeling: '',
           drops: 0
         };
         recipe.formula.push(formula);
       }
 
-      const scents = await Scent.findAllWithRelationFormatForApp();
+      if (from == 'scent') {
+        return res.view({ user, recipe, scents, totalDrops });
+      }
 
-      const totalDrops = 0;
+      if (from == 'feeling') {
+        feelings = await Feeling.findRamdomFeelings();
 
-      return res.view({user, recipe, scents, totalDrops});
+        let feelingArray = [];
+        for (const feeling of feelings) {
+          feelingArray.push(feeling.title);
+        }
+
+        return res.view({ user, recipe, scents, feelings: feelingArray, totalDrops });
+      }
+
     }
     catch (e) {
       res.serverError(e);
@@ -86,6 +102,8 @@ module.exports = {
   },
 
   edit: async function(req, res) {
+    let { from } = req.query
+    if (!from) from = 'scent';
     try {
       let user = AuthService.getSessionUser(req);
       if (!user) {
@@ -100,6 +118,7 @@ module.exports = {
       });
 
       recipe = recipe.toJSON();
+      recipe.createdBy = from;
 
       if(recipe.User.id != user.id){
         const message = "只可維護自己的配方";
@@ -110,6 +129,7 @@ module.exports = {
       let recipeFormula = recipe.formula;
       let formatFormula = [];
       let totalDrops = 0;
+      let feelings = {};
 
       for (var i = 0; i < 6; i++) {
         let formula = {
@@ -119,21 +139,32 @@ module.exports = {
           scentName: '',
           drops: 0
         };
-        if(recipeFormula[i] != null){
+        if (recipeFormula[i] != null) {
           formula.drops = recipeFormula[i].drops;
           formula.scentName = recipeFormula[i].scent;
           formula.scentCategory = recipeFormula[i].scent.charAt(0);
+          formula.feeling = recipeFormula[i].feeling;
         }
 
         totalDrops += parseInt(formula.drops, 10);
-
         formatFormula.push(formula);
-
       }
       recipe.formula = formatFormula;
 
-      return res.view({user, recipe, scents, totalDrops});
+      if (from === 'scent') {
+        return res.view({ user, recipe, scents, totalDrops });
+      }
 
+      if (from === 'feeling') {
+        feelings = await Feeling.findRamdomFeelings();
+
+        let feelingArray = [];
+        for (const feeling of feelings) {
+          feelingArray.push(feeling.title);
+        }
+
+        return res.view({ user, recipe, scents, feelings: feelingArray, totalDrops });
+      }
     } catch (e) {
       return res.serverError(e);
     }
@@ -187,16 +218,18 @@ module.exports = {
         note,
       });
       recipeOrder = await RecipeOrder.findByIdHasJoin(recipeOrder.id);
-
+      const formatName = recipeOrder.ItemNameArray.map((name) => {
+        return name + ' 100 ml';
+      });
       const allPayData = await AllpayService.getAllpayConfig({
         relatedKeyValue: {
           RecipeOrderId: recipeOrder.id,
         },
         MerchantTradeNo: crypto.randomBytes(32).toString('hex').substr(0, 8),
-        tradeDesc: `配方名稱：${perfumeName}, (備註：${message})`,
-        totalAmount: 999,
+        tradeDesc: `配方名稱：${perfumeName} 100 ml, (備註：${message})`,
+        totalAmount: 1550,
         paymentMethod: paymentMethod,
-        itemArray: recipeOrder.ItemNameArray,
+        itemArray: formatName,
       });
 
       return res.view({
