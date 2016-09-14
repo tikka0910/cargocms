@@ -35,6 +35,13 @@
 .heart {
 	color: red;
 }
+
+.icon-weight {
+	width: 15px;
+	display:inline-block;
+	text-align: center;
+ // vertical-align: bottom;
+}
 `); %>
 
 <div class="container content">
@@ -61,9 +68,9 @@
 				</h1>
 				<hr />
 				<div>
-					<i class="fa fa-heart"></i><span> <%= user.score %></span><br/>
-					<i class="fa fa-map-marker"></i><span> Taiwan</span><br/>
-					<i class="fa fa-clock-o" aria-hidden="true"></i> <%= user.createdAt %>
+					<i class="fa fa-heart icon-weight"></i><span> <%= user.score %></span><br/>
+					<i class="fa fa-map-marker icon-weight "></i><span> Taiwan</span><br/>
+					<i class="fa fa-clock-o icon-weight " aria-hidden="true"></i> <%= user.createdAt %>
 				</div>
 				<hr />
 				<ul class="list-inline">
@@ -87,11 +94,11 @@
 
 			<ul class="list-group sidebar-nav-v1 margin-bottom-40" id="sidebar-nav-1">
 				<li class="list-group-item">
-					<a href="/me"><i class="fa fa-bar-chart-o"></i> 我的配方</a>
+					<a href="/me"><i class="fa fa-bar-chart-o icon-weight"></i> 我的配方</a>
 				</li>
 				<li class="list-group-item">
 				  <a href="#" class="btn-create-recipe">
-				    <i class="fa fa-flask"></i>
+				    <i class="fa fa-flask icon-weight"></i>
 				    創作一個新配方
 				  </a>
 				</li>
