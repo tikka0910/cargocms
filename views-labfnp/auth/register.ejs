@@ -24,13 +24,16 @@
 .rounded-x {
     border-radius: 50% !important;
 }
+label.error{
+  color: red;
+}
 </style>
 
 <!--=== Content Part ===-->
 <div class="container content">
   <div class="row">
     <div class="login-block col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-      <form class="reg-page" method='post' action="/auth/local/register">
+      <form id="registerForm" class="reg-page" method='post' action="/auth/local/register">
 
         <div class="social-login">
           <ul class="list-unstyled">
@@ -59,16 +62,24 @@
           </div>
         </div>
 
-        <label>Email <span class="color-red">*</span></label>
-        <input type="text" name="email" value="<%= data.user.email %>" class="form-control margin-bottom-20">
+        <div class="row">
+          <div class="col-sm-12">
+            <label>Email <span class="color-red">*</span></label>
+            <input type="text" name="email" value="<%= data.user.email %>" class="form-control margin-bottom-20">
+          </div>
+        </div>
 
-        <label>帳號 <span class="color-red">*</span></label>
-        <input type="text" name="username" value="<%= data.user.username %>" class="form-control margin-bottom-20">
+        <div class="row">
+          <div class="col-sm-12">
+            <label>帳號 <span class="color-red">*</span></label>
+            <input type="text" name="username" value="<%= data.user.username %>" class="form-control margin-bottom-20">
+          </div>
+        </div>
 
         <div class="row">
           <div class="col-sm-6">
             <label>密碼 <span class="color-red">*</span></label>
-            <input type="password" name="password" class="form-control margin-bottom-20">
+            <input id="firstPassword" type="password" name="password" class="form-control margin-bottom-20">
           </div>
           <div class="col-sm-6">
             <label>再次確認密碼 <span class="color-red">*</span></label>
@@ -81,7 +92,7 @@
         <div class="row">
           <div class="col-lg-6 checkbox">
             <label>
-              <input type="checkbox">
+              <input type="checkbox" name="agree">
               我已閱讀並且同意<a href="#" class="color-green" data-toggle="modal" data-target="#myModal">會員服務條款</a>
             </label>
           </div>
@@ -213,3 +224,51 @@ D.    轉由廠商出貨。
 
   </div>
 </div>
+
+<% LayoutUtils.addScriptBlock(`
+  $(document).ready(function(){
+
+    $("#registerForm").validate({
+      rules: {
+        email: {
+          required: true,
+          email: true
+        },
+        username: {
+          required: true
+        },
+        password: {
+          required: true,
+          minlength: 6
+        },
+        passwordAgain: {
+          required: true,
+          minlength: 6,
+          equalTo: "#firstPassword"
+        },
+        agree: "required"
+
+      },
+      messages: {
+        email: {
+          required: "請輸入 Email",
+          email: "請輸入有效的 Email"
+        },
+        username:{
+          required: "請輸入帳號"
+        },
+        password: {
+          required: "請輸入密碼",
+          minlength: "密碼長度不足"
+        },
+        passwordAgain: {
+          required: "請輸入密碼",
+          minlength: "密碼長度不足",
+          equalTo: "請輸入相同密碼"
+        },
+        agree: "尚未同意會員服務條款"
+      }
+    });
+
+  });
+`); %>
