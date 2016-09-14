@@ -103,7 +103,7 @@ module.exports = {
 
   edit: async function(req, res) {
     let { from } = req.query
-    if (!from) from = 'scent';
+    if (!from || from === null) from = 'scent';
     try {
       let user = AuthService.getSessionUser(req);
       if (!user) {
@@ -151,7 +151,7 @@ module.exports = {
       }
       recipe.formula = formatFormula;
 
-      if (from === 'scent') {
+      if (from === 'scent' || !from) {
         return res.view({ user, recipe, scents, totalDrops });
       }
 
