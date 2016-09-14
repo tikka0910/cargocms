@@ -46,13 +46,13 @@
         </li>
         -->
         <% if (!req.session.authenticated) { %>
-          <li><a href="/register">註冊</a></li>
+          <li class="<%= (req.path=='/register')?'active':'' %>"><a href="/register">註冊</a></li>
           <li class="topbar-devider"></li>
-          <li><a id="login" href="/login">登入</a></li>
+          <li class="<%= (req.path=='/login')?'active':'' %>"><a id="login" href="/login">登入</a></li>
         <% } else { %>
           <li><a id="logout-link" href="/logout">登出</a></li>
           <li class="topbar-devider"></li>
-          <li>
+          <li class="<%= (req.path=='/me')?'active':'' %>" >
             <a href="/me">
               <%= req.session.passport.user.displayName %>
             </a>
