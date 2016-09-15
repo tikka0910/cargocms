@@ -29,7 +29,8 @@ module.exports = {
         const lastName = this.getDataValue('lastName');
 
         let displayName = firstName + lastName;
-        if (locale === 'zh_TW') displayName = lastName + firstName;
+        const isTw = locale === 'zh_TW';
+        if (!locale || isTw) displayName = lastName + firstName;
 
         return displayName;
       }

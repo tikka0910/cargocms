@@ -81,4 +81,45 @@ module.exports = {
       throw e;
     }
   },
+
+  updateByUser: async (user = {
+    id,
+    username,
+    email,
+    firstName,
+    lastName,
+    locale,
+    password,
+    passwordConfirm,
+  }) => {
+    try {
+      sails.log.info('updateByUser service=>', user);
+      let updatedUser = await User.findOne({
+        where: {
+          id: parseInt(user.id, 10)
+        },
+        include: Passport,
+      });
+      if (updatedUser) {
+        if (user.password && user.passwordConfirm) {
+          const passport = await Passport.findById(updatedUser.Passports[0].id);
+          const isOldPassword = await passport.validatePassword(user.password, passport);
+          if (!isOldPassword) {
+            passport.password = user.password;
+            await passport.save();
+          }
+        }
+        updatedUser.username = user.username;
+        updatedUser.email = user.email;
+        updatedUser.firstName = user.firstName;
+        updatedUser.lastName = user.lastName;
+        updatedUser.locale = user.locale;
+
+        updatedUser = await updatedUser.save();
+      }
+      return updatedUser;
+    } catch (e) {
+      throw e;
+    }
+  },
 }

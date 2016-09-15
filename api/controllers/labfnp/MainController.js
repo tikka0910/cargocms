@@ -13,38 +13,49 @@ module.exports = {
       let social = SocialService.forRecipe({recipes});
 
       return res.view({recipes, social});
-
-
-
     }
     catch (e) {
       res.serverError(e);
     }
   },
 
-  portfolio: async function(req, res) {
-
+  editPofile: async function(req, res) {
+    let user = null;
+    let isMe = false;
     try {
-      let user = null;
-      let isMe = false;
-      let loginUser = AuthService.getSessionUser(req);
-      let {id} = req.params;
-      if (id) {
-        user = await User.findOne({where:{id}});
-        if(!user)
-          return res.notFound("查無使用者");
-      }
-      else {
-        user = loginUser
-        if(!user)
-          return res.redirect("/login");
-      }
+      const { id } = req.params;
+      const loginUser = AuthService.getSessionUser(req);
+      if (!loginUser) return res.redirect('/login');
 
-      isMe = (loginUser && (loginUser.id == user.id));
-      let notShowPrivateRecipe = {};
-      if(!isMe) {
-        notShowPrivateRecipe = { visibility: { $not: 'PRIVATE' } };
+      console.log(loginUser.id, 'loginUser=>', loginUser);
+
+      return res.view({
+        user: loginUser,
+      });
+    } catch (e) {
+      res.serverError(e);
+    }
+  },
+
+  portfolio: async function(req, res) {
+    let user = null;
+    let isMe = false;
+    try {
+      const { id } = req.params;
+      const loginUser = AuthService.getSessionUser(req);
+
+      if (id) {
+        user = await User.findOne({where:{ id }});
+        if(!user) return res.notFound("查無使用者");
+      } else {
+        user = loginUser
+        if(!user) return res.redirect("/login");
       }
+      isMe = (loginUser && (loginUser.id == user.id));
+
+      let notShowPrivateRecipe = {};
+      if(!isMe) notShowPrivateRecipe = { visibility: { $not: 'PRIVATE' } };
+
       const recipes = await Recipe.findAll({
         where: {
           userId: user.id,
