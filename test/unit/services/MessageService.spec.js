@@ -44,6 +44,7 @@ describe("about Mailer service", () => {
         shipmentAddress: 'shipmentAddress!!!!',
         expireDate: '2016/09/13',
         note: 'note!!!!!!!',
+        unifiedBusinessNo: 'unifiedBusinessNo!!!'
       });
       let message = await Message.create(messageConfig);
       await MessageService.sendMail(message);

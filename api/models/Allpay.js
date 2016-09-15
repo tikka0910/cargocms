@@ -179,7 +179,21 @@ module.exports = {
         }
       }
     },
-
+    unifiedBusinessNo: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const recipeOrder = this.getDataValue('RecipeOrder');
+          let unifiedBusinessNo = '';
+          if(recipeOrder){
+            unifiedBusinessNo = recipeOrder.unifiedBusinessNo;
+          }
+          return unifiedBusinessNo;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
     ItemNameArray: {
       type: Sequelize.VIRTUAL,
       get: function() {

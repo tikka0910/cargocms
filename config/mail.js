@@ -24,6 +24,7 @@ module.exports.mail = {
       <br />收件者電話： %(phone)s
       <br />收件地址為： %(shipmentAddress)s
       <br />備註： %(note)s
+      <br />統一編號： %(unifiedBusinessNo)s
       <br />
       <br />如果上述資料正確，請將款項 $ %(paymentTotalAmount)s 匯款至以下帳號：
       <br />
@@ -32,6 +33,23 @@ module.exports.mail = {
       <br />帳號： %(accountId)s
       <br />匯款金額： $ %(paymentTotalAmount)s
       <br />匯款期限： %(expireDate)s
+      <br />
+      <br />From %(storeName)s
+      </body></html>`
+    },
+    orderToShopConfirm: {
+      sendBy: 'email',
+      subject: '訂單 %(orderSerialNumber)s 建立完成',
+      html: `<html><body>
+      <br />Hi %(username)s:
+
+      <br />感謝你的訂購，你所購買的產品 %(productName)s 已訂購完成
+      <br />訂單編號為： %(orderSerialNumber)s
+      <br />收件者為： %(shipmentUsername)s
+      <br />收件者電話： %(phone)s
+      <br />收件地址為： %(shipmentAddress)s
+      <br />備註： %(note)s
+      <br />統一編號： %(unifiedBusinessNo)s
       <br />
       <br />From %(storeName)s
       </body></html>`
