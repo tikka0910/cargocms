@@ -29,6 +29,10 @@
   text-transform: none;
 }
 
+.header .navbar-toggle {
+  margin-top: 1em;
+}
+
 body {
   overflow-x: hidden;
 }
