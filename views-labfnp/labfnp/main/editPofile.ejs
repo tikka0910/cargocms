@@ -93,7 +93,7 @@
                 <span class="input-group-addon rounded-left">
                   <i class="icon-lock color-blue"></i>
                 </span>
-                <input type="password" name="password" class="form-control rounded-right" placeholder="輸入密碼">
+                <input type="password" name="password" class="form-control rounded-right" value="<%= user.password %>" placeholder="輸入密碼">
               </div>
             </section>
 
@@ -105,12 +105,12 @@
                 <span class="input-group-addon rounded-left">
                   <i class="icon-lock color-blue"></i>
                 </span>
-                <input type="password" name="passwordConfirm" class="form-control rounded-right" placeholder="請再輸入一次密碼">
+                <input type="password" name="passwordConfirm" class="form-control rounded-right" value="<%= user.password %>" placeholder="請再輸入一次密碼">
               </div>
             </section>
 
           </form>
-          <span class="">如不打算變更密碼，請將密碼欄位留空即可。</span>
+          <span class="">*如不打算變更密碼，請不要修改密碼欄位即可。</span>
         </div>
         <div class="text-center">
           <button form="userProfileForm" id="submit" type="sumbit" class="btn-u btn-u-green" data-id="<%= user.id %>">

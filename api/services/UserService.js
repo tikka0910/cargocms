@@ -101,7 +101,7 @@ module.exports = {
         include: Passport,
       });
       if (updatedUser) {
-        if (user.password && user.passwordConfirm) {
+        if (user.password === user.passwordConfirm) {
           const passport = await Passport.findById(updatedUser.Passports[0].id);
           const isOldPassword = await passport.validatePassword(user.password, passport);
           if (!isOldPassword) {

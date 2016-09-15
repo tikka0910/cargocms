@@ -27,8 +27,6 @@ module.exports = {
       const loginUser = AuthService.getSessionUser(req);
       if (!loginUser) return res.redirect('/login');
 
-      console.log(loginUser.id, 'loginUser=>', loginUser);
-
       return res.view({
         user: loginUser,
       });
