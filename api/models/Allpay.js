@@ -179,16 +179,16 @@ module.exports = {
         }
       }
     },
-    unifiedBusinessNo: {
+    invoiceNo: {
       type: Sequelize.VIRTUAL,
       get: function() {
         try {
           const recipeOrder = this.getDataValue('RecipeOrder');
-          let unifiedBusinessNo = '';
+          let invoiceNo = '';
           if(recipeOrder){
-            unifiedBusinessNo = recipeOrder.unifiedBusinessNo;
+            invoiceNo = recipeOrder.invoiceNo;
           }
-          return unifiedBusinessNo;
+          return invoiceNo;
         } catch (e) {
           sails.log.error(e);
         }

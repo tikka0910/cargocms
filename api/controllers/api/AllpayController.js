@@ -163,7 +163,7 @@ module.exports = {
         messageConfig.shipmentAddress = recipeOrder.address;
         messageConfig.note = recipeOrder.note;
         messageConfig.phone = recipeOrder.phone;
-        messageConfig.unifiedBusinessNo = recipeOrder.unifiedBusinessNo;
+        messageConfig.invoiceNo = recipeOrder.invoiceNo;
       }
       messageConfig = await MessageService.orderConfirm(messageConfig);
       const message = await Message.create(messageConfig);

@@ -208,7 +208,7 @@ module.exports = {
       })();
       if (!verifyInputs) return res.forbidden('訂單資料錯誤！');
 
-      const { email, note, perfumeName, description, message, unifiedBusinessNo } = req.body;
+      const { email, note, perfumeName, description, message, invoiceNo } = req.body;
 
       let recipeOrder = await RecipeOrder.create({
         UserId: user.id,
@@ -218,7 +218,7 @@ module.exports = {
         address,
         email,
         note,
-        unifiedBusinessNo,
+        invoiceNo,
       });
       recipeOrder = await RecipeOrder.findByIdHasJoin(recipeOrder.id);
       const formatName = recipeOrder.ItemNameArray.map((name) => {
@@ -262,7 +262,7 @@ module.exports = {
         messageConfig.shipmentAddress = recipeOrder.address;
         messageConfig.note = recipeOrder.note;
         messageConfig.phone = recipeOrder.phone;
-        messageConfig.unifiedBusinessNo = recipeOrder.unifiedBusinessNo;
+        messageConfig.invoiceNo = recipeOrder.invoiceNo;
         messageConfig = await MessageService.orderToShopConfirm(messageConfig);
         const message = await Message.create(messageConfig);
         await MessageService.sendMail(message);

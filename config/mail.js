@@ -24,7 +24,7 @@ module.exports.mail = {
       <br />收件者電話： %(phone)s
       <br />收件地址為： %(shipmentAddress)s
       <br />備註： %(note)s
-      <br />統一編號： %(unifiedBusinessNo)s
+      <br />發票號碼： %(invoiceNo)s
       <br />
       <br />如果上述資料正確，請將款項 $ %(paymentTotalAmount)s 匯款至以下帳號：
       <br />
@@ -49,7 +49,7 @@ module.exports.mail = {
       <br />收件者電話： %(phone)s
       <br />收件地址為： %(shipmentAddress)s
       <br />備註： %(note)s
-      <br />統一編號： %(unifiedBusinessNo)s
+      <br />發票號碼： %(invoiceNo)s
       <br />
       <br />From %(storeName)s
       </body></html>`

@@ -22,7 +22,7 @@ module.exports = {
 		remark: {
 			type: Sequelize.STRING,
 		},
-    unifiedBusinessNo: {
+    invoiceNo: {
       type: Sequelize.STRING,
     },
 		ItemNameArray: {

@@ -52,10 +52,10 @@
               <td>備註</td>
               <td><%= item.RecipeOrder.note ? item.RecipeOrder.note : " " %></td>
             </tr>
-						<% if(item.RecipeOrder.unifiedBusinessNo){ %>
+						<% if(item.RecipeOrder.invoiceNo){ %>
 	            <tr>
-	              <td>統一編號</td>
-	              <td><%= item.RecipeOrder.unifiedBusinessNo %></td>
+	              <td>發票號碼</td>
+	              <td><%= item.RecipeOrder.invoiceNo %></td>
 	            </tr>
 						<% } %>
           </tbody>
