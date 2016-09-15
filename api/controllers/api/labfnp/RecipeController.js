@@ -1,7 +1,7 @@
 module.exports = {
 
-  find: async (req, res) => {
-
+  findForLab: async (req, res) => {
+    console.log("=== findForLab ===");
     try {
       let user = AuthService.getSessionUser(req);
       const recipes = await Recipe.findAndIncludeUserLike({
@@ -9,6 +9,27 @@ module.exports = {
         start: parseInt(req.query.start, 10) || 0,
         length: parseInt(req.query.length, 10) || 5,
       });
+      console.log();
+      let social = SocialService.forRecipe({recipes});
+      res.ok({
+        data: {
+          items: recipes,
+          social,
+        }
+      });
+    } catch (e) {
+      res.serverError(e);
+    }
+  },
+
+  find: async (req, res) => {
+
+    try {
+      let user = AuthService.getSessionUser(req);
+      const recipes = await Recipe.findAndIncludeUserLike({
+        currentUser: user
+      });
+      console.log();
       let social = SocialService.forRecipe({recipes});
       res.ok({
         data: {

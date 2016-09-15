@@ -103,7 +103,7 @@ $(document).ready(function(){
     start = config.start;
     length = config.length;
     $.ajax({
-      url: '/api/labfnp/recipe?start='+ start +'&length='+ length,
+      url: '/api/labfnp/recipe/findForLab?start='+ start +'&length='+ length,
       type: 'GET',
       dataType: 'json',
       success: ajaxSuccess,
