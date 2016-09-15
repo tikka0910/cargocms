@@ -34,7 +34,7 @@
   <section>
     <label class="label">香水描述</label>
     <label class="textarea textarea-resizable">
-      <textarea name="description" value="<%= recipe.description %>" rows="3"></textarea>
+      <textarea name="description" value="<%= recipe.description %>" rows="3"><%= recipe.description %></textarea>
     </label>
   </section>
 
@@ -57,7 +57,7 @@
   <section>
     <label class="label">備註</label>
     <label class="textarea textarea-resizable">
-      <textarea name="message" rows="3"></textarea>
+      <textarea name="message" rows="3" value="<%= recipe.message %>"><%= recipe.message %></textarea>
     </label>
   </section>
 
