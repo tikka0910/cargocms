@@ -22,18 +22,24 @@
               <td>應付金額</td>
               <td><%= item.ShouldTradeAmt %></td>
             </tr>
-            <tr>
-              <td>銀行代碼</td>
-              <td><%= item.BankCode %></td>
-            </tr>
-            <tr>
-              <td>銀行帳號</td>
-              <td><%= item.vAccount %></td>
-            </tr>
-            <tr>
-              <td>付款期限</td>
-              <td><%= item.ExpireDate %></td>
-            </tr>
+            <% if(item.BankCode){ %>
+              <tr>
+                <td>銀行代碼</td>
+                <td><%= item.BankCode %></td>
+              </tr>
+            <% } %>
+						<% if(item.vAccount){ %>
+	            <tr>
+	              <td>銀行帳號</td>
+	              <td><%= item.vAccount %></td>
+	            </tr>
+						<% } %>
+						<% if(item.ExpireDate){ %>
+	            <tr>
+	              <td>付款期限</td>
+	              <td><%= item.ExpireDate %></td>
+	            </tr>
+						<% } %>
             <tr>
               <td>收件者電話</td>
               <td><%= item.RecipeOrder.phone ? item.RecipeOrder.phone : " " %></td>
@@ -46,6 +52,12 @@
               <td>備註</td>
               <td><%= item.RecipeOrder.note ? item.RecipeOrder.note : " " %></td>
             </tr>
+						<% if(item.RecipeOrder.invoiceNo){ %>
+	            <tr>
+	              <td>發票號碼</td>
+	              <td><%= item.RecipeOrder.invoiceNo %></td>
+	            </tr>
+						<% } %>
           </tbody>
         </table>
 

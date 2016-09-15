@@ -52,6 +52,11 @@
     padding-bottom: 10px;
   }
 
+  #gotoShop {
+    margin-top: 13px;
+    margin-left: 5px;
+  }
+
 </style>
 
 <div class="container content profile">
@@ -167,11 +172,17 @@
           </section>
 
           <section class="col">
+            <label for="invoiceNo">發票號碼</label>
+            <input type="text" id="invoiceNo" class="form-control" name="invoiceNo" value="" placeholder="請輸入發票號碼...">
+          </section>
+
+          <section class="col paymentMethod">
             <label for="paymentMethod">付款方式<span class="required">*</span>
             </label>
             <select class="form-control" id="paymentMethod" class="form-control" name="paymentMethod" required>
               <option value="Credit">信用卡</option>
               <option value="ATM">ATM轉帳</option>
+              <option value="gotoShop">到店購買</option>
             </select>
           </section>
 
@@ -203,7 +214,6 @@
 <% LayoutUtils.addScripts('/assets/labfnp/page/recipe/favorite.js'); %>
 <% LayoutUtils.addScriptBlock(`
   $(document).ready(function(){
-
 
   });
 `); %>

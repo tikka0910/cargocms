@@ -179,7 +179,21 @@ module.exports = {
         }
       }
     },
-
+    invoiceNo: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const recipeOrder = this.getDataValue('RecipeOrder');
+          let invoiceNo = '';
+          if(recipeOrder){
+            invoiceNo = recipeOrder.invoiceNo;
+          }
+          return invoiceNo;
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
     ItemNameArray: {
       type: Sequelize.VIRTUAL,
       get: function() {
