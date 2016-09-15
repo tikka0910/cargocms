@@ -43,6 +43,7 @@ module.exports.routes = {
   'post /api/admin/upload': 'api/admin/ImageController.upload',
   'delete /api/admin/upload/:id': 'api/admin/ImageController.destroy',
 
+  'get /api/labfnp/recipe/findForLab': 'api/labfnp/RecipeController.findForLab',
   'get /api/labfnp/recipe': 'api/labfnp/RecipeController.find',
   'post /api/labfnp/recipe': 'api/labfnp/RecipeController.create',
   'get /api/labfnp/recipe/new': 'api/labfnp/RecipeController.topNew',
@@ -137,6 +138,7 @@ module.exports.routes = {
   //----- view -----
   "/labfnp/:controller/:action/:id?": {},
   "/admin/:controller/:action/:id?": {},
+
   "/:controller/:action/:id?": {},
 
   //----- WallController -----

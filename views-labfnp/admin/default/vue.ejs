@@ -67,7 +67,9 @@ var defaultVueMathod = {
 			console.log('result=>', result);
 			if (modelName === 'user') {
 				appModel.data.item = result.data;
-				appModel.data.option.passwordConfirm = result.data.Passports[0].password;
+				if(result.data.Passports && result.data.Passports[0])
+					appModel.data.option.passwordConfirm = result.data.Passports[0].password;
+
 				var hasAvatar = typeof result.data.avatar === 'string';
 				if (!hasAvatar) appModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
 			} else {
