@@ -89,6 +89,7 @@ module.exports = {
     firstName,
     lastName,
     locale,
+    Passports,
     password,
     passwordConfirm,
   }) => {
@@ -103,7 +104,8 @@ module.exports = {
       if (updatedUser) {
         if (user.password === user.passwordConfirm) {
           const passport = await Passport.findById(updatedUser.Passports[0].id);
-          const isOldPassword = await passport.validatePassword(user.password, passport);
+          // const isOldPassword = await passport.validatePassword(user.password, passport);
+          const isOldPassword = user.password === passport.password;
           if (!isOldPassword) {
             passport.password = user.password;
             await passport.save();
