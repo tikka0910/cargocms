@@ -249,7 +249,7 @@ module.exports = {
         item.TradeAmt = 1550;
         item.TradeNo = item.MerchantTradeNo;
         item.PaymentType = '到店購買';
-        item.ExpireDate = moment(new Date()).format("YYYY/MM/DD");
+        item.PaymentDate = moment(new Date()).format("YYYY/MM/DD");
         await item.save();
 
         let messageConfig = {};

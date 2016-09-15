@@ -1,3 +1,4 @@
+<% LayoutUtils.addStylesheets('/assets/admin/css/smartadmin-default-index.css'); %>
 
 <!-- client -->
 <table id="main-table" class="table table-striped table-bordered table-hover" width="100%">
@@ -5,18 +6,19 @@
 		<tr>
 			<th data-hide="phone"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs"/> ID</th>
 			<th data-class="expand"><i class="fa fa-fw text-muted hidden-sm hidden-xs"/> 交易編號 </th>
-      <th data-hide="phone,tablet">廠商交易編號</th>
-      <th>交易訊息</th>
+      <th data-hide="always">廠商交易編號</th>
+      <th data-hide="always">交易訊息</th>
       <th>付款時間</th>
-      <th data-hide="phone,tablet">付款方式</th>
-      <th data-hide="phone,tablet">付款金額</th>
-      <th data-hide="phone,tablet">付款帳號</th>
-      <th data-hide="phone,tablet">訂購物品</th>
-      <th data-hide="phone,tablet">訂購人</th>
-      <th data-hide="phone,tablet">Email</th>
-      <th data-hide="phone,tablet">電話</th>
-			<th data-hide="phone,tablet">住址</th>
+      <th data-hide="always">付款方式</th>
+      <th>付款金額</th>
+      <th data-hide="always">付款帳號</th>
+      <th>訂購物品</th>
+      <th>訂購人</th>
+      <th data-hide="always">Email</th>
+      <th data-hide="always">電話</th>
+			<th data-hide="always">住址</th>
 			<th data-hide="phone,tablet"></th>
+			<th data-hide="always">統一編號</th>
 		</tr>
 	</thead>
 	<!-- client only -->
@@ -26,7 +28,7 @@
 			<td><a href="/admin/#/admin/{{modelName}}/show/{{item.id}}">{{ item.TradeNo }}</a></td>
 			<td>{{ item.MerchantTradeNo }}</td>
 			<td>{{ item.RtnMsg }}</td>
-      <td>{{ item.PaymentDate }} </td>
+      <td>{{ item.PaymentDate }}</td>
       <td>{{ item.PaymentType }} </td>
       <td>{{ item.TradeAmt }} </td>
       <td>{{ item.vAccount }} </td>
@@ -45,6 +47,7 @@
 					</a>
 				</div>
 			</td>
+			<td>{{ item.unifiedBusinessNo }} </td>
 		</tr>
 	</tbody>
  </table>
