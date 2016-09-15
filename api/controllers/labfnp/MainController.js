@@ -27,8 +27,10 @@ module.exports = {
       const loginUser = AuthService.getSessionUser(req);
       if (!loginUser) return res.redirect('/login');
 
+      const user = await User.findOneWithPassport({ id: loginUser.id });
+
       return res.view({
-        user: loginUser,
+        user: user,
       });
     } catch (e) {
       res.serverError(e);
