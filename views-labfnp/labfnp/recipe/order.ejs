@@ -171,7 +171,7 @@
             <input type="text" id="note" class="form-control" name="note" value="" placeholder="請輸入送件備註...">
           </section>
 
-          <section class="col">
+          <section class="col paymentMethod">
             <label for="paymentMethod">付款方式<span class="required">*</span>
             </label>
             <select class="form-control" id="paymentMethod" class="form-control" name="paymentMethod" required>
@@ -212,7 +212,15 @@
 <% LayoutUtils.addScripts('/assets/labfnp/page/recipe/favorite.js'); %>
 <% LayoutUtils.addScriptBlock(`
   $(document).ready(function(){
-
+    $('#gotoShop').on('change', function(){
+      var gotoShop = $('#gotoShop:checked').val();
+      console.log(gotoShop);
+      if (gotoShop) {
+        $('.paymentMethod').hide();
+      } else {
+        $('.paymentMethod').show();
+      }
+    });
 
   });
 `); %>
