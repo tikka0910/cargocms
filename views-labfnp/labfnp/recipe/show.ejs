@@ -3,7 +3,7 @@
 <% LayoutUtils.addMeta({ property:"description", content:recipe.description }); %>
 
 <!-- FB OG tags-->
-<% LayoutUtils.addMeta({ property:"og:title", content:"LFP: 香料香水實驗室，客製專屬香水 | 配方名稱：" + recipe.perfumeName }); %>
+<% LayoutUtils.addMeta({ property:"og:title", content:"配方名稱：" + recipe.perfumeName + " | LFP: 香料香水實驗室，客製專屬香水"}); %>
 <% LayoutUtils.addMeta({ property:"og:description", content:recipe.description }); %>
 <% LayoutUtils.addMeta({ property:"og:image", content:SocialService.getShareUrl() + recipe.coverPhoto }); %>
 <% LayoutUtils.addMeta({ property:"og:image:type", content:"image/jpeg" }); %>
