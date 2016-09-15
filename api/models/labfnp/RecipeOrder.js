@@ -20,6 +20,9 @@ module.exports = {
     remark: {
       type: Sequelize.STRING,
     },
+    unifiedBusinessNo: {
+      type: Sequelize.STRING,
+    },
     ItemNameArray: {
       type: Sequelize.VIRTUAL,
       get: function() {

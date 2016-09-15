@@ -1,4 +1,6 @@
 import crypto from 'crypto';
+import moment from 'moment';
+
 module.exports = {
   create: async function(req, res) {
     let user, recipe, scents, totalDrops, feelings
@@ -206,7 +208,7 @@ module.exports = {
       })();
       if (!verifyInputs) return res.forbidden('訂單資料錯誤！');
 
-      const { email, note, perfumeName, description, message } = req.body;
+      const { email, note, perfumeName, description, message, unifiedBusinessNo } = req.body;
 
       let recipeOrder = await RecipeOrder.create({
         UserId: user.id,
@@ -216,6 +218,7 @@ module.exports = {
         address,
         email,
         note,
+        unifiedBusinessNo,
       });
       recipeOrder = await RecipeOrder.findByIdHasJoin(recipeOrder.id);
       const formatName = recipeOrder.ItemNameArray.map((name) => {
@@ -243,9 +246,27 @@ module.exports = {
         });
         item.RtnMsg = '到店購買';
         item.ShouldTradeAmt = 1550;
+        item.TradeAmt = 1550;
         item.TradeNo = item.MerchantTradeNo;
         item.PaymentType = '到店購買';
+        item.ExpireDate = moment(new Date()).format("YYYY/MM/DD");
         await item.save();
+
+        let messageConfig = {};
+        messageConfig.serialNumber = item.MerchantTradeNo;
+        messageConfig.paymentTotalAmount = 1550;
+        messageConfig.productName = recipeOrder.Recipe.perfumeName + ' 100 ml';
+        messageConfig.email = recipeOrder.email;
+        messageConfig.username = recipeOrder.User.displayName;
+        messageConfig.shipmentUsername = recipeOrder.recipient;
+        messageConfig.shipmentAddress = recipeOrder.address;
+        messageConfig.note = recipeOrder.note;
+        messageConfig.phone = recipeOrder.phone;
+        messageConfig.unifiedBusinessNo = recipeOrder.unifiedBusinessNo;
+        messageConfig = await MessageService.orderToShopConfirm(messageConfig);
+        const message = await Message.create(messageConfig);
+        await MessageService.sendMail(message);
+
         res.view('shop/done', {
           item
         });
