@@ -84,7 +84,8 @@
                   <th class="" data-hide="phone,tablet" style="">建立日期</th>
                   <th class="" data-hide="">公開狀態</th>
                   <th class="" data-hide="">製作狀態</th>
-                  <th class="" data-hide="phone,tablet" style=""><i class="fa fa-fw fa-comment text-muted hidden-xs" /> 備註</th>
+                  <th class="" data-hide="phone,tablet" style="width: 30%;"><i class="fa fa-fw fa-comment text-muted hidden-xs" /> 香水描述</th>
+                  <th class="" data-hide="phone,tablet" style="width: 30%;"><i class="fa fa-fw fa-comment text-muted hidden-xs" /> 額外資訊</th>
                   <template v-for="n in 6">
                     <th class="no-sort" data-hide="always" style="">香味分子{{n}}</th>
                     <th class="no-sort" data-hide="always" style="">滴數</th>
@@ -102,6 +103,7 @@
                   <td>{{ recipe.createdAt }}</td>
                   <td>{{ recipe.visibilityDesc }}</td>
                   <td>{{ recipe.productionStatusDesc }}</td>
+                  <td>{{ recipe.description }}</td>
                   <td>{{ recipe.message }}</td>
 
                   <template v-for="n in 6">

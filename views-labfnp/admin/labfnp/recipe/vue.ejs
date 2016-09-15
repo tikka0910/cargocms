@@ -1,5 +1,4 @@
 <%- include ../metadata.js.ejs %>
-
 var appModel = {
 	data: {
 		link: {
@@ -485,7 +484,9 @@ var mainApp = new Vue({
 					{
 						"targets": 'no-sort',
 						"orderable": false,
-        },
+        	},
+					{ "width": "20%", "targets": 6 },
+					{ "width": "20%", "targets": 7 }
       ],
 				"oTableTools": {
 					"sSwfPath": "/assets/admin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf",
