@@ -32,4 +32,45 @@ module.exports = {
     }
   },
 
+  update: async (req, res) => {
+    const { id } = req.params;
+    const data = req.body;
+    try {
+      sails.log.info('update user controller id=>', id);
+      sails.log.info('update user controller data=>', data);
+      const { password, passwordConfirm } = data;
+      const checkPwdEqual = password === passwordConfirm;
+
+      if (checkPwdEqual) {
+        const user = await UserService.updateByUser({
+          id: id,
+          ...data,
+        })
+        const checkLastName = user.lastName === data.lastName;
+        const checkFirstName = user.firstName === data.firstName;
+        const checkEmail = user.email === data.email;
+        if (checkEmail && (checkFirstName && checkLastName)) {
+          req.session.passport.user.displayName = user.displayName;
+          req.session.passport.user.lastName = user.lastName;
+          req.session.passport.user.firstName = user.firstName;
+          req.session.passport.user.email = user.email;
+          req.session.passport.user.local = user.local;
+          req.session.passport.user.avatarThumb = user.avatarThumb;
+          req.session.passport.user.avatar = user.avatar;
+          res.send(req.session);
+          // res.ok({
+          //   message: 'Update user success.',
+          //   data: user,
+          // });
+        } else {
+          throw Error(`update user ${id} failed`);
+        }
+      } else {
+        throw Error('error: user password and passwordConfirm is not equal!');
+      }
+    } catch (e) {
+      res.serverError(e);
+    }
+  },
+
 }
