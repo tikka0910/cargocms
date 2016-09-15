@@ -231,11 +231,30 @@ module.exports = {
         paymentMethod: paymentMethod,
         itemArray: formatName,
       });
-
-      return res.view({
-        AioCheckOut: AllpayService.getPostUrl(),
-        ...allPayData
-      });
+      if (req.body.gotoShop) {
+        const item = await Allpay.findOne({
+          where:{
+            MerchantTradeNo: allPayData.MerchantTradeNo
+          },
+          include:{
+            model: RecipeOrder,
+            include: [User, Recipe]
+          }
+        });
+        item.RtnMsg = '到店購買';
+        item.ShouldTradeAmt = 1550;
+        item.TradeNo = item.MerchantTradeNo;
+        item.PaymentType = '到店購買';
+        await item.save();
+        res.view('shop/done', {
+          item
+        });
+      } else {
+        return res.view({
+          AioCheckOut: AllpayService.getPostUrl(),
+          ...allPayData
+        });
+      }
     } catch (e) {
       res.serverError(e);
     }
