@@ -181,12 +181,21 @@ $(document).ready(function () {
 
 	for (var i = 0; i < allScentOptions.length; i++) {
 		var scent = $(allScentOptions[i]);
-		allScents.push($("<option></option>")
-			.attr("value", scent.val())
-			.data('color', scent.data('color'))
-			.data('title', scent.data('title'))
-			.data('description', scent.data('description'))
-			.text(scent.val()));
+		var scentData = {
+			val: scent.val(),
+			color: scent.data('color'),
+			title: scent.data('title'),
+			description: scent.data('description')
+		}
+
+		allScents.push(scentData);
+
+		// allScents.push($("<option></option>")
+		// 	.attr("value", scent.val())
+		// 	.data('color', scent.data('color'))
+		// 	.data('title', scent.data('title'))
+		// 	.data('description', scent.data('description'))
+		// 	.text(scent.val()));
 	}
 
 	$('.scents-categories').change(function () {
@@ -198,12 +207,22 @@ $(document).ready(function () {
 
 		if (prefix) {
 			for (var i = 0; i < allScents.length; i++) {
-				if (allScents[i].val().substring(0, 1) == prefix)
-					filterOptions.push(allScents[i]);
+				if (allScents[i].val.substring(0, 1) == prefix)
+					filterOptions.push($("<option></option>")
+						.attr("value", allScents[i].val)
+						.data('color', allScents[i].color)
+						.data('title', allScents[i].title)
+						.data('description', allScents[i].description)
+						.text(allScents[i].val));
 			}
 		} else {
 			for (var i = 0; i < allScents.length; i++) {
-				filterOptions.push(allScents[i]);
+				filterOptions.push($("<option></option>")
+					.attr("value", allScents[i].val)
+					.data('color', allScents[i].color)
+					.data('title', allScents[i].title)
+					.data('description', allScents[i].description)
+					.text(allScents[i].val));
 			}
 		}
 
