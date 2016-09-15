@@ -85,32 +85,34 @@
               </div>
             </section>
 
-            <section class="col">
-              <label class="input" for="password">
-                請輸入密碼
-              </label>
-              <div class="input-group">
-                <span class="input-group-addon rounded-left">
-                  <i class="icon-lock color-blue"></i>
-                </span>
-                <input type="password" name="password" class="form-control rounded-right" value="<%= user.Passports[0].password %>" placeholder="輸入密碼">
-              </div>
-            </section>
+            <% if (!user.facebookId) { %>
+              <section class="col">
+                <label class="input" for="password">
+                  請輸入密碼
+                </label>
+                <div class="input-group">
+                  <span class="input-group-addon rounded-left">
+                    <i class="icon-lock color-blue"></i>
+                  </span>
+                  <input type="password" name="password" class="form-control rounded-right" value="<%= user.Passports[0].password %>" placeholder="輸入密碼">
+                </div>
+              </section>
 
-            <section class="col">
-              <label class="input" for="password">
-                確認密碼
-              </label>
-              <div class="input-group margin-bottom-20">
-                <span class="input-group-addon rounded-left">
-                  <i class="icon-lock color-blue"></i>
-                </span>
-                <input type="password" name="passwordConfirm" class="form-control rounded-right" value="<%= user.Passports[0].password %>" placeholder="請再輸入一次密碼">
-              </div>
-            </section>
+              <section class="col">
+                <label class="input" for="password">
+                  確認密碼
+                </label>
+                <div class="input-group margin-bottom-20">
+                  <span class="input-group-addon rounded-left">
+                    <i class="icon-lock color-blue"></i>
+                  </span>
+                  <input type="password" name="passwordConfirm" class="form-control rounded-right" value="<%= user.Passports[0].password %>" placeholder="請再輸入一次密碼">
+                </div>
+              </section>
+              <span class="">*如不打算變更密碼，請不要修改密碼欄位即可。</span>
+          <% } %>
 
           </form>
-          <span class="">*如不打算變更密碼，請不要修改密碼欄位即可。</span>
         </div>
         <div class="text-center">
           <button form="userProfileForm" id="submit" type="sumbit" class="btn-u btn-u-green" data-id="<%= user.id %>">
