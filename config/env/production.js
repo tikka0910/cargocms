@@ -49,7 +49,7 @@ module.exports = {
         ]
       }
     }
-  }
+  },
   session: {
     secret: '',
     adapter: 'redis',
