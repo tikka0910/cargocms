@@ -1,4 +1,5 @@
 import moment from 'moment';
+
 module.exports = {
   attributes: {
     //TODO authorAvatar
@@ -90,7 +91,7 @@ module.exports = {
       type: Sequelize.STRING,
       get: function() {
         const val = this.getDataValue('message');
-        if (typeof val !== 'string' || val === null) return '沒有備註';
+        if (typeof val !== 'string' || val === null) return '';
         return val;
       }
     },
@@ -99,7 +100,7 @@ module.exports = {
       type: Sequelize.STRING,
       get: function() {
         const val = this.getDataValue('description');
-        if (typeof val !== 'string' || val === null) return '沒有描述';
+        if (typeof val !== 'string' || val === null) return '';
         return val;
       }
     },

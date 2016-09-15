@@ -139,7 +139,8 @@ module.exports = {
           },
           include: [ Role, {
               model: Passport,
-              where: { provider: 'local' }
+              where: { provider: 'local' },
+              required: false
           }],
         });
       },

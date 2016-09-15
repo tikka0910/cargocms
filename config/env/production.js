@@ -49,7 +49,16 @@ module.exports = {
         ]
       }
     }
-  }
+  },
+  session: {
+    secret: '',
+    adapter: 'redis',
+    host: 'localhost',
+    port: 6379,
+    db: 0,
+    pass: "",
+    prefix: 'sess:',
+  },
 
 
 };

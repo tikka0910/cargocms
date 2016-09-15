@@ -33,13 +33,44 @@ module.exports = {
   orderConfirm: (result = {
     productName, serialNumber, email, username, bankId, bankName, bankName,
     accountId, accountName, paymentTotalAmount, shipmentUsername, shipmentAddress,
-    note, phone,
+    note, phone, invoiceNo
   }) => {
 
     try {
 
       let orderConfirmTemplete = sails.config.mail.templete.orderConfirm;
       let mailSendConfig = {...orderConfirmTemplete, to: result.email};
+      let orderSerialNumber = result.serialNumber;
+      let DOMAIN_HOST = process.env.DOMAIN_HOST || 'localhost:5001';
+      let orderConfirmLink = `http://${DOMAIN_HOST}/order/paymentConfirm?serial=${orderSerialNumber}`
+
+      mailSendConfig.subject = sprintf(mailSendConfig.subject, { orderSerialNumber });
+      mailSendConfig.html = sprintf(mailSendConfig.html, {
+        ...result,
+        orderSerialNumber,
+        storeName: 'LFP',
+        orderConfirmLink
+      });
+
+      mailSendConfig.type = 'orderConfirm';
+
+      return mailSendConfig;
+
+    } catch (error) {
+      throw error;
+    }
+
+  },
+  orderToShopConfirm: (result = {
+    productName, serialNumber, email, username, bankId, bankName, bankName,
+    accountId, accountName, paymentTotalAmount, shipmentUsername, shipmentAddress,
+    note, phone, invoiceNo
+  }) => {
+
+    try {
+
+      let orderToShopConfirm = sails.config.mail.templete.orderToShopConfirm;
+      let mailSendConfig = {...orderToShopConfirm, to: result.email};
       let orderSerialNumber = result.serialNumber;
       let DOMAIN_HOST = process.env.DOMAIN_HOST || 'localhost:5001';
       let orderConfirmLink = `http://${DOMAIN_HOST}/order/paymentConfirm?serial=${orderSerialNumber}`

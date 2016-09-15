@@ -1,4 +1,6 @@
 import crypto from 'crypto';
+import moment from 'moment';
+
 module.exports = {
   create: async function(req, res) {
     let user, recipe, scents, totalDrops, feelings
@@ -193,7 +195,7 @@ module.exports = {
         if (!verifyInputExists) return res.forbidden('訂單資料缺失或不正確！');
 
         let verifyPaymentMethodValid = 0;
-        const validPaymentMethods = [ 'ATM', 'Credit' ];
+        const validPaymentMethods = [ 'ATM', 'Credit', 'gotoShop' ];
         for (var method of validPaymentMethods) {
           if (paymentMethod === method) verifyPaymentMethodValid += 1;
         }
@@ -206,7 +208,7 @@ module.exports = {
       })();
       if (!verifyInputs) return res.forbidden('訂單資料錯誤！');
 
-      const { email, note, perfumeName, description, message } = req.body;
+      const { email, note, perfumeName, description, message, invoiceNo } = req.body;
 
       let recipeOrder = await RecipeOrder.create({
         UserId: user.id,
@@ -216,6 +218,7 @@ module.exports = {
         address,
         email,
         note,
+        invoiceNo,
       });
       recipeOrder = await RecipeOrder.findByIdHasJoin(recipeOrder.id);
       const formatName = recipeOrder.ItemNameArray.map((name) => {
@@ -231,11 +234,48 @@ module.exports = {
         paymentMethod: paymentMethod,
         itemArray: formatName,
       });
+      if (paymentMethod == 'gotoShop') {
+        const item = await Allpay.findOne({
+          where:{
+            MerchantTradeNo: allPayData.MerchantTradeNo
+          },
+          include:{
+            model: RecipeOrder,
+            include: [User, Recipe]
+          }
+        });
+        item.RtnMsg = '到店購買';
+        item.ShouldTradeAmt = 1550;
+        item.TradeAmt = 1550;
+        item.TradeNo = item.MerchantTradeNo;
+        item.PaymentType = '到店購買';
+        item.PaymentDate = moment(new Date()).format("YYYY/MM/DD");
+        await item.save();
 
-      return res.view({
-        AioCheckOut: AllpayService.getPostUrl(),
-        ...allPayData
-      });
+        let messageConfig = {};
+        messageConfig.serialNumber = item.MerchantTradeNo;
+        messageConfig.paymentTotalAmount = 1550;
+        messageConfig.productName = recipeOrder.Recipe.perfumeName + ' 100 ml';
+        messageConfig.email = recipeOrder.email;
+        messageConfig.username = recipeOrder.User.displayName;
+        messageConfig.shipmentUsername = recipeOrder.recipient;
+        messageConfig.shipmentAddress = recipeOrder.address;
+        messageConfig.note = recipeOrder.note;
+        messageConfig.phone = recipeOrder.phone;
+        messageConfig.invoiceNo = recipeOrder.invoiceNo;
+        messageConfig = await MessageService.orderToShopConfirm(messageConfig);
+        const message = await Message.create(messageConfig);
+        await MessageService.sendMail(message);
+
+        res.view('shop/done', {
+          item
+        });
+      } else {
+        return res.view({
+          AioCheckOut: AllpayService.getPostUrl(),
+          ...allPayData
+        });
+      }
     } catch (e) {
       res.serverError(e);
     }

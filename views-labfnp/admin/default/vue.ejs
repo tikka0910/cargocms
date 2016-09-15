@@ -67,7 +67,9 @@ var defaultVueMathod = {
 			console.log('result=>', result);
 			if (modelName === 'user') {
 				appModel.data.item = result.data;
-				appModel.data.option.passwordConfirm = result.data.Passports[0].password;
+				if(result.data.Passports && result.data.Passports[0])
+					appModel.data.option.passwordConfirm = result.data.Passports[0].password;
+
 				var hasAvatar = typeof result.data.avatar === 'string';
 				if (!hasAvatar) appModel.data.item.avatar = COMMON.DEFAULT_AVATAR;
 			} else {
@@ -150,7 +152,7 @@ var defaultVueMathod = {
 		var defaultTableConfig = {
 			"processing": false,
 			"serverSide": serverSidePaging,
-			"sDom": "<'dt-toolbar'<'row'r<'col-xs-7 col-md-7 col-sm-7'f><'col-xs-5 col-md-4 col-sm-4'T><'col-md-1 col-sm-1 hidden-xs'l>>>" +
+			"sDom": "<'dt-toolbar'<'row'r<'col-xs-12 col-md-7 col-sm-7'f><'col-xs-12 col-md-4 col-sm-4'T><'col-md-1 col-sm-1 hidden-xs'l>>>" +
 				"t" +
 				"<'dt-toolbar-footer'<'row'<'col-md-6 col-xs-12 hidden-xs'i><'col-md-6 col-xs-12'p>>>",
 			"oLanguage": {

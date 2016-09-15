@@ -22,7 +22,7 @@ module.exports = {
     createdBy,
   }) => {
     try {
-      
+
       recipe.formula = RecipeService.sortFormulaByScentName({ formula: recipe.formula });
       recipe.coverPhotoId = recipe.coverPhotoId == "" ? null : recipe.coverPhotoId;
 
@@ -55,6 +55,7 @@ module.exports = {
     message,
     description,
     visibility,
+    coverPhotoId,
     productionStatus,
   }) => {
     try {
@@ -75,6 +76,7 @@ module.exports = {
         updatedRecipe.visibility = recipe.visibility;
         updatedRecipe.productionStatus = recipe.productionStatus
         updatedRecipe.description = recipe.description;
+        updatedRecipe.coverPhotoId = recipe.coverPhotoId == "" ? updatedRecipe.coverPhotoId : recipe.coverPhotoId;
 
         updatedRecipe = await updatedRecipe.save();
       }
