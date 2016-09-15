@@ -58,7 +58,7 @@ module.exports = {
 
       const recipes = await Recipe.findAll({
         where: {
-          userId: user.id,
+          UserId: user.id,
           ...notShowPrivateRecipe
         },
         order: 'Recipe.updatedAt desc',
