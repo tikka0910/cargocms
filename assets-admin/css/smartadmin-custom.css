@@ -73,10 +73,6 @@ nav ul span.menu-item-parent {
   display: flex;
 }
 
-.jarviswidget {
-  display: none;
-}
-
 .color {
   color: white;
   padding: 2px;
@@ -87,25 +83,25 @@ nav ul span.menu-item-parent {
   font-family: monospace;
 }
 
-@media only screen and (min-width: 1200px) {
+@media screen and (min-width: 1200px) {
   #main-table_filter input {
     width: 500px;
   }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1199px) {
+@media screen and (min-width: 768px) and (max-width: 1199px) {
   #main-table_filter input {
     width: 300px;
   }
 }
 
-@media only screen and (min-width: 480px) and (max-width: 767px) {
+@media screen and (min-width: 480px) and (max-width: 767px) {
   #main-table_filter input {
     width: 400px;
   }
 }
 
-@media only screen and (max-width: 479px) {
+@media screen and (max-width: 479px) {
   #main-table_filter input {
     width: 255px;
   }

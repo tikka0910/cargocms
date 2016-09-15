@@ -64,7 +64,7 @@ var defaultVueMathod = {
 		window.onbeforeunload = null;
 
 		var ajaxSuccess = function (result) {
-			console.log('result=>', result);
+			console.log('loadItem result=>', result);
 			if (modelName === 'user') {
 				appModel.data.item = result.data;
 				if(result.data.Passports && result.data.Passports[0])
