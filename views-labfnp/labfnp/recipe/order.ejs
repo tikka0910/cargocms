@@ -177,18 +177,14 @@
             <select class="form-control" id="paymentMethod" class="form-control" name="paymentMethod" required>
               <option value="Credit">信用卡</option>
               <option value="ATM">ATM轉帳</option>
+              <option value="gotoShop">到店購買</option>
             </select>
           </section>
-          
+
           <section class="col">
             <label for="unifiedBusinessNo">統一編號</label>
             <input type="text" id="unifiedBusinessNo" class="form-control" name="unifiedBusinessNo" value="" placeholder="請輸入統一編號...">
           </section>
-
-          <section class="col">
-            <input type="checkbox" id="gotoShop" name="gotoShop"> 到店購買
-          </section>
-
 
         </form>
       </div>
@@ -218,15 +214,6 @@
 <% LayoutUtils.addScripts('/assets/labfnp/page/recipe/favorite.js'); %>
 <% LayoutUtils.addScriptBlock(`
   $(document).ready(function(){
-    $('#gotoShop').on('change', function(){
-      var gotoShop = $('#gotoShop:checked').val();
-      console.log(gotoShop);
-      if (gotoShop) {
-        $('.paymentMethod').hide();
-      } else {
-        $('.paymentMethod').show();
-      }
-    });
 
   });
 `); %>

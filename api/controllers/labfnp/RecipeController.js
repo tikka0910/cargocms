@@ -195,7 +195,7 @@ module.exports = {
         if (!verifyInputExists) return res.forbidden('訂單資料缺失或不正確！');
 
         let verifyPaymentMethodValid = 0;
-        const validPaymentMethods = [ 'ATM', 'Credit' ];
+        const validPaymentMethods = [ 'ATM', 'Credit', 'gotoShop' ];
         for (var method of validPaymentMethods) {
           if (paymentMethod === method) verifyPaymentMethodValid += 1;
         }
@@ -234,7 +234,7 @@ module.exports = {
         paymentMethod: paymentMethod,
         itemArray: formatName,
       });
-      if (req.body.gotoShop) {
+      if (paymentMethod == 'gotoShop') {
         const item = await Allpay.findOne({
           where:{
             MerchantTradeNo: allPayData.MerchantTradeNo
