@@ -50,7 +50,7 @@
           <li class="topbar-devider"></li>
           <li class="<%= (req.path=='/login')?'active':'' %>"><a id="login" href="/login">登入</a></li>
         <% } else { %>
-          <li><a id="logout-link" href="/logout">登出</a></li>
+          <li><a id="logout-link">登出</a></li>
           <li class="topbar-devider"></li>
           <li class="<%= (req.path=='/me')?'active':'' %>" >
             <a href="/me">
@@ -63,3 +63,25 @@
   </div><!--/navbar-collapse-->
 </div>
 <!--=== End Header ===-->
+
+<% LayoutUtils.addScriptBlock(`
+  $('#logout-link').click(function(){
+    swal({
+      title: '確認',
+      text: '您確定要登出了嗎？',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: "#e6caa8",
+      confirmButtonText: "登出",
+      cancelButtonText: "我要回去",
+      closeOnConfirm: true,
+      closeOnCancel: true,
+    },function(isConform){
+      if(isConform){
+        open('/logout', '_self');
+      }else{
+        swal.close();
+      }
+    });
+  });
+`); %>

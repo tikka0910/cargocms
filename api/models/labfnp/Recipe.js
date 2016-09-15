@@ -1,4 +1,5 @@
 import moment from 'moment';
+
 module.exports = {
   attributes: {
     //TODO authorAvatar

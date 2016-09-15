@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 module.exports = {
   attributes: {
     // 歐付寶
@@ -23,6 +25,13 @@ module.exports = {
     // allpay 付款時間
     PaymentDate: {
       type: Sequelize.DATE,
+      get: function () {
+        try {
+          return moment(this.getDataValue('PaymentDate')).format("YYYY/MM/DD HH:mm:SS");
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
     },
     // allpay 交易日期
     TradeDate: {
