@@ -2,17 +2,9 @@ var submitData = function (form) {
 	var api = $(form).attr('action');
 	var method = $(form).attr('method');
 
-	var formIsValid = true
 	var values = {};
 	$.each($(form).serializeArray(), function (i, field) {
 		values[field.name] = field.value;
-
-		var checkFirstName = field.name === 'firstName' && field.value === '';
-		var checkLastName = field.name === 'lastName' && field.value === '';
-		var checkEmail = field.name === 'email' && field.value === '';
-		if ((checkFirstName && checkLastName) && checkEmail) {
-			formIsValid = false;
-    }
 	});
 
   var checkPwdEqual = values['password'] !== values['passwordConfirm'];
@@ -22,11 +14,15 @@ var submitData = function (form) {
     return false;
   };
 
-	if (!formIsValid) {
-    swal('錯誤', '姓名與信箱不可留空！', 'warning');
+  var checkFirstName = values['firstName'].length < 1;
+  var checkLastName = values['lastName'].length < 1;
+  var checkEmail = values['email'].length < 1;
+  if ((checkFirstName || checkLastName) || checkEmail) {
+    swal('錯誤', '姓名/信箱欄位都不可留空！', 'warning');
     clearTimeout(time);
     return false;
   }
+
 	var ajaxConfig = {
 		url: api,
 		method: method,
@@ -45,12 +41,12 @@ var submitData = function (form) {
 	var catchDone = function (result) {
 		swal({
 			title: '訊息',
-			text: '更新個人資料成功，請重新登入。',
+			text: '更新個人資料成功！',
 			type: 'success',
 			confirmButtonColor: "#2ecc71",
 			confirmButtonText: "ＯＫ",
 		}, function (isConform) {
-			open('/edit/me', '_self');
+			open('/me', '_self');
 		});
 	};
   var catchFail = function (result) {
