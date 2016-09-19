@@ -37,52 +37,8 @@ describe('about LikeRecipe Controller operation.', function() {
   it('Recipe like action should be success.', async (done) => {
     try {
       const res = await request(sails.hooks.http.app)
-      .get(`/api/labfnp/recipe/like/${recipe.id}`)
+      .get(`/api/admin/recipe/csv`)
       res.status.should.be.eq(200);
-      done();
-    } catch (e) {
-      done(e);
-    }
-  });
-
-  it('Recipe unlike should be success.', async (done) => {
-    try {
-      const res = await request(sails.hooks.http.app)
-      .get(`/api/labfnp/recipe/unlike/${recipe.id}`)
-      res.status.should.be.eq(200);
-      done();
-    } catch (e) {
-      done(e);
-    }
-  });
-
-  it('Recipe feelings should be success.', async (done) => {
-    try {
-      const res = await request(sails.hooks.http.app)
-      .get(`/api/labfnp/recipe/${recipe.id}/feelings`);
-      res.status.should.be.eq(200);
-
-      sails.log(res.body.data);
-      // test content
-      res.body.data.feelings.should.be.Array;
-
-      done();
-    } catch (e) {
-      done(e);
-    }
-  });
-
-  it('Recipe feelings should be success.', async (done) => {
-    try {
-      const res = await request(sails.hooks.http.app)
-      .get(`/api/admin/labfnp/recipe/csv`);
-      res.status.should.be.eq(200);
-
-      //sails.log(res.body.data);
-      // test content
-      //res.body.data.feelings.should.be.Array;
-      //return data should be a csv file
-
       done();
     } catch (e) {
       done(e);
