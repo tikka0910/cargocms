@@ -23,6 +23,7 @@ describe('about LikeRecipe Controller operation.', function() {
         message: 'this is love test',
         UserId: user.id,
       });
+      console.log('create successful');
       done()
     } catch (e) {
       done(e)
@@ -34,14 +35,47 @@ describe('about LikeRecipe Controller operation.', function() {
     done();
   });
 
-  it('Recipe to CSV should be success.', async (done) => {
+  it('Recipe to CSV with Date should be success.', async (done) => {
     try {
       const webForm = { draw: '1',
         type: 'csv',
+        startDate: '1900/01/01',
+        endDate: '3000/01/01',
         columns:[
            { data: 'id', name: '' },
            { data: 'perfumeName', name: '', "searchable": "true"},
-           { data: 'authorName', name: '' , "searchable": "true"}
+           { data: 'authorName', name: '' , "searchable": "true"},
+           { data: 'createdAt', name: '', "searchable": "false"},
+           { data: 'updatedAt', name: '', "searchable": "false"},
+           { data: 'visibility', name: '', "searchable": "false"},
+           { data: 'productionStatus', name: '', "searchable": "false"},
+           { data: 'description', name: '', "searchable": "false"},
+           { data: 'message', name: '', "searchable": "false"},
+           { data: 'formula', name: '', "searchable": "false"},
+        ],
+        order: [ { column: '0', dir: 'asc' } ],
+        search: { value: 'John', regex: 'false' },
+        _: '1470989140227'
+      }
+      const res = await request(sails.hooks.http.app)
+      .get(`/api/admin/labfnp/recipe/export`).form(webForm)
+      res.status.should.be.eq(200);
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  it('Recipe to CSV with Date should be success.', async (done) => {
+    try {
+      const webForm = { draw: '1',
+        type: 'csv',
+        startDate: '',
+        endDate: '',
+        columns:[
+           { data: 'id', name: '' },
+           { data: 'perfumeName', name: '', "searchable": "true"},
+           { data: 'authorName', name: '' , "searchable": "true"},
            { data: 'createdAt', name: '', "searchable": "false"},
            { data: 'updatedAt', name: '', "searchable": "false"},
            { data: 'visibility', name: '', "searchable": "false"},
