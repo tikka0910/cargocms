@@ -8,7 +8,7 @@
 	var pagefunction = function() {
 		<%- include vue.ejs %>
 		appMain.$mount("#main-edit");
-		appMain.recipeLoadItem(appMain.onEnterPageEdit);
+		appMain.loadItem(appMain.onEnterPageEdit);
 		appMain.setupForm("edit");
 	};
 
