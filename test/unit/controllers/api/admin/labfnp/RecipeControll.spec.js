@@ -5,8 +5,8 @@ describe('about LikeRecipe Controller operation.', function() {
   before(async (done) => {
     try {
       let user = await User.create({
-        username: 'likeRecipeUserController',
-        email: 'likeRecipeUserController@gmail.com',
+        username: 'JohnGettingCSV',
+        email: 'JohnGettingCSV@gmail.com',
         password: ''
       });
       sinon.stub(AuthService, 'getSessionUser', (req) => {
@@ -19,7 +19,7 @@ describe('about LikeRecipe Controller operation.', function() {
         ],
         formulaLogs: '',
         authorName: '王大明',
-        perfumeName: 'love test',
+        perfumeName: 'John test perfume',
         message: 'this is love test',
         UserId: user.id,
       });
@@ -37,24 +37,25 @@ describe('about LikeRecipe Controller operation.', function() {
   it('Recipe to CSV should be success.', async (done) => {
     try {
       const webForm = { draw: '1',
+        type: 'csv',
         columns:[
            { data: 'id', name: '' },
-           { data: 'perfumeName', name: '', "searchable": "false"},
-           //only capture User.displayName to CSV
-           { data: 'User', name: '', "searchable": "false"},
+           { data: 'perfumeName', name: '', "searchable": "true"},
+           { data: 'authorName', name: '' , "searchable": "true"}
            { data: 'createdAt', name: '', "searchable": "false"},
-           { data: 'visibilityDesc', name: '', "searchable": "false"},
-           { data: 'productionStatusDesc', name: '', "searchable": "false"},
+           { data: 'updatedAt', name: '', "searchable": "false"},
+           { data: 'visibility', name: '', "searchable": "false"},
+           { data: 'productionStatus', name: '', "searchable": "false"},
            { data: 'description', name: '', "searchable": "false"},
            { data: 'message', name: '', "searchable": "false"},
            { data: 'formula', name: '', "searchable": "false"},
         ],
         order: [ { column: '0', dir: 'asc' } ],
-        search: { value: 'userX', regex: 'false' },
+        search: { value: 'John', regex: 'false' },
         _: '1470989140227'
       }
       const res = await request(sails.hooks.http.app)
-      .get(`/api/admin/recipe/csv`).form(webForm)
+      .get(`/api/admin/labfnp/recipe/export`).form(webForm)
       res.status.should.be.eq(200);
       done();
     } catch (e) {
