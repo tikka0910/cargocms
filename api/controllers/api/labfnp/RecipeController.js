@@ -23,20 +23,18 @@ module.exports = {
   },
 
   find: async (req, res) => {
-
     try {
-      let user = AuthService.getSessionUser(req);
-      const recipes = await Recipe.findAndIncludeUserLike({
-        currentUser: user
-      });
-      console.log();
-      let social = SocialService.forRecipe({recipes});
-      res.ok({
-        data: {
-          items: recipes,
-          social,
-        }
-      });
+      const { query } = req;
+      const { serverSidePaging } = query;
+      const modelName = req.options.controller.split("/").reverse()[0];
+      let result;
+      if (serverSidePaging) {
+        result = await PagingService.process({query, modelName});
+      } else {
+        const items = await sails.models[modelName].findAll();
+        result = { data: { items } };
+      }
+      res.ok(result);
     } catch (e) {
       res.serverError(e);
     }
