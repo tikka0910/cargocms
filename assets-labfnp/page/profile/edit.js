@@ -7,11 +7,13 @@ var submitData = function (form) {
 		values[field.name] = field.value;
 	});;
 
+	var pwd = values['password'];
+	var pwdCon = values['passwordConfirm'];
+	var checkPwd = typeof pwd !== 'undefined' ? pwd.length < 1 : true;
+	var checkPwdCon = typeof pwdCon !== 'undefined' ? pwdCon.length < 1 : true;
 	var checkFirstName = values['firstName'].length < 1;
 	var checkLastName = values['lastName'].length < 1;
 	var checkEmail = values['email'].length < 1;
-	var checkPwd = values['password'].length < 1;
-	var checkPwdCon = values['passwordConfirm'].length < 1;
 	var checkArray = [
     checkFirstName,
     checkLastName,
