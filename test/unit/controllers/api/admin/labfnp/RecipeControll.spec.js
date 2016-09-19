@@ -34,10 +34,27 @@ describe('about LikeRecipe Controller operation.', function() {
     done();
   });
 
-  it('Recipe like action should be success.', async (done) => {
+  it('Recipe to CSV should be success.', async (done) => {
     try {
+      const webForm = { draw: '1',
+        columns:[
+           { data: 'id', name: '' },
+           { data: 'perfumeName', name: '', "searchable": "false"},
+           //only capture User.displayName to CSV
+           { data: 'User', name: '', "searchable": "false"},
+           { data: 'createdAt', name: '', "searchable": "false"},
+           { data: 'visibilityDesc', name: '', "searchable": "false"},
+           { data: 'productionStatusDesc', name: '', "searchable": "false"},
+           { data: 'description', name: '', "searchable": "false"},
+           { data: 'message', name: '', "searchable": "false"},
+           { data: 'formula', name: '', "searchable": "false"},
+        ],
+        order: [ { column: '0', dir: 'asc' } ],
+        search: { value: 'userX', regex: 'false' },
+        _: '1470989140227'
+      }
       const res = await request(sails.hooks.http.app)
-      .get(`/api/admin/recipe/csv`)
+      .get(`/api/admin/recipe/csv`).form(webForm)
       res.status.should.be.eq(200);
       done();
     } catch (e) {
