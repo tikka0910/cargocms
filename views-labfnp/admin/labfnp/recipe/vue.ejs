@@ -11,6 +11,26 @@ var appModel = {
 	modelName: modelName,
 	prefix: prefix,
 	data: {
+		link: {
+			PAGE_INDEX: '/admin/#/admin/labfnp/recipe',
+			PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
+			PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit/',
+			PAGE_SHOW: '/admin/#/admin/labfnp/recipe/show/',
+			API_LIST_SCENT: '/api/labfnp/scent',
+			API_LIST: '/api/labfnp/recipe',
+			API_ITEM: '/api/labfnp/recipe/',
+			API_CREATE: '/api/labfnp/recipe',
+			API_UPDATE: '/api/labfnp/recipe/',
+		},
+		common: {
+			DEFAULT_AVATAR: '/assets/admin/img/avatars/default.png',
+			DROPS_MAX: 50,
+			DROPS_MIN: 1,
+			DEFAULT_INDEX: -1,
+		},
+		status: {
+			itemBeforeEdit: {},
+		},
 		item: {
 			id: '',
 			authorName: '',
@@ -25,19 +45,20 @@ var appModel = {
 			productionStatus: '',
 		},
 		items: [],
+		scentData: {},
+		scentColor: {},
 		option: {}
 	},
 	view: {
 		table: {
-			selectIndex: COMMON.DEFAULT_INDEX,
+			selectIndex: -1,
 		},
-	}
+	},
 }
 
 /* TABLETOOLS */
 
 <%- include ../../default/vue.ejs %>
-<%- include pieChartAdmin.ejs %>
 // 需要新增函式可以對 appMain 進行定義，如：
 // appMain.log = function () {console.log("123")}
 appMain.enableSelect = function () {

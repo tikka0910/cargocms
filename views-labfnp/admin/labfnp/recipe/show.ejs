@@ -168,6 +168,7 @@
 
   // pagefunction
   var pagefunction = function() {
+    <%- include pieChartAdmin.ejs %>
     <%- include vue.ejs %>
     appMain.$mount("#main-show");
     appMain.loadItem(appMain.onEnterPageShow);
