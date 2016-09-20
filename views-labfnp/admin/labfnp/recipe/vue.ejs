@@ -70,11 +70,133 @@ appMain.onEnterPageShow = function () {
 	drawD3PieFroAdmin();
 };
 
+appMain.insertEmptyFormulaItem = function () {
+	var thisFormula = [];
+	for (var i = 0; i < 6; i++) {
+		var indexFormula = appModel.data.item.formula[i];
+		var checkFormula = typeof indexFormula === 'undefined';
+
+		if (checkFormula) {
+			indexFormula = {
+				'scent': '',
+				'drops': '0',
+			};
+		} else {
+			var checkDrops = typeof indexFormula.drops === 'string';
+			var checkDropsValue = indexFormula.drops === '0';
+			if (!checkDrops || checkDropsValue) indexFormula.scent = '';
+		}
+		thisFormula.push(indexFormula);
+	}
+	appModel.data.item.formula = thisFormula;
+},
+
+appMain.loadSelectOptions = function (cb) {
+	var ajaxSuccess = function (result) {
+		appModel.data.scentData = result.data.items;
+		appModel.data.scentColor = new Object();
+		var scentData = appModel.data.scentData;
+		for (var i = 0; i < scentData.length; i++) {
+			appModel.data.scentColor[scentData[i].name] = scentData[i].color;
+		}
+		if (typeof cb !== 'undefined') setTimeout(cb, 0);
+	};
+
+	$.ajax({
+		url: appModel.data.link.API_LIST_SCENT,
+		// async: false,
+		success: ajaxSuccess,
+		// error: ajaxError,
+	});
+};
+
+appMain.onEnterPageCreare = function () {
+	appMain.insertEmptyFormulaItem();
+	appMain.loadSelectOptions();
+	appMain.setupForm("create");
+	appMain.data.status.itemBeforeEdit = null;
+};
+
+appMain.onEnterPageEdit = function () {
+	appMain.loadItem();
+	appMain.insertEmptyFormulaItem();
+	appMain.loadSelectOptions();
+	appMain.setupForm("edit");
+	appMain.saveItemStatusBeforeEdit();
+};
+
+appMain.save = function(e) {
+	var ajaxSuccess = function (result) {
+		location.href = '/admin/#/admin/' + modelName;
+		messageApp.show({
+			desc: '新增資料成功！',
+			type: 'success'
+		});
+	};
+
+	var ajaxError = function (result) {
+		messageApp.show({
+			desc: '新增資料失敗！errorMessage: ' + result.responseJSON.message,
+			type: 'error'
+		});
+	};
+
+	$.ajax({
+		url: '/api/' + prefix + modelName,
+		type: 'POST',
+		dataType: 'json',
+		data: appMain.verifySendData(),
+		xhrFields: {
+			withCredentials: true,
+		},
+		success: ajaxSuccess,
+		error: ajaxError,
+	});
+};
+
+appMain.verifySendData = function () {
+	var scentColor = appModel.data.scentColor;
+	var dataJson = JSON.parse(JSON.stringify(appModel.data.item));
+	var newFormula = [];
+	for (var i = 0; i < dataJson.formula.length; i++) {
+		var checkDropsType = typeof dataJson.formula[i].drops === 'string';
+		var checkDropsZero = dataJson.formula[i].drops !== 0;
+		var checkDrops = checkDropsType && checkDropsZero;
+		var checkScentType = typeof dataJson.formula[i].scent === 'string';
+		var checkScentEmpty = dataJson.formula[i].scent !== '';
+		var checkScent = checkScentType && checkScentEmpty;
+		if (checkDrops && checkScent) newFormula.push(dataJson.formula[i]);
+	}
+	for (var i = 0; i < newFormula.length; i++) {
+		newFormula[i].color = scentColor[newFormula[i].scent];
+	}
+	dataJson.formula = newFormula;
+	return dataJson;
+};
+
+appMain.isPageEditDataModified = function () {
+	var isDataModified = false;
+	var itemBeforeEdit = appModel.data.status.itemBeforeEdit;
+	if (itemBeforeEdit) {
+		var itemBeforeLeave = JSON.stringify(appModel.data.item);
+		isDataModified = itemBeforeEdit !== itemBeforeLeave;
+	} else window.onbeforeunload = null;
+	return isDataModified;
+};
+
+appMain.saveItemStatusBeforeEdit = function () {
+	appModel.data.status.itemBeforeEdit = JSON.stringify(appModel.data.item);
+	window.onbeforeunload = function (e) {
+		if (appMain.isPageEditDataModified()) {
+			var message = '您已經修改過資料，是否確定要放棄本次的修改？';
+			e.returnValue = message;
+			return message;
+		}
+	};
+};
+
 appMain.renderTable = function () {
 	/* BASIC ;*/
-	var responsiveHelper_user_table = undefined;
-	var responsiveHelper_datatable_fixed_column = undefined;
-	var responsiveHelper_datatable_col_reorder = undefined;
 	var responsiveHelper_datatable_tabletools = undefined;
 
 	var breakpointDefinition = {
@@ -156,9 +278,8 @@ appMain.renderTable = function () {
 						// var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
 						var isSelected = appModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
 						if (isSelected) {
-							var index = appModel.view.table.selectIndex;
-							var id = appModel.data.items[index].id;
-							location.href = appModel.data.link.PAGE_SHOW + id;
+							var id = appModel.view.table.selectIndex;
+							location.href = '/admin/#/admin/' + modelName + '/show/' + id;
 						} else {
 							messageApp.show({
 								desc: '請選擇一筆資料',
@@ -171,7 +292,7 @@ appMain.renderTable = function () {
 					"sExtends": "text",
 					"sButtonText": "新增",
 					"fnClick": function (nButton, oConfig, oFlash) {
-						location.href = appModel.data.link.PAGE_CREATE;
+						location.href = '/admin/#/admin/' + modelName + '/create';
 					}
        },
 				{
@@ -183,9 +304,8 @@ appMain.renderTable = function () {
 						console.log("-->", appModel.view.table.selectIndex);
 						var isSelected = appModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
 						if (isSelected) {
-							var index = appModel.view.table.selectIndex;
-							var id = appModel.data.items[index].id;
-							location.href = appModel.data.link.PAGE_EDIT + id;
+							var id = appModel.view.table.selectIndex;
+							location.href = '/admin/#/admin/' + modelName + '/edit/' + id;
 						} else {
 							messageApp.show({
 								desc: '請選擇一筆資料',
@@ -227,12 +347,21 @@ appMain.renderTable = function () {
 
 	// selection
 	defaultTable.on('click', 'tr', function () {
+
 		if ($(this).hasClass('selected')) {
 			$(this).removeClass('selected');
+
 		} else {
+			var data = defaultTable.fnGetData(this);
 			$('#main-table tbody tr').removeClass('selected');
 			$(this).addClass('selected');
+			var id = data.id || data[0];
+			appMain.selection(id);
 		}
+	}).on('dblclick', 'tr', function () {
+		var data = defaultTable.fnGetData(this);
+		var id = data.id || data[0];
+		appMain.show(id);
 	});
 
 	// animate table
