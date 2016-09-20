@@ -39,6 +39,11 @@ var appModel = {
 <%- include ../../default/vue.ejs %>
 // 需要新增函式可以對 appMain 進行定義，如：
 // appMain.log = function () {console.log("123")}
+appMain.enableSelect = function () {
+  $('select').attr('disabled', false);
+  $('.select').removeClass('state-disabled');
+}
+
 appMain.onEnterPageShow = function () {
 	var pieHeader = {
 		"title": {
@@ -107,9 +112,6 @@ appMain.onEnterPageShow = function () {
 			}
 		},
 	};
-  console.log("###########");
-  console.log(appModel);
-  console.log("###########");
 
 	var formula = appModel.data.item.formula;
 	for (var i = 0; i < formula.length; i++) {
@@ -234,7 +236,8 @@ appMain.renderTable =  function () {
   				"sExtends": "text",
   				"sButtonText": "檢視",
   				"fnClick": function (nButton, oConfig, oFlash) {
-  					var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
+            // var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
+  					var isSelected = appModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
   					if (isSelected) {
   						var index = appModel.view.table.selectIndex;
   						var id = appModel.data.items[index].id;
@@ -258,7 +261,10 @@ appMain.renderTable =  function () {
   				"sExtends": "text",
   				"sButtonText": "編輯",
   				"fnClick": function (nButton, oConfig, oFlash) {
-  					var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
+            // var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
+            //appModel.view.table.selectIndex 沒變更到
+            console.log("-->",appModel.view.table.selectIndex);
+  					var isSelected = appModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
   					if (isSelected) {
   						var index = appModel.view.table.selectIndex;
   						var id = appModel.data.items[index].id;
@@ -314,4 +320,4 @@ appMain.renderTable =  function () {
 
   // animate table
   $('#main-table-widget').fadeIn();
-  },
+};
