@@ -1,4 +1,5 @@
 import moment from 'moment';
+import allPayPaymentTypeJson from '../../config/allpayPaymentType.json';
 
 module.exports = {
   attributes: {
@@ -223,6 +224,20 @@ module.exports = {
           }
           return userName;
         } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+    PaymentTypeDesc:{
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try{
+          const payDesc = this.getDataValue('PaymentType');
+          let PaymentTypeDesc = allPayPaymentTypeJson[payDesc] || payDesc;
+
+          return PaymentTypeDesc;
+        }
+        catch(e){
           sails.log.error(e);
         }
       }
