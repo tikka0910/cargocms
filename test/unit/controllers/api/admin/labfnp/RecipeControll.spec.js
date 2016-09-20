@@ -1,5 +1,5 @@
 var sinon = require('sinon');
-describe('about LikeRecipe Controller operation.', function() {
+describe.only('about export recipe Controller operation.', function() {
 
   const serialize = (obj, prefix) => {
     let str = [];
@@ -48,7 +48,7 @@ describe('about LikeRecipe Controller operation.', function() {
     done();
   });
 
-  it.only('Recipe to CSV with Date should be success.', async (done) => {
+  it('Recipe to CSV with Date should be success.', async (done) => {
     try {
       const webForm = { draw: '1',
         type: 'csv',
@@ -73,10 +73,75 @@ describe('about LikeRecipe Controller operation.', function() {
       const res = await request(sails.hooks.http.app)
       .get(`/api/admin/labfnp/recipe/export`).query(serialize(webForm));
       res.status.should.be.eq(200);
+      res.body.data.items.length.should.be.eq(1);
       done();
     } catch (e) {
       done(e);
     }
   });
+
+  it('Recipe to CSV with Date should be success. all date', async (done) => {
+      try {
+        const webForm = { draw: '1',
+          type: 'csv',
+          startDate: '',
+          endDate: '',
+          columns:[
+             { data: 'id', name: '' },
+             { data: 'perfumeName', name: '', "searchable": "true"},
+             { data: 'authorName', name: '' , "searchable": "true"},
+             { data: 'createdAt', name: '', "searchable": "false"},
+             { data: 'updatedAt', name: '', "searchable": "false"},
+             { data: 'visibility', name: '', "searchable": "false"},
+             { data: 'productionStatus', name: '', "searchable": "false"},
+             { data: 'description', name: '', "searchable": "false"},
+             { data: 'message', name: '', "searchable": "false"},
+             { data: 'formula', name: '', "searchable": "false"},
+          ],
+          order: [ { column: '0', dir: 'asc' } ],
+          search: { value: 'John', regex: 'false' },
+          _: '1470989140227'
+        }
+        const res = await request(sails.hooks.http.app)
+        .get(`/api/admin/labfnp/recipe/export`).query(serialize(webForm));
+        res.status.should.be.eq(200);
+        res.body.data.items.length.should.be.eq(1)
+        done();
+      } catch (e) {
+        done(e);
+      }
+    });
+
+    it('Recipe to CSV with Date should be success. out of date', async (done) => {
+      try {
+        const webForm = { draw: '1',
+          type: 'csv',
+          startDate: '1900/1/1',
+          endDate: '1901/1/1',
+          columns:[
+             { data: 'id', name: '' },
+             { data: 'perfumeName', name: '', "searchable": "true"},
+             { data: 'authorName', name: '' , "searchable": "true"},
+             { data: 'createdAt', name: '', "searchable": "false"},
+             { data: 'updatedAt', name: '', "searchable": "false"},
+             { data: 'visibility', name: '', "searchable": "false"},
+             { data: 'productionStatus', name: '', "searchable": "false"},
+             { data: 'description', name: '', "searchable": "false"},
+             { data: 'message', name: '', "searchable": "false"},
+             { data: 'formula', name: '', "searchable": "false"},
+          ],
+          order: [ { column: '0', dir: 'asc' } ],
+          search: { value: 'John', regex: 'false' },
+          _: '1470989140227'
+        }
+        const res = await request(sails.hooks.http.app)
+        .get(`/api/admin/labfnp/recipe/export`).query(serialize(webForm));
+        res.status.should.be.eq(200);
+        res.body.data.items.length.should.be.eq(0);
+        done();
+      } catch (e) {
+        done(e);
+      }
+    });
 
 });
