@@ -6,6 +6,7 @@
 		<tr>
 			<th data-hide="phone"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs"/> ID</th>
 			<th data-class="expand"><i class="fa fa-fw text-muted hidden-sm hidden-xs"/> 交易編號 </th>
+      <th data-hide="always">發票號碼</th>
       <th data-hide="always">廠商交易編號</th>
       <th data-hide="always">交易訊息</th>
       <th>付款時間</th>
@@ -17,13 +18,14 @@
       <th>配方編號</th>
       <th>訂單狀態</th>
       <template v-for="n in 6">
-        <th class="no-sort" data-hide="phone,tablet" style="">香味分子{{n + 1}}</th>
+        <th class="no-sort" data-hide="always" style="">香味分子{{n + 1}}</th>
       </template>
       <th data-hide="always">Email</th>
       <th data-hide="always">電話</th>
 			<th data-hide="always">住址</th>
 			<th data-hide="phone,tablet"></th>
-			<th data-hide="always">發票號碼</th>
+			<th data-hide="always">訂單建立時間</th>
+
 		</tr>
 	</thead>
 	<!-- client only -->
@@ -31,10 +33,11 @@
 		<tr v-for="item in data.items">
       <td>{{ item.id }}</td>
 			<td><a href="/admin/#/admin/{{modelName}}/show/{{item.id}}">{{ item.TradeNo ? item.TradeNo:"訂單尚未成立" }}</a></td>
-			<td>{{ item.MerchantTradeNo }}</td>
+      <td>{{ item.invoiceNo }} </td>
+      <td>{{ item.MerchantTradeNo }}</td>
 			<td>{{ item.RtnMsg }}</td>
       <td>{{ (item.PaymentDate == "Invalid date") ? "":item.PaymentDate }}</td>
-      <td>{{ item.PaymentType }} </td>
+      <td>{{ item.PaymentTypeDesc }} </td>
       <td>{{ item.TradeAmt }} </td>
       <td>{{ item.vAccount }} </td>
       <td>{{ item.ItemNameArray }} </td>
@@ -42,7 +45,7 @@
       <td>{{ item.RecipeOrder.Recipe.id}}<a href="/admin/#/admin/labfnp/recipe/show/{{item.RecipeOrder.Recipe.id}}"> <i class="fa fa-fw fa-external-link"></i> </a></td>
       <td>{{ item.RecipeOrder.Recipe.productionStatusDesc}}</td>
       <template v-for="n in 6">
-        <td>{{ item.RecipeOrder.Recipe.formula[n].scent }} <br> {{ item.RecipeOrder.Recipe.formula[n].drops + ' 滴'}}</td>
+        <td>{{ item.RecipeOrder.Recipe.formula[n].scent + ' , ' + item.RecipeOrder.Recipe.formula[n].drops + ' 滴'}}</td>
       </template>
       <td>{{ item.Email }} </td>
       <td>{{ item.Phone}} </td>
@@ -57,7 +60,7 @@
 					</a>
 				</div>
 			</td>
-			<td>{{ item.invoiceNo }} </td>
+			<td>{{ item.createdAt }} </td>
 		</tr>
 	</tbody>
  </table>
@@ -70,11 +73,12 @@
 		var columns = [
 			{ "data": "id" },
 			{ "data": "TradeNo" },
+      { "data": "invoiceNo"},
 			{ "data": "MerchantTradeNo" },
 			{ "data": "RtnCode" },
       { "data": "RtnMsg" },
       { "data": "PaymentDate" },
-      { "data": "PaymentType" },
+      { "data": "PaymentTypeDesc" },
       { "data": "TradeAmt" },
       { "data": "vAccount" },
       { "data": "ItemNameArray" },
@@ -83,7 +87,7 @@
       { "data": "Phone" },
       { "data": "Address" },
 			{ "data": null },
-      { "data": "invoiceNo"}
+
 		]
 
 		// server only
