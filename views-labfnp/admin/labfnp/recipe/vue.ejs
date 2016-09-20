@@ -1,18 +1,18 @@
 var COMMON = {
-  DOUBLE_CLICK_TIME_PERIOD: 250,
-  DEFAULT_INDEX: -1,
-  DEFAULT_AVATAR: "/assets/admin/img/avatars/default.png",
+	DOUBLE_CLICK_TIME_PERIOD: 250,
+	DEFAULT_INDEX: -1,
+	DEFAULT_AVATAR: "/assets/admin/img/avatars/default.png",
 };
 
 var itemBeforeEdit = {};
 var prefix = '';
 var modelName = "labfnp/recipe";
 var appModel = {
-  modelName: modelName,
-  prefix: prefix,
-  data: {
-    item: {
-      id: '',
+	modelName: modelName,
+	prefix: prefix,
+	data: {
+		item: {
+			id: '',
 			authorName: '',
 			perfumeName: '',
 			formulaLogs: '',
@@ -23,196 +23,92 @@ var appModel = {
 			User: {},
 			visibility: '',
 			productionStatus: '',
-    },
-    items: [],
-    option: {}
-  },
-  view: {
-    table: {
-      selectIndex: COMMON.DEFAULT_INDEX,
-    },
-  }
+		},
+		items: [],
+		option: {}
+	},
+	view: {
+		table: {
+			selectIndex: COMMON.DEFAULT_INDEX,
+		},
+	}
 }
 
 /* TABLETOOLS */
 
 <%- include ../../default/vue.ejs %>
+<%- include pieChartAdmin.ejs %>
 // 需要新增函式可以對 appMain 進行定義，如：
 // appMain.log = function () {console.log("123")}
 appMain.enableSelect = function () {
-  $('select').attr('disabled', false);
-  $('.select').removeClass('state-disabled');
+	$('select').attr('disabled', false);
+	$('.select').removeClass('state-disabled');
 }
 
 appMain.onEnterPageShow = function () {
-	var pieHeader = {
-		"title": {
-			"text": "",
-			"fontSize": 24,
-			"font": "open sans"
-		},
-		"subtitle": {
-			"text": "",
-			"color": "#999999",
-			"fontSize": 12,
-			"font": "open sans"
-		},
-		"titleSubtitlePadding": 9
-	};
-	var pieFooter = {
-		"color": "#999999",
-		"fontSize": 10,
-		"font": "open sans",
-		"location": "bottom-left"
-	};
-	var pieSize = {
-		"canvasWidth": 300,
-		"canvasHeight": 400,
-		"pieOuterRadius": "70%"
-	};
-	var pieDate = {
-		"sortOrder": "value-desc",
-		"content": [],
-		"labels": {
-			"outer": {
-				"pieDistance": 32
-			},
-			"inner": {
-				"hideWhenLessThanPercentage": 3
-			},
-			"mainLabel": {
-				"fontSize": 11
-			},
-			"percentage": {
-				"color": "#ffffff",
-				"decimalPlaces": 0
-			},
-			"value": {
-				"color": "#adadad",
-				"fontSize": 11
-			},
-			"lines": {
-				"enabled": true
-			},
-			"truncation": {
-				"enabled": true
-			},
-		},
-		"effects": {
-			"pullOutSegmentOnClick": {
-				"effect": "elastic",
-				"speed": 400,
-				"size": 8
-			}
-		},
-		"misc": {
-			"gradient": {
-				"enabled": true,
-				"percentage": 100
-			}
-		},
-	};
-
-	var formula = appModel.data.item.formula;
-	for (var i = 0; i < formula.length; i++) {
-		if (formula[i].drops > 0) {
-			pieDate.content.push({
-				label: formula[i].scent,
-				value: parseInt(formula[i].drops),
-				color: formula[i].color,
-			});
-		}
-	}
-	var pie = new d3pie("pieChart", {
-		"header": pieHeader,
-		"footer": pieFooter,
-		"size": pieSize,
-		"data": pieDate,
-	});
-	// var perfumePieConfig = {
-	//     type: 'pie',
-	//     data: {
-	//       datasets: [{
-	//         data: dropsArray,
-	//         backgroundColor: scentColorArray,
-	//       }],
-	//       labels: labelArray,
-	//     },
-	//     animation:{
-	//         animateScale:true,
-	//     },
-	//     options: {
-	//       title: {
-	//           display: true,
-	//           text: ''
-	//       },
-	//       legend: {
-	//           display: false,
-	//       },
-	//       circumference: 1.5 * Math.PI,
-	//       responsive: true,
-	//       hover: {
-	//         mode: 'label',
-	//       }
-	//     }
-	// };
-// var perfumePie = new Chart(document.getElementById("pieChart"), perfumePieConfig);
+	drawD3PieFroAdmin();
 };
 
-appMain.renderTable =  function () {
-  /* BASIC ;*/
-  var responsiveHelper_user_table = undefined;
-  var responsiveHelper_datatable_fixed_column = undefined;
-  var responsiveHelper_datatable_col_reorder = undefined;
-  var responsiveHelper_datatable_tabletools = undefined;
+appMain.renderTable = function () {
+	/* BASIC ;*/
+	var responsiveHelper_user_table = undefined;
+	var responsiveHelper_datatable_fixed_column = undefined;
+	var responsiveHelper_datatable_col_reorder = undefined;
+	var responsiveHelper_datatable_tabletools = undefined;
 
-  var breakpointDefinition = {
-  	tablet: 1024,
-  	phone: 480
-  };
-  /* TABLETOOLS */
-  //var table = $('#main-table').dataTable({
-  	// Tabletools options:
-  	//   https://datatables.net/extensions/tabletools/button_options
-  var ajax = '/api/' + prefix + modelName + "?serverSidePaging=" + serverSidePaging;
-  var defaultTableConfig = {
-    "processing": false,
-    "serverSide": serverSidePaging,
-  	"sDom": "<'dt-toolbar'<'row'r<'col-xs-12 col-md-7 col-sm-7'f><'col-xs-12 col-md-4 col-sm-4'T><'col-md-1 col-sm-1 hidden-xs'l>>>" +
-  		"t" +
-  		"<'dt-toolbar-footer'<'row'<'col-md-6 col-xs-12 hidden-xs'i><'col-md-6 col-xs-12'p>>>",
-  	"oLanguage": {
-  		"sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
-  		"sInfo": "顯示 _START_ 到 _END_ 總共 _TOTAL_ 筆紀錄",
-  		"sInfoPostFix": "",
-  		"sInfoEmpty": "顯示第 0 至 0 項結果，共 0 項",
-  		"sInfoFiltered": "(從 _MAX_ 項結果中過濾)",
-  		"sProcessing": "處理中...",
-  		"sLoadingRecords": "載入中...",
-  		"sLengthMenu": "_MENU_",
-  		"sZeroRecords": "沒有符合的結果",
-  		"oPaginate": {
-  			"sFirst": "第一頁",
-  			"sPrevious": "<i class='fa fa-chevron-left' aria-hidden='true'></i>",
-  			"sNext": "<i class='fa fa-chevron-right' aria-hidden='true'></i>",
-  			"sLast": "最後一頁"
-  		},
-  		"sAria": {
-  			"sortAscending": ": 升冪排列",
-  			"sortDescending": ": 降冪排列"
-  		}
-  	},
-  	"columnDefs": [
-  		{
-  			"targets": 'no-sort',
-  			"orderable": false,
+	var breakpointDefinition = {
+		tablet: 1024,
+		phone: 480
+	};
+	/* TABLETOOLS */
+	//var table = $('#main-table').dataTable({
+	// Tabletools options:
+	//   https://datatables.net/extensions/tabletools/button_options
+	var ajax = '/api/' + prefix + modelName + "?serverSidePaging=" + serverSidePaging;
+	var defaultTableConfig = {
+		"processing": false,
+		"serverSide": serverSidePaging,
+		"sDom": "<'dt-toolbar'<'row'r<'col-xs-12 col-md-7 col-sm-7'f><'col-xs-12 col-md-4 col-sm-4'T><'col-md-1 col-sm-1 hidden-xs'l>>>" +
+			"t" +
+			"<'dt-toolbar-footer'<'row'<'col-md-6 col-xs-12 hidden-xs'i><'col-md-6 col-xs-12'p>>>",
+		"oLanguage": {
+			"sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
+			"sInfo": "顯示 _START_ 到 _END_ 總共 _TOTAL_ 筆紀錄",
+			"sInfoPostFix": "",
+			"sInfoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+			"sInfoFiltered": "(從 _MAX_ 項結果中過濾)",
+			"sProcessing": "處理中...",
+			"sLoadingRecords": "載入中...",
+			"sLengthMenu": "_MENU_",
+			"sZeroRecords": "沒有符合的結果",
+			"oPaginate": {
+				"sFirst": "第一頁",
+				"sPrevious": "<i class='fa fa-chevron-left' aria-hidden='true'></i>",
+				"sNext": "<i class='fa fa-chevron-right' aria-hidden='true'></i>",
+				"sLast": "最後一頁"
+			},
+			"sAria": {
+				"sortAscending": ": 升冪排列",
+				"sortDescending": ": 降冪排列"
+			}
+		},
+		"columnDefs": [
+			{
+				"targets": 'no-sort',
+				"orderable": false,
     	},
-  		{ "width": "20%", "targets": 6 },
-  		{ "width": "20%", "targets": 7 }
+			{
+				"width": "20%",
+				"targets": 6
+			},
+			{
+				"width": "20%",
+				"targets": 7
+			}
   ],
-  	"oTableTools": {
-  		"sSwfPath": "/assets/admin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf",
-  		"aButtons": [
+		"oTableTools": {
+			"sSwfPath": "/assets/admin/js/plugin/datatables/swf/copy_csv_xls_pdf.swf",
+			"aButtons": [
         // "copy",
         // "xls",
         // {
@@ -225,99 +121,99 @@ appMain.renderTable =  function () {
         //   "sExtends": "print",
         //   "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
         // },
-  			{
-  				"sExtends": "csv",
-  				"sButtonText": "匯出",
-  				"sToolTip": "把全部資料匯出成CSV",
-  				"sCharSet": "UTF8",
-  				"bBomInc": true,
+				{
+					"sExtends": "csv",
+					"sButtonText": "匯出",
+					"sToolTip": "把全部資料匯出成CSV",
+					"sCharSet": "UTF8",
+					"bBomInc": true,
         },
-  			{
-  				"sExtends": "text",
-  				"sButtonText": "檢視",
-  				"fnClick": function (nButton, oConfig, oFlash) {
-            // var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
-  					var isSelected = appModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
-  					if (isSelected) {
-  						var index = appModel.view.table.selectIndex;
-  						var id = appModel.data.items[index].id;
-  						location.href = appModel.data.link.PAGE_SHOW + id;
-  					} else {
-  						messageApp.show({
-  							desc: '請選擇一筆資料',
-  							type: 'warning'
-  						});
-  					}
-  				}
+				{
+					"sExtends": "text",
+					"sButtonText": "檢視",
+					"fnClick": function (nButton, oConfig, oFlash) {
+						// var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
+						var isSelected = appModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
+						if (isSelected) {
+							var index = appModel.view.table.selectIndex;
+							var id = appModel.data.items[index].id;
+							location.href = appModel.data.link.PAGE_SHOW + id;
+						} else {
+							messageApp.show({
+								desc: '請選擇一筆資料',
+								type: 'warning'
+							});
+						}
+					}
        },
-  			{
-  				"sExtends": "text",
-  				"sButtonText": "新增",
-  				"fnClick": function (nButton, oConfig, oFlash) {
-  					location.href = appModel.data.link.PAGE_CREATE;
-  				}
+				{
+					"sExtends": "text",
+					"sButtonText": "新增",
+					"fnClick": function (nButton, oConfig, oFlash) {
+						location.href = appModel.data.link.PAGE_CREATE;
+					}
        },
-  			{
-  				"sExtends": "text",
-  				"sButtonText": "編輯",
-  				"fnClick": function (nButton, oConfig, oFlash) {
-            // var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
-            //appModel.view.table.selectIndex 沒變更到
-            console.log("-->",appModel.view.table.selectIndex);
-  					var isSelected = appModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
-  					if (isSelected) {
-  						var index = appModel.view.table.selectIndex;
-  						var id = appModel.data.items[index].id;
-  						location.href = appModel.data.link.PAGE_EDIT + id;
-  					} else {
-  						messageApp.show({
-  							desc: '請選擇一筆資料',
-  							type: 'warning'
-  						});
-  					}
-  				}
+				{
+					"sExtends": "text",
+					"sButtonText": "編輯",
+					"fnClick": function (nButton, oConfig, oFlash) {
+						// var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
+						//appModel.view.table.selectIndex 沒變更到
+						console.log("-->", appModel.view.table.selectIndex);
+						var isSelected = appModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
+						if (isSelected) {
+							var index = appModel.view.table.selectIndex;
+							var id = appModel.data.items[index].id;
+							location.href = appModel.data.link.PAGE_EDIT + id;
+						} else {
+							messageApp.show({
+								desc: '請選擇一筆資料',
+								type: 'warning'
+							});
+						}
+					}
        },
      ]
-  	},
-  	"autoWidth": true,
-  	"preDrawCallback": function () {
-  		// Initialize the responsive datatables helper once.
-  		if (!responsiveHelper_datatable_tabletools) {
-  			responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#main-table'), breakpointDefinition);
-  		}
-  	},
-  	"rowCallback": function (nRow) {
-  		responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
-  	},
-  	"drawCallback": function (oSettings) {
-  		responsiveHelper_datatable_tabletools.respond();
-  	}
-  };
+		},
+		"autoWidth": true,
+		"preDrawCallback": function () {
+			// Initialize the responsive datatables helper once.
+			if (!responsiveHelper_datatable_tabletools) {
+				responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#main-table'), breakpointDefinition);
+			}
+		},
+		"rowCallback": function (nRow) {
+			responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
+		},
+		"drawCallback": function (oSettings) {
+			responsiveHelper_datatable_tabletools.respond();
+		}
+	};
 
-  if (serverSidePaging) {
-    defaultTableConfig.columns = columns;
-    defaultTableConfig.columnDefs = columnDefs;
-    defaultTableConfig.ajax = ajax;
-  }
-  var defaultTable = $('#main-table').dataTable(defaultTableConfig).yadcf([
-  	{        
-  		column_number: 3,
-  		filter_type: "range_date",
-          filter_container_id: "external_filter_container",
-  		date_format: 'yy/mm/dd',
+	if (serverSidePaging) {
+		defaultTableConfig.columns = columns;
+		defaultTableConfig.columnDefs = columnDefs;
+		defaultTableConfig.ajax = ajax;
+	}
+	var defaultTable = $('#main-table').dataTable(defaultTableConfig).yadcf([
+		{        
+			column_number: 3,
+			filter_type: "range_date",
+			        filter_container_id: "external_filter_container",
+			date_format: 'yy/mm/dd',
   	},
   ]);
 
-  // selection
-  defaultTable.on('click', 'tr', function () {
-  	if ($(this).hasClass('selected')) {
-  		$(this).removeClass('selected');
-  	} else {
-  		$('#main-table tbody tr').removeClass('selected');
-  		$(this).addClass('selected');
-  	}
-  });
+	// selection
+	defaultTable.on('click', 'tr', function () {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+		} else {
+			$('#main-table tbody tr').removeClass('selected');
+			$(this).addClass('selected');
+		}
+	});
 
-  // animate table
-  $('#main-table-widget').fadeIn();
+	// animate table
+	$('#main-table-widget').fadeIn();
 };
