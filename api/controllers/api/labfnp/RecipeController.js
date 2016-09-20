@@ -47,7 +47,7 @@ module.exports = {
       sails.log.info('get recipe =>', recipe);
       res.ok({
         message: 'Get recipe success.',
-        data: recipe,
+        data: {item: recipe},
       });
     } catch (e) {
       res.serverError(e);
