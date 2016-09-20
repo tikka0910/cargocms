@@ -8,7 +8,14 @@
 const url = require('url');
 module.exports = {
   login: function(req, res) {
-    res.view({}, "auth/login");
+    let user = {
+      identifier: '',
+      password: ''
+    }
+    let form = req.flash('form')[0];
+    if(form) user = form;
+
+    res.ok({user, errors: req.flash('error')[0]});
   },
   logout: function(req, res) {
     req.session.authenticated = false;
