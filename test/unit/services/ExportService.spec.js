@@ -128,7 +128,7 @@ describe('about export service operation.', function() {
 
   it('export Recipe to CSV with Date should be success.', async (done) => {
     try {
-      const json = [
+      const content = [
         {
           "formula": [
             {
@@ -165,7 +165,7 @@ describe('about export service operation.', function() {
           "coverPhotoId": null
         }
       ]
-      const result = await ExportService.export({ json });
+      const result = await ExportService.export({ content });
       sails.log.debug(result);
       done();
     } catch (e) {

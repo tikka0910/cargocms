@@ -4,7 +4,7 @@ import fs from 'fs';
 import iconv from 'iconv-lite';
 
 module.exports = {
-  query: async ({query, modelName, include}) => {
+  query: async ({ query, modelName, include }) => {
     try {
       let findQuery = FormatService.getQueryObj(query);
       if (include) {
@@ -21,18 +21,20 @@ module.exports = {
       delete findQuery.limit;
       sails.log.info(findQuery);
       const result =  await sails.models[modelName].findAll(findQuery);
-      return result;
+      return result.map((data) => data.toJSON());
     } catch (e) {
       throw e;
     }
   },
 
-  export: async ({json, fileName}) => {
+  export: async ({format, content, fileName, columns}) => {
     try {
-
-      sails.log.debug(json);
+      if (format) {
+        content = format(content);
+      }
+      sails.log.debug(content);
       const dataString = await new Promise((defer, reject) => {
-        stringify(json, function(err, output){
+        stringify(content, { header: !!columns, columns }, function(err, output){
           if (err) reject(err);
           defer(output);
         });
@@ -42,9 +44,8 @@ module.exports = {
       const encoding = 'big5';
       let dataBuffer = new Buffer(dataString);
       dataBuffer = iconv.encode(dataBuffer, encoding);
-      const now = moment(new Date()).format("YYYYMMDDHHmmSS");
-      fileName = `${fileName || ''}-${now}.csv`;
-
+      const time = moment(new Date()).format("YYYYMMDDHHmmSS");
+      fileName = `${fileName || ''}${time}.csv`;
       const filePath = `${__dirname}/../../.tmp/${fileName}`;
       // await fs.writeFileSync(filePath, dataBuffer);
 
