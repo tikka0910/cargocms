@@ -17,14 +17,11 @@
       <th>訂購人</th>
       <th>配方編號</th>
       <th>訂單狀態</th>
-      <template v-for="n in 6">
-        <th class="no-sort" data-hide="always" style="">香味分子{{n + 1}}</th>
-      </template>
       <th data-hide="always">Email</th>
       <th data-hide="always">電話</th>
-			<th data-hide="always">住址</th>
-			<th data-hide="phone,tablet"></th>
-			<th data-hide="always">訂單建立時間</th>
+      <th data-hide="always">住址</th>
+      <th data-hide="always">訂單建立時間</th>
+      <th data-hide="phone,tablet"></th>
 
 		</tr>
 	</thead>
@@ -74,7 +71,6 @@
 			{ "data": "id" },
 			{ "data": "TradeNo" },
 			{ "data": "MerchantTradeNo" },
-			{ "data": "RtnCode" },
       { "data": "RtnMsg" },
       { "data": "PaymentDate" },
       { "data": "PaymentTypeDesc" },
@@ -83,9 +79,12 @@
       { "data": "vAccount" },
       { "data": "ItemNameArray" },
       { "data": "UserName" },
+      { "data": "RecipeOrder.Recipe.id" },
+      { "data": "RecipeOrder.Recipe.productionStatusDesc" },
       { "data": "Email" },
       { "data": "Phone" },
       { "data": "Address" },
+      { "data": "createdAt" },
 			{ "data": null },
 
 		]
@@ -100,8 +99,44 @@
         "searchable": false,
         "targets": 2
       },
+      {
+        "searchable": false,
+        "targets": 5
+      },
+      {
+        "searchable": false,
+        "targets": 6
+      },
+      {
+        "searchable": false,
+        "targets": 9
+      },
+      {
+        "searchable": false,
+        "targets": 10
+      },
+      {
+        "searchable": false,
+        "targets": 11
+      },
+      {
+        "searchable": false,
+        "targets": 12
+      },
+      {
+        "searchable": false,
+        "targets": 13
+      },
+      {
+        "searchable": false,
+        "targets": 14
+      },
+      {
+        "searchable": false,
+        "targets": 15
+      },
 			{
-				"targets"  : 5,
+				"targets"  : 17,
 				"orderable": false,
 				"searchable": false,
 				"render": function ( data, type, row ) {
