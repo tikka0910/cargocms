@@ -1,18 +1,5 @@
 var sinon = require('sinon');
-describe('about export recipe Controller operation.', function() {
-
-  const serialize = (obj, prefix) => {
-    let str = [];
-    for(let p in obj) {
-      if (obj.hasOwnProperty(p)) {
-        let k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-        str.push(typeof v == "object" ?
-          serialize(v, k) :
-          encodeURIComponent(k) + "=" + encodeURIComponent(v));
-      }
-    }
-    return str.join("&");
-  }
+describe.only('about export service operation.', function() {
 
   let recipe;
   before(async (done) => {
@@ -50,7 +37,7 @@ describe('about export recipe Controller operation.', function() {
 
   it('Recipe to CSV with Date should be success.', async (done) => {
     try {
-      const webForm = { draw: '1',
+      const query = { draw: '1',
         type: 'csv',
         startDate: '1900/01/01',
         endDate: '3000/01/01',
@@ -70,10 +57,8 @@ describe('about export recipe Controller operation.', function() {
         search: { value: 'John', regex: 'false' },
         _: '1470989140227'
       }
-      const res = await request(sails.hooks.http.app)
-      .get(`/api/admin/labfnp/recipe/export`).query(serialize(webForm));
-      res.status.should.be.eq(200);
-      res.body.data.items.length.should.be.eq(1);
+      const result = await ExportService.export({query, modelName: 'recipe'});
+      result.length.should.be.eq(1);
       done();
     } catch (e) {
       done(e);
@@ -82,7 +67,7 @@ describe('about export recipe Controller operation.', function() {
 
   it('Recipe to CSV with Date should be success. all date', async (done) => {
       try {
-        const webForm = { draw: '1',
+        const query = { draw: '1',
           type: 'csv',
           startDate: '',
           endDate: '',
@@ -102,10 +87,8 @@ describe('about export recipe Controller operation.', function() {
           search: { value: 'John', regex: 'false' },
           _: '1470989140227'
         }
-        const res = await request(sails.hooks.http.app)
-        .get(`/api/admin/labfnp/recipe/export`).query(serialize(webForm));
-        res.status.should.be.eq(200);
-        res.body.data.items.length.should.be.eq(1)
+        const result = await ExportService.export({query, modelName: 'recipe'});
+        result.length.should.be.eq(1);
         done();
       } catch (e) {
         done(e);
@@ -114,7 +97,7 @@ describe('about export recipe Controller operation.', function() {
 
     it('Recipe to CSV with Date should be success. out of date', async (done) => {
       try {
-        const webForm = { draw: '1',
+        const query = { draw: '1',
           type: 'csv',
           startDate: '1900/1/1',
           endDate: '1901/1/1',
@@ -134,10 +117,8 @@ describe('about export recipe Controller operation.', function() {
           search: { value: 'John', regex: 'false' },
           _: '1470989140227'
         }
-        const res = await request(sails.hooks.http.app)
-        .get(`/api/admin/labfnp/recipe/export`).query(serialize(webForm));
-        res.status.should.be.eq(200);
-        res.body.data.items.length.should.be.eq(0);
+        const result = await ExportService.export({query, modelName: 'recipe'});
+        result.length.should.be.eq(0);
         done();
       } catch (e) {
         done(e);
