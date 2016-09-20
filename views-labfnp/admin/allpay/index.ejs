@@ -17,6 +17,7 @@
       <th>訂購人</th>
       <th>配方編號</th>
       <th>訂單狀態</th>
+      <th class="no-sort" data-hide="always" style="">香味分子</th>
       <th data-hide="always">Email</th>
       <th data-hide="always">電話</th>
       <th data-hide="always">住址</th>
@@ -68,7 +69,7 @@
 
 		// server only
 		var columns = [
-			{ "data": "id" },
+			{ "data": "id" },  // 0
 			{ "data": "TradeNo" },
 			{ "data": "MerchantTradeNo" },
       { "data": "RtnMsg" },
@@ -79,8 +80,9 @@
       { "data": "vAccount" },
       { "data": "ItemNameArray" },
       { "data": "UserName" },
-      { "data": "RecipeOrder.Recipe.id" },
-      { "data": "RecipeOrder.Recipe.productionStatusDesc" },
+      { "data": null },
+      { "data": "RecipeOrder.Recipe.productionStatusDesc" }, //12
+      { "data": null },
       { "data": "Email" },
       { "data": "Phone" },
       { "data": "Address" },
@@ -117,7 +119,10 @@
       },
       {
         "searchable": false,
-        "targets": 11
+        "targets": 11,
+        "render": function (data, type, row) {
+          return '<td>' + data.RecipeOrder.Recipe.id + '<a href="/admin/#/admin/labfnp/recipe/show/' + data.RecipeOrder.Recipe.id + '"> <i class="fa fa-fw fa-external-link"></i> </a>' + '</td>';
+        }
       },
       {
         "searchable": false,
@@ -125,7 +130,16 @@
       },
       {
         "searchable": false,
-        "targets": 13
+        "targets": 13,
+        "render": function (data, type, row) {
+          var colBody = '';
+          for(var i = 0 , len = data.RecipeOrder.Recipe.formula.length; i < len - 1; i++){
+            colBody = colBody + data.RecipeOrder.Recipe.formula[i].scent + ' (' + data.RecipeOrder.Recipe.formula[i].drops + ')';
+            colBody += ' , ';
+          }
+          colBody = colBody + data.RecipeOrder.Recipe.formula[i].scent + ' (' + data.RecipeOrder.Recipe.formula[i].drops + ')';
+          return '<td>' + colBody + '</td>';
+        }
       },
       {
         "searchable": false,
@@ -135,8 +149,12 @@
         "searchable": false,
         "targets": 15
       },
+      {
+        "searchable": false,
+        "targets": 16
+      },
 			{
-				"targets"  : 17,
+				"targets"  : 18,
 				"orderable": false,
 				"searchable": false,
 				"render": function ( data, type, row ) {
