@@ -6,11 +6,11 @@
 		<tr>
 			<th data-hide="phone"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs"/> ID</th>
 			<th data-class="expand"><i class="fa fa-fw text-muted hidden-sm hidden-xs"/> 交易編號 </th>
-      <th data-hide="always">發票號碼</th>
       <th data-hide="always">廠商交易編號</th>
       <th data-hide="always">交易訊息</th>
       <th>付款時間</th>
       <th data-hide="phone,tablet">付款方式</th>
+      <th data-hide="">發票號碼</th>
       <th>付款金額</th>
       <th data-hide="always">付款帳號</th>
       <th data-hide="always">訂購物品</th>
@@ -33,11 +33,11 @@
 		<tr v-for="item in data.items">
       <td>{{ item.id }}</td>
 			<td><a href="/admin/#/admin/{{modelName}}/show/{{item.id}}">{{ item.TradeNo ? item.TradeNo:"訂單尚未成立" }}</a></td>
-      <td>{{ item.invoiceNo }} </td>
       <td>{{ item.MerchantTradeNo }}</td>
 			<td>{{ item.RtnMsg }}</td>
       <td>{{ (item.PaymentDate == "Invalid date") ? "":item.PaymentDate }}</td>
       <td>{{ item.PaymentTypeDesc }} </td>
+      <td>{{ item.invoiceNo }} </td>
       <td>{{ item.TradeAmt }} </td>
       <td>{{ item.vAccount }} </td>
       <td>{{ item.ItemNameArray }} </td>
@@ -73,12 +73,12 @@
 		var columns = [
 			{ "data": "id" },
 			{ "data": "TradeNo" },
-      { "data": "invoiceNo"},
 			{ "data": "MerchantTradeNo" },
 			{ "data": "RtnCode" },
       { "data": "RtnMsg" },
       { "data": "PaymentDate" },
       { "data": "PaymentTypeDesc" },
+      { "data": "invoiceNo"},
       { "data": "TradeAmt" },
       { "data": "vAccount" },
       { "data": "ItemNameArray" },
