@@ -19,7 +19,7 @@ describe('about export service operation.', function() {
         ],
         formulaLogs: '',
         authorName: '王大明',
-        perfumeName: 'John test perfume',
+        perfumeName: 'JohnExport test perfume',
         message: 'this is love test',
         UserId: user.id,
       });
@@ -54,7 +54,7 @@ describe('about export service operation.', function() {
            { data: 'formula', name: '', "searchable": "false"},
         ],
         order: [ { column: '0', dir: 'asc' } ],
-        search: { value: 'John', regex: 'false' },
+        search: { value: 'JohnExport', regex: 'false' },
         _: '1470989140227'
       }
       const result = await ExportService.query({query, modelName: 'recipe'});
@@ -84,7 +84,7 @@ describe('about export service operation.', function() {
            { data: 'formula', name: '', "searchable": "false"},
         ],
         order: [ { column: '0', dir: 'asc' } ],
-        search: { value: 'John', regex: 'false' },
+        search: { value: 'JohnExport', regex: 'false' },
         _: '1470989140227'
       }
       const result = await ExportService.query({query, modelName: 'recipe'});
@@ -114,7 +114,7 @@ describe('about export service operation.', function() {
            { data: 'formula', name: '', "searchable": "false"},
         ],
         order: [ { column: '0', dir: 'asc' } ],
-        search: { value: 'John', regex: 'false' },
+        search: { value: 'JohnExport', regex: 'false' },
         _: '1470989140227'
       }
       const result = await ExportService.query({query, modelName: 'recipe'});

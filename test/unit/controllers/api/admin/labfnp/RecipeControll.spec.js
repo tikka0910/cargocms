@@ -49,7 +49,7 @@ describe('about export recipe Controller operation.', function() {
   });
 
 
-  it.only('Recipe to CSV with Date should be success.', async (done) => {
+  it('Recipe to CSV with Date should be success.', async (done) => {
     try {
       const webForm = { draw: '1',
         type: 'csv',
