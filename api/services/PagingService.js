@@ -4,7 +4,9 @@ module.exports = {
   process: async ({query, modelName, include}) => {
     try {
       const findQuery = FormatService.getQueryObj(query);
-      findQuery.include = { ...include };
+      if(include){
+        findQuery.include = { ...include };
+      }
       let result = await sails.models[modelName].findAndCountAll(findQuery)
       let data = result.rows;
       let recordsTotal = data.length
