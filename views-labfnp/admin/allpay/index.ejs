@@ -17,7 +17,12 @@
       <th>訂購人</th>
       <th>配方編號</th>
       <th>訂單狀態</th>
-      <th class="no-sort" data-hide="always" style="">香味分子</th>
+      <th class="no-sort" data-hide="always" style="">香味分子1</th>
+      <th class="no-sort" data-hide="always" style="">香味分子2</th>
+      <th class="no-sort" data-hide="always" style="">香味分子3</th>
+      <th class="no-sort" data-hide="always" style="">香味分子4</th>
+      <th class="no-sort" data-hide="always" style="">香味分子5</th>
+      <th class="no-sort" data-hide="always" style="">香味分子6</th>
       <th data-hide="always">Email</th>
       <th data-hide="always">電話</th>
       <th data-hide="always">住址</th>
@@ -65,24 +70,40 @@
 
 
 <script type="text/javascript">
+
+  var returnRecipeFormula = function(data, n){
+    if(data.RecipeOrder){
+      if(data.RecipeOrder.Recipe.formula[n]){
+        return '<td>' + data.RecipeOrder.Recipe.formula[n].scent + ' , ' + data.RecipeOrder.Recipe.formula[n].drops + ' 滴' + '</td>';
+      }
+    }
+
+    return '<td></td>';
+  };
+
 	var pagefunction = function() {
 
 		// server only
 		var columns = [
-			{ "data": "id" },  // 0
-			{ "data": "TradeNo" },
+			{ "data": "id" },  // row0
+			{ "data": null}, //TradeNo
 			{ "data": "MerchantTradeNo" },
       { "data": "RtnMsg" },
-      { "data": "PaymentDate" },
+      { "data": null }, //PaymentDate
       { "data": "PaymentTypeDesc" },
       { "data": "invoiceNo"},
       { "data": "TradeAmt" },
       { "data": "vAccount" },
       { "data": "ItemNameArray" },
       { "data": "UserName" },
+      { "data": null }, // Recipe.id
+      { "data": "RecipeOrder.Recipe.productionStatusDesc" },
+      { "data": null }, //row13 Recipe.formula[0]
       { "data": null },
-      { "data": "RecipeOrder.Recipe.productionStatusDesc" }, //12
       { "data": null },
+      { "data": null },
+      { "data": null },
+      { "data": null }, //row18
       { "data": "Email" },
       { "data": "Phone" },
       { "data": "Address" },
@@ -97,9 +118,29 @@
         "targets": 'no-sort',
         "orderable": false,
       },
+      {
+        "targets": 1,
+        "render": function(data, type, row) {
+          if(data.TradeNo){
+            return '<td>' + data.TradeNo +'</td>';
+          }else{
+            return '<td>訂單尚未成立</td>';
+          }
+        }
+      },
 			{
         "searchable": false,
         "targets": 2
+      },
+      {
+        "targets": 4,
+        "render": function(data, type, row) {
+          if(data.PaymentDate !== "Invalid date"){
+            return '<td>' + data.PaymentDate +'</td>';
+          }else{
+            return '<td></td>';
+          }
+        }
       },
       {
         "searchable": false,
@@ -132,29 +173,58 @@
         "searchable": false,
         "targets": 13,
         "render": function (data, type, row) {
-          var colBody = '';
-          for(var i = 0 , len = data.RecipeOrder.Recipe.formula.length; i < len - 1; i++){
-            colBody = colBody + data.RecipeOrder.Recipe.formula[i].scent + ' (' + data.RecipeOrder.Recipe.formula[i].drops + ')';
-            colBody += ' , ';
-          }
-          colBody = colBody + data.RecipeOrder.Recipe.formula[i].scent + ' (' + data.RecipeOrder.Recipe.formula[i].drops + ')';
-          return '<td>' + colBody + '</td>';
+          return returnRecipeFormula(data, 0);
         }
       },
       {
         "searchable": false,
-        "targets": 14
+        "targets": 14,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 1);
+        }
       },
       {
         "searchable": false,
-        "targets": 15
+        "targets": 15,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 2);
+        }
       },
       {
         "searchable": false,
-        "targets": 16
+        "targets": 16,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 3);
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 17,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 4);
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 18,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 5);
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 19
+      },
+      {
+        "searchable": false,
+        "targets": 20
+      },
+      {
+        "searchable": false,
+        "targets": 21
       },
 			{
-				"targets"  : 18,
+				"targets"  : 23,
 				"orderable": false,
 				"searchable": false,
 				"render": function ( data, type, row ) {
