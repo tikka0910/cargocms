@@ -8,6 +8,8 @@ module.exports = {
       const recipes = await Recipe.findAndIncludeUserLike({
         findByUserId: userId,
         currentUser,
+        start: 0,
+        length: 100,
       });
 
       let social = SocialService.forRecipe({recipes});
