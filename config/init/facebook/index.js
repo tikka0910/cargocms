@@ -18,7 +18,7 @@ module.exports.init = async () => {
     console.log('Feed URL: ' + feedUrl);
 
     let feeds = await new Promise(function(resolve, reject) {
-      FB.api(feedUrl, async (response) => {
+      FB.api(feedUrl, (response) => {
           if (response && !response.error) {
             resolve(response.data)
           } else {
