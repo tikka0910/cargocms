@@ -37,7 +37,6 @@ $(document).ready(function(){
       targets: targets,
     });
     $container.append(newRecipe).masonry( 'appended', newRecipe)
-    $('.grid-boxes-in').width(362);
     setTimeout(function(){
       $container.masonry();
     },0);
