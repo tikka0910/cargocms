@@ -157,7 +157,7 @@ var defaultVueMathod = {
 				appModel.pagingQuery = data;
 	      appModel.pagingQuery.startDate = $("#yadcf-filter--main-table-from-date-3").val() || '';
 	      appModel.pagingQuery.endDate = $("#yadcf-filter--main-table-to-date-3").val() || '';
-				console.log(appModel.pagingQuery);
+				console.log(JSON.stringify(appModel.pagingQuery));
 	      return data
 	    }
 	  }

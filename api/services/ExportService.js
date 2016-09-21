@@ -40,7 +40,7 @@ module.exports = {
       const time = moment(new Date()).format("YYYYMMDDHHmmSS");
       fileName = `${fileName || ''}${time}.csv`;
       const filePath = `${__dirname}/../../.tmp/${fileName}`;
-      // await fs.writeFileSync(filePath, dataBuffer);
+      await fs.writeFileSync(filePath, dataBuffer);
 
       return { filePath, fileName, data: dataBuffer};
     } catch (e) {

@@ -1,4 +1,4 @@
-import allPayPaymentTypeJson from '../../../config/allpayPaymentType.json';
+import allPayPaymentTypeJson from '../../../../config/allpayPaymentType.json';
 
 module.exports = {
 
@@ -177,5 +177,92 @@ module.exports = {
     } catch (e) {
       res.serverError(e);
     }
-  }
+  },
+
+  export: async (req, res) => {
+    try {
+      let { query, options } = req;
+      sails.log.info('export', query);
+      const modelName = options.controller.split("/").reverse()[0];
+      const include = {
+        model: RecipeOrder,
+        include: [User, Recipe]
+      }
+      const content = await ExportService.query({ query, modelName, include });
+      const columns = {
+        id: "ID",
+        TradeNo: "交易編號",
+        MerchantTradeNo: "廠商交易編號",
+        RtnMsg: "交易訊息",
+        PaymentDate: "付款時間",
+        PaymentTypeDesc: "付款方式",
+        invoiceNo: "發票號碼",
+        TradeAmt: "付款金額",
+        vAccount: "付款帳號",
+        ItemNameArray: "訂購物品",
+        UserName: "訂購人",
+        RecipeId: "配方編號",
+        productionStatusDesc: "訂單狀態",
+        scent0: '香味分子 1',
+        scentPercent0: '香味分子 1 比例',
+        scent1: '香味分子 2',
+        scentPercent1: '香味分子 2 比例',
+        scent2: '香味分子 3',
+        scentPercent2: '香味分子 3 比例',
+        scent3: '香味分子 4',
+        scentPercent3: '香味分子 4 比例',
+        scent4: '香味分子 5',
+        scentPercent4: '香味分子 5 比例',
+        scent5: '香味分子 6',
+        scentPercent5: '香味分子 6 比例',
+        Email: "Email",
+        Phone: "電話",
+        Address: "住址",
+        createdAt: "訂單建立時間"
+      }
+      const format = (items) => {
+        let result = items.map((data) => {
+          sails.log.debug(data);
+          let formatted = {
+            id: data.id,
+            TradeNo: data.TradeNo ? data.TradeNo : '訂單尚未成立',
+            MerchantTradeNo: data.MerchantTradeNo,
+            RtnMsg: data.RtnMsg,
+            PaymentDate: data.PaymentDate == "Invalid date" ? '' : data.PaymentDate,
+            PaymentTypeDesc: data.PaymentTypeDesc,
+            invoiceNo: data.invoiceNo,
+            TradeAmt: data.TradeAmt,
+            vAccount: data.vAccount,
+            ItemNameArray: data.ItemNameArray,
+            UserName: data.UserName,
+            RecipeId: data.RecipeOrder.RecipeId,
+            productionStatusDesc: data.productionStatusDesc,
+            Email: data.Email,
+            Phone: data.Phone,
+            Address: data.Address,
+            createdAt: new Date(data.createdAt).toISOString(),
+          }
+          data.RecipeOrder.Recipe.formula.forEach((formula, index) => {
+            if (formula.scent && formula.drops > 0) {
+              formatted[`scent${index}`] = `${formula.scent}, ${formula.drops} 滴`,
+              formatted[`scentPercent${index}`] = Math.ceil(formula.drops / data.formulaTotalDrops * 1000000)/10000;
+            }
+          });
+          return formatted;
+        });
+        return result;
+      }
+
+      const result = await ExportService.export({
+        fileName: modelName,
+        content,
+        format,
+        columns,
+      });
+      res.attachment(result.fileName);
+      res.end(result.data, 'UTF-8');
+    } catch (e) {
+      res.serverError(e);
+    }
+  },
 }
