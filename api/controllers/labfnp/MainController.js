@@ -46,12 +46,21 @@ module.exports = {
       const { id } = req.params;
       const loginUser = AuthService.getSessionUser(req);
 
+      let score = 0;
       if (id) {
         user = await User.findOne({where:{ id }});
         if(!user) return res.notFound("查無使用者");
+        score = user.score;
       } else {
         user = loginUser
         if(!user) return res.redirect("/login");
+
+        user = await User.findById(loginUser.id);
+        const userRecipes = await Recipe.findAll({where: { UserId: user.id }});
+        const userRecipesIds = userRecipes.map((recipe) => recipe.id);
+        score = await UserLikeRecipe.count({where: { RecipeId: userRecipeIdArray }});
+        user.score = score;
+        await user.save();
       }
       isMe = (loginUser && (loginUser.id == user.id));
 
@@ -79,10 +88,6 @@ module.exports = {
           }
         });
       }
-
-      const userRecipes = await Recipe.findAll({where: { UserId: user.id }});
-      const userRecipeIdArray = userRecipes.map((recipe) => recipe.id);
-      const score = await UserLikeRecipe.count({where: { RecipeId: userRecipeIdArray }});
 
       return res.view({
         user, recipes, followers, favorited, following, isMe, score,
