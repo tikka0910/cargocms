@@ -30,8 +30,8 @@ module.exports = {
         scent5: '香味分子 6',
         scentPercent5: '香味分子 6 比例',
       }
-      const format = (datas) => {
-        let result = datas.map((data) => {
+      const format = (items) => {
+        let result = items.map((data) => {
           let formatted = {
             id: data.id,
             perfumeName: data.perfumeName,
