@@ -46,7 +46,6 @@
       <td>{{ item.ItemNameArray }} </td>
       <td>{{ item.UserName}} </td>
       <td>{{ item.RecipeOrder.Recipe.id}}<a href="/admin/#/admin/labfnp/recipe/show/{{item.RecipeOrder.Recipe.id}}"> <i class="fa fa-fw fa-external-link"></i> </a></td>
-      <td>{{ item.RecipeOrder.Recipe.productionStatusDesc}}</td>
       <template v-for="n in 6">
         <td>{{ item.RecipeOrder.Recipe.formula[n].scent + ' , ' + item.RecipeOrder.Recipe.formula[n].drops + ' 滴'}}</td>
       </template>
@@ -97,7 +96,6 @@
       { "data": "ItemNameArray" },
       { "data": "UserName" },
       { "data": null }, // Recipe.id
-      { "data": "RecipeOrder.Recipe.productionStatusDesc" },
       { "data": null }, //row13 Recipe.formula[0]
       { "data": null },
       { "data": null },
@@ -167,49 +165,49 @@
       },
       {
         "searchable": false,
-        "targets": 12
-      },
-      {
-        "searchable": false,
-        "targets": 13,
+        "targets": 12,
         "render": function (data, type, row) {
           return returnRecipeFormula(data, 0);
         }
       },
       {
         "searchable": false,
-        "targets": 14,
+        "targets": 13,
         "render": function (data, type, row) {
           return returnRecipeFormula(data, 1);
         }
       },
       {
         "searchable": false,
-        "targets": 15,
+        "targets": 14,
         "render": function (data, type, row) {
           return returnRecipeFormula(data, 2);
         }
       },
       {
         "searchable": false,
-        "targets": 16,
+        "targets": 15,
         "render": function (data, type, row) {
           return returnRecipeFormula(data, 3);
         }
       },
       {
         "searchable": false,
-        "targets": 17,
+        "targets": 16,
         "render": function (data, type, row) {
           return returnRecipeFormula(data, 4);
         }
       },
       {
         "searchable": false,
-        "targets": 18,
+        "targets": 17,
         "render": function (data, type, row) {
           return returnRecipeFormula(data, 5);
         }
+      },
+      {
+        "searchable": false,
+        "targets": 18
       },
       {
         "searchable": false,
@@ -219,12 +217,8 @@
         "searchable": false,
         "targets": 20
       },
-      {
-        "searchable": false,
-        "targets": 21
-      },
 			{
-				"targets"  : 23,
+				"targets"  : 22,
 				"orderable": false,
 				"searchable": false,
 				"render": function ( data, type, row ) {

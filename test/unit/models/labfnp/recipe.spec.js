@@ -8,7 +8,6 @@ describe('test Recipe model operation', function() {
       // message: '沒有備註',
       // description: '沒有描述',
       // visibilityDesc: '公開',
-      // productionStatusDesc: 'NEW',
       // updatedAt: '2016/08/26 11:18:45',
       // createdAt: '2016/08/26 11:18:45',
       // authorName: '',
@@ -16,7 +15,6 @@ describe('test Recipe model operation', function() {
       // totalDrops: 0,
       // coverPhoto: '',
       // visibility: 'PUBLIC',
-      // productionStatus: 'NEW',
       // id: null }
       done();
     } catch (e) {
