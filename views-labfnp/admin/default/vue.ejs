@@ -211,6 +211,27 @@ var defaultVueMathod = {
           //   "bBomInc": true,
           // },
 					{
+	  				"sExtends": "text",
+	  				"sButtonText": "匯出",
+	  				"sToolTip": "把全部資料匯出成CSV",
+	          "fnClick": function (nButton, oConfig, oFlash) {
+	            var serialize = function(obj, prefix) {
+	              var str = [];
+	              for(var p in obj) {
+	                if (obj.hasOwnProperty(p)) {
+	                  var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+	                  str.push(typeof v == "object" ?
+	                    serialize(v, k) :
+	                    encodeURIComponent(k) + "=" + encodeURIComponent(v));
+	                }
+	              }
+	              return str.join("&");
+	            }
+	  					console.log(serialize(appModel.pagingQuery));
+	            location.href = '/api/admin/' + modelName + '/export?' + serialize(appModel.pagingQuery)
+	  				}
+	        },
+					{
 						"sExtends": "text",
 						"sButtonText": "檢視",
 						"fnClick": function (nButton, oConfig, oFlash) {

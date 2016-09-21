@@ -85,7 +85,7 @@
 		// server only
 		var columns = [
 			{ "data": "id" },  // row0
-			{ "data": null}, //TradeNo
+			{ "data": "TradeNo"}, //TradeNo
 			{ "data": "MerchantTradeNo" },
       { "data": "RtnMsg" },
       { "data": null }, //PaymentDate
@@ -128,11 +128,12 @@
         }
       },
 			{
-        "searchable": false,
+        "searchable": true,
         "targets": 2
       },
       {
         "targets": 4,
+				"searchable": false,
         "render": function(data, type, row) {
           if(data.PaymentDate !== "Invalid date"){
             return '<td>' + data.PaymentDate +'</td>';
