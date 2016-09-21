@@ -88,7 +88,32 @@
                               </p>
                             </li>
                             <li>
-                              <p class="text-muted" v-show="data.item.userAgent">
+                              <p class="">
+                                <i class="fa fa-birthday-cake"></i>  {{data.item.birthday}}
+                              </p>
+                            </li>
+                            <li>
+                              <p class="">
+                                <i class="fa fa-phone"></i>  {{data.item.phone1}}
+                              </p>
+                            </li>
+                            <li>
+                              <p class="">
+                                <i class="fa fa-phone"></i>  {{data.item.phone2}}
+                              </p>
+                            </li>
+                            <li>
+                              <p class="">
+                                <i class="fa fa-map-marker"></i>  {{data.item.address}}
+                              </p>
+                            </li>
+                            <li>
+                              <p class="">
+                                <i class="fa fa-map-marker"></i>  {{data.item.address2}}
+                              </p>
+                            </li>
+                            <li>
+                              <p class="" v-show="data.item.userAgent">
                                 <i class="fa fa-flag"></i>&nbsp;&nbsp;<span class="semi-bold">{{ data.item.userAgent }}</span>
                               </p>
                             </li>
