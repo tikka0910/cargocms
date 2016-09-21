@@ -100,7 +100,7 @@ describe('about Format Service operation.', function() {
             "data": "productionStatus",
             "searchable": "true",
             "search": {
-              "value": "SUBMITTED"
+              "custom": "SUBMITTED"
             }
           }
         },

@@ -67,13 +67,21 @@ appMain.DataTableInitComplete = function() {
   $('#productionStatus').on('change', function(){
     api.columns().search().draw();
   })
+  this.yadcf([
+    {        
+      column_number: 3,
+      filter_type: "range_date",
+      filter_container_id: "external_filter_container",
+      date_format: 'yy/mm/dd',
+    },
+  ]);
 }
 appMain.customSearch = function() {
   appModel.pagingQuery.columns.push({
     data: 'productionStatus',
     searchable: true,
     search: {
-      value: $('#productionStatus').val(),
+      custom: $('#productionStatus').val(),
     }
   })
 }

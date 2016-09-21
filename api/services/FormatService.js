@@ -14,9 +14,9 @@ module.exports = {
             $like: `%${input.search.value}%`
           };
           data.where.$or.push(result);
-          if (column.search && column.search.value !== '') {
+          if (column.search && column.search.custom) {
             data.where[column.data] = {
-              $like: `%${column.search.value}%`
+              $like: `%${column.search.custom}%`
             };
           }
         }
@@ -38,6 +38,7 @@ module.exports = {
         let sortColumn = input.columns[columnIndex].data;
         return [sortColumn, data.dir];
       });
+      sails.log.debug(JSON.stringify(data, null, 2));
       return data;
     } catch (e) {
       sails.log.error(e);
