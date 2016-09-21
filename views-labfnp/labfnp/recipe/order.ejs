@@ -217,12 +217,7 @@
 
     $("#orderForm").submit(function(){
       $("#submitOrder").prop("disabled", true);
-
       swal('訊息', '訂單處理中...！', 'info');
-      
-      setTimeout(function(){
-        $("#submitOrder").prop("disabled", false);
-      }, 800);
     });
 
   });
