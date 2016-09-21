@@ -28,21 +28,30 @@ module.exports.init = async () => {
       );
     });
 
-    let createFeeds = feeds.map((feed) => {
-      let row = {
-        fullPicture: feed.full_picture,
-        name: feed.name,
-        message: feed.message,
-        story: feed.story,
-        description: feed.description,
-        type: feed.type,
-        link: feed.link,
-        createdAt: feed.created_time,
-      };
-      return Feed.findOrCreate({ where: {sourceId: feed.id}, defaults: row });
-    })
+    let findFeeds = feeds.map((feed) => Feed.findOne({ where: {sourceId: feed.id}}));
 
-    await Promise.all(createFeeds);
+    let modelFeeds = await Promise.all(findFeeds);
+
+    let createFeeds = modelFeeds.reduce((results, feed, index) => {
+      if(feed == null){
+        let row = {
+          fullPicture: feeds[index].full_picture,
+          name: feeds[index].name,
+          message: feeds[index].message,
+          story: feeds[index].story,
+          description: feeds[index].description,
+          type: feeds[index].type,
+          link: feeds[index].link,
+          createdAt: feeds[index].created_time,
+          sourceId: feeds[index].id
+        };
+        results.push(row)
+        return results;
+      }
+      return results
+    }, [])
+
+    Feed.bulkCreate(createFeeds);
 
     console.log('<<< done: config/init/facebook <<<');
 
