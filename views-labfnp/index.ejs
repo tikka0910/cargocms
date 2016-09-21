@@ -60,12 +60,19 @@ p.lead {
 
 .feature-slogan {
   position: relative;
-  top: -65px;
+  top: -100px;
+}
+
+@media (max-width: 543px) {
+  .feature-slogan {
+    top: -65px;
+  }
 }
 
 .feature-slogan p {
-  font-size: 22px;
-  font-family: serif;
+  font-size: 24px;
+  font-family: 'Noto Sans TC', serif;
+  font-weight: 300;
   color: #fff;
   text-shadow: 1px 1px 1px rgba(0,0,0,.5);
 }
@@ -76,15 +83,12 @@ p.lead {
 }
 
 .feature-buttons .btn-u {
+  font-size: 16px;
   color: #333;
   background: rgba(255,255,255,.7);
-}
-
-.feature-buttons .btn-u {
   margin-right: 5px;
   margin-left: 5px;
 }
-
 
 .feature-buttons .btn-u:hover {
   background: rgba(255,255,255,1);
