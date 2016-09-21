@@ -258,7 +258,7 @@ module.exports = {
             index += 1;
           }
 
-          return JSON.stringify(dpFormulaArray);
+          return dpFormulaArray;
         } catch (e) {
           sails.log.error(e);
         }

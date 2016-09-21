@@ -108,7 +108,7 @@
 			{
 				"targets"  : 9, "orderable": false, "searchable": false,
 				"render": function ( data, type, row ) {
-					var json = typeof data.displayFormula === 'undefineds' ? '' : JSON.parse(data.displayFormula);
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
 					var colBody = typeof json[0] === 'undefined' ? '' : json[0].value;
 					return colBody;
 				}
@@ -116,7 +116,7 @@
 			{
 				"targets"  : 10, "orderable": false, "searchable": false,
 				"render": function ( data, type, row ) {
-					var json = typeof data.displayFormula === 'undefineds' ? '' : JSON.parse(data.displayFormula);
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
 					var colBody = typeof json[1] === 'undefined' ? '' : json[1].value;
 					return colBody;
 				}
@@ -124,7 +124,7 @@
 			{
 				"targets"  : 11, "orderable": false, "searchable": false,
 				"render": function ( data, type, row ) {
-					var json = typeof data.displayFormula === 'undefineds' ? '' : JSON.parse(data.displayFormula);
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
 					var colBody = typeof json[2] === 'undefined' ? '' : json[2].value;
 					return colBody;
 				}
@@ -132,7 +132,7 @@
 			{
 				"targets"  : 12, "orderable": false, "searchable": false,
 				"render": function ( data, type, row ) {
-					var json = typeof data.displayFormula === 'undefineds' ? '' : JSON.parse(data.displayFormula);
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
 					var colBody = typeof json[3] === 'undefined' ? '' : json[3].value;
 					return colBody;
 				}
@@ -140,7 +140,7 @@
 			{
 				"targets"  : 13, "orderable": false, "searchable": false,
 				"render": function ( data, type, row ) {
-					var json = typeof data.displayFormula === 'undefineds' ? '' : JSON.parse(data.displayFormula);
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
 					var colBody = typeof json[4] === 'undefined' ? '' : json[4].value;
 					return colBody;
 				}
@@ -148,7 +148,7 @@
 			{
 				"targets"  : 14, "orderable": false, "searchable": false,
 				"render": function ( data, type, row ) {
-					var json = typeof data.displayFormula === 'undefineds' ? '' : JSON.parse(data.displayFormula);
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
 					var colBody = typeof json[5] === 'undefined' ? '' : json[5].value;
 					return colBody;
 				}
