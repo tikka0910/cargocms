@@ -47,15 +47,15 @@ module.exports = {
       let score = 0;
       if (id) {
         user = await User.findOne({where:{ id }});
-        score = user.score;
         if(!user) return res.notFound("查無使用者");
+        score = user.score;
       } else {
         user = loginUser
         if(!user) return res.redirect("/login");
 
         user = await User.findById(loginUser.id);
         const userRecipes = await Recipe.findAll({where: { UserId: user.id }});
-        const userRecipeIdArray = userRecipes.map((recipe) => recipe.id);
+        const userRecipesIds = userRecipes.map((recipe) => recipe.id);
         score = await UserLikeRecipe.count({where: { RecipeId: userRecipeIdArray }});
         user.score = score;
         await user.save();
