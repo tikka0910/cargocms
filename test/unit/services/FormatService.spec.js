@@ -55,4 +55,35 @@ describe('about Format Service operation.', function() {
     }
 
   })
+
+  it('gen format', async (done) => {
+    try {
+      const result = FormatService.getQueryObj({ draw: '1',
+        columns:{
+          '0': { data: 'id', name: '' },
+          '1': { data: 'username', name: '' },
+          '2': { data: 'displayName', name: '', "searchable": "false"},
+          '3': { data: 'email', name: '' },
+          '4': { data: 'lastLogin', name: '', "searchable": "false"},
+          '5': { data: '5', name: '', "searchable": "false"}
+        },
+        order: [ { column: '0', dir: 'asc' } ],
+        start: '0',
+        length: '10',
+        search: { value: 'userX', regex: 'false' },
+        _: '1470989140227'
+      });
+      sails.log.debug(JSON.stringify(result, null, 2));
+      result.where.should.be.Object;
+      result.where.$or.should.be.Array;
+      result.where.$or[0].id.$like.should.be.String;
+      result.where.$or[0].id.$like.should.be.String;
+      result.order[0].should.be.Array;
+      result.order[0][0].should.be.Array;
+      done();
+    } catch (e) {
+      done(e)
+    }
+  });
+
 });

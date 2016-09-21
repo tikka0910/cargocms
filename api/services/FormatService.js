@@ -5,17 +5,17 @@ module.exports = {
       let data = {
         where: {},
       };
-      data.where.$or = input.columns.reduce((result, column) => {
-        let data = {};
-
-        if(column.searchable == "false") return result;
-
-        data[column.data] = {
-          $like: `%${input.search.value}%`
+      data.where.$or = [];
+      for (const index in input.columns) {
+        let result = {};
+        const column = input.columns[index];
+        if (column.searchable !== "false") {
+          result[column.data] = {
+            $like: `%${input.search.value}%`
+          };
+          data.where.$or.push(result);
         }
-        result.push(data);
-        return result;
-      }, []);
+      }
       data.offset = parseInt(input.start);
       data.limit = parseInt(input.length);
       data.order = input.order.map((data) => {
