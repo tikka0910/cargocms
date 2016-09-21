@@ -60,6 +60,7 @@
 </style>
 
 <div class="container content profile">
+  <% var error = req.flash('error'); %>
   <input type="hidden" name="id" class="hidden" value="<%= recipe.id %>" disabled>
 
   <!-- begin row -->
@@ -188,6 +189,17 @@
 
         </form>
       </div>
+
+      <section class="col">
+        <% if (error.length > 0) { %>
+          <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <% } %>
+        <% if (error.length > 0) { %>
+          <div class="margin-bottom-20 has-error">
+            <label class="col-md-6 control-label" for="password"><%= error %></label>
+          </div>
+        <% } %>
+      </section>
 
       <div class="text-center">
         <button form="orderForm" id="submitOrder" type="sumbit" class="btn-u btn-u-green" data-id="<%= recipe.id %>">
