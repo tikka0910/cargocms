@@ -293,6 +293,10 @@ var defaultVueMathod = {
 		}
 
 		var defaultTable = $('#main-table').dataTable(defaultTableConfig);
+		
+		if (!appModel.data.option.exportCSV) {
+			$('#ToolTables_main-table_0').hide()
+		}
 		// selection
 		defaultTable.on('click', 'tr', function () {
 
