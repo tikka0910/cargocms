@@ -17,30 +17,32 @@ module.exports.init = async () => {
 
     console.log('Feed URL: ' + feedUrl);
 
-    FB.api(feedUrl, async (response) => {
-        // console.log(response);
-        if (response && !response.error) {
-
-          console.log('Found: ' + response.data.length);
-
-          for (var feed of response.data) {
-
-            let row = {
-              fullPicture: feed.full_picture,
-              name: feed.name,
-              message: feed.message,
-              story: feed.story,
-              description: feed.description,
-              type: feed.type,
-              link: feed.link,
-              createdAt: feed.created_time,
-            };
-
-            await Feed.findOrCreate({ where: {sourceId: feed.id}, defaults: row });
+    let feeds = await new Promise(function(resolve, reject) {
+      FB.api(feedUrl, async (response) => {
+          if (response && !response.error) {
+            resolve(response.data)
+          } else {
+            throw new Error("can not get feed data.");
           }
         }
-      }
-    );
+      );
+    });
+
+    let createFeeds = feeds.map((feed) => {
+      let row = {
+        fullPicture: feed.full_picture,
+        name: feed.name,
+        message: feed.message,
+        story: feed.story,
+        description: feed.description,
+        type: feed.type,
+        link: feed.link,
+        createdAt: feed.created_time,
+      };
+      return Feed.findOrCreate({ where: {sourceId: feed.id}, defaults: row });
+    })
+
+    await Promise.all(createFeeds);
 
     console.log('<<< done: config/init/facebook <<<');
 
