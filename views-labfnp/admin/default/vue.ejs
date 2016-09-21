@@ -153,9 +153,10 @@ var defaultVueMathod = {
 		var ajax = {
 	    "url": url,
 	    "data": function(data) {
-				console.log(data);
 				// TODO: 這裡可以新增 startDate, endDate
 				appModel.pagingQuery = data;
+	      appModel.pagingQuery.startDate = $("#yadcf-filter--main-table-from-date-3").val() || '';
+	      appModel.pagingQuery.endDate = $("#yadcf-filter--main-table-to-date-3").val() || '';
 				console.log(appModel.pagingQuery);
 	      return data
 	    }
