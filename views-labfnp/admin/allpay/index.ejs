@@ -96,6 +96,7 @@
       { "data": "ItemNameArray" },
       { "data": "UserName" },
       { "data": null }, // Recipe.id
+			{ "data": null },
       { "data": null }, //row13 Recipe.formula[0]
       { "data": null },
       { "data": null },
@@ -163,51 +164,54 @@
           return '<td>' + data.RecipeOrder.Recipe.id + '<a href="/admin/#/admin/labfnp/recipe/show/' + data.RecipeOrder.Recipe.id + '"> <i class="fa fa-fw fa-external-link"></i> </a>' + '</td>';
         }
       },
-      {
+			{
         "searchable": false,
         "targets": 12,
         "render": function (data, type, row) {
-          return returnRecipeFormula(data, 0);
+          return '<td>' + data.productionStatusDesc + '</td>';
         }
       },
       {
         "searchable": false,
         "targets": 13,
         "render": function (data, type, row) {
-          return returnRecipeFormula(data, 1);
+          return returnRecipeFormula(data, 0);
         }
       },
       {
         "searchable": false,
         "targets": 14,
         "render": function (data, type, row) {
-          return returnRecipeFormula(data, 2);
+          return returnRecipeFormula(data, 1);
         }
       },
       {
         "searchable": false,
         "targets": 15,
         "render": function (data, type, row) {
-          return returnRecipeFormula(data, 3);
+          return returnRecipeFormula(data, 2);
         }
       },
       {
         "searchable": false,
         "targets": 16,
         "render": function (data, type, row) {
-          return returnRecipeFormula(data, 4);
+          return returnRecipeFormula(data, 3);
         }
       },
       {
         "searchable": false,
         "targets": 17,
         "render": function (data, type, row) {
-          return returnRecipeFormula(data, 5);
+          return returnRecipeFormula(data, 4);
         }
       },
       {
         "searchable": false,
-        "targets": 18
+        "targets": 18,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 5);
+        }
       },
       {
         "searchable": false,
@@ -217,8 +221,12 @@
         "searchable": false,
         "targets": 20
       },
+      {
+        "searchable": false,
+        "targets": 21
+      },
 			{
-				"targets"  : 22,
+				"targets"  : 23,
 				"orderable": false,
 				"searchable": false,
 				"render": function ( data, type, row ) {
