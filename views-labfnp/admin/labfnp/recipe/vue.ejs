@@ -73,9 +73,12 @@ appMain.onEnterPageShow = function () {
 appMain.insertEmptyFormulaItem = function () {
 	var thisFormula = [];
 	for (var i = 0; i < 6; i++) {
-		var indexFormula = appModel.data.item.formula[i];
-		var checkFormula = typeof indexFormula === 'undefined';
+		var indexFormula = JSON.stringify(appModel.data.item.formula[i]);
 
+		indexFormula = JSON.parse(indexFormula);
+		var checkFormula = typeof indexFormula === 'undefined';
+		console.log(i, ' checkFormula=>', checkFormula);
+		console.log(i, ' indexFormula=>', indexFormula);
 		if (checkFormula) {
 			indexFormula = {
 				'scent': '',
@@ -84,11 +87,16 @@ appMain.insertEmptyFormulaItem = function () {
 		} else {
 			var checkDrops = typeof indexFormula.drops === 'string';
 			var checkDropsValue = indexFormula.drops === '0';
+			console.log('checkDrops=>',checkDrops);
+			console.log('checkDropsValue=>',checkDropsValue);
 			if (!checkDrops || checkDropsValue) indexFormula.scent = '';
+			console.log('indexFormula.scent=>',indexFormula.scent);
 		}
 		thisFormula.push(indexFormula);
 	}
+	console.log('thisFormula=>', thisFormula);
 	appModel.data.item.formula = thisFormula;
+	console.log('final->', appModel.data.item.formula);
 },
 
 appMain.loadSelectOptions = function (cb) {
@@ -193,6 +201,30 @@ appMain.saveItemStatusBeforeEdit = function () {
 			return message;
 		}
 	};
+};
+
+appMain.onSelectChange = function (e) {
+	var targetId = e.target.id.split("-")[1];
+	console.log('targetId=>', targetId);
+	appModel.data.item.formula[targetId].drops = '1';
+};
+
+appMain.onDropsChange = function (e) {
+	var totalDrops = 0;
+	for (var i = 0; i < appModel.data.item.formula.length; i++) {
+		var drops = parseInt(appModel.data.item.formula[i].drops);
+		totalDrops += drops;
+	}
+	appModel.data.item.totalDrops = totalDrops;
+};
+
+appMain.onBtnCleanClick = function (e) {
+	var targetId = e.target.id.split("-")[1];
+	console.log('targetId=>', targetId);
+	console.log('appModel.data.item.formula=>',appModel.data.item.formula);
+	appModel.data.item.formula[targetId].drops = '0';
+	appModel.data.item.formula[targetId].scent = '';
+	$("select#scent-" + targetId).select(0).val('');
 };
 
 appMain.renderTable = function () {
