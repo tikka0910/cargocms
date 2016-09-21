@@ -9,7 +9,11 @@ module.exports = {
       const modelName = req.options.controller.split("/").reverse()[0];
       let result;
       if (serverSidePaging) {
-        result = await PagingService.process({query, modelName});
+        const include = {
+          model: RecipeOrder,
+          include: [User, Recipe]
+        }
+        result = await PagingService.process({ query, modelName, include });
       } else {
         const items = await sails.models[modelName].findAll({
           include:{

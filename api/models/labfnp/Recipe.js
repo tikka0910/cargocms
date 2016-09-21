@@ -304,6 +304,7 @@ module.exports = {
           return {
             ...whereParam,
             ...paging,
+            order: [['createdAt', 'DESC']],
             include: [{
               model: UserLikeRecipe,
               required: false

@@ -70,6 +70,24 @@ $(document).ready(function () {
 		}
 	});
 
+	$('.scents-dropdown').change(function () {
+		var idx = $(this).data('index');
+		var selected = document.getElementsByName("formulaScents[" + idx + "]")[0].value;
+		$(this).val(selected);
+
+		for (var id=0; id<5; id++) {
+			if (id !== idx && selected !== '') {
+				var otherSelectedScent =
+				document.getElementsByName("formulaScents[" + id + "]")[0].value;
+
+				if (selected == otherSelectedScent) {
+					swal('注意', '香味分子 ‘' + selected + '’ 已經被選過了，請選擇其他香味分子！');
+					$(this).val('');
+					return false;
+				}
+			}
+		}
+	});
 
 	$('.feeling-dropdown').change(function () {
 		var idx = $(this).data('index');
