@@ -14,7 +14,6 @@ module.exports = {
         authorName: '創作人',
         createdAt: '建立日期',
         visibilityDesc: '公開狀態',
-        productionStatusDesc: '製作狀態',
         description: '香水描述',
         message: '額外資訊',
         scent0: '香味分子 1',
@@ -38,7 +37,6 @@ module.exports = {
             authorName: data.authorName,
             createdAt: data.createdAt,
             visibilityDesc: data.visibilityDesc,
-            productionStatusDesc: data.productionStatusDesc,
             description: data.description,
             message: data.message,
           }
