@@ -1,11 +1,14 @@
 import FacebookHelper from './libraries/facebook/'
 
 module.exports = {
-  process: async ({query, modelName}) => {
+  process: async ({query, modelName, include}) => {
     try {
       const findQuery = FormatService.getQueryObj(query);
+      if(include){
+        findQuery.include = include;
+      }
       let result = await sails.models[modelName].findAndCountAll(findQuery)
-      let data = result.rows
+      let data = result.rows;
       let recordsTotal = data.length
       let recordsFiltered =  result.count
       let draw = parseInt(query.draw) + 1
