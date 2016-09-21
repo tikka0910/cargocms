@@ -60,6 +60,7 @@
 </style>
 
 <div class="container content profile">
+  <% var error = req.flash('error'); %>
   <input type="hidden" name="id" class="hidden" value="<%= recipe.id %>" disabled>
 
   <!-- begin row -->
@@ -152,7 +153,7 @@
           <section class="col">
             <label for="phone">收件人聯絡電話<span class="required">*</span>
             </label>
-            <input type="tel" id="phone" class="form-control" name="phone" value="" placeholder="請輸入手機號碼或市話含區碼..." pattern="0\d{8,11}" required>
+            <input type="tel" id="phone" class="form-control" name="phone" value="" placeholder="請輸入手機號碼或市話含區碼..." required>
           </section>
 
           <section class="col">
@@ -188,6 +189,16 @@
 
         </form>
       </div>
+
+      <section class="col">
+        <% if (error.length > 0) { %>
+          <div class="margin-bottom-20 has-error">
+            <label class="col-md-6 control-label" for="password">
+              <span class="glyphicon glyphicon-remove"></span><%= error %>
+            </label>
+          </div>
+        <% } %>
+      </section>
 
       <div class="text-center">
         <button form="orderForm" id="submitOrder" type="sumbit" class="btn-u btn-u-green" data-id="<%= recipe.id %>">
