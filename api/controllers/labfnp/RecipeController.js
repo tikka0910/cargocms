@@ -204,7 +204,7 @@ module.exports = {
         if (!verifyPaymentMethodValid) return '付款方式錯誤！';
 
         // disable phone fromat for isseue #551
-        // if (phone.indexOf(0) !== 0) return '收件人電話格式錯誤！';
+        if (phone.indexOf(0) !== 0) return '收件人電話格式錯誤！';
 
         return true;
       })();

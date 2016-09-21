@@ -192,11 +192,10 @@
 
       <section class="col">
         <% if (error.length > 0) { %>
-          <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-        <% } %>
-        <% if (error.length > 0) { %>
           <div class="margin-bottom-20 has-error">
-            <label class="col-md-6 control-label" for="password"><%= error %></label>
+            <label class="col-md-6 control-label" for="password">
+              <span class="glyphicon glyphicon-remove"></span><%= error %>
+            </label>
           </div>
         <% } %>
       </section>
