@@ -124,62 +124,19 @@
 
 <!-- SCRIPTS ON PAGE EVENT -->
 <script type="text/javascript">
-  /* DO NOT REMOVE : GLOBAL FUNCTIONS!
-   *
-   * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
-   *
-   * // activate tooltips
-   * $("[rel=tooltip]").tooltip();
-   *
-   * // activate popovers
-   * $("[rel=popover]").popover();
-   *
-   * // activate popovers with hover states
-   * $("[rel=popover-hover]").popover({ trigger: "hover" });
-   *
-   * // activate inline charts
-   * runAllCharts();
-   *
-   * // setup widgets
-   * setup_widgets_desktop();
-   *
-   * // run form elements
-   * runAllForms();
-   *
-   ********************************
-   *
-   * pageSetUp() is needed whenever you load a page.
-   * It initializes and checks for all basic elements of the page
-   * and makes rendering easier.
-   *
-   */
+pageSetUp();
 
-  pageSetUp();
+// PAGE RELATED SCRIPTS pagefunction
+var pagefunction = function() {
+  <%- include vue.ejs %>
+  <%- include pieChartAdmin.ejs %>
+  appMain.$mount("#main-show");
+  appMain.onEnterPageShow();
+};
 
-  // Load form valisation dependency
-
-  loadScript("/assets/admin/js/plugin/jquery-form/jquery-form.min.js", function() {
-    loadScript("/assets/admin/js/plugin/d3/d3.min.js", function() {
-      loadScript("/assets/admin/js/plugin/d3/d3pie.min.js", pagefunction)
-    });
+loadScript("/assets/admin/js/plugin/jquery-form/jquery-form.min.js", function() {
+  loadScript("/assets/admin/js/plugin/d3/d3.min.js", function() {
+    loadScript("/assets/admin/js/plugin/d3/d3pie.min.js", pagefunction)
   });
-
-  // PAGE RELATED SCRIPTS
-
-  // pagefunction
-  var pagefunction = function() {
-    <%- include vue.ejs %>
-    appMain.$mount("#main-show");
-    appMain.loadItem(appMain.onEnterPageShow);
-  };
-
-  // var pagedestroy = function() {
-  // $(window).unload(function() {
-  //   return "Handler for .unload() called.";
-  // });
-  // }
-
-  // end pagefunction
-
-
+});
 </script>
