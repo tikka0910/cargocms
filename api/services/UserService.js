@@ -73,8 +73,6 @@ module.exports = {
       if (updatedUser) {
         const passport = await Passport.findById(updatedUser.Passports[0].id);
         const isOldPassword = await passport.validatePassword(user.Passports[0].password);
-        console.log("passport pwd=>", passport.password);
-        console.log("user pwd=>", user.Passports[0].password);
         if (!isOldPassword) {
           passport.password = user.Passports[0].password;
           await passport.save();
