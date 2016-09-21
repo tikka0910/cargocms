@@ -127,10 +127,10 @@ $(document).ready(function(){
     }
   }
 
-  getRecipe({start: 0, length: 10});
+  // getRecipe({start: 0, length: 10});
 
   $(document).scroll(function () {
-    if ($(window).scrollTop() >= $(document).height() - $(window).height() - 1000) {
+    if ($(window).scrollTop() >= $(document).height() - $(window).height() - 1500) {
       if (scrollLoad) {
         scrollLoad = false;
         setTimeout(function(){
@@ -138,7 +138,7 @@ $(document).ready(function(){
         }, 1000);
         console.log("getRecipe");
         var recipeLength =  $('.grid-boxes').children().length
-        getRecipe({start: recipeLength, length: 5});
+        getRecipe({start: recipeLength, length: 50});
       }
     }
   });
