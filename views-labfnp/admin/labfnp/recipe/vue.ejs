@@ -1,5 +1,7 @@
 var COMMON = {
 	DOUBLE_CLICK_TIME_PERIOD: 250,
+	DROPS_MAX: 50,
+	DROPS_MIN: 1,
 	DEFAULT_INDEX: -1,
 	DEFAULT_AVATAR: "/assets/admin/img/avatars/default.png",
 };
@@ -12,21 +14,7 @@ var appModel = {
 	prefix: prefix,
 	data: {
 		link: {
-			PAGE_INDEX: '/admin/#/admin/labfnp/recipe',
-			PAGE_CREATE: '/admin/#/admin/labfnp/recipe/create',
-			PAGE_EDIT: '/admin/#/admin/labfnp/recipe/edit/',
-			PAGE_SHOW: '/admin/#/admin/labfnp/recipe/show/',
 			API_LIST_SCENT: '/api/labfnp/scent',
-			API_LIST: '/api/labfnp/recipe',
-			API_ITEM: '/api/labfnp/recipe/',
-			API_CREATE: '/api/labfnp/recipe',
-			API_UPDATE: '/api/labfnp/recipe/',
-		},
-		common: {
-			DEFAULT_AVATAR: '/assets/admin/img/avatars/default.png',
-			DROPS_MAX: 50,
-			DROPS_MIN: 1,
-			DEFAULT_INDEX: -1,
 		},
 		status: {
 			itemBeforeEdit: {},
@@ -66,37 +54,24 @@ appMain.enableSelect = function () {
 	$('.select').removeClass('state-disabled');
 }
 
-appMain.onEnterPageShow = function () {
-	drawD3PieFroAdmin();
-};
-
 appMain.insertEmptyFormulaItem = function () {
 	var thisFormula = [];
 	for (var i = 0; i < 6; i++) {
-		var indexFormula = JSON.stringify(appModel.data.item.formula[i]);
-
-		indexFormula = JSON.parse(indexFormula);
+		var indexFormula = appModel.data.item.formula[i];
 		var checkFormula = typeof indexFormula === 'undefined';
-		console.log(i, ' checkFormula=>', checkFormula);
-		console.log(i, ' indexFormula=>', indexFormula);
 		if (checkFormula) {
 			indexFormula = {
 				'scent': '',
 				'drops': '0',
 			};
 		} else {
-			var checkDrops = typeof indexFormula.drops === 'string';
+			var checkScent = typeof indexFormula.scent === 'undefined';
 			var checkDropsValue = indexFormula.drops === '0';
-			console.log('checkDrops=>',checkDrops);
-			console.log('checkDropsValue=>',checkDropsValue);
-			if (!checkDrops || checkDropsValue) indexFormula.scent = '';
-			console.log('indexFormula.scent=>',indexFormula.scent);
+			if (checkScent || checkDropsValue) indexFormula.scent = '';
 		}
 		thisFormula.push(indexFormula);
 	}
-	console.log('thisFormula=>', thisFormula);
 	appModel.data.item.formula = thisFormula;
-	console.log('final->', appModel.data.item.formula);
 },
 
 appMain.loadSelectOptions = function (cb) {
@@ -118,6 +93,10 @@ appMain.loadSelectOptions = function (cb) {
 	});
 };
 
+appMain.onEnterPageShow = function () {
+	appMain.loadItem(appMain.drawD3PieFroAdmin);
+};
+
 appMain.onEnterPageCreare = function () {
 	appMain.insertEmptyFormulaItem();
 	appMain.loadSelectOptions();
@@ -126,11 +105,40 @@ appMain.onEnterPageCreare = function () {
 };
 
 appMain.onEnterPageEdit = function () {
-	appMain.loadItem();
-	appMain.insertEmptyFormulaItem();
+	appMain.loadItem(appMain.insertEmptyFormulaItem);
 	appMain.loadSelectOptions();
 	appMain.setupForm("edit");
 	appMain.saveItemStatusBeforeEdit();
+};
+
+appMain.update = function (event) {
+	var ajaxSuccess = function (result) {
+		window.onbeforeunload = null;
+		location.href = '/admin/#/admin/' + modelName;
+		messageApp.show({
+			desc: '更新資料成功！',
+			type: 'success'
+		});
+	};
+
+	var ajaxError = function (result) {
+		messageApp.show({
+			desc: '更新資料失敗！errorMessage: ' + result.responseJSON.message,
+			type: 'error'
+		});
+	};
+
+	$.ajax({
+		url: '/api/' + prefix + modelName + '/' + appModel.data.item.id,
+		type: 'PUT',
+		dataType: 'json',
+		data: appMain.verifySendData(),
+		xhrFields: {
+			withCredentials: true,
+		},
+		success: ajaxSuccess,
+		error: ajaxError,
+	});
 };
 
 appMain.save = function(e) {
@@ -205,8 +213,25 @@ appMain.saveItemStatusBeforeEdit = function () {
 
 appMain.onSelectChange = function (e) {
 	var targetId = e.target.id.split("-")[1];
-	console.log('targetId=>', targetId);
-	appModel.data.item.formula[targetId].drops = '1';
+	var selectedScent = $("select#scent-" + targetId).select(0).val();
+	var duplicated = -1;
+
+	for (var formula of appModel.data.item.formula) {
+		if (selectedScent === formula.scent) {
+			duplicated += 1;
+		}
+	}
+
+	if (duplicated > 0) {
+		messageApp.show({
+			desc: '香味分子 ' + selectedScent + ' 重複！請選取其他香味分子！',
+			type: 'error'
+		});
+		$("select#scent-" + targetId).select(0).val('');
+		return false;
+	} else {
+		appModel.data.item.formula[targetId].drops = '1';
+	}
 };
 
 appMain.onDropsChange = function (e) {
@@ -220,8 +245,6 @@ appMain.onDropsChange = function (e) {
 
 appMain.onBtnCleanClick = function (e) {
 	var targetId = e.target.id.split("-")[1];
-	console.log('targetId=>', targetId);
-	console.log('appModel.data.item.formula=>',appModel.data.item.formula);
 	appModel.data.item.formula[targetId].drops = '0';
 	appModel.data.item.formula[targetId].scent = '';
 	$("select#scent-" + targetId).select(0).val('');
@@ -333,7 +356,6 @@ appMain.renderTable = function () {
 					"fnClick": function (nButton, oConfig, oFlash) {
 						// var isSelected = appModel.view.table.selectIndex !== appModel.data.common.DEFAULT_INDEX;
 						//appModel.view.table.selectIndex 沒變更到
-						console.log("-->", appModel.view.table.selectIndex);
 						var isSelected = appModel.view.table.selectIndex !== COMMON.DEFAULT_INDEX;
 						if (isSelected) {
 							var id = appModel.view.table.selectIndex;

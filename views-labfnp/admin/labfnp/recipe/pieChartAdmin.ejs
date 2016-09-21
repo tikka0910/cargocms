@@ -1,4 +1,4 @@
-var drawD3PieFroAdmin = function(){
+appMain.drawD3PieFroAdmin = function(){
 	var minSize = 450;
 	var autoSize = $('.col.col-md-12').width() * 0.75 > minSize ? $('.col.col-md-12').width() * 0.75 : minSize;
 	var autoOuter = autoSize > minSize ? "60%" : "40%";
@@ -40,7 +40,6 @@ var drawD3PieFroAdmin = function(){
 				if (context.section === 'outer') {
 					label = label + ' - ' + context.value + '滴';
 				}
-				console.log('context=>', context);
 				return label;
 			},
 			"outer": {

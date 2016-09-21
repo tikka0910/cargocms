@@ -1,5 +1,6 @@
 <style>
-  .drops, .scent {
+  .drops,
+  .scent {
     font-size: 16px;
     font-weight: bold;
     color: black;
@@ -15,18 +16,18 @@
   .name {
     padding-bottom: 10px !important;
   }
+
 </style>
 <!-- Bread crumbs -->
 <div class="row">
   <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
     <h1 class="page-title txt-color-blueDark">
-			<!-- PAGE HEADER -->
-			<i class="fa-fw fa fa-pencil-square-o"></i>
-				配方資料
-			<span>>
-				詳細資料
-			</span>
-		</h1>
+      <!-- PAGE HEADER -->
+      <i class="fa-fw fa fa-pencil-square-o"></i>
+      配方資料
+      <span>> 詳細資料
+      </span>
+    </h1>
   </div>
 </div>
 <!-- END Bread crumbs -->
@@ -65,23 +66,28 @@
                     </div>
 
                     <div class="col-lg-7 col-md-6 col-sm-6 col-xs-12">
-                      <h2 class="name"><small>配方名稱</small>{{ data.item.perfumeName }}</h2>
+                      <h2 class="name">
+                        <small>配方名稱</small>{{ data.item.perfumeName }}</h2>
                       <hr>
                       <div class="row">
                         <div class="col col-xs-6 vcol-md-3 col-sm-12 col-lg-3">
-                          <h2 class="name"><small>創作人</small>{{ data.item.authorName }}</h2>
+                          <h2 class="name">
+                            <small>創作人</small>{{ data.item.authorName }}</h2>
                         </div>
                         <div class="col col-xs-6 vcol-md-3 col-sm-12 col-lg-3">
-                          <h2 class="name"><small>建立者</small>{{ data.item.User.displayName }}</h2>
+                          <h2 class="name">
+                            <small>建立者</small>{{ data.item.User.displayName }}</h2>
                         </div>
                       </div>
                       <hr>
                       <div class="row">
                         <div class="col col-xs-6 vcol-md-3 col-sm-12 col-lg-3">
-                          <h2 class="name"><small>公開狀態</small>{{ data.item.visibilityDesc }}</h2>
+                          <h2 class="name">
+                            <small>公開狀態</small>{{ data.item.visibilityDesc }}</h2>
                         </div>
                         <div class="col col-xs-6 vcol-md-3 col-sm-12 col-lg-3">
-                          <h2 class="name"><small>製作狀態</small>{{ data.item.productionStatusDesc }}</h2>
+                          <h2 class="name">
+                            <small>製作狀態</small>{{ data.item.productionStatusDesc }}</h2>
                         </div>
                       </div>
                       <hr>
@@ -93,11 +99,15 @@
             							<i class="fa fa-star fa-2x text-muted"></i>
             							<span class="fa fa-2x"><h5>(109) Votes</h5></span>
                           <hr> -->
-                      <h4 class="name" v-if="data.item.description"><small>配方描述</small>{{ data.item.description }}</h4>
-                      <h4 class="name" v-else><small>配方描述</small>沒有資料</h4>
+                      <h4 class="name" v-if="data.item.description">
+                        <small>配方描述</small>{{ data.item.description }}</h4>
+                      <h4 class="name" v-else>
+                        <small>配方描述</small>沒有資料</h4>
                       <hr>
-                      <h4 class="name" v-if="data.item.message"><small>其他訊息</small>{{ data.item.message }}</h4>
-                      <h4 class="name" v-else><small>備註</small>沒有資料</h4>
+                      <h4 class="name" v-if="data.item.message">
+                        <small>其他訊息</small>{{ data.item.message }}</h4>
+                      <h4 class="name" v-else>
+                        <small>備註</small>沒有資料</h4>
                       <hr>
 
                     </div>
@@ -115,72 +125,28 @@
     </div>
     <!-- end row -->
   </div>
-  </div>
-  </div>
-  <!-- end row -->
+</div>
+</div>
+<!-- end row -->
 
 </section>
 <!-- end widget grid -->
 
 <!-- SCRIPTS ON PAGE EVENT -->
 <script type="text/javascript">
-  /* DO NOT REMOVE : GLOBAL FUNCTIONS!
-   *
-   * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
-   *
-   * // activate tooltips
-   * $("[rel=tooltip]").tooltip();
-   *
-   * // activate popovers
-   * $("[rel=popover]").popover();
-   *
-   * // activate popovers with hover states
-   * $("[rel=popover-hover]").popover({ trigger: "hover" });
-   *
-   * // activate inline charts
-   * runAllCharts();
-   *
-   * // setup widgets
-   * setup_widgets_desktop();
-   *
-   * // run form elements
-   * runAllForms();
-   *
-   ********************************
-   *
-   * pageSetUp() is needed whenever you load a page.
-   * It initializes and checks for all basic elements of the page
-   * and makes rendering easier.
-   *
-   */
+pageSetUp();
 
-  pageSetUp();
+// PAGE RELATED SCRIPTS pagefunction
+var pagefunction = function() {
+  <%- include vue.ejs %>
+  <%- include pieChartAdmin.ejs %>
+  appMain.$mount("#main-show");
+  appMain.onEnterPageShow();
+};
 
-  // Load form valisation dependency
-
-  loadScript("/assets/admin/js/plugin/jquery-form/jquery-form.min.js", function() {
-    loadScript("/assets/admin/js/plugin/d3/d3.min.js", function() {
-      loadScript("/assets/admin/js/plugin/d3/d3pie.min.js", pagefunction)
-    });
+loadScript("/assets/admin/js/plugin/jquery-form/jquery-form.min.js", function() {
+  loadScript("/assets/admin/js/plugin/d3/d3.min.js", function() {
+    loadScript("/assets/admin/js/plugin/d3/d3pie.min.js", pagefunction)
   });
-
-  // PAGE RELATED SCRIPTS
-
-  // pagefunction
-  var pagefunction = function() {
-    <%- include pieChartAdmin.ejs %>
-    <%- include vue.ejs %>
-    appMain.$mount("#main-show");
-    appMain.loadItem(appMain.onEnterPageShow);
-  };
-
-  // var pagedestroy = function() {
-  // $(window).unload(function() {
-  //   return "Handler for .unload() called.";
-  // });
-  // }
-
-  // end pagefunction
-
-
+});
 </script>
