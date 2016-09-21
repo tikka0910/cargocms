@@ -1,7 +1,7 @@
 module.exports = {
   getQueryObj: (input) => {
     try {
-      sails.log.debug(input);
+      sails.log.debug(JSON.stringify(input, null, 2));
       let data = {
         where: {},
       };
@@ -14,6 +14,11 @@ module.exports = {
             $like: `%${input.search.value}%`
           };
           data.where.$or.push(result);
+          if (column.search && column.search.value !== '') {
+            data.where[column.data] = {
+              $like: `%${column.search.value}%`
+            };
+          }
         }
       }
       const hasDateFilter = input.startDate !== '' || input.endDate !== '';

@@ -43,7 +43,7 @@ var appModel = {
     },
     items: [],
     option: {
-      exportCSV: true, 
+      exportCSV: true,
     }
   },
   view: {
@@ -61,4 +61,19 @@ var appModel = {
 appMain.disableAllpay = function(){
   $('.allpay').attr('disabled', true);
   $('.allpaydisabled').addClass('state-disabled');
+}
+appMain.DataTableInitComplete = function() {
+  var api = this.api();
+  $('#productionStatus').on('change', function(){
+    api.columns().search().draw();
+  })
+}
+appMain.customSearch = function() {
+  appModel.pagingQuery.columns.push({
+    data: 'productionStatus',
+    searchable: true,
+    search: {
+      value: $('#productionStatus').val(),
+    }
+  })
 }

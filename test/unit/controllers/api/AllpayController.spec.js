@@ -157,7 +157,7 @@ describe('about Allpay controllers', () => {
       }
     });
 
-    it.only('export csv', async (done) => {
+    it('export csv', async (done) => {
       try {
         const webForm = {
           "draw": 1,

@@ -157,7 +157,10 @@ var defaultVueMathod = {
 				appModel.pagingQuery = data;
 	      appModel.pagingQuery.startDate = $("#yadcf-filter--main-table-from-date-3").val() || '';
 	      appModel.pagingQuery.endDate = $("#yadcf-filter--main-table-to-date-3").val() || '';
-				console.log(JSON.stringify(appModel.pagingQuery));
+				if (appMain.customSearch) {
+					appMain.customSearch();
+				}
+				console.log(appModel.pagingQuery);
 	      return data
 	    }
 	  }
@@ -227,6 +230,9 @@ var defaultVueMathod = {
 	              }
 	              return str.join("&");
 	            }
+							if (appMain.customSearch) {
+								appMain.customSearch();
+							}
 	  					console.log(serialize(appModel.pagingQuery));
 	            location.href = '/api/admin/' + modelName + '/export?' + serialize(appModel.pagingQuery)
 	  				}
@@ -292,8 +298,12 @@ var defaultVueMathod = {
 			defaultTableConfig.ajax = ajax;
 		}
 
+		if (appMain.DataTableInitComplete) {
+			defaultTableConfig.initComplete = appMain.DataTableInitComplete
+		}
+
 		var defaultTable = $('#main-table').dataTable(defaultTableConfig);
-		
+
 		if (!appModel.data.option.exportCSV) {
 			$('#ToolTables_main-table_0').hide()
 		}
