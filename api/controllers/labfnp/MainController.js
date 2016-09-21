@@ -58,7 +58,7 @@ module.exports = {
         user = await User.findById(loginUser.id);
         const userRecipes = await Recipe.findAll({where: { UserId: user.id }});
         const userRecipesIds = userRecipes.map((recipe) => recipe.id);
-        score = await UserLikeRecipe.count({where: { RecipeId: userRecipeIdArray }});
+        score = await UserLikeRecipe.count({where: { RecipeId: userRecipesIds }});
         user.score = score;
         await user.save();
       }
