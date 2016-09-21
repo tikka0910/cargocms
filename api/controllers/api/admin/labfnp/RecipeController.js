@@ -18,17 +18,17 @@ module.exports = {
         description: '香水描述',
         message: '額外資訊',
         scent0: '香味分子 1',
-        scentPercent0: '香味分子 1 百分比',
+        scentPercent0: '香味分子 1 比例',
         scent1: '香味分子 2',
-        scentPercent1: '香味分子 2 百分比',
+        scentPercent1: '香味分子 2 比例',
         scent2: '香味分子 3',
-        scentPercent2: '香味分子 3 百分比',
+        scentPercent2: '香味分子 3 比例',
         scent3: '香味分子 4',
-        scentPercent3: '香味分子 4 百分比',
+        scentPercent3: '香味分子 4 比例',
         scent4: '香味分子 5',
-        scentPercent4: '香味分子 5 百分比',
+        scentPercent4: '香味分子 5 比例',
         scent5: '香味分子 6',
-        scentPercent5: '香味分子 6 百分比',
+        scentPercent5: '香味分子 6 比例',
       }
       const format = (datas) => {
         let result = datas.map((data) => {
