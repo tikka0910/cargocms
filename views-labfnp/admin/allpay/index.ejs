@@ -9,31 +9,47 @@
       <th data-hide="always">廠商交易編號</th>
       <th data-hide="always">交易訊息</th>
       <th>付款時間</th>
-      <th data-hide="always">付款方式</th>
+      <th data-hide="phone,tablet">付款方式</th>
+      <th data-hide="">發票號碼</th>
       <th>付款金額</th>
       <th data-hide="always">付款帳號</th>
-      <th>訂購物品</th>
+      <th data-hide="always">訂購物品</th>
       <th>訂購人</th>
+      <th>配方編號</th>
+      <th>訂單狀態</th>
+      <th class="no-sort" data-hide="always" style="">香味分子1</th>
+      <th class="no-sort" data-hide="always" style="">香味分子2</th>
+      <th class="no-sort" data-hide="always" style="">香味分子3</th>
+      <th class="no-sort" data-hide="always" style="">香味分子4</th>
+      <th class="no-sort" data-hide="always" style="">香味分子5</th>
+      <th class="no-sort" data-hide="always" style="">香味分子6</th>
       <th data-hide="always">Email</th>
       <th data-hide="always">電話</th>
-			<th data-hide="always">住址</th>
-			<th data-hide="phone,tablet"></th>
-			<th data-hide="always">發票號碼</th>
+      <th data-hide="always">住址</th>
+      <th data-hide="always">訂單建立時間</th>
+      <th data-hide="phone,tablet"></th>
+
 		</tr>
 	</thead>
 	<!-- client only -->
 	<tbody>
 		<tr v-for="item in data.items">
       <td>{{ item.id }}</td>
-			<td><a href="/admin/#/admin/{{modelName}}/show/{{item.id}}">{{ item.TradeNo }}</a></td>
-			<td>{{ item.MerchantTradeNo }}</td>
+			<td><a href="/admin/#/admin/{{modelName}}/show/{{item.id}}">{{ item.TradeNo ? item.TradeNo:"訂單尚未成立" }}</a></td>
+      <td>{{ item.MerchantTradeNo }}</td>
 			<td>{{ item.RtnMsg }}</td>
-      <td>{{ item.PaymentDate }}</td>
-      <td>{{ item.PaymentType }} </td>
+      <td>{{ (item.PaymentDate == "Invalid date") ? "":item.PaymentDate }}</td>
+      <td>{{ item.PaymentTypeDesc }} </td>
+      <td>{{ item.invoiceNo }} </td>
       <td>{{ item.TradeAmt }} </td>
       <td>{{ item.vAccount }} </td>
       <td>{{ item.ItemNameArray }} </td>
       <td>{{ item.UserName}} </td>
+      <td>{{ item.RecipeOrder.Recipe.id}}<a href="/admin/#/admin/labfnp/recipe/show/{{item.RecipeOrder.Recipe.id}}"> <i class="fa fa-fw fa-external-link"></i> </a></td>
+      <td>{{ item.RecipeOrder.Recipe.productionStatusDesc}}</td>
+      <template v-for="n in 6">
+        <td>{{ item.RecipeOrder.Recipe.formula[n].scent + ' , ' + item.RecipeOrder.Recipe.formula[n].drops + ' 滴'}}</td>
+      </template>
       <td>{{ item.Email }} </td>
       <td>{{ item.Phone}} </td>
       <td>{{ item.Address }} </td>
@@ -47,32 +63,53 @@
 					</a>
 				</div>
 			</td>
-			<td>{{ item.invoiceNo }} </td>
+			<td>{{ item.createdAt }} </td>
 		</tr>
 	</tbody>
  </table>
 
 
 <script type="text/javascript">
+
+  var returnRecipeFormula = function(data, n){
+    if(data.RecipeOrder){
+      if(data.RecipeOrder.Recipe.formula[n]){
+        return '<td>' + data.RecipeOrder.Recipe.formula[n].scent + ' , ' + data.RecipeOrder.Recipe.formula[n].drops + ' 滴' + '</td>';
+      }
+    }
+
+    return '<td></td>';
+  };
+
 	var pagefunction = function() {
 
 		// server only
 		var columns = [
-			{ "data": "id" },
-			{ "data": "TradeNo" },
+			{ "data": "id" },  // row0
+			{ "data": null}, //TradeNo
 			{ "data": "MerchantTradeNo" },
-			{ "data": "RtnCode" },
       { "data": "RtnMsg" },
-      { "data": "PaymentDate" },
-      { "data": "PaymentType" },
+      { "data": null }, //PaymentDate
+      { "data": "PaymentTypeDesc" },
+      { "data": "invoiceNo"},
       { "data": "TradeAmt" },
       { "data": "vAccount" },
       { "data": "ItemNameArray" },
       { "data": "UserName" },
+      { "data": null }, // Recipe.id
+      { "data": "RecipeOrder.Recipe.productionStatusDesc" },
+      { "data": null }, //row13 Recipe.formula[0]
+      { "data": null },
+      { "data": null },
+      { "data": null },
+      { "data": null },
+      { "data": null }, //row18
       { "data": "Email" },
       { "data": "Phone" },
       { "data": "Address" },
-			{ "data": null }
+      { "data": "createdAt" },
+			{ "data": null },
+
 		]
 
 		// server only
@@ -81,12 +118,113 @@
         "targets": 'no-sort',
         "orderable": false,
       },
+      {
+        "targets": 1,
+        "render": function(data, type, row) {
+          if(data.TradeNo){
+            return '<td>' + data.TradeNo +'</td>';
+          }else{
+            return '<td>訂單尚未成立</td>';
+          }
+        }
+      },
 			{
         "searchable": false,
         "targets": 2
       },
+      {
+        "targets": 4,
+        "render": function(data, type, row) {
+          if(data.PaymentDate !== "Invalid date"){
+            return '<td>' + data.PaymentDate +'</td>';
+          }else{
+            return '<td></td>';
+          }
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 5
+      },
+      {
+        "searchable": false,
+        "targets": 6
+      },
+      {
+        "searchable": false,
+        "targets": 9
+      },
+      {
+        "searchable": false,
+        "targets": 10
+      },
+      {
+        "searchable": false,
+        "targets": 11,
+        "render": function (data, type, row) {
+          return '<td>' + data.RecipeOrder.Recipe.id + '<a href="/admin/#/admin/labfnp/recipe/show/' + data.RecipeOrder.Recipe.id + '"> <i class="fa fa-fw fa-external-link"></i> </a>' + '</td>';
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 12
+      },
+      {
+        "searchable": false,
+        "targets": 13,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 0);
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 14,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 1);
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 15,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 2);
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 16,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 3);
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 17,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 4);
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 18,
+        "render": function (data, type, row) {
+          return returnRecipeFormula(data, 5);
+        }
+      },
+      {
+        "searchable": false,
+        "targets": 19
+      },
+      {
+        "searchable": false,
+        "targets": 20
+      },
+      {
+        "searchable": false,
+        "targets": 21
+      },
 			{
-				"targets"  : 5,
+				"targets"  : 23,
 				"orderable": false,
 				"searchable": false,
 				"render": function ( data, type, row ) {
