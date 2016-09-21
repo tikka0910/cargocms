@@ -86,6 +86,7 @@
 			},
 		]
 		var serverSidePaging = <%= (data.serverSidePaging != null)?data.serverSidePaging:false %>;
+
 		<%- include vue.ejs %>
 		appMain.$mount("#main-index");
 		appMain.loadItems(appMain.renderTable);
