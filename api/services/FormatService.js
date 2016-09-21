@@ -1,7 +1,7 @@
 module.exports = {
   getQueryObj: (input) => {
     try {
-      sails.log.debug(data);
+      sails.log.debug(input);
       let data = {
         where: {},
       };
