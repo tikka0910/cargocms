@@ -43,11 +43,11 @@ module.exports = {
   findOne: async (req, res) => {
     const { id } = req.params;
     try {
-      const recipe = await Recipe.findOneWithScent({ id });
+      const recipe = await Recipe.findOneWithScent({id})
       sails.log.info('get recipe =>', recipe);
       res.ok({
         message: 'Get recipe success.',
-        data: { item: recipe },
+        data: {item: recipe},
       });
     } catch (e) {
       res.serverError(e);
