@@ -93,18 +93,37 @@ module.exports = {
         currentUser
       });
       if (!recipe) {
-        const error = new Error('can not find recipe');
+        let error = new Error('can not find recipe');
         error.type = 'notFound';
         throw error;
       }
 
       let editable = false;
-      const belongUser = currentUser != null && recipe.UserId === currentUser.id;
+      let userId = null;
+      if(currentUser != null && currentUser.id) userId = currentUser.id;
+
+      const belongUser = recipe.UserId === currentUser.id;
       if (currentUser && belongUser) editable = true;
 
       const social = SocialService.forRecipe({ recipes: [recipe] });
 
-      return { recipe, editable, social };
+      const RecipeId = recipeId
+      const UserId = userId
+      let recipeFeedback = await RecipeFeedback.findOne({where: {RecipeId, UserId}})
+      if(recipeFeedback == null)
+        recipeFeedback = RecipeFeedback.build();
+
+      let recipeOrder = await RecipeOrder.findOne({where: {RecipeId, UserId}})
+      
+      if(recipeOrder != null){
+        recipeFeedback.invoiceNo = recipeOrder.invoiceNo;
+        let RecipeOrderId = recipeOrder.id;
+        let allpay = await Allpay.findOne({where: {RecipeOrderId}})
+        if(allpay != null)
+          recipeFeedback.tradeNo = allpay.TradeNo
+      }
+
+      return { recipe, editable, social, recipeFeedback};
     } catch (e) {
       throw e;
     }

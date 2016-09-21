@@ -56,11 +56,8 @@ module.exports = {
     const { id } = req.params;
     try {
       const currentUser = AuthService.getSessionUser(req);
-      // if (!currentUser) return res.redirect('/login');
-
-      const { recipe, editable, social } = await RecipeService.loadRecipe(id, currentUser);
-
-      return res.view({ recipe, editable, social });
+      const { recipe, editable, social, recipeFeedback} = await RecipeService.loadRecipe(id, currentUser);
+      return res.view({ recipe, editable, social, recipeFeedback});
     } catch (e) {
       if (e.type === 'notFound') return res.notFound();
       return res.serverError(e);
