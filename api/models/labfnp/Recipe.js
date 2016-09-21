@@ -257,7 +257,6 @@ module.exports = {
             });
             index += 1;
           }
-          console.log('displayFormula=>', dpFormulaArray);
 
           return JSON.stringify(dpFormulaArray);
         } catch (e) {

@@ -48,7 +48,7 @@
 			</td>
 
       <template v-for="n in 6">
-        <td> {{ item.formula[n].scent }} - {{ item.formula[n].drops }}滴 - ({{ Math.round((item.formula[n].drops / item.formulaTotalDrops * 100)*10000)/10000 + '%'}})</td>
+        <td>{{ item.displayFormula[0].value }}</td>
       </template>
 
 		</tr>
