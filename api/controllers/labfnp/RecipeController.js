@@ -236,7 +236,7 @@ module.exports = {
         },
         MerchantTradeNo: crypto.randomBytes(32).toString('hex').substr(0, 8),
         tradeDesc: `配方名稱：${perfumeName} 100 ml, (備註：${message})`,
-        totalAmount: 1500,
+        totalAmount: 1550,
         paymentMethod: paymentMethod,
         itemArray: formatName,
       });
