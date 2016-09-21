@@ -4,15 +4,10 @@
 <!-- SCRIPTS ON PAGE EVENT -->
 <script type="text/javascript">
 
-
 	var pagefunction = function() {
 		<%- include vue.ejs %>
 		appMain.$mount("#main-edit");
-		appMain.loadItem( function(){
-      appMain.onEnterPageEdit();
-      appMain.enableSelect();
-    });
-		appMain.setupForm("edit");
+		appMain.onEnterPageEdit();
 	};
 
 </script>
