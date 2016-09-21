@@ -43,8 +43,10 @@ module.exports = {
             message: data.message,
           }
           data.formula.forEach((formula, index) => {
-            formatted[`scent${index}`] = `${formula.scent}, ${formula.drops} 滴`,
-            formatted[`scentPercent${index}`] = Math.ceil(formula.drops / data.formulaTotalDrops * 1000000)/10000;
+            if (formula.scent && formula.drops > 0) {
+              formatted[`scent${index}`] = `${formula.scent}, ${formula.drops} 滴`,
+              formatted[`scentPercent${index}`] = Math.ceil(formula.drops / data.formulaTotalDrops * 1000000)/10000;
+            }
           });
           return formatted;
         });
