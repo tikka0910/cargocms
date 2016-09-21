@@ -14,6 +14,11 @@ module.exports = {
     lastName,
     locale,
     Passports,
+    birthday,
+    phone1,
+    phone2,
+    address,
+    address2
   }) => {
     try {
       sails.log.info({
@@ -23,8 +28,13 @@ module.exports = {
         lastName,
         locale,
         Passports,
+        birthday,
+        phone1,
+        phone2,
+        address,
+        address2
       });
-      const user = await User.create({ username, email, firstName, lastName, locale });
+      const user = await User.create({ username, email, firstName, lastName, locale, birthday, phone1, phone2, address, address2 });
       await Passport.create({
         provider: 'local',
         password: Passports[0].password,
@@ -45,7 +55,12 @@ module.exports = {
     lastName,
     locale,
     Passports,
-    RolesArray
+    RolesArray,
+    birthday,
+    phone1,
+    phone2,
+    address,
+    address2
   }) => {
     try {
       sails.log.info('update user service=>', user);
@@ -57,7 +72,9 @@ module.exports = {
       });
       if (updatedUser) {
         const passport = await Passport.findById(updatedUser.Passports[0].id);
-        const isOldPassword = await passport.validatePassword(user.Passports[0].password, passport);
+        const isOldPassword = await passport.validatePassword(user.Passports[0].password);
+        console.log("passport pwd=>", passport.password);
+        console.log("user pwd=>", user.Passports[0].password);
         if (!isOldPassword) {
           passport.password = user.Passports[0].password;
           await passport.save();
@@ -67,6 +84,11 @@ module.exports = {
         updatedUser.firstName = user.firstName;
         updatedUser.lastName = user.lastName;
         updatedUser.locale = user.locale;
+        updatedUser.birthday = user.birthday;
+        updatedUser.phone1 = user.phone1;
+        updatedUser.phone2 = user.phone2;
+        updatedUser.address = user.address;
+        updatedUser.address2 = user.address2;
 
         const userRoles = await Role.findAll({
           where: {
