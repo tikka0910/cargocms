@@ -17,6 +17,32 @@ module.exports = {
     lastName: {
       type: Sequelize.STRING
     },
+    birthday:{
+      type: Sequelize.DATEONLY,
+      get: function () {
+        try {
+          if(this.getDataValue('birthday'))
+            return moment(this.getDataValue('birthday')).format("YYYY-MM-DD");
+          else{
+            return "";
+          }
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+    phone1:{
+      type: Sequelize.STRING
+    },
+    phone2:{
+      type: Sequelize.STRING
+    },
+    address:{
+      type: Sequelize.STRING
+    },
+    address2:{
+      type: Sequelize.STRING
+    },
     locale: {
       type: Sequelize.STRING,
       defaultValues: 'zh_TW'
