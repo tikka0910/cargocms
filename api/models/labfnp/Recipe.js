@@ -427,9 +427,6 @@ module.exports = {
 
           })
           feelings = RecipeService.sortFeelingsByValue({feelings});
-          sails.log("my-feeling")
-          sails.log(feelings);
-
 
           /*
           feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
