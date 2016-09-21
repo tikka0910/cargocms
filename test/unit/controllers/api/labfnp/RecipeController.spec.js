@@ -72,6 +72,4 @@ describe('about LikeRecipe Controller operation.', function() {
     }
   });
 
-
-
 });

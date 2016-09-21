@@ -16,6 +16,16 @@ module.exports = {
           data.where.$or.push(result);
         }
       }
+      const hasDateFilter = input.startDate !== '' || input.endDate !== '';
+      if (hasDateFilter) {
+        data.where.createdAt = {};
+        if (input.startDate !== '') {
+          data.where.createdAt.$gte = new Date(input.startDate);
+        }
+        if (input.endDate !== '') {
+          data.where.createdAt.$lte = new Date(input.endDate);
+        }
+      }
       data.offset = parseInt(input.start);
       data.limit = parseInt(input.length);
       data.order = input.order.map((data) => {

@@ -98,6 +98,8 @@ module.exports.routes = {
   'post /api/admin/message':       'api/admin/MessageController.create',
   'put /api/admin/message/:id':    'api/admin/MessageController.update',
   'delete /api/admin/message/:id': 'api/admin/MessageController.destroy',
+
+  'get /api/admin/labfnp/recipe/export': 'api/admin/labfnp/RecipeController.export',
   // 'get /api/admin/Default': 'api/admin/DefaultController.find',
   // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
   // 'post /api/admin/Default': 'api/admin/DefaultController.create',
