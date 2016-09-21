@@ -215,5 +215,12 @@
 <% LayoutUtils.addScriptBlock(`
   $(document).ready(function(){
 
+    $("#orderForm").submit(function(){
+      $("#submitOrder").prop("disabled", true);
+      setTimeout(function(){
+        $("#submitOrder").prop("disabled", false);
+      }, 800);
+    });
+
   });
 `); %>
