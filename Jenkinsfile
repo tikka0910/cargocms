@@ -12,6 +12,8 @@ node {
 
       if(BRANCH_NAME == "release-labfnp"){
         deploy = true;
+        skiptest = true;
+        preview = false;
       } else {
         timeout(time:10, unit:'SECONDS') {
             stage 'preview'
@@ -21,12 +23,21 @@ node {
 
       }
 
-      if(preview || deploy){
+      if(deploy){
+        timeout(time:5, unit:'SECONDS') {
+            stage 'do test'
+            input message: "do test?", ok: "do test"
+        }
+        skiptest = false;
+
+      }
+
+
+      if(preview){
         timeout(time:5, unit:'SECONDS') {
             stage 'skip test'
             input message: "skip test?", ok: "skip test"
         }
-
         skiptest = true;
       }
 
