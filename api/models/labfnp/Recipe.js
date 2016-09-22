@@ -218,6 +218,21 @@ module.exports = {
         }
       }
     },
+    invoicenum: {
+      type: Sequelize.STRING
+    },
+    address: {
+      type: Sequelize.STRING
+    },
+    phonenum: {
+      type: Sequelize.STRING
+    },
+    created: {
+      type: Sequelize.STRING
+    },
+    sourceId: {
+      type: Sequelize.STRING
+    }
 
   },
   associations: function() {
