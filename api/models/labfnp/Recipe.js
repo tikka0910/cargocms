@@ -110,10 +110,10 @@ module.exports = {
       defaultValue: "scent"
     },
 
-    totalDrops: {
-      type: Sequelize.INTEGER,
-      defaultValue: 0
-    },
+    // totalDrops: {
+    //   type: Sequelize.INTEGER,
+    //   defaultValue: 0
+    // },
 
     coverPhoto: {
       type: Sequelize.STRING,

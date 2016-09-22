@@ -1,7 +1,5 @@
 var COMMON = {
 	DOUBLE_CLICK_TIME_PERIOD: 250,
-	DROPS_MAX: 50,
-	DROPS_MIN: 1,
 	DEFAULT_INDEX: -1,
 	DEFAULT_AVATAR: "/assets/admin/img/avatars/default.png",
 };
@@ -13,6 +11,10 @@ var appModel = {
 	modelName: modelName,
 	prefix: prefix,
 	data: {
+    common: {
+    	DROPS_MAX: 50,
+    	DROPS_MIN: 1,
+    },
 		link: {
 			API_LIST_SCENT: '/api/labfnp/scent',
 		},
@@ -241,6 +243,7 @@ appMain.onDropsChange = function (e) {
 		totalDrops += drops;
 	}
 	appModel.data.item.totalDrops = totalDrops;
+  console.log('appModel.data.item.totalDrops =>',appModel.data.item.totalDrops );
 };
 
 appMain.onBtnCleanClick = function (e) {
