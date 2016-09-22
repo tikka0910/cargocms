@@ -131,7 +131,8 @@ var formRules = {
     equalTo : '#password'
   },
   brithday : {
-    required : true,
+    required : false,
+    onsubmit : false,
     dateISO: true
   },
 }
@@ -159,7 +160,6 @@ var formMessages = {
     equalTo : '請輸入相同的密碼'
   },
   brithday : {
-    required : "請輸入生日",
     dateISO : "請輸入正確日期格式"
   },
 }
