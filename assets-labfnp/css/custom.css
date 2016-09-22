@@ -29,6 +29,17 @@
   text-transform: none;
 }
 
+.header .navbar-nav > li.base{
+  width: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 991px) {
+  .header .navbar-nav > li.base{
+    display: none;
+  }
+}
+
 .header .navbar-toggle {
   margin-top: 1em;
 }

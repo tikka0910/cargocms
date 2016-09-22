@@ -1,3 +1,4 @@
+
 var pieChart = null
 var apiRecipe = '/api/labfnp/recipe/';
 var recipeId = $('input[name="id"]').val();
@@ -132,11 +133,13 @@ var pieParam = {
 	}
 };
 var ajaxSuccess = function (result) {
-	for (var i = 0; i < result.data.formula.length; i++) {
+	console.log('result=>', result);
+	var formula = result.data.item.formula;
+	for (var i = 0; i < formula.length; i++) {
 		pieParam.data.content.push({
-			label: result.data.formula[i].scent,
-			value: parseInt(result.data.formula[i].drops),
-			color: result.data.formula[i].color,
+			label: formula[i].scent,
+			value: parseInt(formula[i].drops),
+			color: formula[i].color,
 		});
 	}
 	pieChart = new d3pie("pieChart", pieParam);

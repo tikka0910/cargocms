@@ -4,7 +4,7 @@ $(document).ready(function () {
 			hideOption(o);
 			var doShow = function () {
 				var feelings = $(o).data('feelings');
-				for (var k = 0; k < feelings.length - 1; k++) {
+				for (var k = 0; k < feelings.length; k++) {
 					var checkWrap = $(o).parent('span').length !== 0;
 					var checkFeeling = feelings[k].key === prefix;
 					checkFeeling && checkWrap && $(o).unwrap().show();

@@ -69,6 +69,8 @@
           <input type="password" placeholder="Password" value="<%= data.user.password %>" id="password" name="password" class="form-control">
         </div>
 
+        <input id='backUrl' type="hidden" name="url" value='/'>
+
         <div class="row">
           <div class="col-md-6 checkbox">
             <!--<label><input type="checkbox"> 保持登入狀態</label>-->
@@ -115,6 +117,8 @@
         },
       }
     });
+
+    document.referrer && $('#backUrl').val(document.referrer);
 
   });
 `); %>
