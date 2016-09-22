@@ -1,7 +1,5 @@
 var COMMON = {
 	DOUBLE_CLICK_TIME_PERIOD: 250,
-	DROPS_MAX: 50,
-	DROPS_MIN: 1,
 	DEFAULT_INDEX: -1,
 	DEFAULT_AVATAR: "/assets/admin/img/avatars/default.png",
 };
@@ -13,6 +11,10 @@ var appModel = {
 	modelName: modelName,
 	prefix: prefix,
 	data: {
+    common: {
+    	DROPS_MAX: 50,
+    	DROPS_MIN: 1,
+    },
 		link: {
 			API_LIST_SCENT: '/api/labfnp/scent',
 		},
@@ -241,6 +243,7 @@ appMain.onDropsChange = function (e) {
 		totalDrops += drops;
 	}
 	appModel.data.item.totalDrops = totalDrops;
+  // console.log('appModel.data.item.totalDrops =>',appModel.data.item.totalDrops );
 };
 
 appMain.onBtnCleanClick = function (e) {
@@ -270,7 +273,7 @@ appMain.renderTable = function () {
 			appModel.pagingQuery = data;
 			appModel.pagingQuery.startDate = $("#yadcf-filter--main-table-from-date-3").val() || '';
 			appModel.pagingQuery.endDate = $("#yadcf-filter--main-table-to-date-3").val() || '';
-			console.log(appModel.pagingQuery);
+			// console.log(appModel.pagingQuery);
 			return data
 		}
 	}
@@ -347,7 +350,7 @@ appMain.renderTable = function () {
               }
               return str.join("&");
             }
-  					console.log("!!!!!!!", serialize(appModel.pagingQuery));
+  					// console.log("!!!!!!!", serialize(appModel.pagingQuery));
             location.href = '/api/admin/labfnp/recipe/export?' + serialize(appModel.pagingQuery)
   				}
         },
