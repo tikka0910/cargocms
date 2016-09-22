@@ -41,7 +41,7 @@ exports.register = async (req, res, next) => {
     let user = await User.create(newUser);
 
     let passport = await Passport.create({
-      protocol: 'local',
+      provider: 'local',
       password: password,
       UserId: user.id
     });
