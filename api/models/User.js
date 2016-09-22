@@ -55,13 +55,16 @@ module.exports = {
       get: function () {
         try {
           let lastLogin = this.getDataValue("lastLogin");
-          if(lastLogin == null) lastLogin = "從未登入";
-          return lastLogin;
+
+          if (lastLogin == null) {
+            return "N/A";
+          }
+
+          return moment(this.getDataValue('lastLogin')).format("YYYY/MM/DD HH:mm:SS");
 
         } catch (e) {
           throw e;
         }
-
       }
     },
     facebookId: {
