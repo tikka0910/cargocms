@@ -13,6 +13,8 @@ describe('about Format Service operation.', function() {
         order: [ { column: '0', dir: 'asc' } ],
         start: '0',
         length: '10',
+        startDate: '2016/08/11',
+        endDate: "2016/09/20",
         search: { value: 'userX', regex: 'false' },
         _: '1470989140227'
       });
@@ -127,7 +129,7 @@ describe('about Format Service operation.', function() {
     }
   });
 
-  it.only('get Incude single Query Obj', async (done) => {
+  it('get Incude single Query Obj', async (done) => {
     try {
       const result = FormatService.getIncudeQueryObj({
         include: {

@@ -1,3 +1,4 @@
+import moment from 'moment';
 module.exports = {
   getQueryObj: (input) => {
     try {
@@ -21,14 +22,15 @@ module.exports = {
           }
         }
       }
-      const hasDateFilter = input.startDate !== '' || input.endDate !== '';
+      const hasDateFilter = (input.startDate && input.startDate !== '') ||
+      (input.endDate && input.endDate !== '');
       if (hasDateFilter) {
         data.where.createdAt = {};
         if (input.startDate !== '') {
-          data.where.createdAt.$gte = new Date(input.startDate);
+          data.where.createdAt.$gte = moment(new Date(input.startDate)).format('YYYY/MM/DD');
         }
         if (input.endDate !== '') {
-          data.where.createdAt.$lte = new Date(input.endDate);
+          data.where.createdAt.$lte = moment(new Date(input.endDate)).add(1, 'day').format('YYYY/MM/DD');
         }
       }
       data.offset = parseInt(input.start);
