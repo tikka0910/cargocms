@@ -7,6 +7,8 @@ const FeelingData = require('./data/Feeling');
 module.exports.init = async () => {
   try {
 
+    console.log('>>>> config/init/labfnp >>>>');
+
     ScentDetail.rows.forEach(function(scentDetail){
       Scent.create({
         sequence: parseInt(scentDetail.name.replace(/[^0-9]+/, '')),

@@ -8,6 +8,9 @@
  * For more information on bootstrapping your app, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.bootstrap.html
  */
+
+import fs from 'fs';
+
 import MailerService from 'sails-service-mailer';
 module.exports.bootstrap = async (cb) => {
   if(!sails.config.shareUrl) sails.config.shareUrl = "localhost:"+ sails.config.port
@@ -102,6 +105,12 @@ module.exports.bootstrap = async (cb) => {
       adminUsers[0].addRole(adminRole[0]);
     });
 
+
+    /*
+     * TODO 是否要匯入的判斷必須交給 init 定義的程式負責
+     */
+
+    /*
     if (environment !== 'test') {
       let menuItems = await MenuItem.findAll();
       if(menuItems.length == 0){
@@ -109,9 +118,21 @@ module.exports.bootstrap = async (cb) => {
         require('./init/facebook').init();
       }
     }
+    */
 
-
-
+    if (environment !== 'test') {
+      // 自動掃描 init 底下的 module 資料夾後執行資料初始化
+      fs.readdir('./config/init/', function(err, files) {
+        for (var i in files) {
+          let dirName = files[i];
+          let isDir = fs.statSync('./config/init/' + dirName).isDirectory();
+          if (isDir) {
+            let hasIndexFile = fs.statSync('./config/init/' + dirName + '/index.js').isFile();
+            require('./init/' + dirName).init();
+          }
+        }
+      });
+    }
 
     if (environment === 'development' && sails.config.models.migrate == 'drop') {
       sails.log.info("init Dev data", environment);
