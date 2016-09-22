@@ -64,6 +64,25 @@ module.exports = {
     }
   },
 
+  feedback: async function(req, res) {
+    const { id } = req.params;
+    try {
+      const currentUser = AuthService.getSessionUser(req);
+      const { recipe, editable, social, recipeFeedback} = await RecipeService.loadRecipe(id, currentUser);
+
+      let feelings = await Feeling.findRamdomFeelings();
+      let feelingArray = [];
+      for (const feeling of feelings) {
+        feelingArray.push(feeling.title);
+      }
+
+      return res.view({ recipe, editable, social, recipeFeedback,feelings:feelingArray , user: currentUser});
+    } catch (e) {
+      if (e.type === 'notFound') return res.notFound();
+      return res.serverError(e);
+    }
+  },
+
   preview: async function(req, res) {
     const { id } = req.params;
     try {
