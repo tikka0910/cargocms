@@ -63,24 +63,25 @@
       </label>
     </section>
   </section>
-  <div class="row">
-    <section class="col col-6">
-      <label class="label">公開狀態</label>
-      <label class="select">
-        <select v-model="data.item.visibility">
-          <option value="PUBLIC" selected>公開</option>
-          <option value="PROTECTED">半公開</option>
-          <option value="PRIVATE">私密</option>
-        </select> <i></i> </label>
+  <section >
+    <label class="label">公開狀態</label>
+    <label class="select">
+      <select v-model="data.item.visibility">
+        <option value="PUBLIC" selected>公開</option>
+        <option value="PROTECTED">半公開</option>
+        <option value="PRIVATE">私密</option>
+      </select> <i></i> </label>
     </section>
+<!--
+  <div class="row">
 
     <section class="col col-6">
       <label class="label">製作狀態</label>
       <label class="select">
         <select v-model="data.item.productionStatus">
           <option value="NEW" selected>NEW</option>
-          <!-- <option value="RECEIVED">RECEIVED</option>
-          <option value="REQUESTED">REQUESTED</option> -->
+          <option value="RECEIVED">RECEIVED</option>
+          <option value="REQUESTED">REQUESTED</option>
           <option value="SUBMITTED">下訂單</option>
           <option value="PAID">已付款</option>
           <option value="PROCESSING">製作中</option>
@@ -91,6 +92,7 @@
         </select> <i></i> </label>
     </section>
   </div>
+-->
 
   <section class="row">
     <div class="col col-mo-3 totalDropsWrapper">

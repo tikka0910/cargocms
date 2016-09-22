@@ -8,11 +8,12 @@ module.exports = {
     try {
       let findQuery = FormatService.getQueryObj(query);
       if (include) {
+        include = FormatService.getIncudeQueryObj({ include, query });
         findQuery.include = include;
       }
       delete findQuery.offset;
       delete findQuery.limit;
-      sails.log.info(findQuery);
+      sails.log.debug(findQuery);
       const result =  await sails.models[modelName].findAll(findQuery);
       return result.map((data) => data.toJSON());
     } catch (e) {
