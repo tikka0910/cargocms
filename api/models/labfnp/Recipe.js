@@ -239,11 +239,11 @@ module.exports = {
       type: Sequelize.VIRTUAL,
       get: function() {
         try {
-          const formulaTotalDrops = this.get('formulaTotalDrops');
-
+          let dpFormulaArray = [];
+          
           if (typeof this.getDataValue('formula') !== 'undefined') {
+            const formulaTotalDrops = this.get('formulaTotalDrops');
             const formulaJson = JSON.parse(this.getDataValue('formula'));
-            const dpFormulaArray = [];
             let index = 0;
 
             for (const formula of formulaJson) {
@@ -254,11 +254,9 @@ module.exports = {
               });
               index += 1;
             }
-            return dpFormulaArray;
-          } else {
-
-            return '';
           }
+
+          return dpFormulaArray;
         } catch (e) {
           sails.log.error(e);
         }
