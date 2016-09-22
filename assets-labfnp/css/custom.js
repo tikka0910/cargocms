@@ -24,13 +24,20 @@ export default StyleSheet.create({
         "fontSize": 13
     },
     "header navbar-nav > li > a:hover": {
-        "borderBottomWidth": 8
+        "borderBottomWidth": 4
     },
     "header navbar-nav > active > a": {
-        "borderBottomWidth": 8
+        "borderBottomWidth": 4
     },
     "header navbar-nav > li > a": {
         "textTransform": "none"
+    },
+    "header navbar-nav > libase": {
+        "width": 0,
+        "overflow": "hidden"
+    },
+    "header navbar-toggle": {
+        "marginTop": 1
     },
     "body": {
         "overflowX": "hidden"
