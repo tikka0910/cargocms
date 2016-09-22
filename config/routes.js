@@ -21,18 +21,18 @@
  * http://sailsjs.org/#!/documentation/concepts/Routes/RouteTargetSyntax.html
  */
 import fs from 'fs';
-var customerRoutes = {}
+var customeConfig = {}
 var files = fs.readdirSync('./config')
 for (var i in files) {
   let dirName = files[i];
   let isDir = fs.statSync('./config/' + dirName).isDirectory();
   if (isDir) {
     if(fs.existsSync('./config/' + dirName + '/routes.js'))
-      customerRoutes = require('./' + dirName + '/routes.js');
+      customeConfig = require('./' + dirName + '/routes.js');
   }
 }
 
-var defaultRoutes = {
+var defaultConfig = {
 
   /***************************************************************************
   *                                                                          *
@@ -132,8 +132,8 @@ module.exports.routes = {
   '/': {
     view: 'index'
   },
-  ...customerRoutes,
-  ...defaultRoutes,
+  ...customeConfig,
+  ...defaultConfig,
   "/admin/:controller/:action/:id?": {},
   "/:controller/:action/:id?": {}
 }
