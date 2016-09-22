@@ -228,7 +228,7 @@ module.exports = {
           sails.log.debug(data);
           let formatted = {
             id: data.id,
-            TradeNo: data.TradeNo ? data.TradeNo : '訂單尚未成立',
+            TradeNo: data.TradeNo ? `="${data.TradeNo}"` : '訂單尚未成立',
             MerchantTradeNo: data.MerchantTradeNo,
             RtnMsg: data.RtnMsg,
             PaymentDate: data.PaymentDate == "Invalid date" ? '' : data.PaymentDate,
