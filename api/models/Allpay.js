@@ -245,7 +245,6 @@ module.exports = {
 
   },
   associations: function() {
-    Allpay.belongsTo(RecipeOrder);
   },
   options: {
     classMethods: {
