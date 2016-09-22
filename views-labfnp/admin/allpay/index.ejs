@@ -133,8 +133,8 @@
       {
         "targets": 1,
         "render": function(data, type, row) {
-          if (data && data.TradeNo) {
-            return '<td>' + data.TradeNo +'</td>';
+          if (data) {
+            return '<td>' + data +'</td>';
           }else{
             return '<td>訂單尚未成立</td>';
           }
