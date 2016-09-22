@@ -150,4 +150,7 @@ var ajaxError = function (requestObject, error, errorThrown) {
 		console.log('[error]=>', errorThrown);
 		console.log('[errorThrown]=>', error);
 	} // end ajaxError
-$.get(apiRecipe + recipeId).done(ajaxSuccess).fail(ajaxError);
+
+if (recipeId) {
+	$.get(apiRecipe + recipeId).done(ajaxSuccess).fail(ajaxError);
+}
