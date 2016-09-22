@@ -2,7 +2,7 @@ node {
 
   try {
     // slackSend message: "started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-
+    echo "BRANCH_NAME = " + env.BRANCH_NAME
     def preview = false;
     def skiptest = false;
 

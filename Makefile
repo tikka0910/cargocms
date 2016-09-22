@@ -22,3 +22,7 @@ preview:
 	- pm2 stop cargo-preview
 	- pm2 delete cargo-preview
 	pm2 start app.js --name cargo-preview
+
+
+deploy-beta:
+	ssh cargo@linode1.trunksys.com ". .nvm/nvm.sh && cd labfnp && git checkout . && git pull && pm2 restart labfnp"
