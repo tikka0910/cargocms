@@ -3,17 +3,25 @@ node {
   try {
     // slackSend message: "started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
     echo "BRANCH_NAME = " + env.BRANCH_NAME
+    def BRANCH_NAME = env.BRANCH_NAME;
     def preview = false;
     def skiptest = false;
+    def deploy = false;
 
     try{
-      timeout(time:10, unit:'SECONDS') {
-          stage 'preview'
-          input message: "wanner preview?", ok: "start preview"
-      }
-      preview = true;
 
-      if(preview){
+      if(BRANCH_NAME == "release-labfnp"){
+        deploy = true;
+      } else {
+        timeout(time:10, unit:'SECONDS') {
+            stage 'preview'
+            input message: "wanner preview?", ok: "start preview"
+        }
+        preview = true;
+
+      }
+
+      if(preview || deploy){
         timeout(time:5, unit:'SECONDS') {
             stage 'skip test'
             input message: "skip test?", ok: "skip test"
@@ -21,6 +29,7 @@ node {
 
         skiptest = true;
       }
+
 
 
     }catch(e){
@@ -49,6 +58,8 @@ node {
     }
 
     if(preview) sh "npm run preview"
+
+    if(deploy) sh "make deploy-beta"
 
     // stage 'run project'
     // sh "npm run pm2-start"
