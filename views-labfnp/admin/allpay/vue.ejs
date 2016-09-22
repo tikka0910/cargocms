@@ -64,9 +64,6 @@ appMain.disableAllpay = function(){
 }
 appMain.DataTableInitComplete = function() {
   var api = this.api();
-  $('#productionStatus').on('change', function(){
-    api.columns().search().draw();
-  })
   this.yadcf([
     {        
       column_number: 3,
@@ -75,6 +72,22 @@ appMain.DataTableInitComplete = function() {
       date_format: 'yy/mm/dd',
     },
   ]);
+  var slesct = '<span>訂單狀態：</span>'+
+  '<select class="form-control input-sm" id="productionStatus" style="margin-right: 5px;">'+
+    '<option value=""></option>' +
+    '<option value="NEW">NEW</option>' +
+    '<option value="SUBMITTED">下訂單</option>' +
+    '<option value="PAID">已付款</option>' +
+    '<option value="PROCESSING">製作中</option>' +
+    '<option value="CANCELLED">取消</option>' +
+    '<option value="SHIPPED">已寄出</option>' +
+    '<option value="DELIVERED">已交付</option>' +
+    '<option value="COMPLETED">完成</option>' +
+  '</select>';
+  $(slesct).prependTo('.DTTT_container');
+  $('#productionStatus').on('change', function(){
+    api.columns().search().draw();
+  })
 }
 appMain.customSearch = function() {
   var searchProductionStatus = $('#productionStatus').val()
