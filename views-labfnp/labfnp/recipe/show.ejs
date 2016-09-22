@@ -97,6 +97,10 @@
         <div class="projects">
 
           <div class="pull-right">
+            <a id="likeButton" href="/recipe/feedback/<%= recipe.id %>" class="btn-u btn-u-orange">
+              <i class="fa fa-comment-o" aria-hidden="true"></i>
+              感覺回饋
+            </a>
             <button id="likeButton" class="btn-u btn-u-red" data-id="<%= recipe.id %>" data-like="<%= recipe.currentUserLike %>">
               <i class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %>" aria-hidden="true"></i>
               收藏
