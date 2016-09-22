@@ -84,7 +84,7 @@
 <script type="text/javascript">
 
   var returnRecipeFormula = function(data, n){
-    if(data.RecipeOrder){
+    if(data.RecipeOrder && data.RecipeOrder.Recipe){
       if(data.RecipeOrder.Recipe.formula[n]){
         return '<td>' + data.RecipeOrder.Recipe.formula[n].scent + ' , ' + data.RecipeOrder.Recipe.formula[n].drops + ' 滴' + '</td>';
       }
@@ -133,7 +133,7 @@
       {
         "targets": 1,
         "render": function(data, type, row) {
-          if(data.TradeNo){
+          if (data && data.TradeNo) {
             return '<td>' + data.TradeNo +'</td>';
           }else{
             return '<td>訂單尚未成立</td>';
@@ -148,7 +148,7 @@
         "targets": 4,
 				"searchable": false,
         "render": function(data, type, row) {
-          if(data.PaymentDate !== "Invalid date"){
+          if (data && data.PaymentDate !== "Invalid date") {
             return '<td>' + data.PaymentDate +'</td>';
           }else{
             return '<td></td>';
@@ -175,7 +175,8 @@
         "searchable": false,
         "targets": 11,
         "render": function (data, type, row) {
-          return '<td>' + data.RecipeOrder.Recipe.id + '<a href="/admin/#/admin/labfnp/recipe/show/' + data.RecipeOrder.Recipe.id + '"> <i class="fa fa-fw fa-external-link"></i> </a>' + '</td>';
+					var RecipeID = data.RecipeOrder.Recipe ? data.RecipeOrder.Recipe.id : '';
+          return '<td>' + RecipeID + '<a href="/admin/#/admin/labfnp/recipe/show/' + RecipeID + '"> <i class="fa fa-fw fa-external-link"></i> </a>' + '</td>';
         }
       },
 			{

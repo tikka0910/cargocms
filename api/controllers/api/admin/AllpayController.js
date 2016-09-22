@@ -242,12 +242,14 @@ module.exports = {
             Address: data.Address,
             createdAt: new Date(data.createdAt).toISOString(),
           }
-          data.RecipeOrder.Recipe.formula.forEach((formula, index) => {
-            if (formula.scent && formula.drops > 0) {
-              formatted[`scent${index}`] = `${formula.scent}, ${formula.drops} 滴`,
-              formatted[`scentPercent${index}`] = Math.ceil(formula.drops / data.formulaTotalDrops * 1000000)/10000;
-            }
-          });
+          if (data.RecipeOrder && data.RecipeOrder.Recipe) {
+            data.RecipeOrder.Recipe.formula.forEach((formula, index) => {
+              if (formula.scent && formula.drops > 0) {
+                formatted[`scent${index}`] = `${formula.scent}, ${formula.drops} 滴`,
+                formatted[`scentPercent${index}`] = Math.ceil(formula.drops / data.RecipeOrder.Recipe.formulaTotalDrops * 1000000)/10000;
+              }
+            });
+          }
           return formatted;
         });
         return result;
