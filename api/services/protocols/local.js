@@ -60,9 +60,8 @@ exports.register = async (req, res, next) => {
 
   } catch (err) {
     console.error(err.stack);
-    req.flash('error', err.message);
+    req.flash('error', err.errors[0].message);
     return next(err);
-
   }
 };
 

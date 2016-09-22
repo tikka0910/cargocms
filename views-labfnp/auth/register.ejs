@@ -69,12 +69,21 @@ label.error{
           </div>
         </div>
 
+        <% var error = data.errors[0]; %>
+        <% if(error === 'email must be unique' ){ %>
+            <div class="alert alert-warning" role="alert"> 此 Email 已被註冊，請更換 Email！</div>
+        <% }%>
+
         <div class="row">
           <div class="col-sm-12">
             <label>帳號 <span class="color-red">*</span></label>
             <input type="text" name="username" value="<%= data.user.username %>" class="form-control margin-bottom-20">
           </div>
         </div>
+
+        <% if(error === 'username must be unique' ){ %>
+            <div class="alert alert-warning" role="alert">此 帳號 已有人使用</div>
+        <% }%>
 
         <div class="row">
           <div class="col-sm-6">
