@@ -37,6 +37,11 @@ module.exports = {
         email: '',
         lastName: '',
         firstName: '',
+        birthday: '',
+        phone1: '',
+        phone2: '',
+        address: '',
+        address2: ''
       }
       let form = req.flash('form')[0];
       if(form) user = form;
