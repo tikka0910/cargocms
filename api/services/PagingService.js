@@ -5,8 +5,10 @@ module.exports = {
     try {
       const findQuery = FormatService.getQueryObj(query);
       if (include){
+        include = FormatService.getIncudeQueryObj({ include, query });
         findQuery.include = include;
       }
+      sails.log.debug(findQuery);
       let result = await sails.models[modelName].findAndCountAll(findQuery)
       sails.log.debug(JSON.stringify(result, null, 2));
       let data = result.rows;

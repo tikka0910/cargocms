@@ -77,11 +77,18 @@ appMain.DataTableInitComplete = function() {
   ]);
 }
 appMain.customSearch = function() {
-  appModel.pagingQuery.columns.push({
-    data: 'productionStatus',
-    searchable: true,
-    search: {
-      custom: $('#productionStatus').val(),
-    }
-  })
+  var searchProductionStatus = $('#productionStatus').val()
+  if (searchProductionStatus !== '') {
+    appModel.pagingQuery.columns.push({
+      data: '',
+      searchable: true,
+      findInclude: true,
+      search: {
+        model: 'RecipeOrder',
+        where: {
+          productionStatus: $('#productionStatus').val(),
+        }
+      }
+    })
+  }
 }

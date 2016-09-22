@@ -9,7 +9,7 @@ module.exports = {
       for (const index in input.columns) {
         let result = {};
         const column = input.columns[index];
-        if (column.searchable !== "false") {
+        if (column.searchable !== "false" && column.data !== '') {
           result[column.data] = {
             $like: `%${input.search.value}%`
           };
@@ -38,11 +38,41 @@ module.exports = {
         let sortColumn = input.columns[columnIndex].data;
         return [sortColumn, data.dir];
       });
-      sails.log.debug(JSON.stringify(data, null, 2));
       return data;
     } catch (e) {
       sails.log.error(e);
       throw e;
+    }
+  },
+
+  getIncudeQueryObj: ({ include, query }) => {
+    try {
+      let result = include;
+      for (const index in query.columns) {
+        const column = query.columns[index];
+        if (column.searchable !== "false" && column.findInclude) {
+          if (Array.isArray(include)) {
+            result = include.map((data) => {
+              let inputIncludeModelName = data.model.name;
+              let searchModelName = column.search.model;
+              if (inputIncludeModelName === searchModelName){
+                data.where = column.search.where;
+              }
+              return data
+            });
+          } else {
+            let inputIncludeModelName = include.model.name;
+            let searchModelName = column.search.model;
+            if (inputIncludeModelName === searchModelName){
+              include.where = column.search.where;
+            }
+            result = include
+          }
+        }
+      }
+      return result;
+    } catch (e) {
+      throw e
     }
   },
 }

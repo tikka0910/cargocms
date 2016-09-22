@@ -131,6 +131,8 @@ module.exports = {
       messageConfig.serialNumber = allpay.TradeNo;
       if (allpay.RecipeOrderId) {
         const recipeOrder = await RecipeOrder.findByIdHasJoin(allpay.RecipeOrderId);
+        recipeOrder.productionStatus = 'PAID';
+        await recipeOrder.save();
         messageConfig.email = recipeOrder.email;
         messageConfig.username = recipeOrder.User.displayName;
       }
@@ -236,7 +238,7 @@ module.exports = {
             ItemNameArray: data.ItemNameArray,
             UserName: data.UserName,
             RecipeId: data.RecipeOrder.RecipeId,
-            productionStatusDesc: data.productionStatusDesc,
+            productionStatusDesc: data.RecipeOrder.productionStatusDesc,
             Email: data.Email,
             Phone: data.Phone,
             Address: data.Address,
