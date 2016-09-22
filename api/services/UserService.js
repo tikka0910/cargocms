@@ -82,11 +82,14 @@ module.exports = {
         updatedUser.firstName = user.firstName;
         updatedUser.lastName = user.lastName;
         updatedUser.locale = user.locale;
-        updatedUser.birthday = user.birthday;
         updatedUser.phone1 = user.phone1;
         updatedUser.phone2 = user.phone2;
         updatedUser.address = user.address;
         updatedUser.address2 = user.address2;
+
+        if( user.birthday !== "" ){
+          updatedUser.birthday = user.birthday;
+        }
 
         const userRoles = await Role.findAll({
           where: {
@@ -136,6 +139,14 @@ module.exports = {
         updatedUser.firstName = user.firstName;
         updatedUser.lastName = user.lastName;
         updatedUser.locale = user.locale;
+        updatedUser.phone1 = user.phone1;
+        updatedUser.phone2 = user.phone2;
+        updatedUser.address = user.address;
+        updatedUser.address2 = user.address2;
+
+        if( user.birthday !== "" ){
+          updatedUser.birthday = user.birthday;
+        }
 
         updatedUser = await updatedUser.save();
       }
