@@ -313,18 +313,42 @@ $(document).ready(function () {
 	$('#recipeDeleteButton').on('click', function (event) {
 		event.preventDefault();
 		var id = $(this).data('id');
-		if (confirm("確定刪除此配方？")) {
-			$.ajax({
-				url: '/api/labfnp/recipe/' + id,
-				method: "delete", //create
-				dataType: 'json',
-				cache: false
-			}).done(function (result) {
-				// console.log(result);
-				alert(result.message);
-				location.href = '/me/' + result.data.userId;
-			});
-		}
+
+		swal({
+			title: '確認',
+			text: '確定刪除此配方？',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: "#e6caa8",
+			confirmButtonText: "刪除",
+			cancelButtonText: "取消",
+			closeOnConfirm: true,
+			closeOnCancel: true,
+		},function(isConform){
+			if(isConform){
+				$.ajax({
+					url: '/api/labfnp/recipe/' + id,
+					method: "delete", //create
+					dataType: 'json',
+					cache: false
+				}).done(function (result) {
+					// console.log(result);
+					// alert(result.message);
+					swal({
+						title: '訊息',
+						text: '刪除成功',
+						type: 'success',
+						confirmButtonColor: "#e6caa8",
+						confirmButtonText: "回創作列表",
+						closeOnConfirm: true,
+					},function(isConform){
+						location.href = '/me/' + result.data.userId;
+					});
+				});
+			}else{
+				swal.close();
+			}
+		});
 
 	});
 
