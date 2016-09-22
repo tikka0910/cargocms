@@ -31,11 +31,14 @@ exports.register = async (req, res, next) => {
       email: email,
       lastName,
       firstName,
-      birthday,
       phone1,
       phone2,
       address,
       address2,
+    }
+
+    if (birthday){
+      newUser.birthday = birthday;
     }
 
     let user = await User.create(newUser);
