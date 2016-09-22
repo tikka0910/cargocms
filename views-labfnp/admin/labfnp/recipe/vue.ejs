@@ -32,12 +32,14 @@ var appModel = {
 			message: '',
 			User: {},
 			visibility: '',
-			productionStatus: '',
+			// productionStatus: '',
 		},
 		items: [],
 		scentData: {},
 		scentColor: {},
-		option: {}
+		option: {
+			exportCSV: true
+		}
 	},
 	view: {
 		table: {
@@ -350,7 +352,6 @@ appMain.renderTable = function () {
               }
               return str.join("&");
             }
-  					// console.log("!!!!!!!", serialize(appModel.pagingQuery));
             location.href = '/api/admin/labfnp/recipe/export?' + serialize(appModel.pagingQuery)
   				}
         },

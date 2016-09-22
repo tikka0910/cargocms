@@ -15,7 +15,6 @@ module.exports = {
     message,
     description,
     visibility,
-    productionStatus,
     UserId,
     coverPhotoId,
     authorFbPage,
@@ -56,7 +55,6 @@ module.exports = {
     description,
     visibility,
     coverPhotoId,
-    productionStatus,
   }) => {
     try {
       const bubble = (a,b) => a.scent.match(/(\d+)/g)[0]-b.scent.match(/(\d+)/g)[0];
@@ -74,7 +72,6 @@ module.exports = {
         updatedRecipe.perfumeName = recipe.perfumeName;
         updatedRecipe.message = recipe.message;
         updatedRecipe.visibility = recipe.visibility;
-        updatedRecipe.productionStatus = recipe.productionStatus
         updatedRecipe.description = recipe.description;
         updatedRecipe.coverPhotoId = recipe.coverPhotoId == "" ? updatedRecipe.coverPhotoId : recipe.coverPhotoId;
 

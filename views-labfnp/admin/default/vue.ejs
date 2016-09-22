@@ -105,6 +105,12 @@ var defaultVueMathod = {
 				$('.checkbox').removeClass('state-disabled');
 				$('checkbox').removeAttr('disabled');
 			})() : false;
+
+			var existSelect = $('.select') ? (function () {
+				$('.select').removeClass('state-disabled');
+				$('select').removeAttr('disabled');
+			})() : false;
+
 		})();
 	},
 	onLeavePageEdit: function (cb) {
@@ -157,6 +163,9 @@ var defaultVueMathod = {
 				appModel.pagingQuery = data;
 	      appModel.pagingQuery.startDate = $("#yadcf-filter--main-table-from-date-3").val() || '';
 	      appModel.pagingQuery.endDate = $("#yadcf-filter--main-table-to-date-3").val() || '';
+				if (appMain.customSearch) {
+					appMain.customSearch();
+				}
 				console.log(appModel.pagingQuery);
 	      return data
 	    }
@@ -210,6 +219,30 @@ var defaultVueMathod = {
           //   "sCharSet": "UTF8",
           //   "bBomInc": true,
           // },
+					{
+	  				"sExtends": "text",
+	  				"sButtonText": "匯出",
+	  				"sToolTip": "把全部資料匯出成CSV",
+	          "fnClick": function (nButton, oConfig, oFlash) {
+	            var serialize = function(obj, prefix) {
+	              var str = [];
+	              for(var p in obj) {
+	                if (obj.hasOwnProperty(p)) {
+	                  var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+	                  str.push(typeof v == "object" ?
+	                    serialize(v, k) :
+	                    encodeURIComponent(k) + "=" + encodeURIComponent(v));
+	                }
+	              }
+	              return str.join("&");
+	            }
+							if (appMain.customSearch) {
+								appMain.customSearch();
+							}
+	  					console.log(serialize(appModel.pagingQuery));
+	            location.href = '/api/admin/' + modelName + '/export?' + serialize(appModel.pagingQuery)
+	  				}
+	        },
 					{
 						"sExtends": "text",
 						"sButtonText": "檢視",
@@ -271,7 +304,15 @@ var defaultVueMathod = {
 			defaultTableConfig.ajax = ajax;
 		}
 
+		if (appMain.DataTableInitComplete) {
+			defaultTableConfig.initComplete = appMain.DataTableInitComplete
+		}
+
 		var defaultTable = $('#main-table').dataTable(defaultTableConfig);
+
+		if (!appModel.data.option.exportCSV) {
+			$('#ToolTables_main-table_0').hide()
+		}
 		// selection
 		defaultTable.on('click', 'tr', function () {
 
