@@ -31,6 +31,7 @@ module.exports = {
     }
   },
   register: async (req, res) => {
+    if(req.session.authenticated) return res.redirect('/');
     try {
       let user = {
         username: '',
