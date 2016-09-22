@@ -107,18 +107,8 @@ module.exports.bootstrap = async (cb) => {
 
 
     /*
-     * TODO 是否要匯入的判斷必須交給 init 定義的程式負責
+     * 是否要匯入的判斷必須交給 init 定義的程式負責
      */
-
-    /*
-    if (environment !== 'test') {
-      let menuItems = await MenuItem.findAll();
-      if(menuItems.length == 0){
-        require('./init/labfnp').init();
-        require('./init/facebook').init();
-      }
-    }
-    */
 
     if (environment !== 'test') {
       // 自動掃描 init 底下的 module 資料夾後執行資料初始化
@@ -149,10 +139,6 @@ module.exports.bootstrap = async (cb) => {
           UserId: user.id
         });
       });
-
-
-      // 大量假帳號
-      require('./init/fakeusers').init();
 
       await Post.create({
         title: '自造者世代（MAKERS）與第三次工業革命',

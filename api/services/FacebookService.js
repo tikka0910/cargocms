@@ -67,7 +67,7 @@ module.exports = {
         return results
       }, [])
 
-      console.log("== createFeeds ==", createFeeds);
+      //console.log("== createFeeds ==", createFeeds);
 
       Feed.bulkCreate(createFeeds);
 
