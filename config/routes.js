@@ -20,8 +20,19 @@
  * For more information on configuring custom routes, check out:
  * http://sailsjs.org/#!/documentation/concepts/Routes/RouteTargetSyntax.html
  */
+import fs from 'fs';
+var customerRoutes = {}
+var files = fs.readdirSync('./config')
+for (var i in files) {
+  let dirName = files[i];
+  let isDir = fs.statSync('./config/' + dirName).isDirectory();
+  if (isDir) {
+    if(fs.existsSync('./config/' + dirName + '/routes.js'))
+      customerRoutes = require('./' + dirName + '/routes.js');
+  }
+}
 
-module.exports.routes = {
+var defaultRoutes = {
 
   /***************************************************************************
   *                                                                          *
@@ -33,9 +44,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
   //----- index -----
-  '/': {
-    view: 'index'
-  },
+
 
   //----- api -----
   'get /api/admin/mock': "api/admin/MockController.find",
@@ -43,28 +52,6 @@ module.exports.routes = {
   'post /api/admin/upload': 'api/admin/ImageController.upload',
   'delete /api/admin/upload/:id': 'api/admin/ImageController.destroy',
 
-  'get /api/labfnp/recipe/findForLab': 'api/labfnp/RecipeController.findForLab',
-  'get /api/labfnp/recipe': 'api/labfnp/RecipeController.find',
-  'post /api/labfnp/recipe': 'api/labfnp/RecipeController.create',
-  'get /api/labfnp/recipe/new': 'api/labfnp/RecipeController.topNew',
-  'get /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.findOne',
-  'put /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.update',
-  'delete /api/labfnp/recipe/:id': 'api/labfnp/RecipeController.destroy',
-
-  'get /api/labfnp/recipe/:id/feelings': 'api/labfnp/RecipeController.feelings',
-
-  'get /api/labfnp/feeling': 'api/labfnp/FeelingController.find',
-  'get /api/labfnp/feeling/:id': 'api/labfnp/FeelingController.findOne',
-  'post /api/labfnp/feeling': 'api/labfnp/FeelingController.create',
-  'put /api/labfnp/feeling/:id': 'api/labfnp/FeelingController.update',
-  'delete /api/labfnp/feeling/:id': 'api/labfnp/FeelingController.destroy',
-
-  'get /api/labfnp/recipe/like/:id': 'api/labfnp/RecipeController.like',
-  'get /api/labfnp/recipe/unlike/:id': 'api/labfnp/RecipeController.unlike',
-
-  'get /api/labfnp/scent/simpleList': 'api/labfnp/ScentController.find',
-  'get /api/labfnp/scent': 'api/labfnp/ScentController.find',
-  'get /api/labfnp/scentnote': 'api/labfnp/ScentNoteController.find',
 
   'get /api/admin/user': 'api/admin/UserController.find',
   'get /api/admin/user/:id': 'api/admin/UserController.findOne',
@@ -99,12 +86,6 @@ module.exports.routes = {
   'put /api/admin/message/:id':    'api/admin/MessageController.update',
   'delete /api/admin/message/:id': 'api/admin/MessageController.destroy',
 
-  'get /api/admin/labfnp/recipe/export': 'api/admin/labfnp/RecipeController.export',
-  // 'get /api/admin/Default': 'api/admin/DefaultController.find',
-  // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
-  // 'post /api/admin/Default': 'api/admin/DefaultController.create',
-  // 'put /api/admin/Default/:id': 'api/admin/DefaultController.update',
-  // 'delete /api/admin/Default/:id': 'api/admin/DefaultController.destroy',
 
   'post /api/user/follow/:id':    'api/UserController.follow',
   'post /api/user/unfollow/:id':  'api/UserController.unfollow',
@@ -114,17 +95,6 @@ module.exports.routes = {
 
   '/admin':           'AdminController.index',
   '/admin/config.js': 'AdminController.config',
-
-  '/recipe/:id':      'labfnp/RecipeController.show',
-  '/recipe/preview/:id': 'labfnp/RecipeController.preview',
-  '/recipe/order/:id': 'labfnp/RecipeController.order',
-  // '/recipe/feedback/:id': 'labfnp/RecipeController.feedback',
-  '/recipe/edit/:id': 'labfnp/RecipeController.edit',
-  '/recipe/allpay/:id':  'labfnp/RecipeController.allpay',
-  '/creator':         'labfnp/RecipeController.create',
-  '/lab':             'labfnp/MainController.explore',
-  '/me/:id?':         'labfnp/MainController.portfolio',
-  '/edit/me':         'labfnp/MainController.editPofile',
 
 
   //----- AuthController -----
@@ -138,15 +108,13 @@ module.exports.routes = {
   'get /auth/:provider': 'AuthController.provider',
   'get /auth/:provider/callback': 'AuthController.callback',
   'get /auth/:provider/:action': 'AuthController.callback',
-
-  //----- view -----
-  "/labfnp/:controller/:action/:id?": {},
-  "/admin/:controller/:action/:id?": {},
-
-  "/:controller/:action/:id?": {},
-
   //----- WallController -----
   'get /wall/:id': 'WallController.show',
+  //----- view -----
+
+
+
+
 
 
   /***************************************************************************
@@ -160,3 +128,12 @@ module.exports.routes = {
   ***************************************************************************/
 
 };
+module.exports.routes = {
+  '/': {
+    view: 'index'
+  },
+  ...customerRoutes,
+  ...defaultRoutes,
+  "/admin/:controller/:action/:id?": {},
+  "/:controller/:action/:id?": {}
+}
