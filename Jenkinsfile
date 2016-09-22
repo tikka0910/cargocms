@@ -40,16 +40,14 @@ node {
     // git url: 'https://github.com/trunk-studio/cargocms.git', branch: 'develop'
     checkout scm
 
-    stage 'check env'
-    sh "node -v"
-
-    // stage 'install pm2'
-    // sh "npm install pm2 -g"
-
-    stage 'build project'
-    sh "npm install && npm run build"
 
     if(!skiptest){
+      stage 'check env'
+      sh "node -v"
+
+      stage 'build project'
+      sh "npm install && npm run build"
+
       stage 'test project'
       sh "npm run test-ci"
       step([$class: 'JUnitResultArchiver', testResults: 'test-results.xml'])
