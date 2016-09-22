@@ -18,7 +18,7 @@ module.exports = {
       type: Sequelize.STRING
     },
     birthday:{
-      type: Sequelize.DATEONLY,
+      type: Sequelize.DATE,
       get: function () {
         try {
           if(this.getDataValue('birthday'))
@@ -57,6 +57,14 @@ module.exports = {
         let displayName = firstName + lastName;
         const isTw = locale === 'zh_TW';
         if (!locale || isTw) displayName = lastName + firstName;
+
+        if(displayName === ""){
+          if (this.getDataValue('username') === ""){
+            displayName = this.getDataValue('email');
+          }else{
+            displayName = this.getDataValue('username');
+          }
+        }
 
         return displayName;
       }
