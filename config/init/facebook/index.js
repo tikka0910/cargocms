@@ -28,12 +28,17 @@ module.exports.init = async () => {
       );
     });
 
-    let findFeeds = feeds.map((feed) => Feed.findOne({ where: {sourceId: feed.id}}));
+    let feedsSourceId = feeds.map((feed) => feed.id);
 
-    let modelFeeds = await Promise.all(findFeeds);
+    let findFeeds = await Feed.findAll({
+      where: {sourceId: feedsSourceId},
+      attributes: ["sourceId"]
+    });
 
-    let createFeeds = modelFeeds.reduce((results, feed, index) => {
-      if(feed == null){
+    let sourcesId = findFeeds.map((feed) => feed.sourceId);
+
+    let createFeeds = feedsSourceId.reduce((results, feedSourceId, index) => {
+      if(sourcesId.indexOf(feedSourceId) == -1){
         let row = {
           fullPicture: feeds[index].full_picture,
           name: feeds[index].name,
@@ -50,6 +55,8 @@ module.exports.init = async () => {
       }
       return results
     }, [])
+
+    console.log("== createFeeds ==", createFeeds);
 
     Feed.bulkCreate(createFeeds);
 
