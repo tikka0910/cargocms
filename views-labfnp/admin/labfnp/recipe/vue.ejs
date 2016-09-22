@@ -243,7 +243,7 @@ appMain.onDropsChange = function (e) {
 		totalDrops += drops;
 	}
 	appModel.data.item.totalDrops = totalDrops;
-  console.log('appModel.data.item.totalDrops =>',appModel.data.item.totalDrops );
+  // console.log('appModel.data.item.totalDrops =>',appModel.data.item.totalDrops );
 };
 
 appMain.onBtnCleanClick = function (e) {
@@ -273,7 +273,7 @@ appMain.renderTable = function () {
 			appModel.pagingQuery = data;
 			appModel.pagingQuery.startDate = $("#yadcf-filter--main-table-from-date-3").val() || '';
 			appModel.pagingQuery.endDate = $("#yadcf-filter--main-table-to-date-3").val() || '';
-			console.log(appModel.pagingQuery);
+			// console.log(appModel.pagingQuery);
 			return data
 		}
 	}
@@ -350,7 +350,7 @@ appMain.renderTable = function () {
               }
               return str.join("&");
             }
-  					console.log("!!!!!!!", serialize(appModel.pagingQuery));
+  					// console.log("!!!!!!!", serialize(appModel.pagingQuery));
             location.href = '/api/admin/labfnp/recipe/export?' + serialize(appModel.pagingQuery)
   				}
         },
