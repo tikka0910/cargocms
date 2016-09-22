@@ -66,7 +66,7 @@
 			<div class="user-profile-block margin-bottom-20">
 				<div style="float:right">
 					<% if(isMe) {%>
-						<!-- <button id="edit-button" data-user-id="<%= user.id %>" class="btn btn-primary">修改個人資料</button> --!>
+						<a id="edit-profile-button" data-user-id="<%= user.id %>" class="btn btn-primary" href="/edit/me">修改個人資料</a>
 					<% } else { %>
 						<button id="follow-button" data-user-id="<%= user.id %>" class="btn <%= isFollowing ? 'btn-default' : 'btn-primary' %>"><%= isFollowing ? '取消追蹤' : '追蹤' %></button>
 					<% } %>

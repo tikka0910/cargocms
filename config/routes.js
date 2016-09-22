@@ -104,8 +104,9 @@ module.exports.routes = {
   // 'put /api/admin/Default/:id': 'api/admin/DefaultController.update',
   // 'delete /api/admin/Default/:id': 'api/admin/DefaultController.destroy',
 
-  'post /api/user/follow/:id': 'api/UserController.follow',
-  'post /api/user/unfollow/:id': 'api/UserController.unfollow',
+  'post /api/user/follow/:id':    'api/UserController.follow',
+  'post /api/user/unfollow/:id':  'api/UserController.unfollow',
+  'post /api/user/edit/:id':      'api/UserController.update',
 
   //----- custom -----
 
@@ -120,7 +121,8 @@ module.exports.routes = {
   '/recipe/allpay/:id':  'labfnp/RecipeController.allpay',
   '/creator':         'labfnp/RecipeController.create',
   '/lab':             'labfnp/MainController.explore',
-  '/me/:id?':          'labfnp/MainController.portfolio',
+  '/me/:id?':         'labfnp/MainController.portfolio',
+  '/edit/me':         'labfnp/MainController.editPofile',
 
 
   //----- AuthController -----
