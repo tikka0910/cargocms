@@ -8,9 +8,7 @@ module.exports = {
         include = FormatService.getIncudeQueryObj({ include, query });
         findQuery.include = include;
       }
-      sails.log.debug(findQuery);
       let result = await sails.models[modelName].findAndCountAll(findQuery)
-      sails.log.debug(JSON.stringify(result, null, 2));
       let data = result.rows;
       let recordsTotal = data.length
       let recordsFiltered =  result.count

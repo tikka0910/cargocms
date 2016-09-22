@@ -105,6 +105,12 @@ var defaultVueMathod = {
 				$('.checkbox').removeClass('state-disabled');
 				$('checkbox').removeAttr('disabled');
 			})() : false;
+
+			var existSelect = $('.select') ? (function () {
+				$('.select').removeClass('state-disabled');
+				$('select').removeAttr('disabled');
+			})() : false;
+
 		})();
 	},
 	onLeavePageEdit: function (cb) {

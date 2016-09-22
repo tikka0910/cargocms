@@ -81,6 +81,7 @@ module.exports = {
         email: data.Email,
         note: data.Note,
         remark: data.Remark,
+        productionStatus: data.RecipeOrder.productionStatus,
       };
 
       // const allpay = await Allpay.update(allpayData ,{

@@ -2,7 +2,6 @@ import moment from 'moment';
 module.exports = {
   getQueryObj: (input) => {
     try {
-      sails.log.debug(JSON.stringify(input, null, 2));
       let data = {
         where: {},
       };
