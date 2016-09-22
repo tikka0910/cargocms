@@ -64,11 +64,11 @@
       <div class="col-md-3 map-img md-margin-bottom-40">
         <div class="headline"><h2>聯繫我們</h2></div>
         <address class="md-margin-bottom-40">
-          403 台中市西區<br/>
-          中興一巷8號二樓C戶（綠光計劃）<br />
-          <a href="https://goo.gl/maps/CXLfH89DxRD2">立即前往</a><br/>
-          Tel: <a href="tel:+886423015682">(04)2301-5682</a><br/>
-          Email: <a href="mailto:info@labfnp.com" class="">info@labfnp.com</a>
+          <br/>
+          <br />
+          <a href="">立即前往</a><br/>
+          Tel: <a href="tel:+886423015799">(04)2301-5799</a><br/>
+          Email: <a href="mailto:info@trunk.studio" class="">info@trunk.studio</a>
         </address>
       </div><!--/col-md-3-->
       <!-- End Address -->
@@ -104,19 +104,4 @@
 <!--=== End Footer Version 1 ===-->
 
 <% LayoutUtils.addScriptBlock(`
-$(document).ready(function(){
-  $.get('/api/labfnp/recipe/new', function(result){
-    console.log(result);
-    var ul = $('#newRecipe');
-    result.data.recipes.forEach(function(recipe){
-      ul.append(
-      '<li>' +
-        '<a href=/recipe/'+ recipe.id +'>' +
-          recipe.perfumeName + ' - ' + recipe.authorName +
-        '</a>' +
-      '</li>'
-      );
-    });
-  });
-});
 `); %>
