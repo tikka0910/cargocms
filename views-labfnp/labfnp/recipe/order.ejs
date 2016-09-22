@@ -56,7 +56,9 @@
     margin-top: 13px;
     margin-left: 5px;
   }
-
+  label.error {
+    color: red;
+  }
 </style>
 
 <div class="container content profile">
@@ -225,6 +227,48 @@
 <% LayoutUtils.addScripts('/assets/labfnp/page/recipe/favorite.js'); %>
 <% LayoutUtils.addScriptBlock(`
   $(document).ready(function(){
+
+    $("#orderForm").validate({
+      rules: {
+        recipient: {
+          required: true
+        },
+        phone: {
+          required: true
+        },
+        address: {
+          required: true
+        },
+        email: {
+          required: true,
+          email: true
+        },
+
+      },
+      messages: {
+        recipient: {
+          required: "請輸入 收件人"
+        },
+        phone: {
+          required: "請輸入 收件人電話"
+        },
+        address: {
+          required: "請輸入 地址"
+        },
+        email: {
+          required: "請輸入 Email",
+          email: "請輸入正確格式Email"
+        },
+      }
+    });
+
+    $("#orderForm").submit(function( event ){
+      if( $("#orderForm").valid() ){
+        swal('訊息', '訂單處理中...！', 'info');
+      }else{
+        event.preventDefault();
+      }
+    });
 
   });
 `); %>
