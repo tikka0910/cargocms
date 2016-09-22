@@ -25,6 +25,13 @@
 .rounded-x {
     border-radius: 50% !important;
 }
+.input-group label.error {
+  position: absolute;
+  bottom: -2em;
+  width: 100%;
+  left: 0;
+  color: red;
+}
 </style>
 
 <!--=== Content Part ===-->
@@ -53,14 +60,16 @@
           <h2>輸入帳號及密碼</h2>
         </div>
 
-        <div class="input-group margin-bottom-20">
+        <div class="input-group margin-bottom-25">
           <span class="input-group-addon"><i class="fa fa-user"></i></span>
-          <input type="text" placeholder="Username" id="identifier" name="identifier" class="form-control">
+          <input type="text" placeholder="Username" value="<%= data.user.identifier %>" id="identifier" name="identifier" class="form-control">
         </div>
-        <div class="input-group margin-bottom-20">
+        <div class="input-group margin-bottom-25">
           <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-          <input type="password" placeholder="Password" id="password" name="password" class="form-control">
+          <input type="password" placeholder="Password" value="<%= data.user.password %>" id="password" name="password" class="form-control">
         </div>
+
+        <input id='backUrl' type="hidden" name="url" value='/'>
 
         <div class="row">
           <div class="col-md-6 checkbox">
@@ -74,7 +83,9 @@
             <button id="submit-button" class="btn-u pull-right" type="submit">登入</button>
           </div>
         </div>
-
+        <% if (data.errors) { %>
+          <div class="alert alert-warning" role="alert">帳號或密碼錯誤！</div>
+        <% } %>
         <hr>
 
         <!--<h4>忘記密碼？</h4>
@@ -83,4 +94,32 @@
     </div>
   </div><!--/row-->
 </div><!--/container-->
+
+<% LayoutUtils.addScriptBlock(`
+  $(document).ready(function(){
+
+    $(".reg-page").validate({
+      rules: {
+        identifier: {
+          required: true
+        },
+        password: {
+          required: true
+        },
+
+      },
+      messages: {
+        identifier: {
+          required: "請輸入帳號"
+        },
+        password:{
+          required: "請輸入密碼"
+        },
+      }
+    });
+
+    document.referrer && $('#backUrl').val(document.referrer);
+
+  });
+`); %>
 <!--=== End Content Part ===-->
