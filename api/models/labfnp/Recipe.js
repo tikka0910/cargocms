@@ -240,25 +240,30 @@ module.exports = {
       get: function() {
         try {
           const formulaTotalDrops = this.get('formulaTotalDrops');
-          const formulaJson = JSON.parse(this.getDataValue('formula'));
-          const dpFormulaArray = [];
-          let index = 0;
 
-          for (const formula of formulaJson) {
-            const value = Math.round(( formula.drops / formulaTotalDrops * 100 ) * 10000) / 10000;
-            dpFormulaArray.push({
-              index: index,
-              value: `${formula.scent} - ${formula.drops}滴(${value}%)`
-            });
-            index += 1;
+          if (typeof this.getDataValue('formula') !== 'undefined') {
+            const formulaJson = JSON.parse(this.getDataValue('formula'));
+            const dpFormulaArray = [];
+            let index = 0;
+
+            for (const formula of formulaJson) {
+              const value = Math.round(( formula.drops / formulaTotalDrops * 100 ) * 10000) / 10000;
+              dpFormulaArray.push({
+                index: index,
+                value: `${formula.scent} - ${formula.drops}滴(${value}%)`
+              });
+              index += 1;
+            }
+            return dpFormulaArray;
+          } else {
+
+            return '';
           }
-
-          return dpFormulaArray;
         } catch (e) {
           sails.log.error(e);
         }
       }
-    },
+    }
 
   },
   associations: function() {
