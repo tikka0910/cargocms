@@ -12,8 +12,7 @@ module.exports = {
         return res.redirect('/login');
       }
 
-      scents = await Scent.findAllWithRelationFormatForApp()
-      totalDrops = 0;
+      scents = await Scent.findAllWithRelationFormatForApp();
       recipe = Recipe.build().toJSON();
       recipe.message = "";
       recipe.description = "";
@@ -32,7 +31,7 @@ module.exports = {
       }
 
       if (from == 'scent') {
-        return res.view({ user, recipe, scents, totalDrops });
+        return res.view({ user, recipe, scents });
       }
 
       if (from == 'feeling') {
@@ -43,7 +42,7 @@ module.exports = {
           feelingArray.push(feeling.title);
         }
 
-        return res.view({ user, recipe, scents, feelings: feelingArray, totalDrops });
+        return res.view({ user, recipe, scents, feelings: feelingArray });
       }
 
     }
