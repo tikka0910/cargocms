@@ -87,6 +87,37 @@ label.error{
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-sm-12">
+            <label>生日 <span class="color-red">*</span></label>
+            <input type="date" name="birthday" value="<%= data.user.birthday %>" class="form-control margin-bottom-20" placeholder="例：1970/01/01">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <label>電話1 <span class="color-red">*</span></label>
+            <input type="text" name="phone1" value="<%= data.user.phone1 %>" class="form-control margin-bottom-20">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <label>電話2 </label>
+            <input type="text" name="phone2" value="<%= data.user.phone2 %>" class="form-control margin-bottom-20">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <label>住址 <span class="color-red">*</span></label>
+            <input type="text" name="address" value="<%= data.user.address %>" class="form-control margin-bottom-20">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <label>住址2</label>
+            <input type="text" name="address2" value="<%= data.user.address2 %>" class="form-control margin-bottom-20">
+          </div>
+        </div>
+
         <hr>
 
         <div class="row">
@@ -150,6 +181,16 @@ label.error{
           minlength: 6,
           equalTo: "#firstPassword"
         },
+        birthday: {
+          required: true,
+          dateISO: true
+        },
+        phone1: {
+          required: true
+        },
+        address: {
+          required: true
+        },
         agree: "required"
 
       },
@@ -170,9 +211,26 @@ label.error{
           minlength: "密碼長度不足",
           equalTo: "請輸入相同密碼"
         },
+        birthday: {
+          required: "請輸入生日",
+          dateISO: "請輸入正確日期格式"
+        },
+        phone1: {
+          required: "請輸入電話"
+        },
+        address: {
+          required: "請輸入地址"
+        },
         agree: "尚未同意會員服務條款"
       }
     });
 
+    $("#registerForm").submit( function( event ) {
+      if( $("#registerForm").valid() ){
+        swal("註冊","資料傳送中...","info");
+      }else{
+        event.preventDefault();
+      }
+    });
   });
 `); %>
