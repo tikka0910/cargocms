@@ -182,16 +182,26 @@ module.exports = {
     }
   },
 
-  createFeedback: async (req, res) => {
+  saveFeedback: async (req, res) => {
     const data = req.body;
     try {
       if (typeof data.feeling === 'string'){
         data.feeling = [data.feeling];
       }
-      sails.log.info('create feedback controller=>', data);
-      const feedback = await RecipeFeedback.create(data);
+      let {UserId, RecipeId} = data;
+      let feedback = await RecipeFeedback.findOne({where: {UserId, RecipeId}});
+
+      if(feedback != null){
+        feedback.invoiceNo = data.invoiceNo
+        feedback.tradeNo = data.tradeNo
+        feedback.feeling = data.feeling
+        feedback = await feedback.save(data);
+      }else {
+        feedback = await RecipeFeedback.create(data);
+      }
+
       res.ok({
-        message: 'Create feedback success.',
+        message: 'save feedback success.',
         data: feedback,
       });
     } catch (e) {

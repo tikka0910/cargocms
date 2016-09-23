@@ -172,7 +172,7 @@
             <select multiple name="feeling" class="form-control chosen-select chosen-select-no-results" data-placeholder="請填寫您的感覺（可填寫多個）">
               <option></option>
               <% feelings.forEach(function(feeling) { %>
-                <option value="<%= feeling %>" ><%= feeling %></option>
+                <option <%= recipeFeedback.feeling.indexOf(feeling)>=0 ? 'selected' : '' %> value="<%= feeling %>" ><%= feeling %></option>
               <% }); %>
             </select>
           </section>
