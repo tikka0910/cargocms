@@ -6,8 +6,13 @@ exports.register = async (req, res, next) => {
   username = req.param('username');
   password = req.param('password');
 
-  let lastName = req.param('lastName');
+  let lastName  = req.param('lastName');
   let firstName = req.param('firstName');
+  let birthday  = req.param('birthday');
+  let phone1    = req.param('phone1');
+  let phone2    = req.param('phone2');
+  let address   = req.param('address');
+  let address2  = req.param('address2');
 
   try {
 
@@ -25,12 +30,21 @@ exports.register = async (req, res, next) => {
       username: newUserParams.username || email,
       email: email,
       lastName,
-      firstName
+      firstName,
+      phone1,
+      phone2,
+      address,
+      address2,
+    }
+
+    if (birthday){
+      newUser.birthday = birthday;
     }
 
     let user = await User.create(newUser);
 
     let passport = await Passport.create({
+      provider: 'local',
       protocol: 'local',
       password: password,
       UserId: user.id
@@ -46,9 +60,8 @@ exports.register = async (req, res, next) => {
 
   } catch (err) {
     console.error(err.stack);
-    req.flash('error', err.message);
+    req.flash('error', err.errors[0].message);
     return next(err);
-
   }
 };
 

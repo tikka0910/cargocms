@@ -53,7 +53,7 @@
           <li class="topbar-devider"></li>
           <li class="<%= (req.path=='/login')?'active':'' %>"><a id="login" href="/login">登入</a></li>
         <% } else { %>
-          <li><a id="logout-link">登出</a></li>
+          <li><a id="logout-link" href="#" >登出</a></li>
           <li class="topbar-devider"></li>
           <li class="<%= (req.path=='/me')?'active':'' %>" >
             <a href="/me">

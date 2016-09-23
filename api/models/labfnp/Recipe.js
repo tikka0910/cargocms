@@ -220,6 +220,24 @@ module.exports = {
           sails.log.error(e);
         }
       }
+<<<<<<< HEAD
+=======
+    },
+    invoicenum: {
+      type: Sequelize.STRING
+    },
+    address: {
+      type: Sequelize.STRING
+    },
+    phonenum: {
+      type: Sequelize.STRING
+    },
+    created: {
+      type: Sequelize.STRING
+    },
+    sourceId: {
+      type: Sequelize.STRING
+>>>>>>> 6ff364b9d0166f96ff33a9916d94001e8054eb9e
     }
 
   },
