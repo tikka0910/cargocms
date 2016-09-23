@@ -203,6 +203,7 @@ module.exports.bootstrap = async (cb) => {
           {"drops":"1","scent":"BA69","color":"#E87728"},
           {"drops":"2","scent":"BA70","color":"#B35721"}
         ],
+        visibility: "PUBLIC" ,
         formulaLogs: '',
         authorName: '王大明',
         perfumeName: 'love again',
