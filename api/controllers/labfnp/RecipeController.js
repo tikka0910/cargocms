@@ -56,6 +56,7 @@ module.exports = {
     try {
       const currentUser = AuthService.getSessionUser(req);
       const { recipe, editable, social, recipeFeedback} = await RecipeService.loadRecipe(id, currentUser);
+
       return res.view({ recipe, editable, social, recipeFeedback});
     } catch (e) {
       if (e.type === 'notFound') return res.notFound();
@@ -68,7 +69,7 @@ module.exports = {
     try {
       const currentUser = AuthService.getSessionUser(req);
       const { recipe, editable, social, recipeFeedback} = await RecipeService.loadRecipe(id, currentUser);
-
+      console.log("=== recipeFeedback ===", recipeFeedback);
       let feelings = await Feeling.findRamdomFeelings();
       let feelingArray = [];
       for (const feeling of feelings) {

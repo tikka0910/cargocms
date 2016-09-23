@@ -152,17 +152,18 @@
 
       <div class="projects form-group" id="orderFormWrapper">
         <form class="orderForm" id="orderForm" action="/" method="post">
-
+          <input type="hidden" class="form-control" name="UserId" value="<%= user.id %>" >
+          <input type="hidden" class="form-control" name="RecipeId" value="<%= recipe.id %>" >
           <section class="col">
             <label for="reciverName">發票號碼
             </label>
-            <input type="text" value="<%= recipeFeedback.invoiceNo %>" class="form-control" name="invoiceNo" value="" placeholder="選填，有交易序號請填寫" >
+            <input type="text" value="<%= recipeFeedback.invoiceNo %>" class="form-control" name="invoiceNo" placeholder="選填，有交易序號請填寫" >
           </section>
 
           <section class="col">
             <label for="phone">交易序號
             </label>
-            <input type="text" value="<%= recipeFeedback.tradeNo %>" class="form-control" name="tradeNo" value="" placeholder="選填，有交易序號請填寫" >
+            <input type="text" value="<%= recipeFeedback.tradeNo %>" class="form-control" name="tradeNo" placeholder="選填，有交易序號請填寫" >
           </section>
 
           <section class="col">
