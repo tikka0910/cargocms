@@ -10,7 +10,7 @@
  */
 
 import fs from 'fs';
-
+import shortid from 'shortid';
 import MailerService from 'sails-service-mailer';
 module.exports.bootstrap = async (cb) => {
   if(!sails.config.shareUrl) sails.config.shareUrl = "localhost:"+ sails.config.port
@@ -67,8 +67,17 @@ module.exports.bootstrap = async (cb) => {
     if (!sails.config.hasOwnProperty('offAuth'))
       sails.config.offAuth = false;
 
-    if(environment == 'production')
+    if(environment == 'production'){
       sails.config.offAuth = false;
+      let recipes = await Recipe.findAll({where: {hashId:{$eq: null}}})
+      let updateRecipes = recipes.map((recipe) => {
+        recipe.hashId = shortid.generate();
+        return recipe.save();
+      })
+
+      await Promise.all(updateRecipes);
+
+    }
 
     let adminRole = await Role.findOrCreate({
       where: {authority: 'admin'},

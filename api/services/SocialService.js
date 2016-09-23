@@ -10,9 +10,10 @@ module.exports = {
       let socialsConfig = sails.config.socials
 
       const socialData = recipes.map((recipe) => {
-        const {id, description} = recipe;
+        const {id, hashId, description} = recipe;
         const title = recipe.perfumeName;
-        const url = SocialService.getShareUrl() + '/recipe/' + id
+        const recipeId = hashId || id
+        const url = SocialService.getShareUrl() + '/recipe/' + recipeId
         return {
           description, title, url
         }

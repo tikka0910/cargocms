@@ -104,14 +104,14 @@ module.exports = {
 
       const social = SocialService.forRecipe({ recipes: [recipe] });
 
-      const RecipeId = recipeId
+      const RecipeId = recipe.id
       const UserId = userId
       let recipeFeedback = await RecipeFeedback.findOne({where: {RecipeId, UserId}})
       if(recipeFeedback == null)
         recipeFeedback = RecipeFeedback.build();
 
       let recipeOrder = await RecipeOrder.findOne({where: {RecipeId, UserId}})
-      
+
       if(recipeOrder != null){
         recipeFeedback.invoiceNo = recipeOrder.invoiceNo;
         let RecipeOrderId = recipeOrder.id;

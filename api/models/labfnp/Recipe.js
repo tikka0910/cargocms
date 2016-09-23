@@ -1,7 +1,12 @@
 import moment from 'moment';
+import shortid from 'shortid';
 
 module.exports = {
   attributes: {
+    hashId: {
+      type: Sequelize.STRING(32),
+      unique: true,
+    },
     //TODO authorAvatar
     formula: {
       // from `full_picture`
@@ -253,12 +258,9 @@ module.exports = {
         sails.log.info("findOneWithUser id=>", id);
         let recipeWithScent = '';
         const recipes = await Recipe.findOne({
-          where: {
-            id
-          },
+          where: { $or: [{ id }, {hashId: id}] },
           include: [User, Image],
         });
-        console.log('findOneWithScent recipe=>', recipes);
         return recipes;
       },
 
@@ -276,7 +278,11 @@ module.exports = {
           if (findByUserId) {
             whereParam.where.UserId = findByUserId;
           } else if (findByRecipeId) {
-            whereParam.where.id = findByRecipeId;
+            // whereParam.where.id = findByRecipeId;
+            whereParam.where.$or = [
+              { id: findByRecipeId },
+              { hashId: findByRecipeId },
+            ]
           }
           let notAdmin = true;
           let ownUserId = {};
@@ -350,7 +356,9 @@ module.exports = {
       },
       getFeelings: async function({id}){
         try {
-          const recipe = await Recipe.findOne({where: {id}});
+          const recipe = await Recipe.findOne({
+            where: { $or: [{ id }, {hashId: id}] }
+          });
           const {formula} = recipe;
 
           const secntNames = formula.map(oneFormula => oneFormula.scent)
@@ -438,6 +446,10 @@ module.exports = {
         }
       }
     },
-    hooks: {}
+    hooks: {
+      beforeCreate: async (recipe) => {
+        recipe.hashId = shortid.generate();
+      },
+    }
   }
 };

@@ -421,7 +421,7 @@ $(document).ready(function () {
 				createdBy: createdBy,
 			}
 		}).done(function (result) {
-      location.href = '/recipe/' + result.data.id;
+      location.href = '/recipe/' + result.data.hashId;
 		});
 
 	});

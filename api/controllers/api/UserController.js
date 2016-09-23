@@ -45,7 +45,7 @@ module.exports = {
         const user = await UserService.updateByUser({
           id: id,
           ...data,
-        })
+        });
         const checkLastName = user.lastName === data.lastName;
         const checkFirstName = user.firstName === data.firstName;
         const checkEmail = user.email === data.email;

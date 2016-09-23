@@ -4,19 +4,19 @@
 <table id="main-table" class="table table-striped table-bordered table-hover" width="100%">
 	<thead>
 		<tr>
-			<th data-hide="phone"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs"/> ID</th>
-			<th data-class="expand"><i class="fa fa-fw text-muted hidden-sm hidden-xs"/> 交易編號 </th>
+			<th width="8%" data-hide="phone"><i class="fa fa-fw text-muted fa-hashtag hidden-sm hidden-xs"/> ID</th>
+			<th width="15%" data-class="expand"><i class="fa fa-fw text-muted hidden-sm hidden-xs"/> 交易編號 </th>
       <th data-hide="always">廠商交易編號</th>
       <th data-hide="always">交易訊息</th>
-      <th class="no-sort">付款時間</th>
-      <th class="no-sort" data-hide="phone,tablet">付款方式</th>
-      <th class="no-sort" data-hide="">發票號碼</th>
-      <th>付款金額</th>
+      <th width="15%">付款時間</th>
+      <th width="10%" class="no-sort" data-hide="phone,tablet">付款方式</th>
+      <th width="10%" class="no-sort" data-hide="">發票號碼</th>
+      <th width="8%" >付款金額</th>
       <th data-hide="always">付款帳號</th>
       <th data-hide="always">訂購物品</th>
-      <th class="no-sort">訂購人</th>
-      <th class="no-sort">配方編號</th>
-      <th class="no-sort">
+      <th width="10%" class="no-sort">訂購人</th>
+      <th width="7%" class="no-sort">配方編號</th>
+      <th width="7%" class="no-sort">
 				訂單狀態
         <!--<select class="form-control input-xs" id="productionStatus">
 					<option value=""></option>
@@ -39,8 +39,8 @@
       <th data-hide="always">Email</th>
       <th data-hide="always">電話</th>
       <th data-hide="always">住址</th>
-      <th data-hide="always">訂單建立時間</th>
-      <th data-hide="phone,tablet"></th>
+      <th width="15%" data-hide="phone,tablet">訂單建立時間</th>
+      <th width="10%" data-hide="phone,tablet"></th>
 
 		</tr>
 	</thead>
@@ -101,7 +101,7 @@
 			{ "data": "TradeNo"}, //TradeNo
 			{ "data": "MerchantTradeNo" },
       { "data": "RtnMsg" },
-      { "data": null }, //PaymentDate
+      { "data": "PaymentDate" }, //PaymentDate
       { "data": "PaymentTypeDesc" },
       { "data": "invoiceNo"},
       { "data": "TradeAmt" },
@@ -148,8 +148,8 @@
         "targets": 4,
 				"searchable": false,
         "render": function(data, type, row) {
-          if (data && data.PaymentDate !== "Invalid date") {
-            return '<td>' + data.PaymentDate +'</td>';
+          if (data !== "Invalid date") {
+            return '<td>' + data +'</td>';
           }else{
             return '<td></td>';
           }

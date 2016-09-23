@@ -133,7 +133,7 @@ module.exports = {
       const { id } = req.params;
       const scents = await Scent.findAllWithRelationFormatForApp()
       let recipe = await Recipe.findOne({
-        where:{id},
+        where: { $or: [{ id }, {hashId: id}] },
         include: User
       });
 
@@ -199,7 +199,6 @@ module.exports = {
 
       const { recipient, phone, address, paymentMethod } = req.body;
       const { email, note, perfumeName, description, message, invoiceNo } = req.body;
-
       let recipeOrder = await RecipeOrder.create({
         UserId: user.id,
         RecipeId: id,
