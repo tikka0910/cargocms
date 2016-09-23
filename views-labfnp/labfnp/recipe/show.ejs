@@ -80,7 +80,7 @@
 
         <h2 class="pull-left">
           <i class="fa fa-info-circle" aria-hidden="true"></i>配方內容</h2>
-        <a href="/recipe/edit/<%= recipe.hashId %>?from=<%= recipe.createdBy%>"
+        <a href="/recipe/edit/<%= recipe.hashId  || recipe.id %>?from=<%= recipe.createdBy%>"
           class="btn-u btn-u-dark pull-right <%= editable?'':'hidden' %>">編輯</a>
         <a onclick='history.back()' class="btn-u btn-u-dark pull-right">返回</a>
 
@@ -97,7 +97,7 @@
         <div class="projects">
 
           <div class="pull-right">
-            <a href="/recipe/feedback/<%= recipe.hashId %>" class="btn-u btn-u-orange">
+            <a href="/recipe/feedback/<%= recipe.hashId  || recipe.id %>" class="btn-u btn-u-orange">
               <i class="fa fa-comment-o" aria-hidden="true"></i>
               感覺回饋
             </a>
@@ -105,7 +105,7 @@
               <i class="fa <%= recipe.currentUserLike ? 'fa-heart': 'fa-heart-o' %>" aria-hidden="true"></i>
               收藏
             </button>
-            <a href="/recipe/order/<%= recipe.hashId %>" id="orderButton" class="btn-u btn-u-blue" data-id="<%= recipe.hashId %>">
+            <a href="/recipe/order/<%= recipe.hashId  || recipe.id %>" id="orderButton" class="btn-u btn-u-blue" data-id="<%= recipe.hashId  || recipe.id %>">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
               訂購
             </a>

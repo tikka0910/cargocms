@@ -155,7 +155,7 @@
 			<div class="grid-boxes" >
         <% recipes.forEach(function(recipe, index) { %>
 					<div class="grid-boxes-in col-xs-12 col-sm-6 col-md-4">
-						<a href="/recipe/<%= recipe.hashId %>" id="recipeImageContainer" class="easy-block-v1">
+						<a href="/recipe/<%= recipe.hashId || recipe.id %>" id="recipeImageContainer" class="easy-block-v1">
               <% if (recipe.visibility == 'PROTECTED') { %>
                 <div class="easy-block-v1-badge rgba-red"><%= recipe.visibilityDesc %></div>
               <% } %>
@@ -203,7 +203,7 @@
 	<!--=== End Content Part ===-->
   <script id="recipeTmpl" type="text/x-jquery-tmpl">
     <div class="grid-boxes-in col-xs-12 col-sm-6 col-md-4">
-      <a href="/recipe/${recipe.hashId}" id="recipeImageContainer" class="easy-block-v1">
+      <a href="/recipe/${recipe.hashId || recipe.id}" id="recipeImageContainer" class="easy-block-v1">
         {{if recipe.visibility == 'PROTECTED'}}
           <div class="easy-block-v1-badge rgba-red">${recipe.visibilityDesc}</div>
         {{/if}}

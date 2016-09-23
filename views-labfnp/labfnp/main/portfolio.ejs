@@ -144,12 +144,12 @@
 		    			<div class="timeline-badge primary"><i class="glyphicon glyphicon-record<%= i%2?' invert':'' %>"></i></div>
 		    			<div class="timeline-panel">
 		    				<div class="timeline-heading">
-      						<a href="/recipe/<%= recipe.hashId %>">
+      						<a href="/recipe/<%= recipe.hashId  || recipe.id %>">
     				        <img class="img-responsive" src="<%= recipe.coverPhoto %>" alt=""/>
                   </a>
                 </div>
 		    				<div class="timeline-body text-justify">
-		    					<h2><a href="/recipe/<%= recipe.hashId %>"><%= recipe.perfumeName %></a></h2>
+		    					<h2><a href="/recipe/<%= recipe.hashId  || recipe.id %>"><%= recipe.perfumeName %></a></h2>
 		    					<% if (recipe.description) { %>
 		    						<p><%= recipe.description %></p>
 	    						<% } %>
