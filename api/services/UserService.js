@@ -125,11 +125,13 @@ module.exports = {
         include: Passport,
       });
       if (updatedUser) {
-        if (user.password === user.passwordConfirm) {
-          const passport = await Passport.findById(updatedUser.Passports[0].id);
-          // const isOldPassword = await passport.validatePassword(user.password, passport);
-          const isOldPassword = user.password === passport.password;
-          if (!isOldPassword) {
+        const checkPwdNotEmpty = user.password !== '';
+        if (checkPwdNotEmpty) {
+          
+          const checkPwdAreEqual = user.password === user.passwordConfirm;
+          if (checkPwdAreEqual) {
+
+            const passport = await Passport.findById(updatedUser.Passports[0].id);
             passport.password = user.password;
             await passport.save();
           }
@@ -144,7 +146,7 @@ module.exports = {
         updatedUser.address = user.address;
         updatedUser.address2 = user.address2;
 
-        if( user.birthday !== "" ){
+        if (user.birthday !== '') {
           updatedUser.birthday = user.birthday;
         }
 

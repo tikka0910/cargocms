@@ -40,9 +40,8 @@ module.exports = {
       sails.log.info('update user controller data=>', data);
       const { password, passwordConfirm } = data;
       const checkPwdEqual = password === passwordConfirm;
-      const checkPwdEmpty = passwordConfirm === '';
 
-      if (checkPwdEqual && !checkPwdEmpty) {
+      if (checkPwdEqual) {
         const user = await UserService.updateByUser({
           id: id,
           ...data,
