@@ -58,7 +58,5 @@ module.exports = {
     db: 0,
     pass: "",
     prefix: 'sess:',
-  },
-
-
+  }
 };
