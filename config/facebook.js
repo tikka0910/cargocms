@@ -10,4 +10,5 @@ module.exports.facebook = {
    * http://findmyfbid.com/
    */
   pageId: '',
+  appId: ''
 };

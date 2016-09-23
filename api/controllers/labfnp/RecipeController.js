@@ -12,8 +12,7 @@ module.exports = {
         return res.redirect('/login');
       }
 
-      scents = await Scent.findAllWithRelationFormatForApp()
-      totalDrops = 0;
+      scents = await Scent.findAllWithRelationFormatForApp();
       recipe = Recipe.build().toJSON();
       recipe.message = "";
       recipe.description = "";
@@ -32,7 +31,7 @@ module.exports = {
       }
 
       if (from == 'scent') {
-        return res.view({ user, recipe, scents, totalDrops });
+        return res.view({ user, recipe, scents });
       }
 
       if (from == 'feeling') {
@@ -43,7 +42,7 @@ module.exports = {
           feelingArray.push(feeling.title);
         }
 
-        return res.view({ user, recipe, scents, feelings: feelingArray, totalDrops });
+        return res.view({ user, recipe, scents, feelings: feelingArray });
       }
 
     }
@@ -56,11 +55,30 @@ module.exports = {
     const { id } = req.params;
     try {
       const currentUser = AuthService.getSessionUser(req);
-      // if (!currentUser) return res.redirect('/login');
+      const { recipe, editable, social, recipeFeedback} = await RecipeService.loadRecipe(id, currentUser);
+      return res.view({ recipe, editable, social, recipeFeedback});
+    } catch (e) {
+      if (e.type === 'notFound') return res.notFound();
+      return res.serverError(e);
+    }
+  },
 
-      const { recipe, editable, social } = await RecipeService.loadRecipe(id, currentUser);
+  feedback: async function(req, res) {
+    const { id } = req.params;
+    try {
+      const currentUser = AuthService.getSessionUser(req);
+      const { recipe, editable, social, recipeFeedback} = await RecipeService.loadRecipe(id, currentUser);
 
-      return res.view({ recipe, editable, social });
+      let feelings = await Feeling.findRamdomFeelings();
+      let feelingArray = [];
+      for (const feeling of feelings) {
+        feelingArray.push(feeling.title);
+      }
+
+      recipeFeedback.invoiceNo = recipeFeedback.invoiceNo ? recipeFeedback.invoiceNo : '';
+      recipeFeedback.tradeNo = recipeFeedback.tradeNo ? recipeFeedback.tradeNo : '';
+
+      return res.view({ recipe, editable, social, recipeFeedback,feelings:feelingArray , user: currentUser});
     } catch (e) {
       if (e.type === 'notFound') return res.notFound();
       return res.serverError(e);

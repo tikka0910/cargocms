@@ -8,6 +8,7 @@
 const url = require('url');
 module.exports = {
   login: function(req, res) {
+    if(req.session.authenticated) return res.redirect('/');
     let user = {
       identifier: '',
       password: ''
@@ -38,6 +39,11 @@ module.exports = {
         email: '',
         lastName: '',
         firstName: '',
+        birthday: '',
+        phone1: '',
+        phone2: '',
+        address: '',
+        address2: ''
       }
       let form = req.flash('form')[0];
       if(form) user = form;

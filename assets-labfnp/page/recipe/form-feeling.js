@@ -1,26 +1,30 @@
 $(document).ready(function () {
+
 	var showOption = function (options, prefix) {
-		$(options).each(function (i, o) {
-			hideOption(o);
-			var doShow = function () {
-				var feelings = $(o).data('feelings');
-				for (var k = 0; k < feelings.length; k++) {
-					var checkWrap = $(o).parent('span').length !== 0;
-					var checkFeeling = feelings[k].key === prefix;
-					checkFeeling && checkWrap && $(o).unwrap().show();
-				}
+		var doShow = function (o, prefix) {
+			var checkWrap = $(o).parent('span').length !== 0;
+			var feelings = $(o).data('feelings');
+			var checkFeelings = feelings === '[]';
+			if (checkFeelings) return false;
+
+			for (var k = 0; k < feelings.length; k++) {
+				var checkFeeling = feelings[k].key === prefix;
+				var checkAll = checkFeeling && checkWrap;
+				checkAll && $(o).unwrap().show();
 			}
-			var checkVal = $(o).val() !== '';
-			checkVal && doShow();
-		});
+		};
+
+		hideOption(options, prefix, doShow);
 	};
 
-	var hideOption = function (options, prefix) {
+	var hideOption = function (options, prefix, cb) {
 		$(options).each(function (i, o) {
-			var checkDefault = $(o).val() !== '';
+			var checkDefault = o.value !== '';
 			var checkWrap = $(o).parent('span').length === 0;
 			var checkAll = checkWrap && checkDefault;
 			checkAll && $(o).wrap('<span>').hide();
+
+			if (typeof cb !== 'undefined') checkDefault && cb(o, prefix);
 		});
 	};
 

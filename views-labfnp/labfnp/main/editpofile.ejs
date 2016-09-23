@@ -85,6 +85,69 @@
               </div>
             </section>
 
+            <section class="col">
+              <label class="input" for="birthday">
+                生日
+              </label>
+              <div class="input-group">
+                <span class="input-group-addon rounded-left">
+                  <i class="fa fa-calendar color-blue"></i>
+                </span>
+                <input type="date" id="birthday" name="birthday" class="form-control rounded-right" placeholder="請輸入 生日" value="<%= user.birthday %>">
+              </div>
+            </section>
+
+            <section class="col">
+              <div class="row">
+                <div class="col col-md-6">
+                  <label class="input" for="phone1">
+                    電話1
+                  </label>
+                  <div class="input-group">
+                    <span class="input-group-addon rounded-left">
+                      <i class="fa fa-phone color-blue"></i>
+                    </span>
+                    <input type="text" name="phone1" class="form-control rounded-right" placeholder="請輸入電話" value="<%= user.phone1 ? user.phone1: "" %>">
+                  </div>
+                </div>
+                <div class="col col-md-6">
+                  <label class="input" for="phone2">
+                    電話2
+                  </label>
+                  <div class="input-group">
+                    <span class="input-group-addon rounded-left">
+                      <i class="fa fa-phone color-blue"></i>
+                    </span>
+                    <input type="text" name="phone2" class="form-control rounded-right" placeholder="請輸入電話" value="<%= user.phone2 ? user.phone2: "" %>">
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="col">
+              <label class="input" for="address">
+                住址1
+              </label>
+              <div class="input-group">
+                <span class="input-group-addon rounded-left">
+                  <i class="fa fa-location-arrow color-blue"></i>
+                </span>
+                <input type="text" name="address" class="form-control rounded-right" placeholder="請輸入 地址" value="<%= user.address ? user.address: "" %>">
+              </div>
+            </section>
+
+            <section class="col">
+              <label class="input" for="address2">
+                住址2
+              </label>
+              <div class="input-group">
+                <span class="input-group-addon rounded-left">
+                  <i class="fa fa-location-arrow color-blue"></i>
+                </span>
+                <input type="text" name="address2" class="form-control rounded-right" placeholder="請輸入 地址" value="<%= user.address2 ? user.address2: "" %>">
+              </div>
+            </section>
+
             <% if (!user.facebookId) { %>
               <section class="col">
                 <label class="input" for="password">

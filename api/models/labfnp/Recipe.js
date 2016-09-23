@@ -198,18 +198,21 @@ module.exports = {
       type: Sequelize.VIRTUAL,
       get: function() {
         try {
-          const formulaTotalDrops = this.get('formulaTotalDrops');
-          const formulaJson = JSON.parse(this.getDataValue('formula'));
-          const dpFormulaArray = [];
-          let index = 0;
+          let dpFormulaArray = [];
 
-          for (const formula of formulaJson) {
-            const value = Math.round(( formula.drops / formulaTotalDrops * 100 ) * 10000) / 10000;
-            dpFormulaArray.push({
-              index: index,
-              value: `${formula.scent} - ${formula.drops}滴(${value}%)`
-            });
-            index += 1;
+          if (typeof this.getDataValue('formula') !== 'undefined') {
+            const formulaTotalDrops = this.get('formulaTotalDrops');
+            const formulaJson = JSON.parse(this.getDataValue('formula'));
+            let index = 0;
+
+            for (const formula of formulaJson) {
+              const value = Math.round(( formula.drops / formulaTotalDrops * 100 ) * 10000) / 10000;
+              dpFormulaArray.push({
+                index: index,
+                value: `${formula.scent} - ${formula.drops}滴(${value}%)`
+              });
+              index += 1;
+            }
           }
 
           return dpFormulaArray;
@@ -396,9 +399,6 @@ module.exports = {
 
           })
           feelings = RecipeService.sortFeelingsByValue({feelings});
-          sails.log("my-feeling")
-          sails.log(feelings);
-
 
           /*
           feelings = scents.reduce((result, scent) => result.concat(scent.feelings), []);
