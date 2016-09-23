@@ -68,6 +68,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const currentUser = AuthService.getSessionUser(req);
+      if (!currentUser) return res.redirect('/login');
       const { recipe, editable, social, recipeFeedback} = await RecipeService.loadRecipe(id, currentUser);
       console.log("=== recipeFeedback ===", recipeFeedback);
       let feelings = await Feeling.findRamdomFeelings();
