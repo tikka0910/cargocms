@@ -8,8 +8,11 @@
  * For more information on configuration, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.http.html
  */
-var express = require('express');
-var moment = require('moment');
+
+import express from 'express';
+import moment from 'moment';
+import fs from 'fs';
+import linkifyStr from 'linkifyjs/string';
 
 module.exports.http = {
 
@@ -91,9 +94,14 @@ module.exports.http = {
     // app.use(express.logger());
     // app.use(express.compress());
 
-    app.use('/assets/labfnp', express.static('assets-labfnp'));
-    app.use('/assets/unify', express.static('assets-unify'));
-    app.use('/assets/admin', express.static('assets-admin'));
+    const files = fs.readdirSync('.');
+    for (var dirName of files) {
+      let isDir = fs.statSync(dirName).isDirectory();
+      if (isDir && dirName.startsWith('assets-')) {
+        sails.log.debug('Setup static assets folder: ' + dirName + ', uri: /' + dirName.replace('-', '/'));
+        app.use('/' + dirName.replace('-', '/'), express.static(dirName));
+      }
+    }
   },
   middleware: {
     order: [
@@ -212,7 +220,10 @@ module.exports.http = {
       },
       nl2br: function(text) {
         return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
-      }
+      },
+      linkifyjs: function(text) {
+        return linkifyStr(text);
+      },
     }
   }
 };
