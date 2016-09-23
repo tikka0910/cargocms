@@ -5,9 +5,13 @@ Installation
 -------------
 
 ```
-npm -g install babel-cli
+npm -g install babel-cli bower
 
 npm install
+
+cd assets-mvp
+
+bower install
 ```
 
 Run
