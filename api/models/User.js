@@ -30,7 +30,11 @@ module.exports = {
 
         let displayName = firstName + lastName;
         const isTw = locale === 'zh_TW';
-        if (!locale || isTw) displayName = lastName + firstName;
+
+        var regExp = /^[\d|a-zA-Z]+$/;
+        var checkEng = regExp.test(displayName);
+
+        if (isTw || !checkEng) displayName = lastName + firstName;
 
         return displayName;
       }
