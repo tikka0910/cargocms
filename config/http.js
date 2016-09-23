@@ -11,6 +11,8 @@
 var express = require('express');
 var moment = require('moment');
 
+import linkifyStr from 'linkifyjs/string';
+
 module.exports.http = {
 
   /****************************************************************************
@@ -94,6 +96,7 @@ module.exports.http = {
     app.use('/assets/labfnp', express.static('assets-labfnp'));
     app.use('/assets/unify', express.static('assets-unify'));
     app.use('/assets/admin', express.static('assets-admin'));
+    app.use('/assets/library', express.static('assets-library'));
   },
   middleware: {
     order: [
@@ -212,7 +215,10 @@ module.exports.http = {
       },
       nl2br: function(text) {
         return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
-      }
+      },
+      linkifyjs: function(text) {
+        return linkifyStr(text);
+      },
     }
   }
 };
