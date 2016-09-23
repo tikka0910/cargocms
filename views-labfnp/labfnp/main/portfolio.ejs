@@ -145,7 +145,7 @@
 		    			<div class="timeline-panel">
 		    				<div class="timeline-heading">
       						<a href="/recipe/<%= recipe.id %>">
-    				        <img class="img-responsive" src="<%= recipe.coverPhoto %>" alt=""/>
+    				        <img class="img-responsive" src="<%= recipe.coverPhoto %>" alt="" onerror="this.onerror=null;this.src='/assets/labfnp/img/recipe-default-cover.<%= recipe.id % 7 %>.jpg';"/>
                   </a>
                 </div>
 		    				<div class="timeline-body text-justify">
