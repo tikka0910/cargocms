@@ -53,11 +53,11 @@ label.error{
 
         <div class="row">
           <div class="col-sm-6">
-            <label>姓氏</label>
+            <label>姓氏 <span class="color-red">*</span></label>
             <input type="text" name="firstName" value="<%= data.user.firstName %>" class="form-control margin-bottom-20">
           </div>
           <div class="col-sm-6">
-            <label>名字</label>
+            <label>名字 <span class="color-red">*</span></label>
             <input type="text" name="lastName" value="<%= data.user.lastName %>" class="form-control margin-bottom-20">
           </div>
         </div>
@@ -69,12 +69,21 @@ label.error{
           </div>
         </div>
 
+        <% var error = data.errors[0]; %>
+        <% if(error === 'email must be unique' ){ %>
+            <div class="alert alert-warning" role="alert"> 此 Email 已被註冊，請更換 Email！</div>
+        <% }%>
+
         <div class="row">
           <div class="col-sm-12">
             <label>帳號 <span class="color-red">*</span></label>
             <input type="text" name="username" value="<%= data.user.username %>" class="form-control margin-bottom-20">
           </div>
         </div>
+
+        <% if(error === 'username must be unique' ){ %>
+            <div class="alert alert-warning" role="alert">此 帳號 已有人使用</div>
+        <% }%>
 
         <div class="row">
           <div class="col-sm-6">
@@ -84,6 +93,35 @@ label.error{
           <div class="col-sm-6">
             <label>再次確認密碼 <span class="color-red">*</span></label>
             <input type="password" name="passwordAgain" class="form-control margin-bottom-20">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <label>生日 </label>
+            <input type="date" name="birthday" value="<%= data.user.birthday %>" class="form-control margin-bottom-20" placeholder="例：1970-01-01">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <label>電話1 </label>
+            <input type="text" name="phone1" value="<%= data.user.phone1 %>" class="form-control margin-bottom-20">
+          </div>
+          <div class="col-sm-6">
+            <label>電話2 </label>
+            <input type="text" name="phone2" value="<%= data.user.phone2 %>" class="form-control margin-bottom-20">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <label>住址 </label>
+            <input type="text" name="address" value="<%= data.user.address %>" class="form-control margin-bottom-20">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <label>住址2</label>
+            <input type="text" name="address2" value="<%= data.user.address2 %>" class="form-control margin-bottom-20">
           </div>
         </div>
 
@@ -132,8 +170,20 @@ label.error{
 <% LayoutUtils.addScriptBlock(`
   $(document).ready(function(){
 
+    $('input[name="birthday"]').datepicker({
+      dateFormat: 'yy-mm-dd',
+      prevText: '<i class="fa fa-angle-left"></i>',
+      nextText: '<i class="fa fa-angle-right"></i>'
+    });
+
     $("#registerForm").validate({
       rules: {
+        firstName: {
+          required: true
+        },
+        lastName: {
+          required: true
+        },
         email: {
           required: true,
           email: true
@@ -154,6 +204,12 @@ label.error{
 
       },
       messages: {
+        firstName: {
+          required: "請輸入姓氏"
+        },
+        lastName: {
+          required: "請輸入名字"
+        },
         email: {
           required: "請輸入 Email",
           email: "請輸入有效的 Email"
@@ -174,5 +230,12 @@ label.error{
       }
     });
 
+    $("#registerForm").submit( function( event ) {
+      if( $("#registerForm").valid() ){
+        swal("註冊","資料傳送中...","info");
+      }else{
+        event.preventDefault();
+      }
+    });
   });
 `); %>

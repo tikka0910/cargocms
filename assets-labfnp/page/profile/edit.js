@@ -14,6 +14,7 @@ var submitData = function (form) {
 	var checkFirstName = values['firstName'].length < 1;
 	var checkLastName = values['lastName'].length < 1;
 	var checkEmail = values['email'].length < 1;
+
 	var checkArray = [
     checkFirstName,
     checkLastName,
@@ -49,6 +50,11 @@ var submitData = function (form) {
 			passwordConfirm: values['passwordConfirm'],
 			firstName: values['firstName'],
 			lastName: values['lastName'],
+      birthday: values['birthday'],
+      phone1: values['phone1'],
+      phone2: values['phone2'],
+      address: values['address'],
+      address2: values['address2']
 		}
 	};
 	var catchDone = function (result) {
@@ -67,6 +73,12 @@ var submitData = function (form) {
 	};
 	$.ajax(ajaxConfig).done(catchDone).fail(catchFail);
 };
+
+$('#birthday').datepicker({
+  dateFormat: 'yy-mm-dd',
+  prevText: '<i class="fa fa-angle-left"></i>',
+  nextText: '<i class="fa fa-angle-right"></i>'
+});
 
 $('#userProfileForm').on('submit', function (event) {
 	event.preventDefault();

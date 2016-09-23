@@ -76,6 +76,11 @@ module.exports = {
         try {
           var that = this;
           var result = await new Promise((defer, reject) => {
+
+            if(password === that.password){
+              defer(true);
+            }
+
             bcrypt.compare(password, that.password, (err, result) => {
               if (err) defer(false);
               else defer(result);
