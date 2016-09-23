@@ -112,7 +112,7 @@ $(document).ready(function(){
     result.data.recipes.forEach(function(recipe){
       ul.append(
       '<li>' +
-        '<a href=/recipe/'+ recipe.id +'>' +
+        '<a href=/recipe/'+ recipe.hashId +'>' +
           recipe.perfumeName + ' - ' + recipe.authorName +
         '</a>' +
       '</li>'
