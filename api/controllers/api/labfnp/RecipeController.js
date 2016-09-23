@@ -188,7 +188,6 @@ module.exports = {
       if (typeof data.feeling === 'string'){
         data.feeling = [data.feeling];
       }
-      data.feeling = JSON.stringify(data.feeling);
       sails.log.info('create feedback controller=>', data);
       const feedback = await RecipeFeedback.create(data);
       res.ok({
