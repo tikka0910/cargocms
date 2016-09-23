@@ -59,6 +59,17 @@
     border: 1px solid #ccc;
     padding-top: 2px;
   }
+  .error-text {
+    color: #fc1a1a;
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: 0.2s all;
+  }
+  .error-text.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: 0.2s all;
+  }
 
 </style>
 
@@ -140,30 +151,31 @@
       </div>
 
       <div class="projects form-group" id="orderFormWrapper">
-        <form class="orderForm" id="orderForm" action="" method="post">
+        <form class="orderForm" id="orderForm" action="/" method="post">
 
           <section class="col">
-            <label for="reciverName">發票號碼<span class="required">*</span>
+            <label for="reciverName">發票號碼
             </label>
-            <input type="text" value="<%= recipeFeedback.invoiceNo %>" id="reciverName" class="form-control" name="reciverName" value="" placeholder="" required>
+            <input type="text" value="<%= recipeFeedback.invoiceNo %>" class="form-control" name="invoiceNo" value="" placeholder="選填，有交易序號請填寫" >
           </section>
 
           <section class="col">
-            <label for="phone">交易序號<span class="required">*</span>
+            <label for="phone">交易序號
             </label>
-            <input type="text" value="<%= recipeFeedback.tradeNo %>" id="phone" class="form-control" name="phone" value="" placeholder=" " required>
+            <input type="text" value="<%= recipeFeedback.tradeNo %>" class="form-control" name="tradeNo" value="" placeholder="選填，有交易序號請填寫" >
           </section>
 
           <section class="col">
             <label for="payment">感覺<span class="required">*</span>
             </label>
-            <select required multiple class="form-control chosen-select chosen-select-no-results" data-placeholder="">
+            <select multiple name="feeling" class="form-control chosen-select chosen-select-no-results" data-placeholder="請填寫您的感覺（可填寫多個）">
               <option></option>
               <% feelings.forEach(function(feeling) { %>
                 <option value="<%= feeling %>" ><%= feeling %></option>
               <% }); %>
             </select>
           </section>
+          <label class="error-text">請填寫您的感覺</label>
 
         </form>
 

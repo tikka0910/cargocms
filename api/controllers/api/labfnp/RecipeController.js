@@ -182,4 +182,22 @@ module.exports = {
     }
   },
 
+  createFeedback: async (req, res) => {
+    const data = req.body;
+    try {
+      if (typeof data.feeling === 'string'){
+        data.feeling = [data.feeling];
+      }
+      data.feeling = JSON.stringify(data.feeling);
+      sails.log.info('create feedback controller=>', data);
+      const feedback = await RecipeFeedback.create(data);
+      res.ok({
+        message: 'Create feedback success.',
+        data: feedback,
+      });
+    } catch (e) {
+      res.serverError(e);
+    }
+  },
+
 }

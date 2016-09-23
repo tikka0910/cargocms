@@ -75,6 +75,9 @@ module.exports = {
         feelingArray.push(feeling.title);
       }
 
+      recipeFeedback.invoiceNo = recipeFeedback.invoiceNo ? recipeFeedback.invoiceNo : '';
+      recipeFeedback.tradeNo = recipeFeedback.tradeNo ? recipeFeedback.tradeNo : '';
+
       return res.view({ recipe, editable, social, recipeFeedback,feelings:feelingArray , user: currentUser});
     } catch (e) {
       if (e.type === 'notFound') return res.notFound();

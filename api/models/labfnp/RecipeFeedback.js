@@ -18,9 +18,7 @@ module.exports = {
     },
     feeling: {
       type: Sequelize.STRING,
-      validate: {
-        notNull: true
-      }
+      allowNull: false,
     }
   },
   associations: function() {

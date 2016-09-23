@@ -61,6 +61,7 @@ module.exports.routes = {
 
   'get /api/labfnp/recipe/like/:id': 'api/labfnp/RecipeController.like',
   'get /api/labfnp/recipe/unlike/:id': 'api/labfnp/RecipeController.unlike',
+  'post /api/labfnp/recipe/feedback': 'api/labfnp/RecipeController.createFeedback',
 
   'get /api/labfnp/scent/simpleList': 'api/labfnp/ScentController.find',
   'get /api/labfnp/scent': 'api/labfnp/ScentController.find',
