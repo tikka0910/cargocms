@@ -61,6 +61,7 @@ module.exports.routes = {
 
   'get /api/labfnp/recipe/like/:id': 'api/labfnp/RecipeController.like',
   'get /api/labfnp/recipe/unlike/:id': 'api/labfnp/RecipeController.unlike',
+  'post /api/labfnp/recipe/feedback': 'api/labfnp/RecipeController.createFeedback',
 
   'get /api/labfnp/scent/simpleList': 'api/labfnp/ScentController.find',
   'get /api/labfnp/scent': 'api/labfnp/ScentController.find',
@@ -118,9 +119,9 @@ module.exports.routes = {
   '/admin/config.js': 'AdminController.config',
 
   '/recipe/:id':      'labfnp/RecipeController.show',
-  '/recipe/preview/:id': 'labfnp/RecipeController.preview',
+  // '/recipe/preview/:id': 'labfnp/RecipeController.preview',
   '/recipe/order/:id': 'labfnp/RecipeController.order',
-  // '/recipe/feedback/:id': 'labfnp/RecipeController.feedback',
+  '/recipe/feedback/:id': 'labfnp/RecipeController.feedback',
   '/recipe/edit/:id': 'labfnp/RecipeController.edit',
   '/recipe/allpay/:id':  'labfnp/RecipeController.allpay',
   '/creator':         'labfnp/RecipeController.create',

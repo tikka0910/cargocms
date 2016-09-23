@@ -87,8 +87,8 @@ module.exports.bootstrap = async (cb) => {
       defaults: {
         username: 'admin',
         email: 'admin@example.com',
-        firstName: '管',
-        lastName: '李仁'
+        firstName: '李仁',
+        lastName: '管'
       }
     }).then(function(adminUsers) {
       Passport.findOrCreate({
@@ -130,8 +130,8 @@ module.exports.bootstrap = async (cb) => {
       User.create({
         username: 'user',
         email: 'user@example.com',
-        firstName: '王',
-        lastName: '大明'
+        firstName: '大明',
+        lastName: '王'
       }).then(function(user) {
         Passport.create({
           provider: 'local',

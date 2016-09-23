@@ -157,6 +157,8 @@ function updatePieChart(){
       color: color,
     });
   });
-  drawPieChart(newData);
-  $('#total-drops').text(totalDrops);
+  if (totalDrops > 0) {
+    drawPieChart(newData);
+    $('#total-drops').text(totalDrops);
+  }
 }

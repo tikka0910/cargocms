@@ -22,8 +22,8 @@ describe('about Allpay controllers', () => {
         const user = await User.create({
           username: 'testAllpay',
           email: 'testAllpay@example.com',
-          firstName: '王',
-          lastName: '大明'
+          firstName: '大明', 
+          lastName: '王'
         })
         recipe = await Recipe.create({
           formula:[

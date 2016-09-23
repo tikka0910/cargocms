@@ -8,6 +8,7 @@
 const url = require('url');
 module.exports = {
   login: function(req, res) {
+    if(req.session.authenticated) return res.redirect('/');
     let user = {
       identifier: '',
       password: ''

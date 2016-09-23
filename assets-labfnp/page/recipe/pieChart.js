@@ -43,7 +43,7 @@ var pieParam = {
 			if (context.section === 'outer') {
 				label = label + ' - ' + context.value + '滴';
 			}
-			console.log('context=>', context);
+			// console.log('context=>', context);
 			return label;
 		},
 		"outer": {
@@ -133,7 +133,7 @@ var pieParam = {
 	}
 };
 var ajaxSuccess = function (result) {
-	console.log('result=>', result);
+	// console.log('result=>', result);
 	var formula = result.data.item.formula;
 	for (var i = 0; i < formula.length; i++) {
 		pieParam.data.content.push({
@@ -150,4 +150,7 @@ var ajaxError = function (requestObject, error, errorThrown) {
 		console.log('[error]=>', errorThrown);
 		console.log('[errorThrown]=>', error);
 	} // end ajaxError
-$.get(apiRecipe + recipeId).done(ajaxSuccess).fail(ajaxError);
+
+if (recipeId) {
+	$.get(apiRecipe + recipeId).done(ajaxSuccess).fail(ajaxError);
+}
