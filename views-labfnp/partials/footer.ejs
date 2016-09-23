@@ -110,10 +110,9 @@ $(document).ready(function(){
     console.log(result);
     var ul = $('#newRecipe');
     result.data.recipes.forEach(function(recipe){
-      var recipeId = recipe.hashId || recipe.id;
       ul.append(
       '<li>' +
-        '<a href=/recipe/'+ recipeId +'>' +
+        '<a href=/recipe/'+ recipe.hashId +'>' +
           recipe.perfumeName + ' - ' + recipe.authorName +
         '</a>' +
       '</li>'
