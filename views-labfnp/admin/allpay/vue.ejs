@@ -91,7 +91,7 @@ appMain.DataTableInitComplete = function() {
   })
 }
 appMain.customSearch = function() {
-  var searchProductionStatus = $('#productionStatus').val()
+  var searchProductionStatus = $('#productionStatus').val() || "";
   if (searchProductionStatus !== '') {
     appModel.pagingQuery.columns.push({
       data: '',
