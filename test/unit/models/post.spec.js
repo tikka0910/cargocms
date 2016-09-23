@@ -31,8 +31,8 @@ describe('about Post model operation.', function() {
         user = await User.create({
           username: 'postModelTest',
           email: 'postModelTest@gmail.com',
-          firstName: '王',
-          lastName: '大明'
+          firstName: '大明',
+          lastName: '王'
         });
         const image = await Image.create({
           filePath: 'http://www.labfnp.com/modules/core/img/update1.jpg',
@@ -124,8 +124,8 @@ describe('about Post model operation.', function() {
         user = await User.create({
           username: 'postLocationModelTest',
           email: 'postLocationModelTest@gmail.com',
-          firstName: '王',
-          lastName: '大明'
+          firstName: '大明',
+          lastName: '王'
         });
         const image = await Image.create({
           filePath: 'http://www.labfnp.com/modules/core/img/update1.jpg',
