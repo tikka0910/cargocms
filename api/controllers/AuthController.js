@@ -31,6 +31,7 @@ module.exports = {
     }
   },
   register: async (req, res) => {
+    if(req.session.authenticated) return res.redirect('/');
     try {
       let user = {
         username: '',
@@ -110,7 +111,7 @@ module.exports = {
         const userAgent = req.headers['user-agent'];
         user.loginSuccess({ userAgent });
 
-        return res.redirect(req.query.url || sails.config.urls.afterSignIn);
+        return res.redirect(req.body.url || sails.config.urls.afterSignIn);
       });
     });
   },

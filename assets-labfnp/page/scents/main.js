@@ -235,6 +235,19 @@ $(document).ready(function () {
 		var selected = document.getElementsByName("formulaScents[" + idx + "]")[0].value;
 		$(this).val(selected);
 
+		for (var id=0; id<5; id++) {
+			if (id !== idx && selected !== '') {
+				var otherSelectedScent =
+				document.getElementsByName("formulaScents[" + id + "]")[0].value;
+
+				if (selected == otherSelectedScent) {
+					swal('注意', '香味分子 ‘' + selected + '’ 已經被選過了，請選擇其他香味分子！');
+					$(this).val('');
+					return false;
+				}
+			}
+		}
+
 		// console.log("idx", idx);
 		// var selectedScent = $('option:selected', this);
 		var selectedScent = $('.scents-dropdown[data-index=' + idx + '] option:selected');
@@ -300,18 +313,42 @@ $(document).ready(function () {
 	$('#recipeDeleteButton').on('click', function (event) {
 		event.preventDefault();
 		var id = $(this).data('id');
-		if (confirm("確定刪除此配方？")) {
-			$.ajax({
-				url: '/api/labfnp/recipe/' + id,
-				method: "delete", //create
-				dataType: 'json',
-				cache: false
-			}).done(function (result) {
-				// console.log(result);
-				alert(result.message);
-				location.href = '/me/' + result.data.userId;
-			});
-		}
+
+		swal({
+			title: '確認',
+			text: '確定刪除此配方？',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: "#e6caa8",
+			confirmButtonText: "刪除",
+			cancelButtonText: "取消",
+			closeOnConfirm: true,
+			closeOnCancel: true,
+		},function(isConform){
+			if(isConform){
+				$.ajax({
+					url: '/api/labfnp/recipe/' + id,
+					method: "delete", //create
+					dataType: 'json',
+					cache: false
+				}).done(function (result) {
+					// console.log(result);
+					// alert(result.message);
+					swal({
+						title: '訊息',
+						text: '刪除成功',
+						type: 'success',
+						confirmButtonColor: "#e6caa8",
+						confirmButtonText: "回創作列表",
+						closeOnConfirm: true,
+					},function(isConform){
+						location.href = '/me/' + result.data.userId;
+					});
+				});
+			}else{
+				swal.close();
+			}
+		});
 
 	});
 

@@ -78,8 +78,6 @@ module.exports.routes = {
   'put /api/admin/post/:id': 'api/admin/PostController.update',
   'delete /api/admin/post/:id': 'api/admin/PostController.destroy',
 
-  'post /api/allpay/paid': 'api/AllpayController.paid',
-  'post /api/allpay/paymentinfo': 'api/AllpayController.paymentinfo',
 
   'get /api/admin/slogan': 'api/admin/SloganController.find',
   'get /api/admin/slogan/:id': 'api/admin/SloganController.findOne',
@@ -87,17 +85,23 @@ module.exports.routes = {
   'put /api/admin/slogan/:id': 'api/admin/SloganController.update',
   'delete /api/admin/slogan/:id': 'api/admin/SloganController.destroy',
 
-  'get /api/admin/allpay':        'api/AllpayController.find',
-  'get /api/admin/allpay/:id':    'api/AllpayController.findOne',
-  'post /api/admin/allpay':       'api/AllpayController.create',
-  'put /api/admin/allpay/:id':    'api/AllpayController.update',
-  'delete /api/admin/allpay/:id': 'api/AllpayController.destroy',
+  'get /api/admin/allpay':        'api/admin/AllpayController.find',
+  'get /api/admin/allpay/export': 'api/admin/AllpayController.export',
+  'get /api/admin/allpay/:id':    'api/admin/AllpayController.findOne',
+  'post /api/admin/allpay':       'api/admin/AllpayController.create',
+  'put /api/admin/allpay/:id':    'api/admin/AllpayController.update',
+  'delete /api/admin/allpay/:id': 'api/admin/AllpayController.destroy',
+  'post /api/allpay/paid':        'api/admin/AllpayController.paid',
+  'post /api/allpay/paymentinfo': 'api/admin/AllpayController.paymentinfo',
 
   'get /api/admin/message':        'api/admin/MessageController.find',
   'get /api/admin/message/:id':    'api/admin/MessageController.findOne',
   'post /api/admin/message':       'api/admin/MessageController.create',
   'put /api/admin/message/:id':    'api/admin/MessageController.update',
   'delete /api/admin/message/:id': 'api/admin/MessageController.destroy',
+
+  'get /api/admin/labfnp/recipe/export': 'api/admin/labfnp/RecipeController.export',
+
   // 'get /api/admin/Default': 'api/admin/DefaultController.find',
   // 'get /api/admin/Default/:id': 'api/admin/DefaultController.findOne',
   // 'post /api/admin/Default': 'api/admin/DefaultController.create',

@@ -9,10 +9,19 @@
       <th data-hide=""><i class="fa fa-fw fa-user text-muted hidden-xs" /> 創作人</th>
       <th data-hide="phone,tablet" style="">建立日期</th>
       <th class="no-search" data-hide="">公開狀態</th>
-      <th class="no-search" data-hide="">製作狀態</th>
-      <th class="no-search" data-hide="always" style="width: 30%;"><i class="fa fa-fw fa-comment text-muted hidden-xs" /> 香水描述</th>
-      <th class="no-search" data-hide="always" style="width: 30%;"><i class="fa fa-fw fa-comment text-muted hidden-xs" /> 額外資訊</th>
+      <th class="no-search" data-hide="always" style="width: 30%;">
+				<i class="fa fa-fw fa-comment text-muted hidden-xs" /> 香水描述
+			</th>
+      <th class="no-search" data-hide="always" style="width: 30%;">
+				<i class="fa fa-fw fa-comment text-muted hidden-xs" /> 額外資訊
+			</th>
 			<th class="no-sort no-search" data-hide="phone,tablet"></th>
+
+			<template v-for="n in 6">
+				<th class="no-sort" data-hide="always">
+					<i class="fa-fw fa fa-pie-chart fa-comment text-muted" /> 香味分子{{n+1}}
+				</th>
+			</template>
 		</tr>
 	</thead>
 	<!-- client only -->
@@ -23,7 +32,6 @@
       <td>{{ item.authorName }}</td>
       <td>{{ item.createdAt }}</td>
       <td>{{ item.visibilityDesc }}</td>
-      <td>{{ item.productionStatusDesc }}</td>
       <td>{{ item.description }}</td>
       <td>{{ item.message }}</td>
 			<td align="center" style="cursor: pointer;">
@@ -36,6 +44,11 @@
 					</a>
 				</div>
 			</td>
+
+      <template v-for="n in 6">
+        <td>{{ item.displayFormula[0].value }}</td>
+      </template>
+
 		</tr>
 	</tbody>
  </table>
@@ -51,10 +64,15 @@
 			{ "data": "authorName" },
 			{ "data": "createdAt" },
       { "data": "visibilityDesc" },
-      { "data": "productionStatusDesc"},
       { "data": "description" },
       { "data": "message" },
-			{ "data": null }
+			{ "data": null },
+			{ "data": null },
+			{ "data": null },
+			{ "data": null },
+			{ "data": null },
+			{ "data": null },
+			{ "data": null },
 		]
 
 		// server only
@@ -68,7 +86,7 @@
         "searchable": false
       },
 			{
-				"targets"  : 8,
+				"targets"  : 7,
 				"orderable": false,
 				"searchable": false,
 				"render": function ( data, type, row ) {
@@ -84,6 +102,54 @@
 					return colBody;
 				}
 			},
+			{
+				"targets"  : 8, "orderable": false, "searchable": false,
+				"render": function ( data, type, row ) {
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
+					var colBody = typeof json[0] === 'undefined' ? '' : json[0].value;
+					return colBody;
+				}
+			},
+			{
+				"targets"  : 9, "orderable": false, "searchable": false,
+				"render": function ( data, type, row ) {
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
+					var colBody = typeof json[1] === 'undefined' ? '' : json[1].value;
+					return colBody;
+				}
+			},
+			{
+				"targets"  : 10, "orderable": false, "searchable": false,
+				"render": function ( data, type, row ) {
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
+					var colBody = typeof json[2] === 'undefined' ? '' : json[2].value;
+					return colBody;
+				}
+			},
+			{
+				"targets"  : 11, "orderable": false, "searchable": false,
+				"render": function ( data, type, row ) {
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
+					var colBody = typeof json[3] === 'undefined' ? '' : json[3].value;
+					return colBody;
+				}
+			},
+			{
+				"targets"  : 12, "orderable": false, "searchable": false,
+				"render": function ( data, type, row ) {
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
+					var colBody = typeof json[4] === 'undefined' ? '' : json[4].value;
+					return colBody;
+				}
+			},
+			{
+				"targets"  : 13, "orderable": false, "searchable": false,
+				"render": function ( data, type, row ) {
+					var json = typeof data.displayFormula === 'undefined' ? '' : data.displayFormula;
+					var colBody = typeof json[5] === 'undefined' ? '' : json[5].value;
+					return colBody;
+				}
+			}
 		]
 		var serverSidePaging = <%= (data.serverSidePaging != null)?data.serverSidePaging:false %>;
 		<%- include vue.ejs %>

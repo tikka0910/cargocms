@@ -180,34 +180,6 @@ module.exports = {
       if (!user) return res.redirect('/login');
 
       const { recipient, phone, address, paymentMethod } = req.body;
-      const verifyInputs = (() => {
-        let verifyInputExists = 0;
-        const hasRecipient = typeof recipient === 'string';
-        const hasPhone = typeof phone === 'string';
-        const hasAddress = typeof address === 'string';
-        const hasPaymentMethod = typeof paymentMethod === 'string';
-
-        const checkArray = [ hasRecipient, hasPhone, hasAddress, hasPaymentMethod ];
-        for (var result of checkArray) {
-          if (result) verifyInputExists += 1;
-        }
-        verifyInputExists = verifyInputExists === checkArray.length;
-        if (!verifyInputExists) return res.forbidden('訂單資料缺失或不正確！');
-
-        let verifyPaymentMethodValid = 0;
-        const validPaymentMethods = [ 'ATM', 'Credit', 'gotoShop' ];
-        for (var method of validPaymentMethods) {
-          if (paymentMethod === method) verifyPaymentMethodValid += 1;
-        }
-        verifyPaymentMethodValid = verifyPaymentMethodValid > 0;;
-        if (!verifyPaymentMethodValid) return res.forbidden('付款方式錯誤！');
-
-        if (phone.indexOf(0) !== 0) return res.forbidden('收件人電話格式錯誤！');
-
-        return true;
-      })();
-      if (!verifyInputs) return res.forbidden('訂單資料錯誤！');
-
       const { email, note, perfumeName, description, message, invoiceNo } = req.body;
 
       let recipeOrder = await RecipeOrder.create({
@@ -277,7 +249,10 @@ module.exports = {
         });
       }
     } catch (e) {
-      res.serverError(e);
+      if (e.type === 'flash') {
+        req.flash('error', e.toString());
+        res.redirect('/recipe/order/' + req.body.id);
+      } else res.serverError(e);
     }
   }
 }

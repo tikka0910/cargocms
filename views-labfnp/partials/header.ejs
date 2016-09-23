@@ -40,6 +40,9 @@
         <li class="<%= (req.path=='/blog')?'active':'' %>">
           <a href="/blog">網誌</a>
         </li>
+        <li class="base active">
+          <a>1</a>
+        </li>
         <!--
         <li class="<%= (req.path=='/shop')?'active':'' %>">
           <a href="/shop">活動報名</a>
@@ -73,7 +76,7 @@
       showCancelButton: true,
       confirmButtonColor: "#e6caa8",
       confirmButtonText: "登出",
-      cancelButtonText: "我要回去",
+      cancelButtonText: "取消",
       closeOnConfirm: true,
       closeOnCancel: true,
     },function(isConform){

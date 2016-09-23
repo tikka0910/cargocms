@@ -110,11 +110,6 @@ module.exports = {
       defaultValue: "scent"
     },
 
-    totalDrops: {
-      type: Sequelize.INTEGER,
-      defaultValue: 0
-    },
-
     coverPhoto: {
       type: Sequelize.STRING,
       defaultValue: '',
@@ -150,47 +145,6 @@ module.exports = {
             break;
           default:
             desc = '公開';
-        }
-        return desc;
-      }
-    },
-
-    productionStatus: {
-      type: Sequelize.ENUM("NEW", "RECEIVED", "REQUESTED", "SUBMITTED", "PAID", "PROCESSING", "CANCELLED", "SHIPPED", "DELIVERED", "COMPLETED"),
-      defaultValue: 'NEW',
-    },
-
-    productionStatusDesc: {
-      type: Sequelize.VIRTUAL,
-      get: function() {
-        let desc = '';
-        switch (this.productionStatus) {
-          case 'NEW':
-            desc = 'NEW';
-            break;
-          case 'SUBMITTED':
-            desc = '下訂單';
-            break;
-          case 'PAID':
-            desc = '已付款';
-            break;
-          case 'PROCESSING':
-            desc = '製作中';
-            break;
-          case 'CANCELLED':
-            desc = '取消';
-            break;
-          case 'SHIPPED':
-            desc = '已寄出';
-            break;
-          case 'DELIVERED':
-            desc = '已交付';
-            break;
-          case 'COMPLETED':
-            desc = '完成';
-            break;
-          default:
-            desc = 'NEW';
         }
         return desc;
       }
@@ -234,6 +188,31 @@ module.exports = {
       get: function() {
         try {
           return moment(this.getDataValue('updatedAt'), moment.ISO_8601);
+        } catch (e) {
+          sails.log.error(e);
+        }
+      }
+    },
+
+    displayFormula: {
+      type: Sequelize.VIRTUAL,
+      get: function() {
+        try {
+          const formulaTotalDrops = this.get('formulaTotalDrops');
+          const formulaJson = JSON.parse(this.getDataValue('formula'));
+          const dpFormulaArray = [];
+          let index = 0;
+
+          for (const formula of formulaJson) {
+            const value = Math.round(( formula.drops / formulaTotalDrops * 100 ) * 10000) / 10000;
+            dpFormulaArray.push({
+              index: index,
+              value: `${formula.scent} - ${formula.drops}滴(${value}%)`
+            });
+            index += 1;
+          }
+
+          return dpFormulaArray;
         } catch (e) {
           sails.log.error(e);
         }
@@ -304,6 +283,7 @@ module.exports = {
           return {
             ...whereParam,
             ...paging,
+            order: [['createdAt', 'DESC']],
             include: [{
               model: UserLikeRecipe,
               required: false
