@@ -93,7 +93,7 @@
                 <span class="input-group-addon rounded-left">
                   <i class="fa fa-calendar color-blue"></i>
                 </span>
-                <input type="date" id="birthday" name="birthday" class="form-control rounded-right" placeholder="請輸入 生日" value="<%= user.birthday %>">
+                <input type="text" id="birthday" name="birthday" class="form-control rounded-right" placeholder="請輸入生日" value="<%= user.birthday %>">
               </div>
             </section>
 
@@ -101,7 +101,7 @@
               <div class="row">
                 <div class="col col-md-6">
                   <label class="input" for="phone1">
-                    電話1
+                    手機
                   </label>
                   <div class="input-group">
                     <span class="input-group-addon rounded-left">
@@ -112,7 +112,7 @@
                 </div>
                 <div class="col col-md-6">
                   <label class="input" for="phone2">
-                    電話2
+                    市話
                   </label>
                   <div class="input-group">
                     <span class="input-group-addon rounded-left">
@@ -126,17 +126,17 @@
 
             <section class="col">
               <label class="input" for="address">
-                住址1
+                收件地址
               </label>
               <div class="input-group">
                 <span class="input-group-addon rounded-left">
                   <i class="fa fa-location-arrow color-blue"></i>
                 </span>
-                <input type="text" name="address" class="form-control rounded-right" placeholder="請輸入 地址" value="<%= user.address ? user.address: "" %>">
+                <input type="text" name="address" class="form-control rounded-right" placeholder="請輸入地址" value="<%= user.address ? user.address: "" %>">
               </div>
             </section>
 
-            <section class="col">
+            <!-- <section class="col">
               <label class="input" for="address2">
                 住址2
               </label>
@@ -144,9 +144,9 @@
                 <span class="input-group-addon rounded-left">
                   <i class="fa fa-location-arrow color-blue"></i>
                 </span>
-                <input type="text" name="address2" class="form-control rounded-right" placeholder="請輸入 地址" value="<%= user.address2 ? user.address2: "" %>">
+                <input type="text" name="address2" class="form-control rounded-right" placeholder="請輸入地址" value="<%= user.address2 ? user.address2: "" %>">
               </div>
-            </section>
+            </section> -->
 
             <% if (!user.facebookId) { %>
               <section class="col">
@@ -157,7 +157,7 @@
                   <span class="input-group-addon rounded-left">
                     <i class="icon-lock color-blue"></i>
                   </span>
-                  <input type="password" name="password" class="form-control rounded-right" value="<%= user.Passports[0].password %>" placeholder="輸入密碼">
+                  <input type="password" name="password" class="form-control rounded-right" placeholder="輸入密碼">
                 </div>
               </section>
 
@@ -169,7 +169,7 @@
                   <span class="input-group-addon rounded-left">
                     <i class="icon-lock color-blue"></i>
                   </span>
-                  <input type="password" name="passwordConfirm" class="form-control rounded-right" value="<%= user.Passports[0].password %>" placeholder="請再輸入一次密碼">
+                  <input type="password" name="passwordConfirm" class="form-control rounded-right" placeholder="請再輸入一次密碼">
                 </div>
               </section>
               <span class="">*如不打算變更密碼，請不要修改密碼欄位即可。</span>

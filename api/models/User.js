@@ -54,7 +54,7 @@ module.exports = {
         const firstName = this.getDataValue('firstName');
         const lastName = this.getDataValue('lastName');
 
-        let displayName = firstName + lastName;
+        let displayName = firstName + ' ' + lastName;
         const isTw = locale === 'zh_TW';
 
         var regExp = /^[\d|a-zA-Z]+$/;
@@ -62,10 +62,10 @@ module.exports = {
 
         if (isTw || !checkEng) displayName = lastName + firstName;
 
-        if(displayName === ""){
+        if (displayName === "") {
           if (this.getDataValue('username') === ""){
             displayName = this.getDataValue('email');
-          }else{
+          } else {
             displayName = this.getDataValue('username');
           }
         }
