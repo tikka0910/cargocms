@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     dev: {
       options: {
         layout: "byComponent",
-        targetDir: './assets/bower',
+        targetDir: './assets-tcmadr/bower',
         install: true,
         cleanTargetDir: true
       }
@@ -11,7 +11,7 @@ module.exports = function(grunt) {
     prod: {
       options: {
         layout: "byComponent",
-        targetDir: './assets/bower',
+        targetDir: './assets-tcmadr/bower',
         install: true,
         cleanTargetDir: true,
         cleanBowerDir: true
