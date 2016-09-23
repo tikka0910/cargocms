@@ -74,6 +74,17 @@ var submitData = function (form) {
 	$.ajax(ajaxConfig).done(catchDone).fail(catchFail);
 };
 
+$('input[name="updatePwd"]').change(function(event) {
+
+	if (this.checked) {
+		$('.password').removeAttr('disabled');
+	} else {
+		$('.password').attr('disabled', 'disabled')
+		$('.password').each(function(index, el) { el.value = ''; });
+	}
+
+});
+
 $('#birthday').datepicker({
   dateFormat: 'yy-mm-dd',
   prevText: '<i class="fa fa-angle-left"></i>',

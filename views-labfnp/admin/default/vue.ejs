@@ -303,7 +303,9 @@ var defaultVueMathod = {
 			defaultTableConfig.columnDefs = columnDefs;
 			defaultTableConfig.ajax = ajax;
 		}
-
+		if (appModel.data.option.defaultSort) {
+			defaultTableConfig.order = appModel.data.option.defaultSort
+		}
 		if (appMain.DataTableInitComplete) {
 			defaultTableConfig.initComplete = appMain.DataTableInitComplete
 		}

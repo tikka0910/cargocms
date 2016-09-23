@@ -62,8 +62,8 @@ module.exports = {
 
         if (isTw || !checkEng) displayName = lastName + firstName;
 
-        if (displayName === "") {
-          if (this.getDataValue('username') === ""){
+        if (displayName === '') {
+          if (this.getDataValue('username') === ''){
             displayName = this.getDataValue('email');
           } else {
             displayName = this.getDataValue('username');

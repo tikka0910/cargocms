@@ -8,7 +8,7 @@
 			<th width="15%" data-class="expand"><i class="fa fa-fw text-muted hidden-sm hidden-xs"/> 交易編號 </th>
       <th data-hide="always">廠商交易編號</th>
       <th data-hide="always">交易訊息</th>
-      <th width="15%" class="no-sort">付款時間</th>
+      <th width="15%">付款時間</th>
       <th width="10%" class="no-sort" data-hide="phone,tablet">付款方式</th>
       <th width="10%" class="no-sort" data-hide="">發票號碼</th>
       <th width="8%" >付款金額</th>
@@ -39,7 +39,7 @@
       <th data-hide="always">Email</th>
       <th data-hide="always">電話</th>
       <th data-hide="always">住址</th>
-      <th data-hide="always">訂單建立時間</th>
+      <th width="15%" data-hide="phone,tablet">訂單建立時間</th>
       <th width="10%" data-hide="phone,tablet"></th>
 
 		</tr>
@@ -101,7 +101,7 @@
 			{ "data": "TradeNo"}, //TradeNo
 			{ "data": "MerchantTradeNo" },
       { "data": "RtnMsg" },
-      { "data": null }, //PaymentDate
+      { "data": "PaymentDate" }, //PaymentDate
       { "data": "PaymentTypeDesc" },
       { "data": "invoiceNo"},
       { "data": "TradeAmt" },
@@ -148,8 +148,8 @@
         "targets": 4,
 				"searchable": false,
         "render": function(data, type, row) {
-          if (data && data.PaymentDate !== "Invalid date") {
-            return '<td>' + data.PaymentDate +'</td>';
+          if (data !== "Invalid date") {
+            return '<td>' + data +'</td>';
           }else{
             return '<td></td>';
           }
