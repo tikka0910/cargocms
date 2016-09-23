@@ -94,15 +94,14 @@ module.exports.http = {
     // app.use(express.logger());
     // app.use(express.compress());
 
-    fs.readdir('.', function(err, files) {
-      for (var dirName of files) {
-        let isDir = fs.statSync(dirName).isDirectory();
-        if (isDir && dirName.startsWith('assets-')) {
-          sails.log.debug('Setup static assets folder: ' + dirName + ', uri: /' + dirName.replace('-', '/'));
-          app.use('/' + dirName.replace('-', '/'), express.static(dirName));
-        }
+    const files = fs.readdirSync('.');
+    for (var dirName of files) {
+      let isDir = fs.statSync(dirName).isDirectory();
+      if (isDir && dirName.startsWith('assets-')) {
+        sails.log.debug('Setup static assets folder: ' + dirName + ', uri: /' + dirName.replace('-', '/'));
+        app.use('/' + dirName.replace('-', '/'), express.static(dirName));
       }
-    });
+    }
   },
   middleware: {
     order: [
