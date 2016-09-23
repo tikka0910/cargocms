@@ -381,13 +381,11 @@ $(document).ready(function () {
 		var formIsValid = true;
 
 		if (authorName === '') {
-			console.log('in');
 			swal('提示','請填寫創作者姓名', 'warning');
 			formIsValid = false;
 		}
 
 		if (perfumeName === '') {
-			console.log('in');
 			swal('提示','請填寫香水品名', 'warning');
 			formIsValid = false;
 		}
