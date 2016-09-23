@@ -5,6 +5,7 @@ module.exports = {
   attributes: {
     hashId: {
       type: Sequelize.STRING(32),
+      unique: true,
     },
     //TODO authorAvatar
     formula: {
