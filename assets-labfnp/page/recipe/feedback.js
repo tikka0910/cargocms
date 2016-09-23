@@ -1,43 +1,51 @@
-$.fn.serializeObject = function() {
-      var o = {};
-      var a = this.serializeArray();
-      $.each(a, function() {
-          if (o[this.name] !== undefined) {
-              if (!o[this.name].push) {
-                  o[this.name] = [o[this.name]];
-              }
-              o[this.name].push(this.value || '');
-          } else {
-              o[this.name] = this.value || '';
-          }
-      });
-      return o;
-    };
+$.fn.serializeObject = function () {
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function () {
+		if (o[this.name] !== undefined) {
+			if (!o[this.name].push) {
+				o[this.name] = [o[this.name]];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
+};
 
 $(document).ready(function () {
-	$('.chosen-select').chosen({
-			allow_single_deselect: false,
-			no_results_text: '按 Enter 新增感覺',
-		});
 
-	$('.chosen-choices .search-field input').keydown(function(event) {
-    event.stopPropagation();
+  var chosenTimeout = null;
+
+	$('.chosen-select').chosen({
+		allow_single_deselect: false,
+		no_results_text: '按 Enter 新增感覺',
+	});
+
+	$('.chosen-choices .search-field input').keydown(function (event) {
+		event.stopPropagation();
 		var feeling = $('.chosen-choices .search-field input').val().trim();
 		var IsNoResult = $('.chosen-results').has('.no-results').length > 0;
-		if(event.keyCode === 13 && feeling && IsNoResult){  //press ENTER
 
-			$('.chosen-select').append('<option value="' + feeling + '" selected >' + feeling + '</option>');
+		if (event.keyCode === 13 && feeling && IsNoResult) { //press ENTER
 
-		  setTimeout(function () {
-				$('.chosen-select').trigger("chosen:updated");
-		  }, 250);
+      var newItem = '<option value="' + feeling + '" selected >' + feeling + '</option>';
+			$('.chosen-select').append(newItem);
+
+      if (chosenTimeout === null) {
+  			chosenTimeout = setTimeout(function () {
+  				$('.chosen-select').trigger("chosen:updated");
+          chosenTimeout = null;
+  			}, 250);
+      }
 		}
 	});
 
-	$('#orderForm').submit(function(event) {
+	$('#orderForm').submit(function (event) {
 		if ($('.chosen-select').val() === null) {
 			$('.error-text').addClass('show');
-		}else {
+		} else {
 			$('.error-text').removeClass('show');
 
 			var ajaxConfig = {
