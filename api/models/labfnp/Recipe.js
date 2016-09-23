@@ -4,7 +4,7 @@ import shortid from 'shortid';
 module.exports = {
   attributes: {
     hashId: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING(32),
     },
     //TODO authorAvatar
     formula: {
