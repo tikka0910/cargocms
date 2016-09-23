@@ -199,7 +199,7 @@ module.exports = {
       get: function() {
         try {
           let dpFormulaArray = [];
-          
+
           if (typeof this.getDataValue('formula') !== 'undefined') {
             const formulaTotalDrops = this.get('formulaTotalDrops');
             const formulaJson = JSON.parse(this.getDataValue('formula'));
@@ -220,8 +220,6 @@ module.exports = {
           sails.log.error(e);
         }
       }
-<<<<<<< HEAD
-=======
     },
     invoicenum: {
       type: Sequelize.STRING
@@ -237,7 +235,6 @@ module.exports = {
     },
     sourceId: {
       type: Sequelize.STRING
->>>>>>> 6ff364b9d0166f96ff33a9916d94001e8054eb9e
     }
 
   },
