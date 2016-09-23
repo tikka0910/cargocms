@@ -144,12 +144,12 @@
 		    			<div class="timeline-badge primary"><i class="glyphicon glyphicon-record<%= i%2?' invert':'' %>"></i></div>
 		    			<div class="timeline-panel">
 		    				<div class="timeline-heading">
-      						<a href="/recipe/<%= recipe.id %>">
+									<a href="/recipe/<%= recipe.hashId %>">
     				        <img class="img-responsive" src="<%= recipe.coverPhoto %>" alt="" onerror="this.onerror=null;this.src='/assets/labfnp/img/recipe-default-cover.<%= recipe.id % 7 %>.jpg';"/>
                   </a>
                 </div>
 		    				<div class="timeline-body text-justify">
-		    					<h2><a href="/recipe/<%= recipe.id %>"><%= recipe.perfumeName %></a></h2>
+		    					<h2><a href="/recipe/<%= recipe.hashId %>"><%= recipe.perfumeName %></a></h2>
 		    					<% if (recipe.description) { %>
 		    						<p><%= recipe.description %></p>
 	    						<% } %>
