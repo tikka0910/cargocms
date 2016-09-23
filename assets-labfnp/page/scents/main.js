@@ -378,16 +378,28 @@ $(document).ready(function () {
 
 		var formula = getFormulaData(createdBy);
 		// console.log("=== formula ===", formula);
-
 		var formIsValid = true;
+
+		if (authorName === '') {
+			console.log('in');
+			swal('提示','請填寫創作者姓名', 'warning');
+			formIsValid = false;
+		}
+
+		if (perfumeName === '') {
+			console.log('in');
+			swal('提示','請填寫香水品名', 'warning');
+			formIsValid = false;
+		}
+
 		if (formula.length == 0) {
-			alert("未選定任一配方")
+			swal('提示','未選定任一配方', 'warning')
 			formIsValid = true;
 		};
 
 		formula.forEach(function (oneFormula) {
 			if (oneFormula.drops == 0) {
-				alert("選擇配方後，滴數不可為 0");
+				swal('提示','選擇配方後，滴數不可為 0', 'warning');
 				formIsValid = false;
 			}
 		});
