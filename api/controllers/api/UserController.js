@@ -40,12 +40,13 @@ module.exports = {
       sails.log.info('update user controller data=>', data);
       const { password, passwordConfirm } = data;
       const checkPwdEqual = password === passwordConfirm;
+      const checkPwdEmpty = passwordConfirm === '';
 
-      if (checkPwdEqual) {
+      if (checkPwdEqual && !checkPwdEmpty) {
         const user = await UserService.updateByUser({
           id: id,
           ...data,
-        })
+        });
         const checkLastName = user.lastName === data.lastName;
         const checkFirstName = user.firstName === data.firstName;
         const checkEmail = user.email === data.email;
