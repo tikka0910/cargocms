@@ -34,12 +34,31 @@ module.exports = {
         address,
         address2
       });
-      const user = await User.create({ username, email, firstName, lastName, locale, birthday, phone1, phone2, address, address2 });
+      const findExistUser = await User.find({
+        where: { $or: [ username, email ] }
+      });
+
+      if (findExistUser)
+        throw new Error(`user ${findExistUser.username} exist!`);
+
+      const user = await User.create({
+        username,
+        email,
+        firstName,
+        lastName,
+        locale,
+        birthday,
+        phone1,
+        phone2,
+        address,
+        address2
+      });
       await Passport.create({
         provider: 'local',
         password: Passports[0].password,
         UserId: user.id
       });
+      
       return user;
     } catch (e) {
       sails.log.error(e);
@@ -127,7 +146,7 @@ module.exports = {
       if (updatedUser) {
         const checkPwdNotEmpty = user.password !== '';
         if (checkPwdNotEmpty) {
-          
+
           const checkPwdAreEqual = user.password === user.passwordConfirm;
           if (checkPwdAreEqual) {
 
