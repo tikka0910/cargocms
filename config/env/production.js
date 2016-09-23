@@ -58,5 +58,8 @@ module.exports = {
     db: 0,
     pass: "",
     prefix: 'sess:',
+    cookie: {
+      maxAge: 2 * 60 * 60 * 1000
+    }
   }
 };
