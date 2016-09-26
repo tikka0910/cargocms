@@ -412,7 +412,7 @@ $(document).ready(function () {
     } else {
       // Mark it so that the next submit can be ignored
       $form.data('submitted', true);
-      $('.submittedInfo').removeClass('hidden');
+      $('.submittedInfo').fadeIn();
     }
 
 		$.ajax({
