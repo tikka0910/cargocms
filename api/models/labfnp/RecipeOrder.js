@@ -106,6 +106,7 @@ module.exports = {
 	associations: () => {
 		RecipeOrder.belongsTo(User);
 		RecipeOrder.belongsTo(Recipe);
+		Allpay.hasOne(RecipeOrder);
 	},
 	options: {
 		classMethods: {
