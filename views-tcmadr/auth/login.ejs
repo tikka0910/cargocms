@@ -1,125 +1,145 @@
-<!-- CSS Page Style -->
-<link rel="stylesheet" href="/assets/unify/css/pages/page_log_reg_v1.css">
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+  <title>Login &middot; MVP Ready</title>
 
-<style type="text/css">
-.login-block .social-login {
-    margin-bottom: 70px;
-    border-bottom: 1px solid #eee;
-    position: relative;
-}
-.login-block .or {
-    position: relative;
-    border: 1px solid #eee;
-    width: 70px;
-    height: 70px;
-    top: 35px;
-    left: 50%;
-    margin-left: -35px;
-    text-transform: uppercase;
-    color: #333;
-    background: #fff;
-    line-height: 70px;
-    padding: 0 24px;
-    z-index: 1;
-}
-.rounded-x {
-    border-radius: 50% !important;
-}
-.input-group label.error {
-  position: absolute;
-  bottom: -2em;
-  width: 100%;
-  left: 0;
-  color: red;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-<!--=== Content Part ===-->
-<div class="container content">
-  <div class="row">
-    <div class="login-block col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-      <form class="reg-page" method="post" action="/auth/local?url=/">
-        <!--
-        <div class="reg-header">
-          <h2>使用 Facebook 帳號登入</h2>
-        </div>
-        -->
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,300,700">
 
-        <div class="social-login">
-          <ul class="list-unstyled">
-            <li>
-              <a class="btn rounded btn-block btn-lg btn-facebook-inversed margin-bottom-20" href="/auth/facebook">
-                <i class="fa fa-facebook"></i> 直接以 FB 帳號登入
-              </a>
-            </li>
-          </ul>
-          <div class="or rounded-x">Or</div>
-        </div>
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="/assets/mvp/bower_components/fontawesome/css/font-awesome.min.css">
 
-        <div class="reg-header">
-          <h2>輸入帳號及密碼</h2>
-        </div>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/assets/mvp/bower_components/bootstrap/dist/css/bootstrap.min.css">
 
-        <div class="input-group margin-bottom-25">
-          <span class="input-group-addon"><i class="fa fa-user"></i></span>
-          <input type="text" placeholder="Username" value="<%= data.user.identifier %>" id="identifier" name="identifier" class="form-control">
-        </div>
-        <div class="input-group margin-bottom-25">
-          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-          <input type="password" placeholder="Password" value="<%= data.user.password %>" id="password" name="password" class="form-control">
-        </div>
 
-        <input id='backUrl' type="hidden" name="url" value='/'>
 
-        <div class="row">
-          <div class="col-md-6 checkbox">
-            <!--<label><input type="checkbox"> 保持登入狀態</label>-->
+  <!-- App CSS -->
+  <link rel="stylesheet" href="/assets/mvp/css/mvpready-admin.css">
 
-            <div class="margin-top-20">
-              還沒有帳號嗎？<a href="/register">註冊新帳號</a>
-            </div>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="account-bg">
+
+  <header class="navbar" role="banner">
+
+    <div class="container">
+
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <i class="fa fa-cog"></i>
+        </button>
+
+        <a href="/assets/mvp/index.html" class="navbar-brand navbar-brand-img">
+          <img src="/assets/mvp/img/logo.png" alt="MVP Ready">
+        </a>
+      </div> <!-- /.navbar-header -->
+
+      <nav class="collapse navbar-collapse" role="navigation">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="/assets/mvp/index.html"><i class="fa fa-angle-double-left"></i> &nbsp;Back to Home</a>
+          </li>
+        </ul>
+      </nav>
+
+    </div> <!-- /.container -->
+
+  </header>
+
+
+  <br class="xs-80">
+
+  <div class="account-wrapper">
+
+    <div class="account-body">
+
+      <h3>Welcome back to MVP Ready.</h3>
+
+      <h5>Please sign in to get access.</h5>
+
+      <form class="form account-form" method="POST" action="/assets/mvp/index.html">
+
+        <div class="form-group">
+          <label for="login-username" class="placeholder-hidden">Username</label>
+          <input type="text" class="form-control" id="login-username" placeholder="Username" tabindex="1">
+        </div> <!-- /.form-group -->
+
+        <div class="form-group">
+          <label for="login-password" class="placeholder-hidden">Password</label>
+          <input type="password" class="form-control" id="login-password" placeholder="Password" tabindex="2">
+        </div> <!-- /.form-group -->
+
+        <div class="form-group clearfix">
+          <div class="pull-left">
+            <label class="checkbox-inline">
+            <input type="checkbox" class="" value="" tabindex="3"> <small>Remember me</small>
+            </label>
           </div>
-          <div class="col-md-6">
-            <button id="submit-button" class="btn-u pull-right" type="submit">登入</button>
-          </div>
-        </div>
-        <% if (data.errors) { %>
-          <div class="alert alert-warning" role="alert">帳號或密碼錯誤！</div>
-        <% } %>
-        <hr>
 
-        <!--<h4>忘記密碼？</h4>
-        <p>別擔心，<a class="color-green" href="#">點擊這裡</a>重新設定密碼！</p>-->
+          <div class="pull-right">
+            <small><a href="/assets/mvp/account-forgot.html">Forgot Password?</a></small>
+          </div>
+        </div> <!-- /.form-group -->
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block btn-lg" tabindex="4">
+            Signin &nbsp; <i class="fa fa-play-circle"></i>
+          </button>
+        </div> <!-- /.form-group -->
+
       </form>
-    </div>
-  </div><!--/row-->
-</div><!--/container-->
 
-<% LayoutUtils.addScriptBlock(`
-  $(document).ready(function(){
 
-    $(".reg-page").validate({
-      rules: {
-        identifier: {
-          required: true
-        },
-        password: {
-          required: true
-        },
+    </div> <!-- /.account-body -->
 
-      },
-      messages: {
-        identifier: {
-          required: "請輸入帳號"
-        },
-        password:{
-          required: "請輸入密碼"
-        },
-      }
-    });
+    <div class="account-footer">
+      <p>
+      Don't have an account? &nbsp;
+      <a href="/assets/mvp/account-signup.html" class="">Create an Account!</a>
+      </p>
+    </div> <!-- /.account-footer -->
 
-    document.referrer && $('#backUrl').val(document.referrer);
+  </div> <!-- /.account-wrapper -->
 
-  });
-`); %>
-<!--=== End Content Part ===-->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Core JS -->
+<script src="/assets/mvp/bower_components/jquery/dist/jquery.js"></script>
+<script src="/assets/mvp/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/assets/mvp/bower_components/slimscroll/jquery.slimscroll.min.js"></script>
+
+
+
+
+<!-- App JS -->
+<script src="/assets/mvp/global/js/mvpready-core.js"></script>
+<script src="/assets/mvp/global/js/mvpready-helpers.js"></script>
+<script src="/assets/mvp/js/mvpready-admin.js"></script>
+
+
+<!-- Demo JS -->
+<script src="/assets/mvp/global/js/mvpready-account.js"></script>
+
+
+
+</body>
+</html>
