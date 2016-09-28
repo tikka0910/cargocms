@@ -1,155 +1,502 @@
-<% LayoutUtils.addMeta({ property:"og:image", content:SocialService.getShareUrl() + "/assets/tcmadr/img/logo.png" }); %>
-<% LayoutUtils.addMeta({ property:"og:image:url", content:SocialService.getShareUrl() + "/assets/tcmadr/img/logo.png"  }); %>
-<% LayoutUtils.addMeta({ property:"og:image:type", content:"image/jpeg" }); %>
-<% LayoutUtils.addMeta({ property:"og:image:width", content:"1200" }); %>
-<% LayoutUtils.addMeta({ property:"og:image:height", content:"630" }); %>
-<% LayoutUtils.addMeta({ property:"og:title", content:"CargoCMS" }); %>
-<% LayoutUtils.addMeta({ property:"og:description", content:"CargoCMS" }); %>
-<% LayoutUtils.addMeta({ property:"og:type", content:"website" }); %>
-<style>
-.interactive-slider-v2 {
-  padding: 0 0;
-  background-image: url(/assets/mvp/main/admin/img/mockup.png);
-}
+<div class="content">
 
-.interactive-slider-v2 img {
-}
+<div class="container">
 
-.interactive-slider-v2:after {
-  background: linear-gradient(to bottom, rgba(0,0,0,.5) 5%, rgba(0,0,0,0) 70%, rgba(0,0,0,0) 100%);
-}
+  <div class="page-header">
+    <h3 class="page-title">Basic Tables</h3>
 
-.purchase span {
-  font-family: 'Noto Sans TC', sans-serif;
-  line-height: 150%;
-  font-size: 22px;
-  font-weight: 300;
-}
+    <ol class="breadcrumb">
+      <li><a href="./">Dashboard</a></li>
+      <li><a href="#">Elements</a></li>
+      <li class="active">Basic Tables</li>
+    </ol>
+  </div> <!-- /.page-header -->
 
-.purchase p {
-  font-family: 'Noto Sans TC', sans-serif;
-  line-height: 150%;
-  font-size: 16px;
-  font-weight: 100;
-}
 
-.headline h2 {
-  font-size: 26px;
-  font-family: 'Noto Sans TC', sans-serif;
-  /* font-family: 'cwTeXHei', sans-serif; */
-  font-weight: 700;
-}
+  <div class="row">
+    <div class="col-md-6">
+      <div class="portlet portlet-boxed">
 
-p.lead {
-  font-family: 'Noto Sans TC', sans-serif;
-  line-height: 200%;
-  font-size: 20px;
-  font-weight: 300;
-}
+        <div class="portlet-header">
+          <h4 class="portlet-title">
+            Basic Table
+          </h4>
+        </div> <!-- /.portlet-header -->
 
-.testimonials-v3 .item > p {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 200%;
-}
+        <div class="portlet-body">
 
-.purchase .btn-u {
-  font-size: 18px;
-}
+          <p class="text-muted">
+            For basic styling—light padding and only horizontal dividers—add the base class <code>.table</code> to any <code>&lt;table&gt;</code>.
+          </p>
 
-.feature-slogan {
-  position: relative;
-  top: -100px;
-}
+          <table class="table">
 
-@media (max-width: 543px) {
-  .feature-slogan {
-    top: -65px;
-  }
-}
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
 
-.feature-slogan p {
-  font-size: 24px;
-  font-family: 'Noto Sans TC', serif;
-  font-weight: 300;
-  color: #fff;
-  text-shadow: 1px 1px 1px rgba(0,0,0,.5);
-}
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
 
-.feature-buttons {
-  position: relative;
-  top: -50px;
-}
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
 
-.feature-buttons .btn-u {
-  font-size: 16px;
-  color: #333;
-  background: rgba(255,255,255,.7);
-  margin-right: 5px;
-  margin-left: 5px;
-}
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
 
-.feature-buttons .btn-u:hover {
-  background: rgba(255,255,255,1);
-}
-</style>
+        </div> <!-- /.portlet-body -->
 
-<!-- Interactive Slider v2 -->
-<div class="interactive-slider-v2">
-  <div class="container">
-    <img src="/assets/mvp/main/admin/img/logo.png" alt="LFP: Laboratory of Fragrance &amp; Perfume - 我們提供香味分子、不同香調與課程，協助您創作專屬的個人香水" class="img-responsive animated zoomIn" />
-    <!--
+      </div> <!-- /.portlet -->
+    </div> <!-- /. col -->
 
-    <h1>Laboratory of Fragrance &amp; Perfume</h1>
-    -->
-    <div class="feature-slogan">
-      <p>CargoCMS</p>
-    </div>
+    <div class="col-md-6">
+      <div class="portlet portlet-boxed">
 
-    <div class="feature-buttons">
-      <a href="/lab" class="btn-u rounded">
-        <i class="fa fa-flask fa-fw"></i>
-        CargoCMS
-      </a>
-      <a href="https://www.facebook.com/trunkStudio" target="_blank" class="btn-u rounded hidden-xs">
-        <i class="fa fa-facebook fa-fw"></i>
-        FACEBOOK
-      </a>
-    </div>
-  </div>
-</div>
-<!-- End Interactive Slider v2 -->
+        <div class="portlet-header">
+          <h4 class="portlet-title">
+            Striped Table
+          </h4>
+        </div> <!-- /.portlet-header -->
 
-<!--=== Purchase Block ===-->
-<div class="purchase">
-	<div class="container overflow-h">
-		<div class="row">
-			<div class="col-md-9">
-				<span class="call-to-action">
-          我們認為 CargoCMS 是最獨特的風格呈現
-        </span>
-				<p class="hidden-sm hidden-xs">
-          我們製作 CargoCMS 並把關品質。
-        </p>
-			</div>
-			<div class="col-md-3 btn-buy animated bounce">
-				<a href="/login" class="btn-u btn-u-lg">
-          <i class="fa fa-eyedropper"></i>
-          登入 CargoCMS 系統
-        </a>
-			</div>
-		</div>
-	</div>
-</div><!--/row-->
-<!-- End Purchase Block -->
+        <div class="portlet-body">
+
+          <p class="text-muted">
+              Use <code>.table-striped</code> to add zebra-striping to any table row within the <code>&lt;tbody&gt;</code>.
+          </p>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+            </tbody>
+          </table>
+
+        </div> <!-- /.portlet-body -->
+
+      </div> <!-- /.portlet -->
+    </div> <!-- /. col -->
+  </div> <!-- /.row -->
 
 
 
-<% LayoutUtils.addScripts('/assets/unify/js/app.js', '/assets/unify/js/plugins/owl-carousel.js'); %>
-<% LayoutUtils.addScriptBlock(`
-jQuery(document).ready(function() {
-  App.init();
-		OwlCarousel.initOwlCarousel();
-});
-`); %>
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="portlet portlet-boxed">
+
+        <div class="portlet-header">
+          <h4 class="portlet-title">
+            Bordered Table
+          </h4>
+        </div> <!-- /.portlet-header -->
+
+        <div class="portlet-body">
+
+          <p class="text-muted">
+              Add <code>.table-bordered</code> for borders on all sides of the table and cells.
+          </p>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div> <!-- /.portlet-body -->
+
+      </div> <!-- /.portlet -->
+    </div> <!-- /. col -->
+
+    <div class="col-md-6">
+      <div class="portlet portlet-boxed">
+
+        <div class="portlet-header">
+          <h4 class="portlet-title">
+            Hover Table
+          </h4>
+        </div> <!-- /.portlet-header -->
+
+        <div class="portlet-body">
+
+          <p class="text-muted">
+              Add <code>.table-hover</code> to enable a hover state on table rows within a <code>&lt;tbody&gt;</code>.
+          </p>
+
+          <table class="table table table-hover m-0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div> <!-- /.portlet-body -->
+
+      </div> <!-- /.portlet -->
+    </div> <!-- /. col -->
+  </div> <!-- /.row -->
+
+
+
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="portlet portlet-boxed">
+
+        <div class="portlet-header">
+          <h4 class="portlet-title">
+            Table Condensed
+          </h4>
+        </div> <!-- /.portlet-header -->
+
+        <div class="portlet-body">
+
+          <p class="text-muted font-13">
+              Add <code>.table-condensed</code> to make tables more compact by cutting cell padding in half.
+          </p>
+
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">6</th>
+                <td>Ron</td>
+                <td>Johnson</td>
+                <td>@rj13</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div> <!-- /.portlet-body -->
+
+      </div> <!-- /.portlet -->
+    </div> <!-- /. col -->
+
+    <div class="col-md-6">
+      <div class="portlet portlet-boxed">
+
+        <div class="portlet-header">
+          <h4 class="portlet-title">
+            Contextual Table
+          </h4>
+        </div> <!-- /.portlet-header -->
+
+        <div class="portlet-body">
+
+          <p class="text-muted">
+              Use contextual classes to color table rows or individual cells.
+          </p>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Column heading</th>
+                <th>Column heading</th>
+                <th>Column heading</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr class="active">
+                <th scope="row">1</th>
+                <td>Column content</td>
+                <td>Column content</td>
+                <td>Column content</td>
+              </tr>
+
+              <tr class="success">
+                <th scope="row">2</th>
+                <td>Column content</td>
+                <td>Column content</td>
+                <td>Column content</td>
+              </tr>
+
+              <tr class="info">
+                <th scope="row">3</th>
+                <td>Column content</td>
+                <td>Column content</td>
+                <td>Column content</td>
+              </tr>
+
+              <tr class="warning">
+                <th scope="row">4</th>
+                <td>Column content</td>
+                <td>Column content</td>
+                <td>Column content</td>
+              </tr>
+
+              <tr class="danger">
+                <th scope="row">5</th>
+                <td>Column content</td>
+                <td>Column content</td>
+                <td>Column content</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div> <!-- /.portlet-body -->
+
+      </div> <!-- /.portlet -->
+    </div> <!-- /. col -->
+  </div> <!-- /.row -->
+
+
+  <div class="portlet portlet-boxed">
+
+    <div class="portlet-header">
+      <h4 class="portlet-title">
+        Responsive Tables
+      </h4>
+    </div> <!-- /.portlet-header -->
+
+    <div class="portlet-body">
+
+      <p class="text-muted">
+          Create responsive tables by wrapping any <code>.table</code> in <code>.table-responsive</code>
+          to make them scroll horizontally on small devices (under 768px).
+      </p>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Table heading</th>
+              <th>Table heading</th>
+              <th>Table heading</th>
+              <th>Table heading</th>
+              <th>Table heading</th>
+              <th>Table heading</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br class="xs-20">
+
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Table heading</th>
+              <th>Table heading</th>
+              <th>Table heading</th>
+              <th>Table heading</th>
+              <th>Table heading</th>
+              <th>Table heading</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+
+    </div> <!-- /.portlet-body -->
+
+  </div> <!-- /.portlet -->
+
+
+</div> <!-- /.container -->
+
+</div> <!-- .content -->
