@@ -1,4 +1,3 @@
-
 module.exports = {
   'get /api/labfnp/recipe/findForLab': 'api/labfnp/RecipeController.findForLab',
   'get /api/labfnp/recipe': 'api/labfnp/RecipeController.find',
@@ -39,4 +38,4 @@ module.exports = {
   '/me/:id?':         'labfnp/MainController.portfolio',
   '/edit/me':         'labfnp/MainController.editPofile',
   "/labfnp/:controller/:action/:id?": {}
-}
+};

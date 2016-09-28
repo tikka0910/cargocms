@@ -2,35 +2,24 @@
 /**
  * Route Mappings
  * (sails.config.routes)
- *
- * Your routes map URLs to views and controllers.
- *
- * If Sails receives a URL that doesn't match any of the routes below,
- * it will check for matching files (images, scripts, stylesheets, etc.)
- * in your assets directory.  e.g. `http://localhost:1337/images/foo.jpg`
- * might match an image file: `/assets/images/foo.jpg`
- *
- * Finally, if those don't match either, the default 404 handler is triggered.
- * See `api/responses/notFound.js` to adjust your app's 404 logic.
- *
- * Note: Sails doesn't ACTUALLY serve stuff from `assets`-- the default Gruntfile in Sails copies
- * flat files from `assets` to `.tmp/public`.  This allows you to do things like compile LESS or
- * CoffeeScript for the front-end.
- *
- * For more information on configuring custom routes, check out:
- * http://sailsjs.org/#!/documentation/concepts/Routes/RouteTargetSyntax.html
  */
+
 import fs from 'fs';
-var customeConfig = {}
-var files = fs.readdirSync('./config')
-for (var i in files) {
-  let dirName = files[i];
-  let isDir = fs.statSync('./config/' + dirName).isDirectory();
-  if (isDir) {
-    if(fs.existsSync('./config/' + dirName + '/routes.js'))
-      customeConfig = require('./' + dirName + '/routes.js');
+
+var customConfig = (function() {
+  var files = fs.readdirSync('./config')
+  for (var dirName of files) {
+    let isDir = fs.statSync('./config/' + dirName).isDirectory();
+    if (isDir) {
+      let customRouteConfigFile = './config/' + dirName + '/routes.js';
+      let hasCustomRouteConfigFile = fs.existsSync(customRouteConfigFile);
+      if (hasCustomRouteConfigFile) {
+        console.log('Custom Route Config: ' + customRouteConfigFile);
+        return require('./' + dirName + '/routes.js');
+      }
+    }
   }
-}
+})();
 
 var defaultConfig = {
 
@@ -86,16 +75,13 @@ var defaultConfig = {
   'put /api/admin/message/:id':    'api/admin/MessageController.update',
   'delete /api/admin/message/:id': 'api/admin/MessageController.destroy',
 
-
   'post /api/user/follow/:id':    'api/UserController.follow',
   'post /api/user/unfollow/:id':  'api/UserController.unfollow',
   'post /api/user/edit/:id':      'api/UserController.update',
 
-  //----- custom -----
-
+  //----- Admin -----
   '/admin':           'AdminController.index',
   '/admin/config.js': 'AdminController.config',
-
 
   //----- AuthController -----
   'get /login': 'AuthController.login',
@@ -108,32 +94,17 @@ var defaultConfig = {
   'get /auth/:provider': 'AuthController.provider',
   'get /auth/:provider/callback': 'AuthController.callback',
   'get /auth/:provider/:action': 'AuthController.callback',
+
   //----- WallController -----
   'get /wall/:id': 'WallController.show',
-  //----- view -----
-
-
-
-
-
-
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  * If a request to a URL doesn't match any of the custom routes above, it   *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
-
 };
+
 module.exports.routes = {
   '/': {
     view: 'index'
   },
-  ...customeConfig,
+  ...customConfig,
   ...defaultConfig,
   "/admin/:controller/:action/:id?": {},
   "/:controller/:action/:id?": {}
-}
+};
