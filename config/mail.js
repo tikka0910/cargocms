@@ -1,14 +1,5 @@
-import fs from 'fs';
-var customeConfig = {}
-var files = fs.readdirSync('./config')
-for (var i in files) {
-  let dirName = files[i];
-  let isDir = fs.statSync('./config/' + dirName).isDirectory();
-  if (isDir) {
-    if(fs.existsSync('./config/' + dirName + '/mail.js'))
-      customeConfig = require('./' + dirName + '/mail.js');
-  }
-}
+import customConfigLoader from './util/customConfigLoader.js';
+var customConfig = customConfigLoader('mail.js');
 
 var defaultConfig = {
   type: 'smtp',
@@ -116,5 +107,5 @@ var defaultConfig = {
 
 module.exports.mail = {
   ...defaultConfig,
-  ...customeConfig
+  ...customConfig
 }

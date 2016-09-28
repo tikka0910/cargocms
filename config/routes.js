@@ -4,22 +4,10 @@
  * (sails.config.routes)
  */
 
-import fs from 'fs';
 
-var customConfig = (function() {
-  var files = fs.readdirSync('./config')
-  for (var dirName of files) {
-    let isDir = fs.statSync('./config/' + dirName).isDirectory();
-    if (isDir) {
-      let customRouteConfigFile = './config/' + dirName + '/routes.js';
-      let hasCustomRouteConfigFile = fs.existsSync(customRouteConfigFile);
-      if (hasCustomRouteConfigFile) {
-        console.log('Custom Route Config: ' + customRouteConfigFile);
-        return require('./' + dirName + '/routes.js');
-      }
-    }
-  }
-})();
+import customConfigLoader from './util/customConfigLoader.js';
+
+var customConfig = customConfigLoader('routes.js');
 
 var defaultConfig = {
 
