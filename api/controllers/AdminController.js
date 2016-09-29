@@ -30,7 +30,7 @@ module.exports = {
   },
 
   login: function(req, res) {
-    res.ok({view: true});
+    res.ok({view: true, errors: req.flash('error')[0]});
   },
 
   dashboard: function(req, res) {
