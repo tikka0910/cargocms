@@ -73,7 +73,21 @@
 						</div>
 
 						<input id='backUrl' type="hidden" name="url" value='/admin/'>
-
+            <% var error = data.errors; %>
+            <% console.log("error data=>",data); %>
+            <% if(error === 'no permitted') { %>
+              <div class="alert-danger">
+                <label class="text-danger">
+                  <strong>此使用者並無權限登入！</strong>
+                </label>
+              </div>
+            <% } else if (error === 'Error.Passport.Generic') { %>
+              <div class="alert-danger">
+                <label class="text-danger">
+                  <strong>密碼錯誤，請重新輸入！</strong>
+                </label>
+              </div>
+            <% } %>
 						<div class="checkbox">
 							<ul class="list-inline">
 								<li>
