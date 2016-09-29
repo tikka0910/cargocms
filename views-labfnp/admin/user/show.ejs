@@ -165,7 +165,7 @@
                         地理位置
                       </span>
                       <pre>{{ data.item.lastLoginLat }},{{ data.item.lastLoginLng }}</pre>
-                      <!--<img src="https://maps.googleapis.com/maps/api/staticmap?center=${this.props.lat},${this.props.lon}&zoom=14&size=${imgWidth}x${imgHeight}&scale=2&maptype=hybrid&markers=color:red%7Clabel:S%7C${this.props.lat},${this.props.lon}&key=AIzaSyBiwSQUTr6brsJoPHcliZ3TVFYgYf7ulbw" alt="" />-->
+                      <img :src="'https://maps.googleapis.com/maps/api/staticmap?center='+data.item.lastLoginLat+','+data.item.lastLoginLng+'&amp;zoom=14&amp;size=400x300&amp;scale=2&amp;maptype=hybrid&amp;markers=color:red%7Clabel:S%7C'+data.item.lastLoginLat+','+data.item.lastLoginLng+'&amp;key=AIzaSyBiwSQUTr6brsJoPHcliZ3TVFYgYf7ulbw'" alt="" width="400" height="300" class="img-responsive img-rounded"/>
                     </p>
                   </li>
                 </ul>
