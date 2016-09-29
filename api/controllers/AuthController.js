@@ -18,13 +18,17 @@ module.exports = {
       if(form) user = form;
 
       let url = req.query.url || '/';
-      
-      res.ok({user, errors: req.flash('error')[0], url});
+
+      res.ok({
+        //layout: false,
+        user,
+        errors: req.flash('error')[0],
+        url
+      });
     } catch (e){
       sails.log.error(e);
       res.serverError(e);
     }
-
   },
   logout: function(req, res) {
     req.session.authenticated = false;
